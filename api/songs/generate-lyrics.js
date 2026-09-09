@@ -1,4 +1,4 @@
-﻿module.exports = async (req, res) => {
+module.exports = async (req, res) => {
     // CORS headers - Securisation pour Vercel
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -30,7 +30,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    model: 'llama3-8b-8192',
+                    model: 'llama-3.1-8b-instant',
                     messages: [
                         { role: 'system', content: systemPrompt },
                         { role: 'user', content: `Theme de la chanson : ${prompt}` }
