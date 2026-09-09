@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    model: 'llama3-70b-8192',
+                    model: 'gemma2-9b-it',
                     messages: [
                         { role: 'system', content: systemPrompt },
                         { role: 'user', content: `Theme de la chanson : ${prompt}` }
