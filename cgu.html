@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Conditions d'Utilisation - Nova Tempo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .legal-content {
+            max-width: 800px;
+            margin: 50px auto 100px auto;
+            padding: 0 20px;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+        .legal-content h1, .legal-content h2 {
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+        }
+        .legal-content h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+        .legal-content h2 {
+            margin-top: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            font-size: 24px;
+        }
+        .legal-content ul {
+            margin-left: 20px;
+        }
+        body { overflow-x: hidden; width: 100%; max-width: 100vw; }
+</style>
+    <!-- SEO & Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="description" content="Nova Tempo - L'intelligence artificielle qui transforme vos mots en chansons magiques. Créez des émotions musicales uniques en quelques secondes.">
+    <meta name="theme-color" content="#0047AB">
+    <meta property="og:title" content="Nova Tempo - Créez votre musique IA">
+    <meta property="og:description" content="Transforme tes mots en chansons magiques avec Nova Tempo. Facile, rapide et super fun !">
+    <meta property="og:image" content="hero.jpg">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                <img src="logo.png" alt="Logo Nova Tempo" style="height: 40px; width: auto; margin-right: 10px; vertical-align: middle;">
+                Nova Tempo
+            </a>
+        </div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <a href="index.html" style="color: var(--text-main); text-decoration: none; font-weight: bold;">← Retour à l'accueil</a>
+        </div>
+    </header>
+
+    <div class="legal-content">
+        <h1>Conditions Générales d'Utilisation (CGU)</h1>
+        <p style="text-align: center;"><em>Dernière mise à jour : 19 Août 2026</em></p>
+
+        <h2>1. Présentation du service</h2>
+        <p>Nova Tempo est une plateforme en ligne permettant de générer des chansons personnalisées grâce à l'Intelligence Artificielle, principalement destinées à des événements personnels (anniversaires, mariages, hommages, célébrations).</p>
+
+        <h2>2. Inscription et Accès</h2>
+        <p>Pour utiliser le service, l'utilisateur doit créer un compte. L'utilisateur s'engage à fournir des informations exactes et à garder ses identifiants de connexion confidentiels. L'accès au service de création requiert une connexion internet stable.</p>
+
+        <h2>3. Droits de Propriété Intellectuelle</h2>
+        <p>Les droits sur les œuvres musicales générées dépendent de l'offre souscrite :</p>
+        <ul>
+            <li><strong>Offre "À la carte" :</strong> Les musiques sont générées sous licence d'utilisation strictement personnelle et non commerciale. Vous pouvez les diffuser librement lors d'événements privés.</li>
+            <li><strong>Offres "Mensuel" et "Annuel" :</strong> Vous bénéficiez d'une licence commerciale vous permettant de monétiser et de distribuer les œuvres générées sur les plateformes publiques (YouTube, Spotify, etc.).</li>
+        </ul>
+
+        <h2>4. Règles de bonne conduite</h2>
+        <p>L'utilisateur s'interdit formellement d'utiliser le générateur d'IA pour créer des chansons contenant des propos haineux, diffamatoires, racistes, illégaux ou incitant à la violence. Nova Tempo se réserve le droit de suspendre immédiatement et sans préavis tout compte ne respectant pas ces règles.</p>
+
+        <h2>5. Paiement et Rétractation</h2>
+        <p>S'agissant de contenus numériques personnalisés fournis et consommés immédiatement après le paiement (la génération de la chanson), le droit de rétractation légal de 14 jours ne s'applique pas une fois le processus de génération démarré par l'utilisateur.</p>
+
+        <h2>6. Limitation de responsabilité</h2>
+        <p>Nova Tempo met tout en œuvre pour assurer un service de haute qualité. Cependant, en raison de la nature créative et probabiliste de l'Intelligence Artificielle, nous ne pouvons garantir que le résultat généré correspondra à 100% aux attentes subjectives de l'utilisateur. Le service est fourni "en l'état".</p>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Nova Tempo</h3>
+                <p>L'IA musicale au service de vos émotions.</p>
+            </div>
+            <div class="footer-links">
+                <a href="cgu.html">Conditions d'utilisation</a>
+                <a href="privacy.html">Politique de confidentialité</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2026 Nova Tempo. Tous droits réservés.</p>
+    </footer>
+<script src="support-widget.js"></script>
+
+<script>
+if (typeof toggleProfileMenu !== "function") {
+    window.toggleProfileMenu = function(e) {
+        e.stopPropagation();
+        const dropdown = document.getElementById("profile-dropdown");
+        if(dropdown) {
+            dropdown.style.display = dropdown.style.display === "none" || dropdown.style.display === "" ? "flex" : "none";
+        }
+    };
+    document.addEventListener("click", function(e) {
+        const dropdown = document.getElementById("profile-dropdown");
+        if (dropdown && dropdown.style.display === "flex" && !e.target.closest(".user-profile")) {
+            dropdown.style.display = "none";
+        }
+    });
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

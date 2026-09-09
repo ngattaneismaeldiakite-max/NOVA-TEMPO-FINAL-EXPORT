@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - Nova Tempo</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; padding: 40px; background: #f7f7f8; }
+        .admin-container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h1 { color: #1e293b; margin-bottom: 30px; }
+        .stat-card { background: #fff3e0; border: 1px solid #ffd54f; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
+        .stat-card h2 { margin: 0; color: #e65100; font-size: 36px; }
+        .stat-card p { margin: 5px 0 0; color: #ff8f00; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; color: #64748b; }
+        #auth-guard { display: none; text-align: center; padding: 50px; }
+    </style>
+</head>
+<body>
+    <div id="auth-guard">
+        <h2>Vérification des droits...</h2>
+    </div>
+
+    <div class="admin-container" id="admin-content" style="display:none;">
+        <h1>Tableau de bord financier</h1>
+        
+        <div class="stat-card">
+            <h2 id="total-cost">0.00 $</h2>
+            <p>Consommation ElevenLabs (Mois en cours)</p>
+        </div>
+
+        <h3>Historique des générations</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Job ID</th>
+                    <th>Durée (sec)</th>
+                    <th>Coût estimé ($)</th>
+                </tr>
+            </thead>
+            <tbody id="logs-table">
+                <!-- Data will be injected here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="supabase-client.js" defer></script>
+    <script>
+        // Remplacez par votre vrai UUID Supabase
+        const ADMIN_UUID = 'VOTRE_USER_ID_ICI'; 
+
+        async function initAdmin() {
+            document.getElementById('auth-guard').style.display = 'block';
+            
+            const { data: { user } } = await _supabase.auth.getUser();
+            
+            if (!user || user.id !== ADMIN_UUID) {
+                // Redirection immédiate si non autorisé
+                window.location.href = 'index.html';
+                return;
+            }
+
+            document.getElementById('auth-guard').style.display = 'none';
+            document.getElementById('admin-content').style.display = 'block';
+
+            fetchAdminData();
+        }
+
+        async function fetchAdminData() {
+            // Appeler la RPC
+            const { data: totalCost, error: rpcError } = await _supabase.rpc('get_current_month_cost');
+            if (!rpcError && totalCost !== null) {
+                document.getElementById('total-cost').innerText = parseFloat(totalCost).toFixed(4) + ' $';
+            }
+
+            // Récupérer les logs
+            const { data: logs, error: logsError } = await _supabase
+                .from('api_usage_logs')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(50);
+                
+            if (!logsError && logs) {
+                const tbody = document.getElementById('logs-table');
+                logs.forEach(log => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = \
+                        <td>\</td>
+                        <td style="font-size:12px; color:#888;">\</td>
+                        <td>\ s</td>
+                        <td>\$\</td>
+                    \;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        // Exécuter au chargement
+        initAdmin();
+    </script>
+</body>
+</html>
+

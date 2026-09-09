@@ -1,0 +1,377 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Bibliothèque - Nova Tempo</title>    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+        :root {
+            --primary-magenta: #0047AB;
+            --primary-purple: #0047AB;
+            --primary-yellow: #E60023;
+            --white: #ffffff;
+            --bg-light: #ffffff;
+            --bg-gray: #f7f7f8;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --metallic-gradient: #E60023;
+        }
+
+        /* 1. MOBILE FIRST BASE RULES */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--bg-gray);
+            /* Removed color */
+            display: flex;
+            flex-direction: column; /* Mobile first: stacking */
+            height: 100vh;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        /* Sidebar - Hidden by default on Mobile */
+        .sidebar {
+            position: fixed;
+            left: -300px;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            border-right: 1px solid #eaeaea;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            z-index: 50;
+            transition: left 0.3s ease;
+        }
+        .sidebar.mobile-active { left: 0; }
+        
+        .sidebar-header { padding: 20px; display: flex; align-items: center; gap: 15px; justify-content: center; }
+        .logo-icon { width: 44px; height: 44px; border-radius: 10px; }
+        
+        .nav-menu { padding: 0 15px; display: flex; flex-direction: column; gap: 5px; margin-top: 10px; }
+        .nav-item {
+            display: flex; align-items: center; gap: 15px; padding: 12px 15px;
+            border-radius: 12px; font-weight: 700; font-size: 15px; color: var(--text-muted);
+            cursor: pointer; transition: all 0.3s;
+            text-decoration: none;
+        }
+        .nav-item:hover { background: rgba(0, 71, 171, 0.05); /* Removed color */ }
+        .nav-item.active { background: var(--metallic-gradient); color: var(--white); box-shadow: 0 10px 20px rgba(0, 71, 171, 0.2); }
+
+        /* Main Content - Mobile */
+        .main-content { flex: 1; display: flex; flex-direction: column; background: var(--white); width: 100%; }
+        
+        .top-header {
+            padding: 15px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #eaeaea; background: var(--white); z-index: 1;
+            flex-wrap: wrap; gap: 10px;
+        }
+        .top-header h1 { font-size: 20px; font-weight: 800; margin:0; /* Removed color */ }
+        .mobile-menu-btn { display: block; background: none; border: none; font-size: 24px; cursor: pointer; padding: 5px; margin-right: 10px;}
+        
+        .workspace { padding: 15px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; background: var(--bg-gray); }
+        .history-section { width: 100%; max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+        
+        /* Track Card - Mobile First (Stacked) */
+        .track-card {
+            background: var(--white); border-radius: 16px; padding: 15px; 
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border: 1px solid #eaeaea;
+        }
+        
+        /* Image + Play Button merged */
+        .track-img-container {
+            position: relative;
+            width: 80px; height: 80px;
+            flex-shrink: 0;
+        }
+        .track-img { width: 100%; height: 100%; border-radius: 12px; object-fit: cover; }
+        .play-btn-small {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 44px; height: 44px; border-radius: 50%; background: var(--metallic-gradient); border: none;
+            color: var(--white); cursor: pointer; display: flex; justify-content: center; align-items: center;
+            font-size: 16px; transition: transform 0.3s; opacity: 0.95;
+            box-shadow: 0 4px 10px rgba(0, 71, 171, 0.3);
+        }
+        .play-btn-small:hover { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+
+        .track-info-inner { flex: 1; width: 100%; }
+        .track-title { font-weight: 800; font-size: 16px; margin: 0 0 5px 0; /* Removed color */ }
+        
+        /* Phase 2: Truncate Text properly */
+        .track-prompt { 
+            font-size: 14px; color: var(--text-muted); margin: 0; 
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            white-space: normal;
+        }
+        
+        .track-date { font-size: 12px; color: #999; margin-top: 8px; font-weight: 600; }
+
+        .track-actions { display: flex; justify-content: center; gap: 10px; width: 100%; }
+        .icon-btn { 
+            border: none; background: #f7f7f8; width: 44px; height: 44px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 16px; transition: background 0.2s;
+        }
+        
+        .mobile-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 40; }
+        .mobile-overlay.active { display: block; }
+
+        /* 2. TABLET OVERRIDES (768px+) */
+        @media (min-width: 768px) {
+            body { flex-direction: row; overflow: hidden; }
+            .sidebar { position: static; left: 0; height: 100vh; width: 240px; z-index: 10; }
+            .mobile-menu-btn { display: none; }
+            .mobile-overlay { display: none !important; }
+            
+            .top-header { padding: 20px 30px; }
+            .top-header h1 { font-size: 24px; }
+            .workspace { padding: 30px; }
+            
+            .track-card { flex-direction: row; text-align: left; padding: 20px; }
+            .track-actions { justify-content: flex-end; width: auto; }
+        }
+
+        /* 3. DESKTOP OVERRIDES (1024px+) */
+        @media (min-width: 1024px) {
+            .sidebar { width: 280px; }
+            .sidebar-header { padding: 30px; }
+            .top-header { padding: 20px 40px; }
+            .workspace { padding: 40px; }
+        }
+    </style>
+    <!-- SEO & Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="description" content="Nova Tempo - L'intelligence artificielle qui transforme vos mots en chansons magiques. Créez des émotions musicales uniques en quelques secondes.">
+    <meta name="theme-color" content="#0047AB">
+    <meta property="og:title" content="Nova Tempo - Créez votre musique IA">
+    <meta property="og:description" content="Transforme tes mots en chansons magiques avec Nova Tempo. Facile, rapide et super fun !">
+    <meta property="og:image" content="hero.jpg">
+</head>
+<body>
+    <div class="mobile-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header" style="justify-content: center; padding: 20px 0;"><img src="logo.png" alt="Logo" style="height: 35px; width: auto; margin-right: 10px;"></div>
+        
+        <nav class="nav-menu">
+            <a href="index.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Accueil</a>
+            <a href="studio.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg> Studio Création</a>
+            <a href="bibliotheque.html" class="nav-item active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg> Ma Bibliothèque</a>
+            <a href="parametres.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Paramètres</a>
+        
+            </nav>
+        
+        <div style="flex: 1;"></div>
+        
+        <div style="background: var(--white); border: 1px solid #eaeaea; border-radius: 12px; padding: 15px; margin: 0 20px 20px 20px; text-align: center;">
+            <p style="margin: 0; font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Solde Actuel</p>
+            <p class="display-credits" style="margin: 5px 0 0 0; font-size: 22px; font-weight: 800; color: var(--primary-magenta);">150 <span style="font-size:12px;">Crédits</span></p>
+            <button onclick="openPaymentModal()" style="margin-top: 10px; width: 100%; padding: 8px; background: var(--bg-gray); border: 1px solid #ddd; border-radius: 8px; font-weight: 700; cursor: pointer;">Recharger</button>
+        </div>
+
+        <div class="user-profile" style="position: relative; cursor:pointer; background: #f9f9f9; border-radius: 16px; padding: 12px; display: flex; align-items: center; gap: 12px; margin-top: auto; border: 1px solid #eaeaea;" onclick="if(typeof toggleProfileMenu === 'function') toggleProfileMenu(event)">
+    <div class="display-avatar" style="width:36px; height:36px; border-radius:50%; background: var(--metallic-gradient); display: flex; align-items: center; justify-content: center; color: white; flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+    <div style="display:flex; flex-direction:column; justify-content:center;">
+        <strong class="display-username" style="font-family: 'Inter', sans-serif; font-size: 16px; color:var(--text-main);">Utilisateur</strong>
+        <span style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Mon Compte ▼</span>
+    </div>
+    
+    <div id="profile-dropdown" style="display: none; position: absolute; bottom: 75px; left: 0; width: 100%; background: white; border: 1px solid #eaeaea; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); flex-direction: column; overflow: hidden; z-index: 100;">
+        <a href="parametres.html" style="padding: 12px 15px; text-decoration: none; /* Removed color */ font-size: 16px; font-weight: 600; border-bottom: 1px solid #eaeaea; transition: background 0.2s;" onmouseover="this.style.background='#f7f7f8'" onmouseout="this.style.background='white'">⚙️ Paramètres</a>
+        <a href="index.html" onclick="localStorage.removeItem('nova_username');" style="padding: 12px 15px; text-decoration: none; color: #d93025; font-size: 16px; font-weight: 600; transition: background 0.2s;" onmouseover="this.style.background='#fcf0f0'" onmouseout="this.style.background='white'">🚪 Se déconnecter</a>
+    </div>
+</div>
+</aside>
+<script>
+function toggleProfileMenu(e) {
+    e.stopPropagation();
+    const dropdown = document.getElementById('profile-dropdown');
+    dropdown.style.display = dropdown.style.display === 'none' || dropdown.style.display === '' ? 'flex' : 'none';
+}
+document.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('profile-dropdown');
+    if (dropdown && dropdown.style.display === 'flex' && !e.target.closest('.user-profile')) {
+        dropdown.style.display = 'none';
+    }
+});
+</script>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div style="display:flex; align-items:center;">
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+                <h1>Ma Bibliothèque</h1>
+            </div>
+            <div style="padding: 8px 16px; border-radius: 30px; font-size: 16px; font-weight: 700; background: rgba(0, 71, 171, 0.05); color: var(--primary-purple); border: 1px solid rgba(230, 0, 35, 0.2);">
+                📚 12 Titres générés
+            </div>
+        </header>
+
+        <div class="workspace">
+            <div class="history-section" id="library-container">
+                <!-- Les musiques seront injectées ici par JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- LYRICS MODAL -->
+    <div id="lyrics-modal" class="mobile-overlay" style="display:none; align-items:center; justify-content:center; padding:20px; z-index:1000;">
+        <div style="background:var(--white); border-radius:24px; padding:30px; width:100%; max-width:500px; max-height:80vh; display:flex; flex-direction:column; position:relative; animation: slideInRight 0.3s ease;">
+            <button onclick="document.getElementById('lyrics-modal').style.display='none'" style="position:absolute; top:20px; right:20px; background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+            <h3 id="lyrics-title" style="margin-top:0; color: var(--primary-magenta); font-weight:800;">Titre</h3>
+            <div id="lyrics-content" style="flex:1; overflow-y:auto; font-family:'Inter', sans-serif; font-size:16px; line-height:1.6; color:var(--text-main); white-space:pre-wrap; padding-right:10px;">
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Init User
+        const storedUsername = localStorage.getItem('nova_username') || 'Awa T.';
+        const storedAvatar = localStorage.getItem('nova_avatar') || 'https://via.placeholder.com/150';
+        document.querySelector('.display-username').textContent = storedUsername;
+        document.querySelector('.display-avatar').src = storedAvatar;
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            document.getElementById('sidebar').classList.toggle('mobile-active');
+            document.getElementById('mobile-overlay').classList.toggle('active');
+        }
+
+        function showLyrics(title) {
+            document.getElementById('lyrics-title').textContent = title;
+            const fakeLyrics = `(Couplet 1)\nOh oui, c'est un jour spécial\nUne lumière qui brille dans le ciel\nOn célèbre ensemble cette magie\nLa musique nous transporte dans la nuit...\n\n(Refrain)\nChante avec moi, lève les mains en l'air !\nC'est la fête, on oublie nos galères !\nLa mélodie résonne dans nos cœurs\nNova Tempo nous donne de la chaleur !\n\n(Couplet 2)\nChaque note est une émotion\nUn souvenir gravé avec passion\nOn danse jusqu'au petit matin\nMain dans la main, sur le même chemin.\n\n(Refrain)\nChante avec moi, lève les mains en l'air !\nC'est la fête, on oublie nos galères !`;
+            document.getElementById('lyrics-content').textContent = fakeLyrics;
+            document.getElementById('lyrics-modal').style.display = 'flex';
+        }
+
+        function generateCoverImage(occasion, style) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 300;
+            canvas.height = 300;
+            const ctx = canvas.getContext('2d');
+            let color1 = '#7a00cc', color2 = '#E60023';
+            if (style.includes('Pop')) { color1 = '#E60023'; color2 = '#7a00cc'; }
+            else if (style.includes('Afrobeat')) { color1 = '#ffb300'; color2 = '#e65100'; }
+            const gradient = ctx.createLinearGradient(0, 0, 300, 300);
+            gradient.addColorStop(0, color1);
+            gradient.addColorStop(1, color2);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 300, 300);
+            ctx.fillStyle = 'rgba(255,255,255,0.1)';
+            ctx.beginPath(); ctx.arc(40, 40, 120, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(260, 260, 160, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 32px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(occasion.substring(0, 15), 150, 140);
+            ctx.font = 'italic 20px sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.85)';
+            ctx.fillText(style, 150, 180);
+            return canvas.toDataURL('image/jpeg', 0.8);
+        }
+
+        function renderLibrary() {
+            const container = document.getElementById('library-container');
+            let tracks = JSON.parse(localStorage.getItem('nova_tracks')) || [];
+            
+            // Add some dummy data if empty to show the UI
+            if(tracks.length === 0) {
+                tracks = [
+                    { title: "Anniversaire (Pop)", prompt: "Pop Joyeuse", cover: generateCoverImage("Anniversaire", "Pop"), date: new Date().toLocaleDateString() },
+                    { title: "Mariage (Afrobeat)", prompt: "Afrobeat Romantique", cover: generateCoverImage("Mariage", "Afrobeat"), date: new Date().toLocaleDateString() }
+                ];
+            } else {
+                // Rétrocompatibilité : Réparer les anciennes pochettes Unsplash cassées dans le cache
+                let changed = false;
+                tracks = tracks.map(t => {
+                    if (t.cover && t.cover.includes('unsplash')) {
+                        changed = true;
+                        // Extraire l'occasion et le style du titre "Occasion (Style)"
+                        let occ = "Musique", st = "Standard";
+                        if (t.title.includes('(')) {
+                            occ = t.title.split('(')[0].trim();
+                            st = t.title.split('(')[1].replace(')', '').trim();
+                        }
+                        t.cover = generateCoverImage(occ, st);
+                    }
+                    return t;
+                });
+                if (changed) {
+                    localStorage.setItem('nova_tracks', JSON.stringify(tracks));
+                }
+            }
+
+            container.innerHTML = '';
+            
+            tracks.forEach(t => {
+                const card = document.createElement('div');
+                card.className = 'track-card';
+                // USE SAFELY ENCODED STRINGS AVOIDING SYNTAX ERRORS
+                const safeTitle = t.title.replace(/"/g, '&quot;').replace(/'/g, '\\\'');
+                const safePrompt = t.prompt.replace(/"/g, '&quot;').replace(/'/g, '\\\'');
+                const safeAudio = t.audio_url ? `'${t.audio_url.replace(/'/g, '\\\'')}'` : 'null';
+                card.innerHTML = '<div class="track-img-container">' +
+                    '<img src="' + t.cover + '" class="track-img" alt="Cover" onerror="this.onerror=null; this.src=\'logo.png\'">' +
+                    '<button class="play-btn-small" onclick="if(window.playTrack) playTrack(\'' + safeTitle + '\', \'' + safePrompt + '\', \'' + t.cover + '\', ' + safeAudio + ')">▶</button>' +
+                    '</div>' +
+                    '<div class="track-info-inner">' +
+                        '<h4 class="track-title">' + t.title + '</h4>' +
+                        '<p class="track-prompt">"' + t.prompt + '"</p>' +
+                        '<div class="track-date">' + t.date + '</div>' +
+                    '</div>' +
+                    '<div class="track-actions">' +
+                        '<button class="icon-btn" title="Paroles" onclick="if(window.showLyrics) showLyrics(\'' + safeTitle + '\')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></button>' +
+                        '<button class="icon-btn" title="Télécharger"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button>' +
+                        '<button class="icon-btn" title="Partager"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>' +
+                    '</div>';
+                container.appendChild(card);
+            });
+        }
+        
+        renderLibrary();
+    </script>
+    <script src="supabase-client.js" defer></script>
+    <script src="support-widget.js"></script>
+    <script src="player.js" defer></script>
+    <script src="payment-widget.js"></script>
+    <script src="track-actions.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,439 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Nova Tempo - Chansons personnalisées par IA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@keyframes scroll-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0%); }
+}
+    body { overflow-x: hidden; width: 100%; max-width: 100vw; }
+</style>
+<style>
+/* Spécifique à la page d'accueil : texte blanc quand le menu est transparent sur l'image sombre */
+header:not(.scrolled) nav a,
+header:not(.scrolled) a[href="login.html"],
+header:not(.scrolled) .user-name,
+header:not(.scrolled) .dropdown-icon {
+    color: var(--white) !important;
+     /* Pour garantir la lisibilité */
+}
+header:not(.scrolled) nav a:hover,
+header:not(.scrolled) a[href="login.html"]:hover {
+    color: var(--primary-yellow) !important;
+}
+    body { overflow-x: hidden; width: 100%; max-width: 100vw; }
+</style>
+    <!-- SEO & Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="description" content="Nova Tempo - L'intelligence artificielle qui transforme vos mots en chansons magiques. Créez des émotions musicales uniques en quelques secondes.">
+    <meta name="theme-color" content="#0047AB">
+    <meta property="og:title" content="Nova Tempo - Créez votre musique IA">
+    <meta property="og:description" content="Transforme tes mots en chansons magiques avec Nova Tempo. Facile, rapide et super fun !">
+    <meta property="og:image" content="hero.jpg">
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="logo.png" alt="Logo Nova Tempo" style="height: 40px; width: auto; margin-right: 10px; vertical-align: middle;"></div>
+        
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <a href="login.html" style="color: var(--text-main); text-decoration: none; font-weight: bold;">Connexion</a>
+            <a href="signup.html" class="cta-nav">S'inscrire</a>
+        </div>
+    </header>
+
+    <section class="hero" id="hero-section" style="position: relative; background: url('hero.jpg') center/cover no-repeat; padding: 100px 5%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white;">
+      <div class="hero-content" style="max-width: 900px; z-index: 2; width: 100%;">
+          
+          <div style="background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px 30px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.3); margin-bottom: 40px;">
+              <h1 style="color: white; font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; line-height: 1.2;  margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                  Transforme tes mots en chansons magiques ! 🎶
+              </h1>
+              <p style="color: #fcfcfc; font-size: clamp(1rem, 2vw, 1.2rem);  line-height: 1.6; max-width: 700px; margin: 0 auto; text-shadow: 0 2px 5px rgba(0,0,0,0.8); font-weight: 500;">
+                  Tu as une idée, un poème ou juste une phrase drôle ? Notre IA compose la musique et chante pour toi en quelques secondes. C'est facile, rapide et super fun !
+              </p>
+          </div>
+
+          <div style="margin-top: 20px; margin-bottom: 30px;">
+            <a href="signup.html" class="cta-primary" style="font-size: 1.2rem; padding: 18px 40px; " onclick="event.preventDefault(); confetti({particleCount: 150, spread: 70, origin: { y: 0.6 }}); setTimeout(()=>window.location.href='signup.html', 1200);">Créer mon premier son <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 10px; vertical-align: middle;"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg></a>
+        </div>
+        
+        <div class="genres-band-wrapper" style="width: 100%; max-width: 100vw; margin-top: 40px; overflow: hidden; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 15px 0; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2);">
+            <div class="genres-track" style="color: white; font-weight: bold; display: flex; gap: 30px; animation: scroll-right 25s linear infinite;">
+                <span>Anniversaire</span><span>•</span>
+                <span>Mariage</span><span>•</span>
+                <span>Hommage</span><span>•</span>
+                <span>Déclaration d'amour</span><span>•</span>
+                <span>Événement d'Entreprise</span><span>•</span>
+                <span>Cadeau surprise</span><span>•</span>
+                <span>Anniversaire</span><span>•</span>
+                <span>Mariage</span><span>•</span>
+                <span>Hommage</span><span>•</span>
+                <span>Déclaration d'amour</span><span>•</span>
+                <span>Événement d'Entreprise</span><span>•</span>
+                <span>Cadeau surprise</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section class="crucial-info reveal">
+        <div class="stats-container">
+            <div class="trust-badge">
+                <div class="avatars">
+    <img src="user1.jpg" alt="Utilisateur 1" style="object-fit:cover;">
+    <img src="user2.jpg" alt="Utilisateur 2" style="object-fit:cover;">
+    <img src="user3.jpg" alt="Utilisateur 3" style="object-fit:cover;">
+    <img src="user4.jpg" alt="Utilisateur 4" style="object-fit:cover;">
+</div>
+                <div class="trust-text">
+                    <div class="stars">★★★★★</div>
+                    <p>Rejoint par <strong>+ de 2000 utilisateurs</strong></p>
+                </div>
+            </div>
+            <div class="benefits-row reveal">
+                <div class="benefit-item">
+                    <div class="benefit-icon">✨</div>
+                    <span>100% Sur Mesure</span>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎧</div>
+                    <span>Qualité Studio</span>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">⚡</div>
+                    <span>Prêt en 3 min</span>
+                </div>
+            </div>
+        </div>
+    </section>    <section id="showcase" class="showcase-section">
+        <h2 class="section-title-3d">Écoutez la Magie de l'IA</h2>
+        <p style="text-align:center; color:#666; margin-bottom:40px; font-size:18px;">Voici quelques exemples de chansons générées sur Nova Tempo.</p>
+        
+        <div class="showcase-grid">
+            <!-- Sample 1 -->
+            <div class="showcase-card">
+                <div class="showcase-cover cover-1">
+                    <button class="play-btn">▶</button>
+                </div>
+                <div class="showcase-info">
+                    <h3>Joyeux Anniversaire Maman</h3>
+                    <span class="showcase-tag">Afro Pop</span>
+                </div>
+                <audio src="#" controls></audio>
+            </div>
+
+            <!-- Sample 2 -->
+            <div class="showcase-card">
+                <div class="showcase-cover cover-2">
+                    <button class="play-btn">▶</button>
+                </div>
+                <div class="showcase-info">
+                    <h3>Notre Rencontre (Marc & Sophie)</h3>
+                    <span class="showcase-tag">R&B Romantique</span>
+                </div>
+                <audio src="#" controls></audio>
+            </div>
+
+            <!-- Sample 3 -->
+            <div class="showcase-card">
+                <div class="showcase-cover cover-3">
+                    <button class="play-btn">▶</button>
+                </div>
+                <div class="showcase-info">
+                    <h3>Hymne de l'Équipe</h3>
+                    <span class="showcase-tag">Rap / Hip-Hop</span>
+                </div>
+                <audio src="#" controls></audio>
+            </div>
+        </div>
+    </section>
+
+    <section id="comment-ca-marche" class="how-it-works">
+        <h2>Comment ça marche ? C'est un jeu d'enfant ! 🎮</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Définissez l'intention</h3>
+                <p>Souhaitez-vous partager un instant de pur bonheur, rendre un vibrant hommage ou sublimer l'histoire de votre entreprise ? Posez le cadre et choisissez l'ambiance musicale.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Racontez votre histoire</h3>
+                <p>Partagez vos souvenirs marquants, la vision de votre projet ou les traits de caractère de votre destinataire. Notre IA sculpte vos mots pour en faire des paroles percutantes.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Déclenchez l'émotion</h3>
+                <p>En moins de 3 minutes, votre morceau exclusif est prêt. Téléchargez-le et créez un véritable impact émotionnel auprès de votre audience ou de vos proches.</p>
+            </div>
+        </div>
+    </section>
+
+            <section id="tarifs" class="pricing" style="padding: 80px 5%; background-color: #f7f7f8;">
+        <h2 class="section-title-3d">Nos offres</h2>
+          <div style="background: rgba(0, 71, 171, 0.05); border-left: 5px solid var(--primary-magenta); padding: 25px 30px; border-radius: 0 16px 16px 0; max-width: 800px; margin: 0 auto 60px auto; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
+              <p style="color: #334155; font-size: 18px; line-height: 1.7; margin: 0;">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-magenta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 12px; margin-top: -3px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  Un compositeur professionnel facture en moyenne 50 000 à 100 000 FCFA. Nova Tempo te l'offre en quelques minutes, <strong style="color: var(--primary-yellow); font-size: 20px;">dès 1 500 FCFA.</strong>
+              </p>
+          </div>
+        
+        <div class="plans" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1100px; margin: 0 auto; align-items: flex-start;">
+            
+            <!-- Offre Essai -->
+            <div class="plan" style="flex: 1; min-width: 320px; max-width: 380px; background: white; border-radius: 20px; padding: 40px 30px;  text-align: left; transition: transform 0.3s; border: 1px solid #eaeaea; border-top: 6px solid var(--primary-magenta);">
+                <h3 style="font-size: 24px; margin-bottom: 5px; color: #1e293b;">Essai</h3>
+                <p style="color: #64748b; font-size: 15px; margin-bottom: 25px; height: 22px;">Idéal pour tester l'IA</p>
+                <div class="price" style="font-size: 42px; font-weight: 900; color: #0a0a0a; margin-bottom: 30px; border-bottom: 1px solid #eaeaea; padding-bottom: 30px;">1 500<span style="font-size: 18px; color: #64748b; font-weight: 600;"> FCFA</span></div>
+                
+                <ul style="list-style: none; padding: 0; margin: 0 0 35px 0; text-align: left;">
+                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #475569; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> <strong>1 Chanson</strong> complète</li>
+                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #475569; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Qualité Standard (MP3)</li>
+                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #475569; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Téléchargement immédiat</li>
+                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #94a3b8; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2" style="margin-right:8px; flex-shrink:0;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Usage commercial</li>
+                </ul>
+                <a href="#" onclick="handlePricingClick(event, 'essai')" class="btn-plan secondary" style="background: white; border: 2px solid #e2e8f0; color: #475569; border-radius: 12px; font-weight: 700;">Choisir cette offre</a>
+            </div>
+            
+            <!-- Offre Duo -->
+            <div class="plan popular" style="flex: 1; min-width: 340px; max-width: 400px; background: white; border-radius: 20px; padding: 45px 30px;  text-align: left; transform: scale(1.05); border: 2px solid var(--primary-yellow); border-top: 8px solid var(--primary-yellow); position: relative; z-index: 10;">
+                <div class="badge" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--metallic-gradient); color: white; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; letter-spacing: 1px; white-space: nowrap; ">🔥 RECOMMANDÉ</div>
+                <h3 style="font-size: 28px; margin-bottom: 5px; color: #1e293b;">Duo</h3>
+                <p style="color: var(--primary-orange); font-size: 15px; margin-bottom: 25px; font-weight: 700; height: 22px;">Économisez 300 FCFA</p>
+                <div class="price" style="font-size: 48px; font-weight: 900; color: #0a0a0a; margin-bottom: 30px; border-bottom: 1px solid #eaeaea; padding-bottom: 30px;">2 700<span style="font-size: 20px; color: #64748b; font-weight: 600;"> FCFA</span></div>
+                
+                <ul style="list-style: none; padding: 0; margin: 0 0 35px 0; text-align: left;">
+                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #0047AB; font-size: 16px; font-weight: 600;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> <strong>2 Chansons</strong> complètes</li>
+                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #475569; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Haute Définition (WAV)</li>
+                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #475569; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> File d'attente prioritaire</li>
+                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #475569; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Droits réseaux sociaux</li>
+                </ul>
+                <a href="#" onclick="handlePricingClick(event, 'duo')" class="btn-plan primary" style="background: var(--metallic-gradient); color: white; border-radius: 12px; font-weight: 800; ">Choisir cette offre</a>
+            </div>
+            
+            <!-- Offre Collection -->
+            <div class="plan" style="flex: 1; min-width: 320px; max-width: 380px; background: white; border-radius: 20px; padding: 40px 30px;  text-align: left; transition: transform 0.3s; border: 1px solid #eaeaea; border-top: 6px solid #0047AB;">
+                <h3 style="font-size: 24px; margin-bottom: 5px; color: #1e293b;">Collection</h3>
+                <p style="color: #22c55e; font-size: 15px; margin-bottom: 25px; font-weight: 700; height: 22px;">Économisez 1 500 FCFA !</p>
+                <div class="price" style="font-size: 42px; font-weight: 900; color: #0a0a0a; margin-bottom: 30px; border-bottom: 1px solid #eaeaea; padding-bottom: 30px;">6 000<span style="font-size: 18px; color: #64748b; font-weight: 600;"> FCFA</span></div>
+                
+                <ul style="list-style: none; padding: 0; margin: 0 0 35px 0; text-align: left;">
+                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #0047AB; font-size: 15px; font-weight: 600;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> <strong>5 Chansons</strong> complètes</li>
+                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #475569; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Qualité Studio (WAV)</li>
+                    
+                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #475569; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Droits commerciaux 100%</li>
+                </ul>
+                <a href="#" onclick="handlePricingClick(event, 'collection')" class="btn-plan secondary" style="background: white; border: 2px solid #e2e8f0; color: #475569; border-radius: 12px; font-weight: 700;">Choisir cette offre</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="temoignages" class="testimonials">
+        <h2 class="section-title-3d">Ils ont fait la différence</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p class="quote">"J'ai créé une chanson sur mesure pour les 50 ans de mon père. Quand on a mis le son à la fête, tout le monde pleurait de joie !"</p>
+                <div class="author">
+                    <div>
+                        <strong>Awa T.</strong><br>
+                        <span>Cadeau d'Anniversaire</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="quote">"Pour notre mariage, on voulait une entrée originale. L'IA nous a fait une chanson incroyable racontant notre rencontre. Inoubliable."</p>
+                <div class="author">
+                    <div>
+                        <strong>Marc & Sophie</strong><br>
+                        <span>Mariage</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="quote">"C'est fou comme c'est simple. J'ai pu rendre un hommage musical majestueux avec un chœur saisissant. Une expérience inoubliable, merci."</p>
+                <div class="author">
+                    <div>
+                        <strong>Franck D.</strong><br>
+                        <span>Hommage personnel</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq">
+        <h2 class="section-title-3d">Questions Fréquentes</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <h3>Combien de temps faut-il pour générer la chanson ?</h3>
+                <p>C'est presque magique : il suffit de 2 à 3 minutes pour que l'IA compose la musique, écrive les paroles et chante votre chanson personnalisée.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Dois-je écrire les paroles moi-même ?</h3>
+                <p>Non, pas du tout ! Vous avez juste à donner quelques détails (le prénom, une anecdote, le message à faire passer) et l'IA s'occupe de rédiger des paroles touchantes et rythmées.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Puis-je choisir le style musical ?</h3>
+                <p>Oui ! Vous pouvez choisir parmi une multitude de styles pour correspondre parfaitement à l'événement (Pop, Rock, R&B, Classique, Variété, etc.).</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Nova Tempo</h3>
+                <p>L'IA musicale au service de vos émotions.</p>
+            </div>
+            <div class="footer-links">
+                <a href="cgu.html">Conditions d'utilisation</a>
+                <a href="privacy.html">Politique de confidentialité</a>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2026 Nova Tempo. Tous droits réservés.</p>
+    </footer>
+    <script src="script.js" defer></script>
+
+<script src="player.js" defer></script>
+<script src="supabase-client.js" defer></script>
+
+<script>
+if (typeof toggleProfileMenu !== "function") {
+    window.toggleProfileMenu = function(e) {
+        e.stopPropagation();
+        const dropdown = document.getElementById("profile-dropdown");
+        if(dropdown) {
+            dropdown.style.display = dropdown.style.display === "none" || dropdown.style.display === "" ? "flex" : "none";
+        }
+    };
+    document.addEventListener("click", function(e) {
+        const dropdown = document.getElementById("profile-dropdown");
+        if (dropdown && dropdown.style.display === "flex" && !e.target.closest(".user-profile")) {
+            dropdown.style.display = "none";
+        }
+    });
+}
+</script>
+<script>
+    // UX Scroll Effects
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        
+        const reveals = document.querySelectorAll('.reveal');
+        for (let i = 0; i < reveals.length; i++) {
+            const windowHeight = window.innerHeight;
+            const elementTop = reveals[i].getBoundingClientRect().top;
+            const elementVisible = 100;
+            if (elementTop < windowHeight - elementVisible) {
+                reveals[i].classList.add('active');
+            }
+        }
+    });
+    // Trigger once on load
+    window.dispatchEvent(new Event('scroll'));
+</script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script><script>
+document.addEventListener('DOMContentLoaded', function() {
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        if(!form.getAttribute('action') && !form.getAttribute('id')) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const btn = this.querySelector('button');
+                if(btn) {
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '✨ C\\'est noté ! ✨';
+                    btn.style.backgroundColor = '#4CAF50';
+                    btn.style.color = 'white';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.backgroundColor = '';
+                        btn.style.color = '';
+                        this.reset();
+                    }, 3000);
+                }
+            });
+        }
+    });
+});
+</script>
+    <script>
+        function handlePricingClick(event, plan) {
+            event.preventDefault();
+            // Si l'utilisateur est connecté, l'envoyer vers paramètres pour payer
+            if (localStorage.getItem('nova_user_id')) {
+                window.location.href = 'parametres.html?plan=' + plan;
+            } else {
+                // Sinon l'envoyer vers l'inscription
+                window.location.href = 'signup.html?plan=' + plan;
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

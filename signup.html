@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Inscription - Nova Tempo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap');
+
+        :root {
+    --primary-magenta: #0047AB;
+    --primary-purple: #0047AB;
+    --primary-yellow: #E60023;
+    --white: #ffffff;
+    --bg-light: #ffffff;
+    --bg-gray: #f7f7f8;
+    --bg-glass: rgba(255, 255, 255, 0.85);
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --metallic-gradient: #E60023;
+    --metallic-gradient-dark: #E60023;
+    --gradient-contrast: #E60023;
+}
+
+        * { box-sizing: border-box; }
+
+        body, html {
+            margin: 0; padding: 0; font-family: 'Inter', sans-serif;
+            height: 100vh; background-color: var(--white);
+        }
+
+        .auth-wrapper { display: flex; min-height: 100vh; flex-direction: column; }
+
+        /* Sidebar Image */
+        .auth-sidebar { display: none; }
+        
+        .auth-sidebar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.8)); z-index: 1; } .auth-sidebar > * { position: relative; z-index: 2; }
+
+        .logo-text { font-weight: 800; font-size: 24px; letter-spacing: -0.02em; }
+        .quote { font-family: 'Playfair Display', serif; font-size: 36px; font-style: italic; line-height: 1.2; margin-bottom: 20px;}
+
+        /* Form Area */
+        .auth-content {
+            flex: 1; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; position: relative; background: var(--white);
+        }
+        .back-home {
+            position: absolute; top: 30px; left: 30px; text-decoration: none;
+            color: var(--text-muted); font-weight: 700; font-size: 16px;
+        }
+
+        .auth-card {
+            width: 100%; max-width: 400px; padding: 40px; text-align: center;
+        }
+
+                .animated-logo { width: 150px; height: auto; display: block; margin: 20px auto 35px; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 71, 171, 0.2); animation: floatPulse 4s ease-in-out infinite; padding: 10px; background: white; }
+        @keyframes floatPulse {
+            0% { transform: translateY(0) scale(1); box-shadow: 0 10px 30px rgba(0, 71, 171, 0.2); }
+            50% { transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 35px rgba(0, 71, 171, 0.5); }
+            100% { transform: translateY(0) scale(1); box-shadow: 0 10px 30px rgba(0, 71, 171, 0.2); }
+        }
+
+        
+            
+        }
+
+        .auth-card h1 { font-size: 28px; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.02em; }
+        .auth-card p { color: var(--text-muted); margin: 0 0 30px 0; font-size: 15px; }
+
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+        .form-group input {
+            width: 100%; box-sizing: border-box; padding: 15px; border: 2px solid #eaeaea;
+            border-radius: 12px; font-family: 'Inter', sans-serif; font-size: 15px;
+            transition: all 0.3s;
+        }
+        .form-group input:focus { outline: none; border-color: var(--primary-magenta); box-shadow: 0 0 0 4px rgba(0, 71, 171, 0.1); }
+
+        .btn-submit {
+            width: 100%; padding: 16px; background: var(--metallic-gradient); color: white;
+            border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 71, 171, 0.3); transition: all 0.3s;
+         min-height: 44px; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(0, 71, 171, 0.4); }
+
+        .auth-links { margin-top: 25px; font-size: 16px; color: var(--text-muted); }
+        .auth-links a { color: var(--primary-magenta); font-weight: 700; text-decoration: none; }
+        .auth-links a:hover { text-decoration: underline; }
+
+        
+            .btn-google {
+            background: #ffffff; color: #333333; border: 2px solid #eaeaea; display: flex; align-items: center; justify-content: center;
+            gap: 10px; font-weight: 700; width: 100%; padding: 15px; border-radius: 12px; cursor: pointer; transition: all 0.3s;
+            font-size: 15px;
+         min-height: 44px; }
+        .btn-google:hover { background: #f8f8f8; border-color: #ddd; }
+        .divider { margin: 25px 0; display: flex; align-items: center; color: var(--text-muted); font-size: 16px; font-weight: 600; }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #eaeaea; }
+        .divider::before { margin-right: 15px; }
+        .divider::after { margin-left: 15px; }
+        body { overflow-x: hidden; width: 100%; max-width: 100vw; }
+@media (min-width: 768px) { .auth-wrapper { flex-direction: row-reverse; } .auth-sidebar { display: flex; flex: 1; position: relative; flex-direction: column; justify-content: flex-end; padding: 40px; color: white; background: url('signup_bg.jpg') center/cover no-repeat; } }
+
+</style>
+    <!-- SEO & Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="description" content="Nova Tempo - L'intelligence artificielle qui transforme vos mots en chansons magiques. Créez des émotions musicales uniques en quelques secondes.">
+    <meta name="theme-color" content="#0047AB">
+    <meta property="og:title" content="Nova Tempo - Créez votre musique IA">
+    <meta property="og:description" content="Transforme tes mots en chansons magiques avec Nova Tempo. Facile, rapide et super fun !">
+    <meta property="og:image" content="hero.jpg">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-sidebar">
+            
+            <div>
+                <h3 class="quote">Zéro talent requis. ✨</h3>
+                <p style="opacity: 0.9; font-size: 16px;">L'IA s'occupe de la musique, toi de la gloire.</p>
+            </div>
+        </div>
+        
+        <div class="auth-content">
+            <a href="index.html" class="back-home">← Retour au site</a>
+            
+            <div class="auth-card">
+                
+                
+                <h1>Créer un compte ✨</h1>
+                
+
+                <form onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label>Nom complet</label>
+                        <input type="text" id="signup-name" placeholder="Awa Touré" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Adresse Email</label>
+                        <input type="email" placeholder="awa.toure@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe</label>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">Créer mon compte</button>
+                </form>
+                <div class="divider">OU</div>
+                <button type="button" class="btn-google" onclick="window.location.href='studio.html'">
+                    <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    Continuer avec Google
+                </button>
+
+                <div class="auth-links">
+                    Déjà un compte ? <a href="login.html">Se Connecter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function handleSignup(event) {
+            event.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            localStorage.setItem('nova_username', name);
+            window.location.href = 'studio.html';
+        }
+    </script>
+    <script src="supabase-client.js" defer></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            if(btn) {
+                btn.innerHTML = '<span style="display:inline-block; animation: spin 1s linear infinite;">⏳</span> Création en cours...';
+                btn.style.opacity = '0.8';
+                btn.style.cursor = 'wait';
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
