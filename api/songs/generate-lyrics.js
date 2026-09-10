@@ -16,10 +16,10 @@ module.exports = async (req, res) => {
     try {
         const { theme, style } = req.body;
         
-        const prompt = "Ecris les paroles d'une chanson sur le theme '' dans le style ''. La chanson doit avoir 2 couplets et 1 refrain. Ne mets pas de musique, juste le texte.";
+        const prompt = `Ecris les paroles d'une chanson sur le theme '${theme}' dans le style '${style}'. La chanson doit avoir 2 couplets et 1 refrain. Ne mets pas de musique, juste le texte.`;
 
         const headers = {
-            'Authorization': Bearer ,
+            'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
             'Content-Type': 'application/json'
         };
 
