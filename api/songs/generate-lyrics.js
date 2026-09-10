@@ -18,10 +18,10 @@ module.exports = async (req, res) => {
             'Content-Type': 'application/json'
         };
 
-        // Configuration du modèle via Variable d'Environnement, avec un fallback par défaut
+        // Configuration du modÃƒÂ¨le via Variable d'Environnement, avec un fallback par dÃƒÂ©faut
         const selectedModelId = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
 
-        const response = await fetch('https://api.groq.com/v1/chat/completions', {
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({
