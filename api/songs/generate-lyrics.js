@@ -18,8 +18,8 @@ module.exports = async (req, res) => {
             'Content-Type': 'application/json'
         };
 
-        // Configuration du modÃƒÂ¨le via Variable d'Environnement, avec un fallback par dÃƒÂ©faut
-        const selectedModelId = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+        // Configuration du modÃƒÆ’Ã‚Â¨le via Variable d'Environnement, avec un fallback par dÃƒÆ’Ã‚Â©faut
+        const selectedModelId = process.env.GROQ_MODEL || 'openai/gpt-oss-120b';
 
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
