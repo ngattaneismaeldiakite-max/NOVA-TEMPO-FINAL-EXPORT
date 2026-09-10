@@ -5,13 +5,8 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS,POST');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
-    }
-
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method Not Allowed' });
-    }
+    if (req.method === 'OPTIONS') return res.status(200).end();
+    if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
     try {
         const { theme, style } = req.body;
@@ -23,26 +18,9 @@ module.exports = async (req, res) => {
             'Content-Type': 'application/json'
         };
 
-        // 1. RECHERCHE DYNAMIQUE DU MODELE DISPONIBLE (Anti-Deprecation)
-        const modelsReq = await fetch('https://api.groq.com/v1/models', { headers });
-        const modelsData = await modelsReq.json();
-        const availableModels = modelsData.data || [];
-        
-        if (availableModels.length === 0) {
-            throw new Error("Aucun modèle disponible sur Groq pour cette clé API.");
-        }
+        // Configuration du modèle via Variable d'Environnement, avec un fallback par défaut
+        const selectedModelId = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
 
-        // On prend un modèle Llama en priorité (en évitant les modèles de sécurité), sinon le premier de la liste
-        let selectedModelId = availableModels[0].id;
-        const preferred = availableModels.find(m => m.id.includes('llama') && !m.id.includes('guard') && !m.id.includes('whisper'));
-        if (preferred) {
-            selectedModelId = preferred.id;
-        } else {
-            const mixtral = availableModels.find(m => m.id.includes('mixtral'));
-            if (mixtral) selectedModelId = mixtral.id;
-        }
-
-        // 2. GENERATION DES PAROLES
         const response = await fetch('https://api.groq.com/v1/chat/completions', {
             method: 'POST',
             headers: headers,
