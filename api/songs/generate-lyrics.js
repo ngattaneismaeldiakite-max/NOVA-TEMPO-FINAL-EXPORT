@@ -9,16 +9,20 @@ module.exports = async (req, res) => {
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
     try {
-        const { theme, style } = req.body;
+        // Le frontend (studio.html) envoie "prompt" (le texte d'inspiration) et "genre" (le style musical)
+        const { prompt: inspirationText, genre } = req.body;
         
-        const prompt = `Ecris les paroles d'une chanson sur le theme '${theme}' dans le style '${style}'. La chanson doit avoir 2 couplets et 1 refrain. Ne mets pas de musique, juste le texte.`;
+        // 1. Message Systeme Strict
+        const systemPrompt = "Tu es un auteur-compositeur professionnel. Génère UNIQUEMENT les paroles de la chanson demandée, dans le style musical précisé. Ne pose jamais de question, ne demande jamais de précision, ne réponds jamais autre chose que les paroles elles-mêmes.";
+
+        // 2. Message Utilisateur Final
+        const finalUserMessage = `Texte d'inspiration : "${inspirationText}"\nStyle musical : ${genre}\n\nÉcris les paroles de la chanson (2 couplets et 1 refrain).`;
 
         const headers = {
             'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
             'Content-Type': 'application/json'
         };
 
-        // Configuration du modÃƒÆ’Ã‚Â¨le via Variable d'Environnement, avec un fallback par dÃƒÆ’Ã‚Â©faut
         const selectedModelId = process.env.GROQ_MODEL || 'openai/gpt-oss-120b';
 
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -26,7 +30,10 @@ module.exports = async (req, res) => {
             headers: headers,
             body: JSON.stringify({
                 model: selectedModelId,
-                messages: [{ role: 'user', content: prompt }],
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: finalUserMessage }
+                ],
                 temperature: 0.7
             })
         });
