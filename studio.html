@@ -400,9 +400,7 @@ window.generateAudio = async function() {
         
         const headers = { 'Content-Type': 'application/json' };
         if (token) {
-            headers['Authorization'] = Bearer ;
-        }
-            headers['Authorization'] = Bearer ;
+            headers['Authorization'] = 'Bearer ' + token;
         } else {
             // Utilisateur non connect - simulation front-end
             setTimeout(() => { window.location.href = 'bibliotheque.html'; }, 4000);
