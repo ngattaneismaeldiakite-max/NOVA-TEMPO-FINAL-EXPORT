@@ -290,6 +290,7 @@ const templates = {
 };
 
 window.selectOccasion = function(element, type) {
+      window.currentOccasionType = type;
     const parent = document.getElementById('occasion-tags');
     parent.querySelectorAll('.tag').forEach(tag => {
         tag.style.background = 'transparent';
