@@ -226,7 +226,7 @@
         </div>
         <input type="hidden" id="lyrics-genre-val" value="Afrobeat">
 
-        <button id="btn-generate-lyrics" class="btn-generate" style="background: var(--primary-purple); color: white; width: 100%; padding: 20px; border-radius: 16px; font-weight: 800; font-size: 17px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(0, 71, 171, 0.2); transition: all 0.3s;" onclick="window.generateLyrics()">✨ Cuisiner les paroles (Gratuit)</button>
+        <button id="btn-generate-lyrics" class="btn-generate" style="background: var(--primary-purple); color: white; width: 100%; padding: 20px; border-radius: 16px; font-weight: 800; font-size: 17px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(0, 71, 171, 0.2); transition: all 0.3s;" onclick="window.generateLyrics()">✨ Tape dedans ! (Paroles)</button>
     </div>
 
     <!-- Etape 2: Paroles -->
@@ -259,7 +259,7 @@
         </div>
         <input type="hidden" id="audio-voice-val" value="male">
 
-        <button id="btn-generate-audio" class="btn-generate" style="background: var(--metallic-gradient); color: white; width: 100%; padding: 22px; border-radius: 16px; font-weight: 900; font-size: 19px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 15px 35px rgba(0, 71, 171, 0.3); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 20px 40px rgba(0, 71, 171, 0.4)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 15px 35px rgba(0, 71, 171, 0.3)';" onclick="window.generateAudio()">🎵 Enregistrer la Musique (1 Chanson)</button>
+        <button id="btn-generate-audio" class="btn-generate" style="background: var(--metallic-gradient); color: white; width: 100%; padding: 22px; border-radius: 16px; font-weight: 900; font-size: 19px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 15px 35px rgba(0, 71, 171, 0.3); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 20px 40px rgba(0, 71, 171, 0.4)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 15px 35px rgba(0, 71, 171, 0.3)';" onclick="window.generateAudio()">🎵 Tape dedans ! (1 Chanson)</button>
     </div>
 
     <!-- LOADING SCREEN -->
@@ -387,7 +387,7 @@ window.generateLyrics = async function() {
                 setTimeout(typeWriter, Math.floor(Math.random() * 20) + 10);
             } else {
                 lyricsBox.disabled = false; 
-                btn.innerHTML = '✨ Paroles générées !';
+                btn.innerHTML = '✨ C'est Zo !';
                 btn.style.background = '#22c55e';
                 btn.disabled = false;
                 
@@ -401,7 +401,7 @@ window.generateLyrics = async function() {
     } catch (e) {
         console.error(e);
         alert("Erreur: " + e.message + "\n(Avez-vous bien déployé sur Vercel ?)");
-        btn.innerHTML = '✨ Cuisiner les paroles (Gratuit)';
+        btn.innerHTML = '✨ Tape dedans ! (Paroles)';
         btn.disabled = false;
         lyricsBox.value = '';
         lyricsBox.disabled = false;
