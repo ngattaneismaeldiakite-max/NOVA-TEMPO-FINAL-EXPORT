@@ -513,6 +513,29 @@ if (typeof toggleProfileMenu !== "function") {
     });
 }
 </script>
+<script>
+function toggleMobileMenu() {
+    var sidebar = document.querySelector('.sidebar');
+    var overlay = document.querySelector('.mobile-overlay');
+    if(sidebar) sidebar.classList.toggle('mobile-active');
+    if(overlay) overlay.classList.toggle('active');
+}
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var occasionTags = document.getElementById('occasion-container');
+    var styleTags = document.getElementById('style-tags');
+    var promptBox = document.querySelector('.prompt-box');
+    
+    if (occasionTags && styleTags && promptBox) {
+        var occasionContainer = occasionTags.closest('.tags-container') || occasionTags;
+        var styleContainer = styleTags.closest('.tags-container') || styleTags.parentElement;
+        
+        // Move styleContainer BEFORE promptBox
+        promptBox.parentNode.insertBefore(styleContainer, promptBox);
+    }
+});
+</script>
 </body>
 </html>
 
