@@ -1,23 +1,47 @@
-const { createClient } = require('@supabase/supabase-js');
-
-module.exports = async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS,GET,POST');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-    if (req.method === 'OPTIONS') return res.status(200).end();
-
-    const jobId = req.query.id || req.body.id;
-    if (!jobId) return res.status(400).json({ error: 'Job ID manquant' });
-
-    const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+export default async function handler(req, res) {
+    if (req.method !== 'GET') return res.status(405).json({ error: "Method not allowed" });
     
-    const { data, error } = await supabase.from('song_jobs').select('status, audio_url').eq('id', jobId).single();
+    const PIAPI_KEY = "7eafe4d5fb1ed82a5e9d911db62168687e3a85160ed92ecd5fb6a95f1b3883eb";
     
-    if (error || !data) return res.status(404).json({ error: 'Job non trouvé' });
+    try {
+        const taskId = req.query.id;
+        
+        const response = await fetch('https://api.piapi.ai/api/suno/v1/music/' + taskId, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + PIAPI_KEY,
+                'Content-Type': 'application/json'
+            }
+        });
 
-    return res.status(200).json(data);
+        const data = await response.json();
+        if (data.code !== 200) {
+            return res.status(500).json({ error: data.message || 'API Error PiAPI' });
+        }
+
+        const status = data.data.status; 
+        
+        if (status === 'completed') {
+            const clips = data.data.clips;
+            let clip1Url = '';
+            
+            // PiAPI returns clips differently sometimes, usually an object mapped by clip ID or array
+            if (Array.isArray(clips) && clips.length > 0) {
+                clip1Url = clips[0].audio_url;
+            } else if (typeof clips === 'object' && Object.values(clips).length > 0) {
+                clip1Url = Object.values(clips)[0].audio_url;
+            }
+            
+            return res.status(200).json({
+                status: 'completed',
+                audio_url: clip1Url
+            });
+        } else if (status === 'failed') {
+             return res.status(200).json({ status: 'failed' });
+        } else {
+             return res.status(200).json({ status: 'processing' });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 }

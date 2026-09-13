@@ -435,7 +435,7 @@ window.generateAudio = async function() {
         // 2. Polling (Vérifier le statut toutes les 3 secondes)
         const pollInterval = setInterval(async () => {
             try {
-                const statusRes = await fetch(/api/songs/check-status?id=);
+                const statusRes = await fetch('/api/songs/check-status?id=' + jobId);
                 const statusData = await statusRes.json();
                 
                 if (statusData.status === 'completed') {
