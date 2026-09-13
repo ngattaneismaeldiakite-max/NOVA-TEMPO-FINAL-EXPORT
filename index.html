@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Nova Tempo - Des sons sur-mesure pour s'enjailler</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 @keyframes scroll-right {
     0% { transform: translateX(-50%); }
@@ -47,22 +47,24 @@ header:not(.scrolled) a[href="login.html"]:hover {
         </div>
     </header>
 
-    <section class="hero" id="hero-section" style="position: relative; background: linear-gradient(135deg, #09090b, #18181b, #27272a); padding: 120px 5%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; min-height: 80vh; overflow: hidden;">
-    <!-- Abstract glowing orbs for a modern "no character" background -->
-    <div style="position: absolute; top: -10%; left: -10%; width: 40vw; height: 40vw; background: #e11d48; border-radius: 50%; filter: blur(120px); opacity: 0.3;"></div>
-    <div style="position: absolute; bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: #2563eb; border-radius: 50%; filter: blur(120px); opacity: 0.3;"></div>
+    <section class="hero" id="hero-section" style="position: relative; background-color: #0A0A0A; padding: 180px 5% 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; min-height: 85vh; overflow: hidden;">
+    <!-- Abstract animated blobs for premium background texture -->
+    <div style="position: absolute; top: -20%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(230,0,35,0.15) 0%, rgba(0,0,0,0) 70%); border-radius: 50%; filter: blur(60px); animation: blobSlow 15s infinite alternate ease-in-out;"></div>
+    <div style="position: absolute; bottom: -20%; right: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(0,71,171,0.15) 0%, rgba(0,0,0,0) 70%); border-radius: 50%; filter: blur(60px); animation: blobSlow 20s infinite alternate-reverse ease-in-out;"></div>
 
     <div class="hero-content" style="max-width: 1000px; z-index: 2; width: 100%; position: relative;">
-        <h1 style="font-family: 'Righteous', cursive; color: white; font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 400; line-height: 1.1; margin-bottom: 30px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); letter-spacing: 1px;">
-            L'IA QUI TRANSFORME TES <span style="background: -webkit-linear-gradient(45deg, #facc15, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PAROLES</span> EN MUSIQUE.
+        <!-- Premium Kicker -->
+        <div class="hero-kicker animate-fade-in-up">AU CHAUD ???</div>
+        
+        <!-- Variable weight main title -->
+        <h1 class="animate-fade-in-up delay-1" style="font-family: 'Bricolage Grotesque', sans-serif; color: white; font-size: clamp(2.8rem, 7vw, 6rem); line-height: 1.05; margin-bottom: 40px; text-shadow: 0 10px 30px rgba(0,0,0,0.5); letter-spacing: -0.02em;">
+            <span style="font-weight: 400; opacity: 0.9;">L'IA qui transforme tes</span><br>
+            <span style="font-weight: 800; background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PAROLES EN MUSIQUE</span>
         </h1>
         
-        <p class="hero-subtitle" style="font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 900; color: #facc15; margin-bottom: 50px; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 4px 15px rgba(0,0,0,0.9); background: rgba(0,0,0,0.5); padding: 15px 30px; border-radius: 16px; display: inline-block; border: 1px solid rgba(250, 204, 21, 0.4); backdrop-filter: blur(10px);">
-            Au chaud ??? 🔥
-        </p>
-        
-        <div style="margin-top: 10px;">
-            <a href="studio.html" style="background: linear-gradient(45deg, #e11d48, #facc15); color: white; font-size: 1.3rem; font-weight: 900; padding: 20px 50px; border-radius: 50px; text-decoration: none; display: inline-block; box-shadow: 0 15px 35px rgba(225, 29, 72, 0.5); text-transform: uppercase; transition: all 0.3s; letter-spacing: 1.5px; text-shadow: 0 2px 5px rgba(0,0,0,0.3);">Tape dedans !</a>
+        <!-- Animated glowing CTA -->
+        <div class="animate-fade-in-up delay-2" style="margin-top: 30px;">
+            <button onclick="fireConfetti()" class="premium-glow-btn">Tape dedans !</button>
         </div>
     </div>
 </section>
