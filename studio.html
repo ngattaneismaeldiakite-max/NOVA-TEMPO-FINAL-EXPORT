@@ -161,33 +161,50 @@
         <div class="workspace">
 <div class="generator-container" style="padding:40px; position:relative; overflow:visible; width:100%; max-width:850px; background:white; border-radius:30px; box-shadow:0 20px 40px rgba(0,0,0,0.04); border:1px solid #eaeaea;">
     <!-- Etape 1: Inspiration -->
-    <div id="step1-inspiration" style="margin-bottom: 40px;">
-        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+        <div id="step1-inspiration" style="margin-bottom: 40px;">
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 30px;">
             <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 71, 171, 0.1); color: var(--primary-magenta); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 20px;">1</div>
             <div>
-                <h3 style="font-size: 22px; font-weight: 800; /* Removed color */ margin: 0;">L'Inspiration (Raconte ton way)</h3>
-                <p style="font-size: 14px; color: var(--text-muted); margin: 0; margin-top: 2px;">Dites-nous de quoi doit parler la chanson.</p>
+                <h3 style="font-size: 22px; font-weight: 800; margin: 0;">L'Inspiration (Raconte ton way)</h3>
+                <p style="font-size: 14px; color: var(--text-muted); margin: 0; margin-top: 2px;">Personnalisez la chanson étape par étape.</p>
             </div>
         </div>
-        
-        <div class="prompt-box" style="margin-bottom:25px;">
-            <textarea id="lyrics-prompt" placeholder="Racontez-nous l'histoire... ex: 'Une chanson d'anniversaire pour ma mère, douce et joyeuse.'" style="width: 100%; height: 120px; padding: 20px; border: 2px solid #eaeaea; border-radius: 16px; font-family: 'Inter', sans-serif; font-size: 16px; /* Removed color */ resize: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--primary-magenta)'" onblur="this.style.borderColor='#eaeaea'"></textarea>
-        </div>
-        
-        <span class="tags-label" style="font-size: 15px; margin-bottom:15px; display:block; font-weight:800; color: #1e293b;">Style Musical</span>
-        <div class="tags" id="style-tags" style="margin-bottom:30px; display: flex; flex-wrap: wrap; gap: 12px;">
-            <div class="tag active" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Afrobeat')">🔥 Afrobeat</div>
-            <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Pop')">🎸 Pop</div>
-            <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'R&B')">🎷 R&B</div>
-            <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Coupe Decale')">🎉 Coupé Décalé</div>
-            <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Rap')">🎤 Rap / Hip-Hop</div>
-        </div>
-        <input type="hidden" id="lyrics-genre-val" value="Afrobeat">
 
-        <button id="btn-generate-lyrics" class="premium-glow-btn" style="background: var(--primary-purple); color: white; width: 100%; padding: 20px; border-radius: 16px; font-weight: 800; font-size: 17px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(0, 71, 171, 0.2); transition: all 0.3s;" onclick="window.generateLyrics()">✨ Tape dedans ! (Paroles)</button>
+        <!-- 1. OCCASION -->
+        <div class="tags-container" id="occasion-container">
+            <span class="tags-label" style="font-size: 15px; margin-bottom:15px; display:block; font-weight:800; color: #1e293b;">1. L'Occasion</span>
+            <div class="tags" id="occasion-tags" style="margin-bottom:30px; display: flex; flex-wrap: wrap; gap: 12px;">
+                <div class="tag active" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: white; background: var(--primary-magenta); border-color: transparent; cursor: pointer; transition: all 0.2s;" onclick="selectOccasion(this, 'anniversaire')">🎂 Anniversaire</div>
+                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectOccasion(this, 'amour')">❤️ Amour</div>
+                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectOccasion(this, 'hommage')">🕊️ Hommage</div>
+                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectOccasion(this, 'fete')">🎉 Fête / Délire</div>
+                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectOccasion(this, 'libre')">✨ Autre / Libre</div>
+            </div>
+        </div>
+
+        <!-- 2. STYLE MUSICAL -->
+        <div class="tags-container" id="style-container">
+            <span class="tags-label" style="font-size: 15px; margin-bottom:15px; display:block; font-weight:800; color: #1e293b;">2. Style Musical</span>
+            <div class="tags" id="style-tags" style="margin-bottom:30px; display: flex; flex-wrap: wrap; gap: 12px;">
+                <div class="tag active" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Afrobeat')">🥁 Afrobeat</div>
+                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Pop')">🎸 Pop</div>
+                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'R&B')">🎤 R&B</div>
+                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Coupe Decale')">🕺 Coupé Décalé</div>
+                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Rap')">🎧 Rap / Hip-Hop</div>
+            </div>
+        </div>
+
+        <!-- 3. PRE-TEXTE (TEXTAREA) -->
+        <div class="prompt-box" style="margin-bottom:30px;">
+            <span class="tags-label" style="font-size: 15px; margin-bottom:15px; display:block; font-weight:800; color: #1e293b;">3. Le Contexte (Pré-texte)</span>
+            <textarea id="lyrics-prompt" placeholder="Racontez-nous l'histoire... ex: 'Une chanson d'anniversaire pour ma mère...'" style="width: 100%; height: 120px; padding: 20px; border: 2px solid #eaeaea; border-radius: 16px; font-family: 'Inter', sans-serif; font-size: 16px; resize: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--primary-magenta)'" onblur="this.style.borderColor='#eaeaea'"></textarea>
+        </div>
+
+        <!-- 4. GENERATION DE TEXTE (PAROLES) -->
+        <button id="btn-generate-lyrics" onclick="window.generateLyrics()" class="premium-glow-btn" style="width: 100%;">
+            ✨ Génération de texte automatique
+        </button>
     </div>
-
-    <!-- Etape 2: Paroles -->
     <div id="step2-lyrics" style="margin-bottom: 40px; display: none; opacity: 0; transition: opacity 0.5s;">
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
             <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(34, 197, 94, 0.1); color: #22c55e; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 20px;">2</div>
@@ -447,7 +464,7 @@ window.generateAudio = async function() {
 }
 </style>
 <script src="supabase-client.js" defer></script>
-    <script src="support-widget.js"></script>
+    
     <script src="player.js" defer></script>
     <script src="payment-widget.js"></script>
     <script src="track-actions.js"></script>
