@@ -383,6 +383,17 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
+<script>
+function fireConfetti() {
+    if (typeof confetti === 'function') {
+        confetti({
+            particleCount: 150,
+            spread: 80,
+            origin: { y: 0.6 }
+        });
+    }
+}
+</script>
 </body>
 </html>
 
