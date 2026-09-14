@@ -241,15 +241,17 @@ document.addEventListener('click', function(e) {
         <!-- 2. STYLE MUSICAL -->
         <div class="tags-container" id="style-container">
             <span class="tags-label" style="font-size: 15px; margin-bottom:15px; display:block; font-weight:800; color: #1e293b;">2. Style Musical</span>
-            <div class="tags" id="style-tags" style="margin-bottom:30px; display: flex; flex-wrap: wrap; gap: 12px;">
-                <div class="tag active" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Afrobeat')">🥁 Afrobeat</div>
-                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Pop')">🎸 Pop</div>
-                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'R&B')">🎤 R&B</div>
-                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Coupe Decale')">🕺 Coupé Décalé</div>
-                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Rap')">🎧 Rap / Hip-Hop</div>
-            </div>
-        </div>
-        <input type="hidden" id="lyrics-genre-val" value="Afrobeat">
+                          <div class="tags" id="style-tags" style="margin-bottom:30px; display: flex; flex-wrap: wrap; gap: 12px;">
+                  <div class="tag active" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: white; background: var(--metallic-gradient); border-color: transparent; cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Afrobeat')">🥁 Afrobeat</div>
+                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Amapiano')">🎹 Amapiano</div>
+                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Pop Acoustique')">🎸 Pop Acoustique</div>
+                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Rap Français')">🎤 Rap / Hip-Hop</div>
+                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Coupé Décalé')">🕺 Coupé Décalé</div>
+                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'R&B Soul')">🎷 R&B / Soul</div>
+                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Reggae Dancehall')">🏝️ Dancehall</div>
+              </div>
+          </div>
+          <input type="hidden" id="lyrics-genre-val" value="Afrobeat">
 
         <!-- 3. PRE-TEXTE (TEXTAREA) -->
         <div class="prompt-box" style="margin-bottom:30px;">
@@ -271,7 +273,16 @@ document.addEventListener('click', function(e) {
             </div>
         </div>
         
-        <textarea id="generated-lyrics-text" style="width: 100%; height: 350px; padding: 25px; border: 2px solid rgba(34, 197, 94, 0.4); border-radius: 16px; font-family: 'Inter', sans-serif; font-size: 15px; /* Removed color */ resize: vertical; line-height: 1.7; background: rgba(34, 197, 94, 0.03); outline: none; box-shadow: inset 0 2px 10px rgba(0,0,0,0.02); transition: border-color 0.3s;" onfocus="this.style.borderColor='#22c55e'"></textarea>
+                  <textarea id="generated-lyrics-text" style="width: 100%; height: 350px; padding: 25px; border: 2px solid rgba(34, 197, 94, 0.4); border-radius: 16px; font-family: 'Inter', sans-serif; font-size: 15px; resize: vertical; line-height: 1.7; background: rgba(34, 197, 94, 0.03); outline: none; box-shadow: inset 0 2px 10px rgba(0,0,0,0.02); transition: border-color 0.3s;" onfocus="this.style.borderColor='#22c55e'"></textarea>
+          
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+              <button onclick="document.getElementById('step1-inspiration').scrollIntoView({ behavior: 'smooth', block: 'start' });" style="background: #f1f5f9; color: var(--text-main); padding: 12px 20px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; flex: 1; transition: 0.2s;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
+                  ✏️ Modifier les options
+              </button>
+              <button onclick="window.generateLyrics()" style="background: var(--text-main); color: white; padding: 12px 20px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; flex: 1; transition: 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                  🔄 Re-générer les paroles
+              </button>
+          </div>
     </div>
 
     <!-- Etape 3: Enregistrement -->
@@ -322,7 +333,7 @@ const templates = {
 };
 
 window.selectOccasion = function(element, type) {
-      window.currentOccasionType = type;
+    window.currentOccasionType = type;
     const parent = document.getElementById('occasion-tags');
     parent.querySelectorAll('.tag').forEach(tag => {
         tag.style.background = 'transparent';
@@ -336,10 +347,23 @@ window.selectOccasion = function(element, type) {
     element.classList.add('active');
 
     const textarea = document.getElementById('lyrics-prompt');
-    textarea.value = templates[type];
-    if (type !== 'libre') {
-        textarea.style.borderColor = 'var(--primary-magenta)';
-        setTimeout(() => textarea.style.borderColor = '#e2e8f0', 1000);
+    
+    // Only replace if empty or if it matches a known template exactly (so we don't erase user's custom details)
+    let isTemplate = false;
+    for (let key in templates) { if (textarea.value === templates[key]) isTemplate = true; }
+    if (!textarea.value || isTemplate) {
+        textarea.value = templates[type];
+        if (type !== 'libre') {
+            textarea.style.borderColor = 'var(--primary-magenta)';
+            setTimeout(() => textarea.style.borderColor = '#e2e8f0', 1000);
+        }
+    }
+
+    // Update button UX to show they can regenerate
+    const btn = document.getElementById('btn-generate-lyrics');
+    if (btn.innerText.includes("Zo") || btn.innerText.includes("Re-générer")) {
+        btn.innerHTML = "🔄 Re-générer avec cette occasion";
+        btn.style.background = "var(--text-main)";
     }
 };
 
@@ -356,6 +380,15 @@ window.selectTag = function(element, inputId, value) {
     element.style.borderColor = 'transparent';
     element.classList.add('active');
     document.getElementById(inputId).value = value;
+
+    // Update button UX to show they can regenerate
+    if (inputId === 'lyrics-genre-val') {
+        const btn = document.getElementById('btn-generate-lyrics');
+        if (btn.innerText.includes("Zo") || btn.innerText.includes("Re-générer") || btn.innerText.includes("Re-g")) {
+            btn.innerHTML = "🔄 Re-générer en style " + value;
+            btn.style.background = "var(--text-main)";
+        }
+    }
 };
 
 // Ensure tags are styled correctly on load

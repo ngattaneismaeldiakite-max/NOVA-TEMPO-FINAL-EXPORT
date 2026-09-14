@@ -3,7 +3,37 @@ module.exports = async function handler(req, res) {
     
     try {
         const { lyrics, voice, genre } = req.body || {};
-        const tags = genre + ", " + voice + " voice";
+        
+        // Optimisation experte des tags pour Suno (PiAPI)
+        let sunoTags = genre;
+        switch (genre) {
+            case 'Afrobeat':
+                sunoTags = "afrobeat, afropop, rhythmic, upbeat, percussion";
+                break;
+            case 'Amapiano':
+                sunoTags = "amapiano, deep log drum, afro house, groovy";
+                break;
+            case 'Pop Acoustique':
+                sunoTags = "acoustic pop, emotional, guitar, piano, clear vocal";
+                break;
+            case 'Rap Français':
+                sunoTags = "french rap, trap beat, hard 808, punchy, urban";
+                break;
+            case 'Coupé Décalé':
+                sunoTags = "coupe decale, fast afrobeat, dance, energetic, african club";
+                break;
+            case 'R&B Soul':
+                sunoTags = "contemporary r&b, smooth soul, romantic, emotional";
+                break;
+            case 'Reggae Dancehall':
+                sunoTags = "dancehall, reggae pop, sunny, tropical, upbeat";
+                break;
+        }
+        
+        // Ajout de la voix
+        const voiceTag = voice === 'female' ? "female vocalist" : (voice === 'duo' ? "male and female duet" : "male vocalist");
+        const finalTags = `${sunoTags}, ${voiceTag}, high quality, catchy`;
+        
         const apiKey = process.env.PIAPI_KEY;
         
         if (!apiKey) return res.status(500).json({ error: "La cle API PiAPI est manquante" });
@@ -17,7 +47,7 @@ module.exports = async function handler(req, res) {
             body: JSON.stringify({
                 custom_mode: true,
                 prompt: lyrics,
-                tags: tags,
+                tags: finalTags,
                 title: 'NovaTempo Track',
                 make_instrumental: false,
                 wait_audio: false
