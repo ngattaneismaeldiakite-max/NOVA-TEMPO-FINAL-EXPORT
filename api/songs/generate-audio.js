@@ -1,7 +1,5 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).json({ error: "Method not allowed" });
-    
-    const PIAPI_KEY = "7eafe4d5fb1ed82a5e9d911db62168687e3a85160ed92ecd5fb6a95f1b3883eb";
     
     try {
         const { lyrics, voice, genre } = req.body;
@@ -10,7 +8,7 @@ export default async function handler(req, res) {
         const response = await fetch('https://api.piapi.ai/api/suno/v1/music', {
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer ' + PIAPI_KEY,
+                'Authorization': Bearer ,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
