@@ -285,10 +285,12 @@
                         // Analyse de la réponse brute pour trouver l'URL
                         let clipUrl = "";
                         const outputs = statusData.outputs;
-                        if (Array.isArray(outputs) && outputs.length > 0) {
+                        if (outputs && outputs.songs && outputs.songs.length > 0) {
+                            clipUrl = outputs.songs[0].song_path;
+                        } else if (Array.isArray(outputs) && outputs.length > 0) {
                             clipUrl = outputs[0].audio_url || outputs[0].file_url || outputs[0].url || "";
                         } else if (typeof outputs === "object") {
-                            clipUrl = outputs.audio_url || outputs.file_url || outputs.url || "";
+                            clipUrl = outputs.audio_url || outputs.file_url || outputs.url || outputs.song_path || "";
                         }
                         
                         if (!clipUrl) {
