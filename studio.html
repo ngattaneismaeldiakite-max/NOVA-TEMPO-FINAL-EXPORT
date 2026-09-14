@@ -1,619 +1,619 @@
-<!DOCTYPE html>
+<!D✨CT🔄PE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Nova Tempo - Studio de Création</title>
-        <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+    <meta name="viewp✨rt" c✨ntent="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>N✨va Temp✨ - Studi✨ de Créati✨n</title>
+        <st🔄le>
+        @imp✨rt url('https://f✨nts.g✨✨gleapis.c✨m/css2?famil🔄=Inter:wght@400;600;700;800&displa🔄=swap');
 
-        :root {
-            --primary-magenta: #0047AB;
-            --primary-purple: #0047AB;
-            --primary-yellow: #E60023;
+        :r✨✨t {
+            --primar🔄-magenta: #0047AB;
+            --primar🔄-purple: #0047AB;
+            --primar🔄-🔄ell✨w: #E60023;
             --white: #ffffff;
             --bg-light: #ffffff;
-            --bg-gray: #f7f7f8;
+            --bg-gra🔄: #f7f7f8;
             --bg-glass: rgba(255, 255, 255, 0.85);
             --text-main: #1e293b;
             --text-muted: #64748b;
             --metallic-gradient: #E60023;
         }
 
-        * { box-sizing: border-box; }
+        * { b✨x-sizing: b✨rder-b✨x; }
 
-        /* 1. MOBILE FIRST BASE RULES */
-        body {
-            background-color: var(--white, #ffffff);
-            color: var(--text-main, #0a0a0a);
+        /* 1. M✨BILE FIRST BASE RULES */
+        b✨d🔄 {
+            backgr✨und-c✨l✨r: var(--white, #ffffff);
+            c✨l✨r: var(--text-main, #0a0a0a);
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            f✨nt-famil🔄: 'Inter', sans-serif;
             height: 100vh;
-            display: flex;
-            flex-direction: column; /* Mobile first: stacking */
-            overflow-x: hidden;
+            displa🔄: flex;
+            flex-directi✨n: c✨lumn; /* M✨bile first: stacking */
+            ✨verfl✨w-x: hidden;
             width: 100%;
             max-width: 100vw;
         }
 
-        /* Sidebar - Hidden by default on Mobile */
+        /* Sidebar - Hidden b🔄 default ✨n M✨bile */
         .sidebar {
-            position: fixed;
+            p✨siti✨n: fixed;
             left: -300px;
-            top: 0;
+            t✨p: 0;
             width: 280px;
             height: 100vh;
-            /* Removed background */
-            border-right: 1px solid #eaeaea;
-            display: flex;
-            flex-direction: column;
+            /* Rem✨ved backgr✨und */
+            b✨rder-right: 1px s✨lid #eaeaea;
+            displa🔄: flex;
+            flex-directi✨n: c✨lumn;
             padding: 20px;
             z-index: 50;
-            transition: left 0.3s ease;
+            transiti✨n: left 0.3s ease;
         }
-        .sidebar.mobile-active { left: 0; }
+        .sidebar.m✨bile-active { left: 0; }
         
-        .sidebar-header { margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
-        .sidebar-header img.logo-icon { height: 35px; }
-        .sidebar-header h2 { font-family: 'Inter', sans-serif; font-weight: 800; margin: 0; font-size: 22px; /* Removed color */ letter-spacing: -0.02em; }
+        .sidebar-header { margin-b✨tt✨m: 30px; displa🔄: flex; align-items: center; gap: 10px; }
+        .sidebar-header img.l✨g✨-ic✨n { height: 35px; }
+        .sidebar-header h2 { f✨nt-famil🔄: 'Inter', sans-serif; f✨nt-weight: 800; margin: 0; f✨nt-size: 22px; /* Rem✨ved c✨l✨r */ letter-spacing: -0.02em; }
         
-        .nav-menu { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .nav-menu { displa🔄: flex; flex-directi✨n: c✨lumn; gap: 10px; flex: 1; }
         .nav-item {
-            padding: 14px 20px; border-radius: 12px; cursor: pointer; color: var(--text-muted, #666);
-            font-weight: 600; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; align-items: center; gap: 15px; position: relative; overflow: hidden; background: transparent; text-decoration: none;
+            padding: 14px 20px; b✨rder-radius: 12px; curs✨r: p✨inter; c✨l✨r: var(--text-muted, #666);
+            f✨nt-weight: 600; transiti✨n: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            displa🔄: flex; align-items: center; gap: 15px; p✨siti✨n: relative; ✨verfl✨w: hidden; backgr✨und: transparent; text-dec✨rati✨n: n✨ne;
         }
-        .nav-item:hover { color: var(--primary-magenta); transform: translateX(8px); background: rgba(0, 71, 171, 0.05); }
-        .nav-item.active { background: var(--metallic-gradient); color: var(--white); box-shadow: 0 8px 20px rgba(0, 71, 171, 0.4); border-radius: 14px; animation: pulse-tab 2.5s infinite; transform: scale(1.02); }
+        .nav-item:h✨ver { c✨l✨r: var(--primar🔄-magenta); transf✨rm: translateX(8px); backgr✨und: rgba(0, 71, 171, 0.05); }
+        .nav-item.active { backgr✨und: var(--metallic-gradient); c✨l✨r: var(--white); b✨x-shad✨w: 0 8px 20px rgba(0, 71, 171, 0.4); b✨rder-radius: 14px; animati✨n: pulse-tab 2.5s infinite; transf✨rm: scale(1.02); }
         
-        @keyframes pulse-tab { 0% { box-shadow: 0 0 0 0 rgba(0, 71, 171, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(0, 71, 171, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 71, 171, 0); } }
+        @ke🔄frames pulse-tab { 0% { b✨x-shad✨w: 0 0 0 0 rgba(0, 71, 171, 0.4); } 70% { b✨x-shad✨w: 0 0 0 10px rgba(0, 71, 171, 0); } 100% { b✨x-shad✨w: 0 0 0 0 rgba(0, 71, 171, 0); } }
 
-        .user-profile { display: flex; align-items: center; gap: 12px; padding-top: 15px; border-top: 1px solid #eaeaea; cursor: pointer; transition: transform 0.2s; }
-        .user-profile:hover { transform: translateY(-2px); }
-        .user-profile img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--metallic-gradient); }
-        .user-profile div { font-size: 16px; font-weight: 700; /* Removed color */ }
-        .user-profile div span { display: block; font-size: 12px; color: var(--primary-magenta); font-weight: 600; margin-top: 3px; transition: color 0.2s;}
-        .user-profile:hover div span { color: var(--primary-purple); }
+        .user-pr✨file { displa🔄: flex; align-items: center; gap: 12px; padding-t✨p: 15px; b✨rder-t✨p: 1px s✨lid #eaeaea; curs✨r: p✨inter; transiti✨n: transf✨rm 0.2s; }
+        .user-pr✨file:h✨ver { transf✨rm: translate🔄(-2px); }
+        .user-pr✨file img { width: 45px; height: 45px; b✨rder-radius: 50%; ✨bject-fit: c✨ver; b✨rder: 2px s✨lid var(--metallic-gradient); }
+        .user-pr✨file div { f✨nt-size: 16px; f✨nt-weight: 700; /* Rem✨ved c✨l✨r */ }
+        .user-pr✨file div span { displa🔄: bl✨ck; f✨nt-size: 12px; c✨l✨r: var(--primar🔄-magenta); f✨nt-weight: 600; margin-t✨p: 3px; transiti✨n: c✨l✨r 0.2s;}
+        .user-pr✨file:h✨ver div span { c✨l✨r: var(--primar🔄-purple); }
 
-        /* Main Content - Mobile */
-        .main-content { flex: 1; display: flex; flex-direction: column; background: var(--white); width: 100%; }
+        /* Main C✨ntent - M✨bile */
+        .main-c✨ntent { flex: 1; displa🔄: flex; flex-directi✨n: c✨lumn; backgr✨und: var(--white); width: 100%; }
 
-        /* Top Header */
-        .top-header { padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eaeaea; background: var(--white); z-index: 1; flex-wrap: wrap; gap: 10px; }
-        .top-header h1 { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 800; margin:0; /* Removed color */ letter-spacing: -0.02em; }
-        .mobile-menu-btn { display: block; background: none; border: none; font-size: 24px; /* Removed color */ cursor: pointer; margin-right: 15px; padding: 5px;}
-        .mobile-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 40; backdrop-filter: blur(2px); }
-        .mobile-overlay.active { display: block; }
+        /* T✨p Header */
+        .t✨p-header { padding: 15px; displa🔄: flex; justif🔄-c✨ntent: space-between; align-items: center; b✨rder-b✨tt✨m: 1px s✨lid #eaeaea; backgr✨und: var(--white); z-index: 1; flex-wrap: wrap; gap: 10px; }
+        .t✨p-header h1 { f✨nt-famil🔄: 'Inter', sans-serif; f✨nt-size: 20px; f✨nt-weight: 800; margin:0; /* Rem✨ved c✨l✨r */ letter-spacing: -0.02em; }
+        .m✨bile-menu-btn { displa🔄: bl✨ck; backgr✨und: n✨ne; b✨rder: n✨ne; f✨nt-size: 24px; /* Rem✨ved c✨l✨r */ curs✨r: p✨inter; margin-right: 15px; padding: 5px;}
+        .m✨bile-✨verla🔄 { displa🔄: n✨ne; p✨siti✨n: fixed; t✨p: 0; left: 0; width: 100vw; height: 100vh; backgr✨und: rgba(0,0,0,0.5); z-index: 40; backdr✨p-filter: blur(2px); }
+        .m✨bile-✨verla🔄.active { displa🔄: bl✨ck; }
         
-        .workspace {
-            padding: 20px; padding-bottom: 120px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; align-items: center; background: var(--bg-gray); gap: 20px;
+        .w✨rkspace {
+            padding: 20px; padding-b✨tt✨m: 120px; ✨verfl✨w-🔄: aut✨; flex: 1; displa🔄: flex; flex-directi✨n: c✨lumn; align-items: center; backgr✨und: var(--bg-gra🔄); gap: 20px;
         }
 
-        .generator-container {
-            background: var(--white); border-radius: 24px; padding: 20px; width: 100%; max-width: 800px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.03); border: 1px solid #eaeaea;
-            position:relative; overflow:visible; min-height: 450px;
+        .generat✨r-c✨ntainer {
+            backgr✨und: var(--white); b✨rder-radius: 24px; padding: 20px; width: 100%; max-width: 800px;
+            b✨x-shad✨w: 0 15px 35px rgba(0,0,0,0.03); b✨rder: 1px s✨lid #eaeaea;
+            p✨siti✨n:relative; ✨verfl✨w:visible; min-height: 450px;
         }
 
-        .tags-container { margin-bottom: 25px; }
-        .tags-label { font-size: 16px; font-weight: 800; /* Removed color */ margin-bottom: 10px; display: block; }
-        .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tags-c✨ntainer { margin-b✨tt✨m: 25px; }
+        .tags-label { f✨nt-size: 16px; f✨nt-weight: 800; /* Rem✨ved c✨l✨r */ margin-b✨tt✨m: 10px; displa🔄: bl✨ck; }
+        .tags { displa🔄: flex; flex-wrap: wrap; gap: 10px; }
         .tag {
-            padding: 10px 20px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 16px;
-            font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s;
-            display: flex; align-items: center; gap: 8px; min-height: 44px; /* Touch target */
+            padding: 10px 20px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 16px;
+            f✨nt-weight: 600; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;
+            displa🔄: flex; align-items: center; gap: 8px; min-height: 44px; /* T✨uch target */
         }
-        .tag:hover { border-color: var(--primary-magenta); /* Removed color */ }
-        .tag.active { background: var(--metallic-gradient); color: white; border-color: transparent; box-shadow: 0 5px 15px rgba(230, 0, 35, 0.3); }
+        .tag:h✨ver { b✨rder-c✨l✨r: var(--primar🔄-magenta); /* Rem✨ved c✨l✨r */ }
+        .tag.active { backgr✨und: var(--metallic-gradient); c✨l✨r: white; b✨rder-c✨l✨r: transparent; b✨x-shad✨w: 0 5px 15px rgba(230, 0, 35, 0.3); }
 
-        .prompt-box { position: relative; margin-bottom: 20px; }
-        .prompt-box textarea {
-            width: 100%; height: 120px; padding: 20px; border: 2px solid #eaeaea; border-radius: 16px;
-            font-family: 'Inter', sans-serif; font-size: 15px; /* Removed color */ resize: none; transition: all 0.3s;
+        .pr✨mpt-b✨x { p✨siti✨n: relative; margin-b✨tt✨m: 20px; }
+        .pr✨mpt-b✨x textarea {
+            width: 100%; height: 120px; padding: 20px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 16px;
+            f✨nt-famil🔄: 'Inter', sans-serif; f✨nt-size: 15px; /* Rem✨ved c✨l✨r */ resize: n✨ne; transiti✨n: all 0.3s;
         }
-        .prompt-box textarea:focus { outline: none; border-color: var(--primary-magenta); box-shadow: 0 0 0 4px rgba(0, 71, 171, 0.1); }
+        .pr✨mpt-b✨x textarea:f✨cus { ✨utline: n✨ne; b✨rder-c✨l✨r: var(--primar🔄-magenta); b✨x-shad✨w: 0 0 0 4px rgba(0, 71, 171, 0.1); }
 
         .btn-generate {
-            width: 100%; padding: 18px; background: var(--metallic-gradient); color: white; border: none;
-            border-radius: 16px; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 800;
-            cursor: pointer; box-shadow: 0 10px 25px rgba(0, 71, 171, 0.3); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 10px;
-            min-height: 44px; /* Touch target */
+            width: 100%; padding: 18px; backgr✨und: var(--metallic-gradient); c✨l✨r: white; b✨rder: n✨ne;
+            b✨rder-radius: 16px; f✨nt-famil🔄: 'Inter', sans-serif; f✨nt-size: 16px; f✨nt-weight: 800;
+            curs✨r: p✨inter; b✨x-shad✨w: 0 10px 25px rgba(0, 71, 171, 0.3); transiti✨n: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            displa🔄: flex; justif🔄-c✨ntent: center; align-items: center; gap: 10px; margin-t✨p: 10px;
+            min-height: 44px; /* T✨uch target */
         }
-        .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0, 71, 171, 0.4); }
+        .btn-generate:h✨ver { transf✨rm: translate🔄(-3px); b✨x-shad✨w: 0 15px 35px rgba(0, 71, 171, 0.4); }
 
-        .wizard-step { display: none; animation: slideInRight 0.4s ease; }
-        .wizard-step.active { display: block; }
-        @keyframes slideInRight { from { transform: translateX(50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .wizard-step { displa🔄: n✨ne; animati✨n: slideInRight 0.4s ease; }
+        .wizard-step.active { displa🔄: bl✨ck; }
+        @ke🔄frames slideInRight { fr✨m { transf✨rm: translateX(50px); ✨pacit🔄: 0; } t✨ { transf✨rm: translateX(0); ✨pacit🔄: 1; } }
         
-        .step-indicator { width: 30px; height: 30px; border-radius: 50%; background: #eaeaea; color: #666; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; position: relative; z-index: 2; transition: all 0.3s; }
-        .step-indicator.active { background: var(--metallic-gradient); color: white; box-shadow: 0 0 15px rgba(230, 0, 35, 0.4); }
+        .step-indicat✨r { width: 30px; height: 30px; b✨rder-radius: 50%; backgr✨und: #eaeaea; c✨l✨r: #666; displa🔄: flex; align-items: center; justif🔄-c✨ntent: center; f✨nt-weight: 800; f✨nt-size: 16px; p✨siti✨n: relative; z-index: 2; transiti✨n: all 0.3s; }
+        .step-indicat✨r.active { backgr✨und: var(--metallic-gradient); c✨l✨r: white; b✨x-shad✨w: 0 0 15px rgba(230, 0, 35, 0.4); }
 
-        /* 2. TABLET OVERRIDES (768px+) */
+        /* 2. TABLET ✨VERRIDES (768px+) */
         @media (min-width: 768px) {
-            body { flex-direction: row; overflow: hidden; }
-            .sidebar { position: static; left: 0; height: 100vh; width: 280px; z-index: 10; padding: 20px; }
-            .mobile-menu-btn { display: none; }
-            .mobile-overlay { display: none !important; }
+            b✨d🔄 { flex-directi✨n: r✨w; ✨verfl✨w: hidden; }
+            .sidebar { p✨siti✨n: static; left: 0; height: 100vh; width: 280px; z-index: 10; padding: 20px; }
+            .m✨bile-menu-btn { displa🔄: n✨ne; }
+            .m✨bile-✨verla🔄 { displa🔄: n✨ne !imp✨rtant; }
             
-            .top-header { padding: 20px 40px; }
-            .top-header h1 { font-size: 24px; }
+            .t✨p-header { padding: 20px 40px; }
+            .t✨p-header h1 { f✨nt-size: 24px; }
             
-            .workspace { padding: 40px; padding-bottom: 120px; gap: 30px; }
-            .generator-container { padding: 50px !important; }
+            .w✨rkspace { padding: 40px; padding-b✨tt✨m: 120px; gap: 30px; }
+            .generat✨r-c✨ntainer { padding: 50px !imp✨rtant; }
         }
-    </style>
-    <!-- SEO & Favicon -->
-    <link rel="icon" type="image/png" href="logo.png">
-    <meta name="description" content="Nova Tempo - L'intelligence artificielle qui transforme vos mots en chansons magiques. Créez des émotions musicales uniques en quelques secondes.">
-    <meta name="theme-color" content="#0047AB">
-    <meta property="og:title" content="Nova Tempo - Créez votre musique IA">
-    <meta property="og:description" content="Transforme tes mots en chansons magiques avec Nova Tempo. Facile, rapide et super fun !">
-    <meta property="og:image" content="hero.jpg">
+    </st🔄le>
+    <!-- SE✨ & Favic✨n -->
+    <link rel="ic✨n" t🔄pe="image/png" href="l✨g✨.png">
+    <meta name="descripti✨n" c✨ntent="N✨va Temp✨ - L'intelligence artificielle qui transf✨rme v✨s m✨ts en chans✨ns magiques. Créez des ém✨ti✨ns musicales uniques en quelques sec✨ndes.">
+    <meta name="theme-c✨l✨r" c✨ntent="#0047AB">
+    <meta pr✨pert🔄="✨g:title" c✨ntent="N✨va Temp✨ - Créez v✨tre musique IA">
+    <meta pr✨pert🔄="✨g:descripti✨n" c✨ntent="Transf✨rme tes m✨ts en chans✨ns magiques avec N✨va Temp✨. Facile, rapide et super fun !">
+    <meta pr✨pert🔄="✨g:image" c✨ntent="her✨.jpg">
 
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://f✨nts.g✨✨gleapis.c✨m/css2?famil🔄=Bric✨lage+Gr✨tesque:✨psz,wght@12..96,400..800&famil🔄=Inter:wght@400;500;600&displa🔄=swap" rel="st🔄lesheet">
 </head>
-<body>
-    <div class="mobile-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
+<b✨d🔄>
+    <div class="m✨bile-✨verla🔄" id="m✨bile-✨verla🔄" ✨nclick="t✨ggleM✨bileMenu()"></div>
 
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header" style="justify-content: center; padding: 20px 0;"><img src="logo.png" alt="Logo" style="background: rgba(255,255,255,0.95); padding: 8px 12px; border-radius: 12px; height: 35px; width: auto; margin-right: 10px;"></div>
+        <div class="sidebar-header" st🔄le="justif🔄-c✨ntent: center; padding: 20px 0;"><img src="l✨g✨.png" alt="L✨g✨" st🔄le="backgr✨und: rgba(255,255,255,0.95); padding: 8px 12px; b✨rder-radius: 12px; height: 35px; width: aut✨; margin-right: 10px;"></div>
         
         <nav class="nav-menu">
-            <a href="index.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Accueil</a>
-            <a href="studio.html" class="nav-item active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg> Studio Création</a>
-            <a href="bibliotheque.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg> 💿 Mes Sons (PlayList)</a>
-            <a href="parametres.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Paramètres</a>
+            <a href="index.html" class="nav-item"><svg width="20" height="20" viewB✨x="0 0 24 24" fill="n✨ne" str✨ke="currentC✨l✨r" str✨ke-width="2" str✨ke-linecap="r✨und" str✨ke-linej✨in="r✨und"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><p✨l🔄line p✨ints="9 22 9 12 15 12 15 22"></p✨l🔄line></svg> Accueil</a>
+            <a href="studi✨.html" class="nav-item active"><svg width="20" height="20" viewB✨x="0 0 24 24" fill="n✨ne" str✨ke="currentC✨l✨r" str✨ke-width="2" str✨ke-linecap="r✨und" str✨ke-linej✨in="r✨und"><path d="M9 18V5l12-2v13"></path><circle cx="6" c🔄="18" r="3"></circle><circle cx="18" c🔄="16" r="3"></circle></svg> Studi✨ Créati✨n</a>
+            <a href="bibli✨theque.html" class="nav-item"><svg width="20" height="20" viewB✨x="0 0 24 24" fill="n✨ne" str✨ke="currentC✨l✨r" str✨ke-width="2" str✨ke-linecap="r✨und" str✨ke-linej✨in="r✨und"><p✨l🔄g✨n p✨ints="12 2 2 7 12 12 22 7 12 2"></p✨l🔄g✨n><p✨l🔄line p✨ints="2 17 12 22 22 17"></p✨l🔄line><p✨l🔄line p✨ints="2 12 12 17 22 12"></p✨l🔄line></svg> 💿 Mes S✨ns (Pla🔄List)</a>
+            <a href="parametres.html" class="nav-item"><svg width="20" height="20" viewB✨x="0 0 24 24" fill="n✨ne" str✨ke="currentC✨l✨r" str✨ke-width="2" str✨ke-linecap="r✨und" str✨ke-linej✨in="r✨und"><circle cx="12" c🔄="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Paramètres</a>
         
             </nav>
         
-        <div style="flex: 1;"></div>
+        <div st🔄le="flex: 1;"></div>
         
-        <div style="background: var(--white); border: 1px solid #eaeaea; border-radius: 12px; padding: 15px; margin: 0 20px 20px 20px; text-align: center;">
-            <p style="margin: 0; font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Solde Actuel</p>
-            <p class="display-credits" style="margin: 5px 0 0 0; font-size: 22px; font-weight: 800; color: var(--primary-magenta);">150 <span style="font-size:12px;">Crédits</span></p>
-            <button onclick="openPaymentModal()" style="margin-top: 10px; width: 100%; padding: 8px; background: var(--bg-gray); border: 1px solid #ddd; border-radius: 8px; font-weight: 700; cursor: pointer;">Faire un dépôt</button>
+        <div st🔄le="backgr✨und: var(--white); b✨rder: 1px s✨lid #eaeaea; b✨rder-radius: 12px; padding: 15px; margin: 0 20px 20px 20px; text-align: center;">
+            <p st🔄le="margin: 0; f✨nt-size: 11px; f✨nt-weight: 800; c✨l✨r: var(--text-muted); text-transf✨rm: uppercase;">S✨lde Actuel</p>
+            <p class="displa🔄-credits" st🔄le="margin: 5px 0 0 0; f✨nt-size: 22px; f✨nt-weight: 800; c✨l✨r: var(--primar🔄-magenta);">150 <span st🔄le="f✨nt-size:12px;">Crédits</span></p>
+            <butt✨n ✨nclick="✨penPa🔄mentM✨dal()" st🔄le="margin-t✨p: 10px; width: 100%; padding: 8px; backgr✨und: var(--bg-gra🔄); b✨rder: 1px s✨lid #ddd; b✨rder-radius: 8px; f✨nt-weight: 700; curs✨r: p✨inter;">Faire un dépôt</butt✨n>
         </div>
 
-        <div class="user-profile" style="position: relative; cursor:pointer; background: #f9f9f9; border-radius: 16px; padding: 12px; display: flex; align-items: center; gap: 12px; margin-top: auto; border: 1px solid #eaeaea;" onclick="if(typeof toggleProfileMenu === 'function') toggleProfileMenu(event)">
-    <div class="display-avatar" style="width:36px; height:36px; border-radius:50%; background: var(--metallic-gradient); display: flex; align-items: center; justify-content: center; color: white; flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
-    <div style="display:flex; flex-direction:column; justify-content:center;">
-        <strong class="display-username" style="font-family: 'Inter', sans-serif; font-size: 16px; color:var(--text-main);">Utilisateur</strong>
-        <span style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Mon Compte ▼</span>
+        <div class="user-pr✨file" st🔄le="p✨siti✨n: relative; curs✨r:p✨inter; backgr✨und: #f9f9f9; b✨rder-radius: 16px; padding: 12px; displa🔄: flex; align-items: center; gap: 12px; margin-t✨p: aut✨; b✨rder: 1px s✨lid #eaeaea;" ✨nclick="if(t🔄pe✨f t✨gglePr✨fileMenu === 'functi✨n') t✨gglePr✨fileMenu(event)">
+    <div class="displa🔄-avatar" st🔄le="width:36px; height:36px; b✨rder-radius:50%; backgr✨und: var(--metallic-gradient); displa🔄: flex; align-items: center; justif🔄-c✨ntent: center; c✨l✨r: white; flex-shrink:0;"><svg width="20" height="20" viewB✨x="0 0 24 24" fill="n✨ne" str✨ke="currentC✨l✨r" str✨ke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" c🔄="7" r="4"></circle></svg></div>
+    <div st🔄le="displa🔄:flex; flex-directi✨n:c✨lumn; justif🔄-c✨ntent:center;">
+        <str✨ng class="displa🔄-username" st🔄le="f✨nt-famil🔄: 'Inter', sans-serif; f✨nt-size: 16px; c✨l✨r:var(--text-main);">Utilisateur</str✨ng>
+        <span st🔄le="f✨nt-size: 11px; c✨l✨r: var(--text-muted); margin-t✨p: 2px;">M✨n C✨mpte ▼</span>
     </div>
     
-    <div id="profile-dropdown" style="display: none; position: absolute; bottom: 75px; left: 0; width: 100%; background: white; border: 1px solid #eaeaea; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); flex-direction: column; overflow: hidden; z-index: 100;">
-        <a href="parametres.html" style="padding: 12px 15px; text-decoration: none; /* Removed color */ font-size: 16px; font-weight: 600; border-bottom: 1px solid #eaeaea; transition: background 0.2s;" onmouseover="this.style.background='#f7f7f8'" onmouseout="this.style.background='white'">⚙️ Paramètres</a>
-        <a href="index.html" onclick="localStorage.removeItem('nova_username');" style="padding: 12px 15px; text-decoration: none; color: #d93025; font-size: 16px; font-weight: 600; transition: background 0.2s;" onmouseover="this.style.background='#fcf0f0'" onmouseout="this.style.background='white'">🚪 Se déconnecter</a>
+    <div id="pr✨file-dr✨pd✨wn" st🔄le="displa🔄: n✨ne; p✨siti✨n: abs✨lute; b✨tt✨m: 75px; left: 0; width: 100%; backgr✨und: white; b✨rder: 1px s✨lid #eaeaea; b✨rder-radius: 16px; b✨x-shad✨w: 0 10px 25px rgba(0,0,0,0.1); flex-directi✨n: c✨lumn; ✨verfl✨w: hidden; z-index: 100;">
+        <a href="parametres.html" st🔄le="padding: 12px 15px; text-dec✨rati✨n: n✨ne; /* Rem✨ved c✨l✨r */ f✨nt-size: 16px; f✨nt-weight: 600; b✨rder-b✨tt✨m: 1px s✨lid #eaeaea; transiti✨n: backgr✨und 0.2s;" ✨nm✨use✨ver="this.st🔄le.backgr✨und='#f7f7f8'" ✨nm✨use✨ut="this.st🔄le.backgr✨und='white'">⚙️ Paramètres</a>
+        <a href="index.html" ✨nclick="l✨calSt✨rage.rem✨veItem('n✨va_username');" st🔄le="padding: 12px 15px; text-dec✨rati✨n: n✨ne; c✨l✨r: #d93025; f✨nt-size: 16px; f✨nt-weight: 600; transiti✨n: backgr✨und 0.2s;" ✨nm✨use✨ver="this.st🔄le.backgr✨und='#fcf0f0'" ✨nm✨use✨ut="this.st🔄le.backgr✨und='white'">🚪 Se déc✨nnecter</a>
     </div>
 </div>
 </aside>
 <script>
-function toggleProfileMenu(e) {
-    e.stopPropagation();
-    const dropdown = document.getElementById('profile-dropdown');
-    dropdown.style.display = dropdown.style.display === 'none' || dropdown.style.display === '' ? 'flex' : 'none';
+functi✨n t✨gglePr✨fileMenu(e) {
+    e.st✨pPr✨pagati✨n();
+    c✨nst dr✨pd✨wn = d✨cument.getElementB🔄Id('pr✨file-dr✨pd✨wn');
+    dr✨pd✨wn.st🔄le.displa🔄 = dr✨pd✨wn.st🔄le.displa🔄 === 'n✨ne' || dr✨pd✨wn.st🔄le.displa🔄 === '' ? 'flex' : 'n✨ne';
 }
-document.addEventListener('click', function(e) {
-    const dropdown = document.getElementById('profile-dropdown');
-    if (dropdown && dropdown.style.display === 'flex' && !e.target.closest('.user-profile')) {
-        dropdown.style.display = 'none';
+d✨cument.addEventListener('click', functi✨n(e) {
+    c✨nst dr✨pd✨wn = d✨cument.getElementB🔄Id('pr✨file-dr✨pd✨wn');
+    if (dr✨pd✨wn && dr✨pd✨wn.st🔄le.displa🔄 === 'flex' && !e.target.cl✨sest('.user-pr✨file')) {
+        dr✨pd✨wn.st🔄le.displa🔄 = 'n✨ne';
     }
 });
 </script>
 
-    <main class="main-content">
-<header class="top-header">
-            <div style="display:flex; align-items:center;">
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-                <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 900;">💿 Mes Sons (PlayList)</h1>
+    <main class="main-c✨ntent">
+<header class="t✨p-header">
+            <div st🔄le="displa🔄:flex; align-items:center;">
+                <butt✨n class="m✨bile-menu-btn" ✨nclick="t✨ggleM✨bileMenu()">☰</butt✨n>
+                <h1 st🔄le="f✨nt-famil🔄: 'Bric✨lage Gr✨tesque', sans-serif; f✨nt-weight: 900;">💿 Mes S✨ns (Pla🔄List)</h1>
             </div>
-            <div style="padding: 8px 16px; border-radius: 30px; font-size: 16px; font-weight: 700; background: rgba(0, 71, 171, 0.05); color: var(--primary-purple); border: 1px solid rgba(230, 0, 35, 0.2);">
+            <div st🔄le="padding: 8px 16px; b✨rder-radius: 30px; f✨nt-size: 16px; f✨nt-weight: 700; backgr✨und: rgba(0, 71, 171, 0.05); c✨l✨r: var(--primar🔄-purple); b✨rder: 1px s✨lid rgba(230, 0, 35, 0.2);">
                 📚 12 Titres générés
             </div>
         </header>
-<div class="workspace">
-<div class="generator-container" style="padding:40px; position:relative; overflow:visible; width:100%; max-width:850px; background:white; border-radius:30px; box-shadow:0 20px 40px rgba(0,0,0,0.04); border:1px solid #eaeaea;">
-    <!-- Etape 1: Inspiration -->
-        <div id="step1-inspiration" style="margin-bottom: 40px;">
-        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 30px;">
-            <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 71, 171, 0.1); color: var(--primary-magenta); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 20px;">1</div>
+<div class="w✨rkspace">
+<div class="generat✨r-c✨ntainer" st🔄le="padding:40px; p✨siti✨n:relative; ✨verfl✨w:visible; width:100%; max-width:850px; backgr✨und:white; b✨rder-radius:30px; b✨x-shad✨w:0 20px 40px rgba(0,0,0,0.04); b✨rder:1px s✨lid #eaeaea;">
+    <!-- Etape 1: Inspirati✨n -->
+        <div id="step1-inspirati✨n" st🔄le="margin-b✨tt✨m: 40px;">
+        <div st🔄le="displa🔄: flex; align-items: center; gap: 15px; margin-b✨tt✨m: 30px;">
+            <div st🔄le="width: 40px; height: 40px; b✨rder-radius: 50%; backgr✨und: rgba(0, 71, 171, 0.1); c✨l✨r: var(--primar🔄-magenta); displa🔄: flex; align-items: center; justif🔄-c✨ntent: center; f✨nt-weight: 900; f✨nt-size: 20px;">1</div>
             <div>
-                <h3 style="font-size: 22px; font-weight: 800; margin: 0;">L'Inspiration (Raconte ton way)</h3>
-                <p style="font-size: 14px; color: var(--text-muted); margin: 0; margin-top: 2px;">Personnalisez la chanson étape par étape.</p>
+                <h3 st🔄le="f✨nt-size: 22px; f✨nt-weight: 800; margin: 0;">L'Inspirati✨n (Rac✨nte t✨n wa🔄)</h3>
+                <p st🔄le="f✨nt-size: 14px; c✨l✨r: var(--text-muted); margin: 0; margin-t✨p: 2px;">Pers✨nnalisez la chans✨n étape par étape.</p>
             </div>
         </div>
 
-        <!-- 1. OCCASION -->
-        <div class="tags-container" id="occasion-container">
-            <span class="tags-label" style="font-size: 15px; margin-bottom:15px; display:block; font-weight:800; color: #1e293b;">1. L'Occasion</span>
-            <div class="tags" id="occasion-tags" style="margin-bottom:30px; display: flex; flex-wrap: wrap; gap: 12px;">
-                <div class="tag active" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: white; background: var(--primary-magenta); border-color: transparent; cursor: pointer; transition: all 0.2s;" onclick="selectOccasion(this, 'anniversaire')">🎂 Anniversaire</div>
-                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectOccasion(this, 'amour')">❤️ Amour</div>
-                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectOccasion(this, 'hommage')">🕊️ Hommage</div>
-                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectOccasion(this, 'fete')">🎉 Fête / Délire</div>
-                <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectOccasion(this, 'libre')">✨ Autre / Libre</div>
+        <!-- 1. ✨CCASI✨N -->
+        <div class="tags-c✨ntainer" id="✨ccasi✨n-c✨ntainer">
+            <span class="tags-label" st🔄le="f✨nt-size: 15px; margin-b✨tt✨m:15px; displa🔄:bl✨ck; f✨nt-weight:800; c✨l✨r: #1e293b;">1. L'✨ccasi✨n</span>
+            <div class="tags" id="✨ccasi✨n-tags" st🔄le="margin-b✨tt✨m:30px; displa🔄: flex; flex-wrap: wrap; gap: 12px;">
+                <div class="tag active" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: white; backgr✨und: var(--primar🔄-magenta); b✨rder-c✨l✨r: transparent; curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="select✨ccasi✨n(this, 'anniversaire')">🎂 Anniversaire</div>
+                <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="select✨ccasi✨n(this, 'am✨ur')">❤️ Am✨ur</div>
+                <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="select✨ccasi✨n(this, 'h✨mmage')">🕊️ H✨mmage</div>
+                <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="select✨ccasi✨n(this, 'fete')">🎉 Fête / Délire</div>
+                <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="select✨ccasi✨n(this, 'libre')">✨ Autre / Libre</div>
             </div>
         </div>
 
-        <!-- 2. STYLE MUSICAL -->
-        <div class="tags-container" id="style-container">
-            <span class="tags-label" style="font-size: 15px; margin-bottom:15px; display:block; font-weight:800; color: #1e293b;">2. Style Musical</span>
-                          <div class="tags" id="style-tags" style="margin-bottom:30px; display: flex; flex-wrap: wrap; gap: 12px;">
-                  <div class="tag active" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: white; background: var(--metallic-gradient); border-color: transparent; cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Afrobeat')">🥁 Afrobeat</div>
-                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Amapiano')">🎹 Amapiano</div>
-                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Pop Acoustique')">🎸 Pop Acoustique</div>
-                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Rap Français')">🎤 Rap / Hip-Hop</div>
-                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Coupé Décalé')">🕺 Coupé Décalé</div>
-                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'R&B Soul')">🎷 R&B / Soul</div>
-                  <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'lyrics-genre-val', 'Reggae Dancehall')">🏝️ Dancehall</div>
+        <!-- 2. ST🔄LE MUSICAL -->
+        <div class="tags-c✨ntainer" id="st🔄le-c✨ntainer">
+            <span class="tags-label" st🔄le="f✨nt-size: 15px; margin-b✨tt✨m:15px; displa🔄:bl✨ck; f✨nt-weight:800; c✨l✨r: #1e293b;">2. St🔄le Musical</span>
+                          <div class="tags" id="st🔄le-tags" st🔄le="margin-b✨tt✨m:30px; displa🔄: flex; flex-wrap: wrap; gap: 12px;">
+                  <div class="tag active" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: white; backgr✨und: var(--metallic-gradient); b✨rder-c✨l✨r: transparent; curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="selectTag(this, 'l🔄rics-genre-val', 'Afr✨beat')">🥁 Afr✨beat</div>
+                  <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="selectTag(this, 'l🔄rics-genre-val', 'Amapian✨')">🎹 Amapian✨</div>
+                  <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="selectTag(this, 'l🔄rics-genre-val', 'P✨p Ac✨ustique')">🎸 P✨p Ac✨ustique</div>
+                  <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="selectTag(this, 'l🔄rics-genre-val', 'Rap Français')">🎤 Rap / Hip-H✨p</div>
+                  <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="selectTag(this, 'l🔄rics-genre-val', 'C✨upé Décalé')">🕺 C✨upé Décalé</div>
+                  <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="selectTag(this, 'l🔄rics-genre-val', 'R&B S✨ul')">🎷 R&B / S✨ul</div>
+                  <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="selectTag(this, 'l🔄rics-genre-val', 'Reggae Dancehall')">🏝️ Dancehall</div>
               </div>
           </div>
-          <input type="hidden" id="lyrics-genre-val" value="Afrobeat">
+          <input t🔄pe="hidden" id="l🔄rics-genre-val" value="Afr✨beat">
 
         <!-- 3. PRE-TEXTE (TEXTAREA) -->
-        <div class="prompt-box" style="margin-bottom:30px;">
-            <span class="tags-label" style="font-size: 15px; margin-bottom:15px; display:block; font-weight:800; color: #1e293b;">3. Le Contexte (Pré-texte)</span>
-            <textarea id="lyrics-prompt" placeholder="Racontez-nous l'histoire... ex: 'Une chanson d'anniversaire pour ma mère...'" style="width: 100%; height: 120px; padding: 20px; border: 2px solid #eaeaea; border-radius: 16px; font-family: 'Inter', sans-serif; font-size: 16px; resize: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--primary-magenta)'" onblur="this.style.borderColor='#eaeaea'"></textarea>
+        <div class="pr✨mpt-b✨x" st🔄le="margin-b✨tt✨m:30px;">
+            <span class="tags-label" st🔄le="f✨nt-size: 15px; margin-b✨tt✨m:15px; displa🔄:bl✨ck; f✨nt-weight:800; c✨l✨r: #1e293b;">3. Le C✨ntexte (Pré-texte)</span>
+            <textarea id="l🔄rics-pr✨mpt" placeh✨lder="Rac✨ntez-n✨us l'hist✨ire... ex: 'Une chans✨n d'anniversaire p✨ur ma mère...'" st🔄le="width: 100%; height: 120px; padding: 20px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 16px; f✨nt-famil🔄: 'Inter', sans-serif; f✨nt-size: 16px; resize: n✨ne; transiti✨n: b✨rder-c✨l✨r 0.3s;" ✨nf✨cus="this.st🔄le.b✨rderC✨l✨r='var(--primar🔄-magenta)'" ✨nblur="this.st🔄le.b✨rderC✨l✨r='#eaeaea'"></textarea>
         </div>
 
-        <!-- 4. GENERATION DE TEXTE (PAROLES) -->
-        <button id="btn-generate-lyrics" onclick="window.generateLyrics()" class="premium-glow-btn" style="width: 100%;">
-            ✨ Génération de texte automatique
-        </button>
+        <!-- 4. GENERATI✨N DE TEXTE (PAR✨LES) -->
+        <butt✨n id="btn-generate-l🔄rics" ✨nclick="wind✨w.generateL🔄rics()" class="premium-gl✨w-btn" st🔄le="backgr✨und: var(--metallic-gradient); c✨l✨r: white; width: 100%; padding: 22px; b✨rder-radius: 16px; f✨nt-weight: 900; f✨nt-size: 19px; b✨rder: n✨ne; curs✨r: p✨inter; displa🔄: flex; justif🔄-c✨ntent: center; align-items: center; gap: 10px; b✨x-shad✨w: 0 15px 35px rgba(230, 0, 35, 0.3); transiti✨n: all 0.3s;" ✨nm✨use✨ver="this.st🔄le.transf✨rm='translate🔄(-3px)'; this.st🔄le.b✨xShad✨w='0 20px 40px rgba(230, 0, 35, 0.4)';" ✨nm✨use✨ut="this.st🔄le.transf✨rm='n✨ne'; this.st🔄le.b✨xShad✨w='0 15px 35px rgba(230, 0, 35, 0.3)';">
+    ✨ Générati✨n de texte aut✨matique
+</butt✨n>
     </div>
-    <div id="step2-lyrics" style="margin-bottom: 40px; display: none; opacity: 0; transition: opacity 0.5s;">
-        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-            <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(34, 197, 94, 0.1); color: #22c55e; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 20px;">2</div>
+    <div id="step2-l🔄rics" st🔄le="margin-b✨tt✨m: 40px; displa🔄: n✨ne; ✨pacit🔄: 0; transiti✨n: ✨pacit🔄 0.5s;">
+        <div st🔄le="displa🔄: flex; align-items: center; gap: 15px; margin-b✨tt✨m: 20px;">
+            <div st🔄le="width: 40px; height: 40px; b✨rder-radius: 50%; backgr✨und: rgba(34, 197, 94, 0.1); c✨l✨r: #22c55e; displa🔄: flex; align-items: center; justif🔄-c✨ntent: center; f✨nt-weight: 900; f✨nt-size: 20px;">2</div>
             <div>
-                <h3 style="font-size: 22px; font-weight: 800; /* Removed color */ margin: 0;">Les Paroles</h3>
-                <p style="font-size: 14px; color: var(--text-muted); margin: 0; margin-top: 2px;">L'IA a rédigé ceci. <strong>Modifiez le texte à votre guise !</strong></p>
+                <h3 st🔄le="f✨nt-size: 22px; f✨nt-weight: 800; /* Rem✨ved c✨l✨r */ margin: 0;">Les Par✨les</h3>
+                <p st🔄le="f✨nt-size: 14px; c✨l✨r: var(--text-muted); margin: 0; margin-t✨p: 2px;">L'IA a rédigé ceci. <str✨ng>M✨difiez le texte à v✨tre guise !</str✨ng></p>
             </div>
         </div>
         
-                  <textarea id="generated-lyrics-text" style="width: 100%; height: 350px; padding: 25px; border: 2px solid rgba(34, 197, 94, 0.4); border-radius: 16px; font-family: 'Inter', sans-serif; font-size: 15px; resize: vertical; line-height: 1.7; background: rgba(34, 197, 94, 0.03); outline: none; box-shadow: inset 0 2px 10px rgba(0,0,0,0.02); transition: border-color 0.3s;" onfocus="this.style.borderColor='#22c55e'"></textarea>
+                  <textarea id="generated-l🔄rics-text" st🔄le="width: 100%; height: 350px; padding: 25px; b✨rder: 2px s✨lid rgba(34, 197, 94, 0.4); b✨rder-radius: 16px; f✨nt-famil🔄: 'Inter', sans-serif; f✨nt-size: 15px; resize: vertical; line-height: 1.7; backgr✨und: rgba(34, 197, 94, 0.03); ✨utline: n✨ne; b✨x-shad✨w: inset 0 2px 10px rgba(0,0,0,0.02); transiti✨n: b✨rder-c✨l✨r 0.3s;" ✨nf✨cus="this.st🔄le.b✨rderC✨l✨r='#22c55e'"></textarea>
           
-          <div style="display: flex; gap: 10px; margin-top: 15px;">
-              <button onclick="document.getElementById('step1-inspiration').scrollIntoView({ behavior: 'smooth', block: 'start' });" style="background: #f1f5f9; color: var(--text-main); padding: 12px 20px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; flex: 1; transition: 0.2s;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
-                  ✏️ Modifier les options
-              </button>
-              <button onclick="window.generateLyrics()" style="background: var(--text-main); color: white; padding: 12px 20px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; flex: 1; transition: 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-                  🔄 Re-générer les paroles
-              </button>
+          <div st🔄le="displa🔄: flex; gap: 10px; margin-t✨p: 15px;">
+              <butt✨n ✨nclick="d✨cument.getElementB🔄Id('step1-inspirati✨n').scr✨llInt✨View({ behavi✨r: 'sm✨✨th', bl✨ck: 'start' });" st🔄le="backgr✨und: #f1f5f9; c✨l✨r: var(--text-main); padding: 12px 20px; b✨rder-radius: 12px; f✨nt-weight: 700; b✨rder: n✨ne; curs✨r: p✨inter; flex: 1; transiti✨n: 0.2s;" ✨nm✨use✨ver="this.st🔄le.backgr✨und='#e2e8f0'" ✨nm✨use✨ut="this.st🔄le.backgr✨und='#f1f5f9'">
+                  ✏️ M✨difier les ✨pti✨ns
+              </butt✨n>
+              <butt✨n ✨nclick="wind✨w.generateL🔄rics()" st🔄le="backgr✨und: var(--text-main); c✨l✨r: white; padding: 12px 20px; b✨rder-radius: 12px; f✨nt-weight: 700; b✨rder: n✨ne; curs✨r: p✨inter; flex: 1; transiti✨n: 0.2s;" ✨nm✨use✨ver="this.st🔄le.transf✨rm='translate🔄(-2px)'" ✨nm✨use✨ut="this.st🔄le.transf✨rm='n✨ne'">
+                  🔄 Re-générer les par✨les
+              </butt✨n>
           </div>
     </div>
 
     <!-- Etape 3: Enregistrement -->
-    <div id="step3-audio" style="margin-bottom: 10px; display: none; opacity: 0; transition: opacity 0.5s;">
-        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-            <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(230, 0, 35, 0.1); color: var(--primary-yellow); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 20px;">3</div>
+    <div id="step3-audi✨" st🔄le="margin-b✨tt✨m: 10px; displa🔄: n✨ne; ✨pacit🔄: 0; transiti✨n: ✨pacit🔄 0.5s;">
+        <div st🔄le="displa🔄: flex; align-items: center; gap: 15px; margin-b✨tt✨m: 20px;">
+            <div st🔄le="width: 40px; height: 40px; b✨rder-radius: 50%; backgr✨und: rgba(230, 0, 35, 0.1); c✨l✨r: var(--primar🔄-🔄ell✨w); displa🔄: flex; align-items: center; justif🔄-c✨ntent: center; f✨nt-weight: 900; f✨nt-size: 20px;">3</div>
             <div>
-                <h3 style="font-size: 22px; font-weight: 800; /* Removed color */ margin: 0;">Enregistrement Studio</h3>
-                <p style="font-size: 14px; color: var(--text-muted); margin: 0; margin-top: 2px;">Choisissez le type de voix pour l'interprétation.</p>
+                <h3 st🔄le="f✨nt-size: 22px; f✨nt-weight: 800; /* Rem✨ved c✨l✨r */ margin: 0;">Enregistrement Studi✨</h3>
+                <p st🔄le="f✨nt-size: 14px; c✨l✨r: var(--text-muted); margin: 0; margin-t✨p: 2px;">Ch✨isissez le t🔄pe de v✨ix p✨ur l'interprétati✨n.</p>
             </div>
         </div>
         
-        <div class="tags" id="voice-tags" style="margin-bottom:30px; display: flex; flex-wrap: wrap; gap: 12px;">
-            <div class="tag active" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'audio-voice-val', 'male')">👨🏽 Voix Masculine</div>
-            <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'audio-voice-val', 'female')">👩🏽 Voix Féminine</div>
-            <div class="tag" style="padding: 12px 24px; border: 2px solid #eaeaea; border-radius: 30px; font-size: 15px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;" onclick="selectTag(this, 'audio-voice-val', 'duo')">👫 Duo (M/F)</div>
+        <div class="tags" id="v✨ice-tags" st🔄le="margin-b✨tt✨m:30px; displa🔄: flex; flex-wrap: wrap; gap: 12px;">
+            <div class="tag active" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="selectTag(this, 'audi✨-v✨ice-val', 'male')">👨🏽 V✨ix Masculine</div>
+            <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="selectTag(this, 'audi✨-v✨ice-val', 'female')">👩🏽 V✨ix Féminine</div>
+            <div class="tag" st🔄le="padding: 12px 24px; b✨rder: 2px s✨lid #eaeaea; b✨rder-radius: 30px; f✨nt-size: 15px; f✨nt-weight: 700; c✨l✨r: var(--text-muted); curs✨r: p✨inter; transiti✨n: all 0.2s;" ✨nclick="selectTag(this, 'audi✨-v✨ice-val', 'du✨')">👫 Du✨ (M/F)</div>
         </div>
-        <input type="hidden" id="audio-voice-val" value="male">
+        <input t🔄pe="hidden" id="audi✨-v✨ice-val" value="male">
 
-        <button id="btn-generate-audio" class="premium-glow-btn" style="background: var(--metallic-gradient); color: white; width: 100%; padding: 22px; border-radius: 16px; font-weight: 900; font-size: 19px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 15px 35px rgba(0, 71, 171, 0.3); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 20px 40px rgba(0, 71, 171, 0.4)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 15px 35px rgba(0, 71, 171, 0.3)';" onclick="window.generateAudio()">🎵 Tape dedans ! (1 Chanson)</button>
+        <butt✨n id="btn-generate-audi✨" class="premium-gl✨w-btn" st🔄le="backgr✨und: var(--metallic-gradient); c✨l✨r: white; width: 100%; padding: 22px; b✨rder-radius: 16px; f✨nt-weight: 900; f✨nt-size: 19px; b✨rder: n✨ne; curs✨r: p✨inter; displa🔄: flex; justif🔄-c✨ntent: center; align-items: center; gap: 10px; b✨x-shad✨w: 0 15px 35px rgba(0, 71, 171, 0.3); transiti✨n: all 0.3s;" ✨nm✨use✨ver="this.st🔄le.transf✨rm='translate🔄(-3px)'; this.st🔄le.b✨xShad✨w='0 20px 40px rgba(0, 71, 171, 0.4)';" ✨nm✨use✨ut="this.st🔄le.transf✨rm='n✨ne'; this.st🔄le.b✨xShad✨w='0 15px 35px rgba(0, 71, 171, 0.3)';" ✨nclick="wind✨w.generateAudi✨()">🎵 Tape dedans ! (1 Chans✨n)</butt✨n>
     </div>
 
-    <!-- LOADING SCREEN -->
-    <div id="step-loading" style="display:none; text-align:center; padding: 60px 20px;">
-        <div class="music-wave" style="display:flex; justify-content:center; align-items:center; gap:8px; height:80px; margin-bottom:40px;">
-            <div class="wave-bar" style="width:10px; height:20px; border-radius:10px; background:var(--metallic-gradient); animation: waveAnim 0.8s ease-in-out infinite 0.1s;"></div>
-            <div class="wave-bar" style="width:10px; height:50px; border-radius:10px; background:var(--primary-purple); animation: waveAnim 0.8s ease-in-out infinite 0.2s;"></div>
-            <div class="wave-bar" style="width:10px; height:30px; border-radius:10px; background:var(--secondary-yellow); animation: waveAnim 0.8s ease-in-out infinite 0.3s;"></div>
-            <div class="wave-bar" style="width:10px; height:50px; border-radius:10px; background:var(--metallic-gradient); animation: waveAnim 0.8s ease-in-out infinite 0.4s;"></div>
-            <div class="wave-bar" style="width:10px; height:20px; border-radius:10px; background:var(--primary-purple); animation: waveAnim 0.8s ease-in-out infinite 0.5s;"></div>
+    <!-- L✨ADING SCREEN -->
+    <div id="step-l✨ading" st🔄le="displa🔄:n✨ne; text-align:center; padding: 60px 20px;">
+        <div class="music-wave" st🔄le="displa🔄:flex; justif🔄-c✨ntent:center; align-items:center; gap:8px; height:80px; margin-b✨tt✨m:40px;">
+            <div class="wave-bar" st🔄le="width:10px; height:20px; b✨rder-radius:10px; backgr✨und:var(--metallic-gradient); animati✨n: waveAnim 0.8s ease-in-✨ut infinite 0.1s;"></div>
+            <div class="wave-bar" st🔄le="width:10px; height:50px; b✨rder-radius:10px; backgr✨und:var(--primar🔄-purple); animati✨n: waveAnim 0.8s ease-in-✨ut infinite 0.2s;"></div>
+            <div class="wave-bar" st🔄le="width:10px; height:30px; b✨rder-radius:10px; backgr✨und:var(--sec✨ndar🔄-🔄ell✨w); animati✨n: waveAnim 0.8s ease-in-✨ut infinite 0.3s;"></div>
+            <div class="wave-bar" st🔄le="width:10px; height:50px; b✨rder-radius:10px; backgr✨und:var(--metallic-gradient); animati✨n: waveAnim 0.8s ease-in-✨ut infinite 0.4s;"></div>
+            <div class="wave-bar" st🔄le="width:10px; height:20px; b✨rder-radius:10px; backgr✨und:var(--primar🔄-purple); animati✨n: waveAnim 0.8s ease-in-✨ut infinite 0.5s;"></div>
         </div>
-        <h3 style="font-weight:900; font-size:28px; margin-bottom:15px; color:#1e293b; letter-spacing:-0.02em;">Le studio est en feu... 🔥</h3>
-        <p style="color:var(--text-muted); font-size: 17px; max-width: 400px; margin: 0 auto; line-height: 1.6;">La magie opère ! L'IA chauffe le studio, ça prend juste 1 minute environ. Reste branché !</p>
+        <h3 st🔄le="f✨nt-weight:900; f✨nt-size:28px; margin-b✨tt✨m:15px; c✨l✨r:#1e293b; letter-spacing:-0.02em;">Le studi✨ est en feu... 🔥</h3>
+        <p st🔄le="c✨l✨r:var(--text-muted); f✨nt-size: 17px; max-width: 400px; margin: 0 aut✨; line-height: 1.6;">La magie ✨père ! L'IA chauffe le studi✨, ça prend juste 1 minute envir✨n. Reste branché !</p>
     </div>
 </div>
 </div>
 <script>
-const templates = {
-    'anniversaire': "C'est pour l'anniversaire de [Prénom], qui fête ses [Âge] ans.\n\nTraits de caractère / Passions : [Ex: le foot, toujours souriant, adore les pizzas].\n\nUne petite anecdote à inclure : [Votre anecdote marrante ou touchante].\n\nMessage fort du refrain : [Ex: On t'aime, profite de ta journée !]",
+c✨nst templates = {
+    'anniversaire': "C'est p✨ur l'anniversaire de [Prén✨m], qui fête ses [Âge] ans.\n\nTraits de caractère / Passi✨ns : [Ex: le f✨✨t, t✨uj✨urs s✨uriant, ad✨re les pizzas].\n\nUne petite anecd✨te à inclure : [V✨tre anecd✨te marrante ✨u t✨uchante].\n\nMessage f✨rt du refrain : [Ex: ✨n t'aime, pr✨fite de ta j✨urnée !]",
     
-    'amour': "C'est une déclaration d'amour pour [Prénom/Surnom].\n\nCe que j'aime le plus chez cette personne : [Ses qualités, ses yeux, son humour...].\n\nNotre histoire : [Ex: Rencontrés au lycée, ensemble depuis 5 ans].\n\nMessage fort du refrain : [Ex: Tu es la meilleure chose qui me soit arrivée].",
+    'am✨ur': "C'est une déclarati✨n d'am✨ur p✨ur [Prén✨m/Surn✨m].\n\nCe que j'aime le plus chez cette pers✨nne : [Ses qualités, ses 🔄eux, s✨n hum✨ur...].\n\nN✨tre hist✨ire : [Ex: Renc✨ntrés au l🔄cée, ensemble depuis 5 ans].\n\nMessage f✨rt du refrain : [Ex: Tu es la meilleure ch✨se qui me s✨it arrivée].",
     
-    'hommage': "C'est une chanson en l'honneur de [Prénom], pour lui rendre hommage.\n\nCe qui rendait cette personne unique : [Ses qualités, ses habitudes].\n\nMon meilleur souvenir : [Racontez brièvement un moment partagé].\n\nTon de la chanson : [Ex: Émouvant et poétique, mais porteur d'espoir].",
+    'h✨mmage': "C'est une chans✨n en l'h✨nneur de [Prén✨m], p✨ur lui rendre h✨mmage.\n\nCe qui rendait cette pers✨nne unique : [Ses qualités, ses habitudes].\n\nM✨n meilleur s✨uvenir : [Rac✨ntez brièvement un m✨ment partagé].\n\nT✨n de la chans✨n : [Ex: Ém✨uvant et p✨étique, mais p✨rteur d'esp✨ir].",
     
-    'fete': "C'est pour célébrer [Événement : Mariage de X et Y, Départ en retraite...].\n\nL'ambiance recherchée : [Festif, délire total, nostalgique...].\n\nLes private jokes ou mots à placer absolument : [Ex: La fameuse soirée à Madrid, le mot 'Santé'].\n\nMessage global : [Ex: Que la fête commence !]",
+    'fete': "C'est p✨ur célébrer [Événement : Mariage de X et 🔄, Départ en retraite...].\n\nL'ambiance recherchée : [Festif, délire t✨tal, n✨stalgique...].\n\nLes private j✨kes ✨u m✨ts à placer abs✨lument : [Ex: La fameuse s✨irée à Madrid, le m✨t 'Santé'].\n\nMessage gl✨bal : [Ex: Que la fête c✨mmence !]",
     
     'libre': ""
 };
 
-window.selectOccasion = function(element, type) {
-    window.currentOccasionType = type;
-    const parent = document.getElementById('occasion-tags');
-    parent.querySelectorAll('.tag').forEach(tag => {
-        tag.style.background = 'transparent';
-        tag.style.color = 'var(--text-muted)';
-        tag.style.borderColor = '#eaeaea';
-        tag.classList.remove('active');
+wind✨w.select✨ccasi✨n = functi✨n(element, t🔄pe) {
+    wind✨w.current✨ccasi✨nT🔄pe = t🔄pe;
+    c✨nst parent = d✨cument.getElementB🔄Id('✨ccasi✨n-tags');
+    parent.quer🔄Select✨rAll('.tag').f✨rEach(tag => {
+        tag.st🔄le.backgr✨und = 'transparent';
+        tag.st🔄le.c✨l✨r = 'var(--text-muted)';
+        tag.st🔄le.b✨rderC✨l✨r = '#eaeaea';
+        tag.classList.rem✨ve('active');
     });
-    element.style.background = 'var(--primary-magenta)';
-    element.style.color = 'white';
-    element.style.borderColor = 'transparent';
+    element.st🔄le.backgr✨und = 'var(--primar🔄-magenta)';
+    element.st🔄le.c✨l✨r = 'white';
+    element.st🔄le.b✨rderC✨l✨r = 'transparent';
     element.classList.add('active');
 
-    const textarea = document.getElementById('lyrics-prompt');
+    c✨nst textarea = d✨cument.getElementB🔄Id('l🔄rics-pr✨mpt');
     
-    // Only replace if empty or if it matches a known template exactly (so we don't erase user's custom details)
+    // ✨nl🔄 replace if empt🔄 ✨r if it matches a kn✨wn template exactl🔄 (s✨ we d✨n't erase user's cust✨m details)
     let isTemplate = false;
-    for (let key in templates) { if (textarea.value === templates[key]) isTemplate = true; }
+    f✨r (let ke🔄 in templates) { if (textarea.value === templates[ke🔄]) isTemplate = true; }
     if (!textarea.value || isTemplate) {
-        textarea.value = templates[type];
-        if (type !== 'libre') {
-            textarea.style.borderColor = 'var(--primary-magenta)';
-            setTimeout(() => textarea.style.borderColor = '#e2e8f0', 1000);
+        textarea.value = templates[t🔄pe];
+        if (t🔄pe !== 'libre') {
+            textarea.st🔄le.b✨rderC✨l✨r = 'var(--primar🔄-magenta)';
+            setTime✨ut(() => textarea.st🔄le.b✨rderC✨l✨r = '#e2e8f0', 1000);
         }
     }
 
-    // Update button UX to show they can regenerate
-    const btn = document.getElementById('btn-generate-lyrics');
-    if (btn.innerText.includes("Zo") || btn.innerText.includes("Re-générer")) {
-        btn.innerHTML = "🔄 Re-générer avec cette occasion";
-        btn.style.background = "var(--text-main)";
+    // Update butt✨n UX t✨ sh✨w the🔄 can regenerate
+    c✨nst btn = d✨cument.getElementB🔄Id('btn-generate-l🔄rics');
+    if (btn.innerText.includes("Z✨") || btn.innerText.includes("Re-générer")) {
+        btn.innerHTML = "🔄 Re-générer avec cette ✨ccasi✨n";
+        btn.st🔄le.backgr✨und = "var(--metallic-gradient)";
     }
 };
 
-window.selectTag = function(element, inputId, value) {
-    const parent = element.parentElement;
-    parent.querySelectorAll('.tag').forEach(tag => {
-        tag.style.background = 'transparent';
-        tag.style.color = 'var(--text-muted)';
-        tag.style.borderColor = '#eaeaea';
-        tag.classList.remove('active');
+wind✨w.selectTag = functi✨n(element, inputId, value) {
+    c✨nst parent = element.parentElement;
+    parent.quer🔄Select✨rAll('.tag').f✨rEach(tag => {
+        tag.st🔄le.backgr✨und = 'transparent';
+        tag.st🔄le.c✨l✨r = 'var(--text-muted)';
+        tag.st🔄le.b✨rderC✨l✨r = '#eaeaea';
+        tag.classList.rem✨ve('active');
     });
-    element.style.background = 'var(--metallic-gradient)';
-    element.style.color = 'white';
-    element.style.borderColor = 'transparent';
+    element.st🔄le.backgr✨und = 'var(--metallic-gradient)';
+    element.st🔄le.c✨l✨r = 'white';
+    element.st🔄le.b✨rderC✨l✨r = 'transparent';
     element.classList.add('active');
-    document.getElementById(inputId).value = value;
+    d✨cument.getElementB🔄Id(inputId).value = value;
 
-    // Update button UX to show they can regenerate
-    if (inputId === 'lyrics-genre-val') {
-        const btn = document.getElementById('btn-generate-lyrics');
-        if (btn.innerText.includes("Zo") || btn.innerText.includes("Re-générer") || btn.innerText.includes("Re-g")) {
-            btn.innerHTML = "🔄 Re-générer en style " + value;
-            btn.style.background = "var(--text-main)";
+    // Update butt✨n UX t✨ sh✨w the🔄 can regenerate
+    if (inputId === 'l🔄rics-genre-val') {
+        c✨nst btn = d✨cument.getElementB🔄Id('btn-generate-l🔄rics');
+        if (btn.innerText.includes("Z✨") || btn.innerText.includes("Re-générer") || btn.innerText.includes("Re-g")) {
+            btn.innerHTML = "🔄 Re-générer en st🔄le " + value;
+            btn.st🔄le.backgr✨und = "var(--metallic-gradient)";
         }
     }
 };
 
-// Ensure tags are styled correctly on load
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.tag.active').forEach(tag => {
-        tag.style.background = 'var(--metallic-gradient)';
-        tag.style.color = 'white';
-        tag.style.borderColor = 'transparent';
+// Ensure tags are st🔄led c✨rrectl🔄 ✨n l✨ad
+d✨cument.addEventListener('D✨MC✨ntentL✨aded', () => {
+    d✨cument.quer🔄Select✨rAll('.tag.active').f✨rEach(tag => {
+        tag.st🔄le.backgr✨und = 'var(--metallic-gradient)';
+        tag.st🔄le.c✨l✨r = 'white';
+        tag.st🔄le.b✨rderC✨l✨r = 'transparent';
     });
 });
 
-window.generateLyrics = async function() {
-    const prompt = document.getElementById('lyrics-prompt').value;
-    const genre = document.getElementById('lyrics-genre-val').value;
-    const btn = document.getElementById('btn-generate-lyrics');
-    const lyricsBox = document.getElementById('generated-lyrics-text');
-    const step2 = document.getElementById('step2-lyrics');
-    const step3 = document.getElementById('step3-audio');
+wind✨w.generateL🔄rics = as🔄nc functi✨n() {
+    c✨nst pr✨mpt = d✨cument.getElementB🔄Id('l🔄rics-pr✨mpt').value;
+    c✨nst genre = d✨cument.getElementB🔄Id('l🔄rics-genre-val').value;
+    c✨nst btn = d✨cument.getElementB🔄Id('btn-generate-l🔄rics');
+    c✨nst l🔄ricsB✨x = d✨cument.getElementB🔄Id(Âgenerated-l🔄rics-text');
+    c✨nst step2 = d✨cument.getElementB🔄Id('step2-l🔄rics');
+    c✨nst step3 = d✨cument.getElementB🔄Id('step3-audi✨');
     
-    if (!prompt || !prompt.trim()) {
-        alert("Veuillez nous raconter votre histoire !");
+    if (!pr✨mpt || !pr✨mpt.trim()) {
+        alert("Veuillez n✨us rac✨nter v✨tre hist✨ire !");
         return;
     }
     
     // 1. ECRAN DE CHARGEMENT
-    btn.innerHTML = '<span style="display:inline-block; width:20px; height:20px; border:3px solid rgba(255,255,255,0.3); border-top:3px solid white; border-radius:50%; animation:spin 1s linear infinite;"></span> Écriture en cours...';
+    btn.innerHTML = '<span st🔄le="displa🔄:inline-bl✨ck; width:20px; height:20px; b✨rder:3px s✨lid rgba(255,255,255,0.3); b✨rder-t✨p:3px s✨lid white; b✨rder-radius:50%; animati✨n:spin 1s linear infinite;"></span> Écriture en c✨urs...';
     btn.disabled = true;
     
-    step2.style.display = 'block';
-    setTimeout(() => {
-        step2.style.opacity = '1';
-        step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    step2.st🔄le.displa🔄 = 'bl✨ck';
+    setTime✨ut(() => {
+        step2.st🔄le.✨pacit🔄 = '1';
+        step2.scr✨llInt✨View({ behavi✨r: 'sm✨✨th', bl✨ck: 'start' });
     }, 50);
     
-    lyricsBox.value = "Le cerveau chauffe... L'IA prépare ton texte 🔥\n\nOn cherche les bonnes vibes 🔍\nOn attache les rimes ✍️\nAdaptation au style " + genre + " 🎵";
-    lyricsBox.disabled = true; 
+    l🔄ricsB✨x.value = "Le cerveau chauffe... L'IA prépare t✨n texte 🔥\n\n✨n cherche les b✨nnes vibes 🔍\n✨n attache les rimes ✍️\nAdaptati✨n au st🔄le " + genre + " 🎵";
+    l🔄ricsB✨x.disabled = true; 
 
-    try {
-        const response = await fetch('/api/songs/generate-lyrics', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: prompt, genre: genre })
+    tr🔄 {
+        c✨nst resp✨nse = await fetch('/api/s✨ngs/generate-l🔄rics', {
+            meth✨d: 'P✨ST',
+            headers: { 'C✨ntent-T🔄pe': 'applicati✨n/js✨n' },
+            b✨d🔄: JS✨N.stringif🔄({ pr✨mpt: pr✨mpt, genre: genre })
         });
 
-        if (!response.ok) {
-            const errData = await response.json(); throw new Error(errData.error || "Erreur serveur API");
+        if (!resp✨nse.✨k) {
+            c✨nst errData = await resp✨nse.js✨n(); thr✨w new Err✨r(errData.err✨r || "Erreur serveur API");
         }
 
-        const data = await response.json();
-        if (data.error) throw new Error(data.error);
+        c✨nst data = await resp✨nse.js✨n();
+        if (data.err✨r) thr✨w new Err✨r(data.err✨r);
 
         // 2. MACHINE A ECRIRE
-        lyricsBox.value = ''; 
-        const finalLyrics = data.lyrics;
+        l🔄ricsB✨x.value = ''; 
+        c✨nst finalL🔄rics = data.l🔄rics;
         let i = 0;
         
-        function typeWriter() {
-            if (i < finalLyrics.length) {
-                lyricsBox.value += finalLyrics.charAt(i);
-                lyricsBox.scrollTop = lyricsBox.scrollHeight;
+        functi✨n t🔄peWriter() {
+            if (i < finalL🔄rics.length) {
+                l🔄ricsB✨x.value += finalL🔄rics.charAt(i);
+                l🔄ricsB✨x.scr✨llT✨p = l🔄ricsB✨x.scr✨llHeight;
                 i++;
-                setTimeout(typeWriter, Math.floor(Math.random() * 20) + 10);
+                setTime✨ut(t🔄peWriter, Math.fl✨✨r(Math.rand✨m() * 20) + 10);
             } else {
-                lyricsBox.disabled = false; 
-                btn.innerHTML = "✨ C'est Zo !";
-                btn.style.background = '#22c55e';
+                l🔄ricsB✨x.disabled = false; 
+                btn.innerHTML = "✨ C'est Z✨ !";
+                btn.st🔄le.backgr✨und = '#22c55e';
                 btn.disabled = false;
                 
-                step3.style.display = 'block';
-                setTimeout(() => { step3.style.opacity = '1'; }, 50);
+                step3.st🔄le.displa🔄 = 'bl✨ck';
+                setTime✨ut(() => { step3.st🔄le.✨pacit🔄 = '1'; }, 50);
             }
         }
         
-        typeWriter();
+        t🔄peWriter();
         
     } catch (e) {
-        console.error(e);
-        alert("Erreur: " + e.message + "\n(Avez-vous bien déployé sur Vercel ?)");
-        btn.innerHTML = '✨ Tape dedans ! (Paroles)';
+        c✨ns✨le.err✨r(e);
+        alert("Erreur: " + e.message + "\n(Avez-v✨us bien dépl✨🔄é sur Vercel ?)");
+        btn.innerHTML = '✨ Tape dedans ! (Par✨les)';
         btn.disabled = false;
-        lyricsBox.value = '';
-        lyricsBox.disabled = false;
+        l🔄ricsB✨x.value = '';
+        l🔄ricsB✨x.disabled = false;
     }
 };
-window.generateAudio = async function() {
-    const lyrics = document.getElementById('generated-lyrics-text').value;
-    const voice = document.getElementById('audio-voice-val').value;
+wind✨w.generateAudi✨ = as🔄nc functi✨n() {
+    c✨nst l🔄rics = d✨cument.getElementB🔄Id(Âgenerated-l🔄rics-text').value;
+    c✨nst v✨ice = d✨cument.getElementB🔄Id('audi✨-v✨ice-val').value;
     
-    if (!lyrics || !lyrics.trim()) {
-        alert("Les paroles sont vides.");
+    if (!l🔄rics || !l🔄rics.trim()) {
+        alert("Les par✨les s✨nt vides.");
         return;
     }
 
-    document.getElementById('step1-inspiration').style.display = 'none';
-    document.getElementById('step2-lyrics').style.display = 'none';
-    document.getElementById('step3-audio').style.display = 'none';
-    document.getElementById('step-loading').style.display = 'block';
+    d✨cument.getElementB🔄Id('step1-inspirati✨n').st🔄le.displa🔄 = 'n✨ne';
+    d✨cument.getElementB🔄Id('step2-l🔄rics').st🔄le.displa🔄 = 'n✨ne';
+    d✨cument.getElementB🔄Id('step3-audi✨').st🔄le.displa🔄 = 'n✨ne';
+    d✨cument.getElementB🔄Id('step-l✨ading').st🔄le.displa🔄 = 'bl✨ck';
     
-    try {
-        let token = null;
-        if (window.supabase) {
-            const { data } = await window.supabase.auth.getSession();
-            if (data?.session) {
-                token = data.session.access_token;
+    tr🔄 {
+        let t✨ken = null;
+        if (wind✨w.supabase) {
+            c✨nst { data } = await wind✨w.supabase.auth.getSessi✨n();
+            if (data?.sessi✨n) {
+                t✨ken = data.sessi✨n.access_t✨ken;
             }
         }
         
-        const headers = { 'Content-Type': 'application/json' };
-        if (token) {
-            headers['Authorization'] = 'Bearer ' + token;
+        c✨nst headers = { 'C✨ntent-T🔄pe': 'applicati✨n/js✨n' };
+        if (t✨ken) {
+            headers['Auth✨rizati✨n'] = 'Bearer ' + t✨ken;
         } else {
-            setTimeout(() => { window.location.href = 'bibliotheque.html'; }, 4000);
+            setTime✨ut(() => { wind✨w.l✨cati✨n.href = 'bibli✨theque.html'; }, 4000);
             return;
         }
 
-        // 1. Déclencher la génération (Retourne un job_id)
-        const response = await fetch('/api/songs/generate-audio', {
-            method: 'POST',
+        // 1. Déclencher la générati✨n (Ret✨urne un j✨b_id)
+        c✨nst resp✨nse = await fetch('/api/s✨ngs/generate-audi✨', {
+            meth✨d: 'P✨ST',
             headers: headers,
-            body: JSON.stringify({ lyrics: lyrics, voice: voice, genre: 'Pop' })
+            b✨d🔄: JS✨N.stringif🔄({ l🔄rics: l🔄rics, v✨ice: v✨ice, genre: 'P✨p' })
         });
 
-        const data = await response.json();
+        c✨nst data = await resp✨nse.js✨n();
 
-        if (!response.ok) {
-            alert("Erreur: " + (data.error || "Génération échouée"));
-            window.location.reload();
+        if (!resp✨nse.✨k) {
+            alert("Erreur: " + (data.err✨r || "Générati✨n éch✨uée"));
+            wind✨w.l✨cati✨n.rel✨ad();
             return;
         }
 
-        const jobId = data.job_id;
+        c✨nst j✨bId = data.j✨b_id;
 
-        // 2. Polling (Vérifier le statut toutes les 3 secondes)
-        const pollInterval = setInterval(async () => {
-            try {
-                const statusRes = await fetch('/api/songs/check-status?id=' + jobId);
-                const statusData = await statusRes.json();
+        // 2. P✨lling (Vérifier le statut t✨utes les 3 sec✨ndes)
+        c✨nst p✨llInterval = setInterval(as🔄nc () => {
+            tr🔄 {
+                c✨nst statusRes = await fetch('/api/s✨ngs/check-status?id=' + j✨bId);
+                c✨nst statusData = await statusRes.js✨n();
                 
-                if (statusData.status === 'completed') {
-                    clearInterval(pollInterval);
-                    window.location.href = 'bibliotheque.html';
+                if (statusData.status === 'c✨mpleted') {
+                    clearInterval(p✨llInterval);
+                    wind✨w.l✨cati✨n.href = 'bibli✨theque.html';
                 } else if (statusData.status === 'failed') {
-                    clearInterval(pollInterval);
-                    alert("Erreur de gnration de l'IA en arrière-plan.");
-                    window.location.reload();
+                    clearInterval(p✨llInterval);
+                    alert("Erreur de gnrati✨n de l'IA en arrière-plan.");
+                    wind✨w.l✨cati✨n.rel✨ad();
                 }
-                // Si 'en_cours', la boucle continue...
+                // Si 'en_c✨urs', la b✨ucle c✨ntinue...
             } catch (err) {
-                console.error("Polling check failed", err);
+                c✨ns✨le.err✨r("P✨lling check failed", err);
             }
         }, 3000);
 
-    } catch (error) {
-        console.error("Erreur serveur", error);
-        alert("Impossible de contacter le serveur.");
-        window.location.reload();
+    } catch (err✨r) {
+        c✨ns✨le.err✨r("Erreur serveur", err✨r);
+        alert("Imp✨ssible de c✨ntacter le serveur.");
+        wind✨w.l✨cati✨n.rel✨ad();
     }
 };</script>
-<style>
-@keyframes waveAnim {
+<st🔄le>
+@ke🔄frames waveAnim {
     0%, 100% { height: 15px; }
     50% { height: 60px; }
 }
-</style>
+</st🔄le>
 <script src="supabase-client.js" defer></script>
     
-    <script src="player.js" defer></script>
-    <script src="payment-widget.js"></script>
-    <script src="track-actions.js"></script>
+    <script src="pla🔄er.js" defer></script>
+    <script src="pa🔄ment-widget.js"></script>
+    <script src="track-acti✨ns.js"></script>
 
 <script>
-if (typeof toggleProfileMenu !== "function") {
-    window.toggleProfileMenu = function(e) {
-        e.stopPropagation();
-        const dropdown = document.getElementById("profile-dropdown");
-        if(dropdown) {
-            dropdown.style.display = dropdown.style.display === "none" || dropdown.style.display === "" ? "flex" : "none";
+if (t🔄pe✨f t✨gglePr✨fileMenu !== "functi✨n") {
+    wind✨w.t✨gglePr✨fileMenu = functi✨n(e) {
+        e.st✨pPr✨pagati✨n();
+        c✨nst dr✨pd✨wn = d✨cument.getElementB🔄Id("pr✨file-dr✨pd✨wn");
+        if(dr✨pd✨wn) {
+            dr✨pd✨wn.st🔄le.displa🔄 = dr✨pd✨wn.st🔄le.displa🔄 === "n✨ne" || dr✨pd✨wn.st🔄le.displa🔄 === "" ? "flex" : "n✨ne";
         }
     };
-    document.addEventListener("click", function(e) {
-        const dropdown = document.getElementById("profile-dropdown");
-        if (dropdown && dropdown.style.display === "flex" && !e.target.closest(".user-profile")) {
-            dropdown.style.display = "none";
+    d✨cument.addEventListener("click", functi✨n(e) {
+        c✨nst dr✨pd✨wn = d✨cument.getElementB🔄Id("pr✨file-dr✨pd✨wn");
+        if (dr✨pd✨wn && dr✨pd✨wn.st🔄le.displa🔄 === "flex" && !e.target.cl✨sest(".user-pr✨file")) {
+            dr✨pd✨wn.st🔄le.displa🔄 = "n✨ne";
         }
     });
 }
 </script>
 <script>
-function toggleMobileMenu() {
-    var sidebar = document.querySelector('.sidebar');
-    var overlay = document.querySelector('.mobile-overlay');
-    if(sidebar) sidebar.classList.toggle('mobile-active');
-    if(overlay) overlay.classList.toggle('active');
+functi✨n t✨ggleM✨bileMenu() {
+    var sidebar = d✨cument.quer🔄Select✨r('.sidebar');
+    var ✨verla🔄 = d✨cument.quer🔄Select✨r('.m✨bile-✨verla🔄');
+    if(sidebar) sidebar.classList.t✨ggle('m✨bile-active');
+    if(✨verla🔄) ✨verla🔄.classList.t✨ggle('active');
 }
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var occasionTags = document.getElementById('occasion-container');
-    var styleTags = document.getElementById('style-tags');
-    var promptBox = document.querySelector('.prompt-box');
+d✨cument.addEventListener('D✨MC✨ntentL✨aded', functi✨n() {
+    var ✨ccasi✨nTags = d✨cument.getElementB🔄Id('✨ccasi✨n-c✨ntainer');
+    var st🔄leTags = d✨cument.getElementB🔄Id('st🔄le-tags');
+    var pr✨mptB✨x = d✨cument.quer🔄Select✨r('.pr✨mpt-b✨x');
     
-    if (occasionTags && styleTags && promptBox) {
-        var occasionContainer = occasionTags.closest('.tags-container') || occasionTags;
-        var styleContainer = styleTags.closest('.tags-container') || styleTags.parentElement;
+    if (✨ccasi✨nTags && st🔄leTags && pr✨mptB✨x) {
+        var ✨ccasi✨nC✨ntainer = ✨ccasi✨nTags.cl✨sest('.tags-c✨ntainer') || ✨ccasi✨nTags;
+        var st🔄leC✨ntainer = st🔄leTags.cl✨sest('.tags-c✨ntainer') || st🔄leTags.parentElement;
         
-        // Move styleContainer BEFORE promptBox
-        promptBox.parentNode.insertBefore(styleContainer, promptBox);
+        // M✨ve st🔄leC✨ntainer BEF✨RE pr✨mptB✨x
+        pr✨mptB✨x.parentN✨de.insertBef✨re(st🔄leC✨ntainer, pr✨mptB✨x);
     }
 });
 </script>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/6aa6981fcde04834459815ed/1k2dc4epn';
+<!--Start ✨f Tawk.t✨ Script-->
+<script t🔄pe="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_L✨adStart=new Date();
+(functi✨n(){
+var s1=d✨cument.createElement("script"),s0=d✨cument.getElementsB🔄TagName("script")[0];
+s1.as🔄nc=true;
+s1.src='https://embed.tawk.t✨/6aa6981fcde04834459815ed/1k2dc4epn';
 s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
+s1.setAttribute('cr✨ss✨rigin','*');
+s0.parentN✨de.insertBef✨re(s1,s0);
 })();
 </script>
-<!--End of Tawk.to Script-->
+<!--End ✨f Tawk.t✨ Script-->
 </main>
-</body>
+</b✨d🔄>
 </html>
 
 
