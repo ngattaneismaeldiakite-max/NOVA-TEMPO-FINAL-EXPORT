@@ -6,35 +6,29 @@ module.exports = async function handler(req, res) {
         const apiKey = process.env.PIAPI_KEY;
         if (!apiKey) return res.status(500).json({ error: "La cle API PiAPI est manquante" });
         
-        const response = await fetch(`https://api.piapi.ai/api/suno/v1/music/${taskId}`, {
+        const response = await fetch(`https://api.piapi.ai/api/v1/task/${taskId}`, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${apiKey}`,
+                'X-API-Key': apiKey,
                 'Content-Type': 'application/json'
             }
         });
 
-        const data = await response.json();
-        if (data.code !== 200) {
+        const data = await response.json().catch(() => ({}));
+        
+        if (data.code && data.code !== 200) {
             return res.status(500).json({ error: data.message || 'API Error PiAPI' });
         }
 
-        const status = data.data.status; 
+        const status = data.data ? data.data.status : 'pending'; 
         
         if (status === 'completed') {
-            const clips = data.data.clips;
-            let clip1Url = '';
-            
-            if (Array.isArray(clips) && clips.length > 0) {
-                clip1Url = clips[0].audio_url;
-            } else if (typeof clips === 'object' && Object.values(clips).length > 0) {
-                clip1Url = Object.values(clips)[0].audio_url;
+            const outputs = data.data.output;
+            let clipUrl = '';
+            if (Array.isArray(outputs) && outputs.length > 0) {
+                clipUrl = outputs[0].audio_url;
             }
-            
-            return res.status(200).json({
-                status: 'completed',
-                audio_url: clip1Url
-            });
+            return res.status(200).json({ status: 'completed', audio_url: clipUrl });
         } else if (status === 'failed') {
              return res.status(200).json({ status: 'failed' });
         } else {
