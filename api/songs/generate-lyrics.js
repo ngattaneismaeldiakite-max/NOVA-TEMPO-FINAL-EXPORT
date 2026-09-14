@@ -13,6 +13,14 @@ module.exports = async function handler(req, res) {
             return res.status(500).json({ error: "La cle API Groq est manquante dans les parametres Vercel." });
         }
         
+        const systemPrompt = `Tu es un "hitmaker" et parolier ultra-moderne (spécialisé en Afrobeat, Rap, Pop urbaine, Coupé Décalé). 
+RÈGLES ABSOLUES :
+1. AUCUNE poésie clichée. Zéro métaphore ringarde (interdit d'utiliser des mots comme : destin, âme, étoiles, éternité, larmes, firmament).
+2. Utilise un langage courant, urbain, direct et naturel. Ça doit sonner comme un VRAI hit radio d'aujourd'hui, écrit par quelqu'un de la rue ou des clubs, pas comme un poème.
+3. Adapte l'énergie au style : si c'est Afrobeat ou Coupé Décalé, sois festif, très rythmé, utilise des onomatopées ou des mots d'ambiance.
+4. Structure stricte et aérée : [Couplet 1], [Refrain], [Couplet 2], [Refrain].
+5. Ne renvoie QUE les paroles de la chanson, sans aucun commentaire avant ou après.`;
+        
         const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -24,7 +32,7 @@ module.exports = async function handler(req, res) {
                 messages: [
                     {
                         role: 'system',
-                        content: 'Tu es un parolier professionnel de musique urbaine et pop. Tu dois ecrire des paroles courtes et percutantes (Couplet 1, Refrain, Couplet 2, Refrain). Limite-toi uniquement aux paroles, pas de blabla. Adapte le ton au style musical fourni.'
+                        content: systemPrompt
                     },
                     {
                         role: 'user',
