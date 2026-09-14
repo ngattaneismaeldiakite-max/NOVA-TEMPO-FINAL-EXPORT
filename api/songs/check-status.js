@@ -24,11 +24,10 @@ module.exports = async function handler(req, res) {
         
         if (status === 'completed') {
             const outputs = data.data.output;
-            let clipUrl = '';
-            if (Array.isArray(outputs) && outputs.length > 0) {
-                clipUrl = outputs[0].audio_url;
-            }
-            return res.status(200).json({ status: 'completed', audio_url: clipUrl });
+            return res.status(200).json({ 
+                status: 'completed', 
+                outputs: outputs // On renvoie TOUT l'objet pour debugger le nom exact de la clé
+            });
         } else if (status === 'failed') {
              return res.status(200).json({ status: 'failed' });
         } else {
