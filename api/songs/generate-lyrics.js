@@ -10,13 +10,13 @@ module.exports = async function handler(req, res) {
         
         const apiKey = process.env.GROQ_API_KEY;
         if (!apiKey) {
-            return res.status(500).json({ error: "La cl API Groq est manquante dans les paramtres Vercel." });
+            return res.status(500).json({ error: "La cle API Groq est manquante dans les parametres Vercel." });
         }
         
         const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
-                'Authorization': Bearer $apiKey,
+                'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -24,11 +24,11 @@ module.exports = async function handler(req, res) {
                 messages: [
                     {
                         role: 'system',
-                        content: 'Tu es un parolier professionnel de musique urbaine et pop. Tu dois crire des paroles courtes et percutantes (Couplet 1, Refrain, Couplet 2, Refrain). Limite-toi uniquement aux paroles, pas de blabla. Adapte le ton au style musical fourni.'
+                        content: 'Tu es un parolier professionnel de musique urbaine et pop. Tu dois ecrire des paroles courtes et percutantes (Couplet 1, Refrain, Couplet 2, Refrain). Limite-toi uniquement aux paroles, pas de blabla. Adapte le ton au style musical fourni.'
                     },
                     {
                         role: 'user',
-                        content: "Style musical : $genre\n\nContexte / Histoire : $prompt"
+                        content: `Style musical : ${genre}\n\nContexte / Histoire : ${prompt}`
                     }
                 ]
             })
@@ -37,18 +37,18 @@ module.exports = async function handler(req, res) {
         const data = await groqRes.json().catch(() => ({}));
         
         if (!groqRes.ok || data.error) {
-            throw new Error((data.error && data.error.message) ? data.error.message : "Erreur HTTP $($groqRes.status)");
+            throw new Error((data.error && data.error.message) ? data.error.message : `Erreur HTTP ${groqRes.status}`);
         }
         
         if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-            throw new Error("Format de rponse inattendu de Groq.");
+            throw new Error("Format de reponse inattendu de Groq.");
         }
         
         const generatedLyrics = data.choices[0].message.content.trim();
         
         return res.status(200).json({ lyrics: generatedLyrics });
     } catch (error) {
-        console.error("Erreur gnration Groq:", error);
+        console.error("Erreur generation Groq:", error);
         return res.status(500).json({ error: "Erreur serveur: " + error.message });
     }
 }

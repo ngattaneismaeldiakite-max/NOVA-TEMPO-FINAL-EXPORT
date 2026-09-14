@@ -2,13 +2,16 @@ module.exports = async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).json({ error: "Method not allowed" });
     
     try {
-        const { lyrics, voice, genre } = req.body;
+        const { lyrics, voice, genre } = req.body || {};
         const tags = genre + ", " + voice + " voice";
+        const apiKey = process.env.PIAPI_KEY;
+        
+        if (!apiKey) return res.status(500).json({ error: "La cle API PiAPI est manquante" });
         
         const response = await fetch('https://api.piapi.ai/api/suno/v1/music', {
             method: 'POST',
             headers: {
-                'Authorization': Bearer ,
+                'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({

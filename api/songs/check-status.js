@@ -3,11 +3,13 @@ module.exports = async function handler(req, res) {
     
     try {
         const taskId = req.query.id;
+        const apiKey = process.env.PIAPI_KEY;
+        if (!apiKey) return res.status(500).json({ error: "La cle API PiAPI est manquante" });
         
-        const response = await fetch('https://api.piapi.ai/api/suno/v1/music/' + taskId, {
+        const response = await fetch(`https://api.piapi.ai/api/suno/v1/music/${taskId}`, {
             method: 'GET',
             headers: {
-                'Authorization': Bearer ,
+                'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
             }
         });
