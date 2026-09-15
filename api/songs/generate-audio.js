@@ -6,17 +6,20 @@ module.exports = async function handler(req, res) {
         
         let tags = genre;
         switch (genre) {
-            case 'Afrobeat': tags = "afrobeat, afropop, rhythmic, upbeat, percussion"; break;
-            case 'Amapiano': tags = "amapiano, deep log drum, afro house, groovy"; break;
+            case 'Afrobeat': tags = "afrobeat, log drum, groove bassline, melodic percussion, radio quality"; break;
+            case 'Amapiano': tags = "amapiano, deep log drum, afro house, groovy, amapiano piano riff, shaker rhythm, deep bass"; break;
             case 'Pop Acoustique': tags = "acoustic pop, emotional, guitar, piano, clear vocal"; break;
-            case 'Rap Français': tags = "french rap, trap beat, hard 808, punchy, urban"; break;
-            case 'Coupé Décalé': tags = "coupe decale, fast afrobeat, dance, energetic, african club"; break;
+            case 'Rap Français': tags = "french rap, trap beat, hard 808, punchy, urban, french rap flow, trap 808, punchy hi-hats, urban vocal delivery"; break;
+            case 'Coupé Décalé': tags = "coupe decale, fast tempo, festive percussion, call and response vocals, party energy"; break;
             case 'R&B Soul': tags = "contemporary r&b, smooth soul, romantic, emotional"; break;
             case 'Reggae Dancehall': tags = "dancehall, reggae pop, sunny, tropical, upbeat"; break;
         }
         
-        const voiceTag = voice === 'female' ? "female vocalist" : (voice === 'duo' ? "male and female duet" : "male vocalist");
-        const finalTags = `${tags}, ${voiceTag}, high quality, catchy`;
+        // Ajout du type de voix (le "smooth" peut-être ajusté, on garde le type demandé par l'utilisateur)
+        const voiceTag = voice === 'female' ? "smooth female vocalist" : (voice === 'duo' ? "soulful male and female duet" : "smooth male vocalist");
+        
+        // La patte professionnelle finale exigée
+        const finalTags = `${tags}, ${voiceTag}, professional studio quality, clear mix`;
         
         const apiKey = process.env.PIAPI_KEY;
         if (!apiKey) return res.status(500).json({ error: "La cle API PiAPI est manquante" });
