@@ -24,10 +24,7 @@ module.exports = async function handler(req, res) {
         
         if (status === 'completed') {
             const outputs = data.data.output;
-            return res.status(200).json({ 
-                status: 'completed', 
-                outputs: outputs
-            });
+            return res.status(200).json({ status: 'completed', outputs: outputs });
         } else if (status === 'failed') {
              return res.status(200).json({ status: 'failed' });
         } else {
