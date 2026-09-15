@@ -43,7 +43,7 @@ module.exports = async function handler(req, res) {
         try {
             data = JSON.parse(rawText);
         } catch (e) {
-            return res.status(500).json({ error: `PiAPI erreur brute: ${rawText.substring(0, 150)}` });
+            return res.status(500).json({ error: `Erreur PiAPI: ${rawText.substring(0, 150)}` });
         }
 
         if (data.code !== 200) {
