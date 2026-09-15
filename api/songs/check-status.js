@@ -26,7 +26,7 @@ module.exports = async function handler(req, res) {
             const outputs = data.data.output;
             return res.status(200).json({ 
                 status: 'completed', 
-                outputs: outputs // On renvoie TOUT l'objet pour debugger le nom exact de la clé
+                outputs: outputs
             });
         } else if (status === 'failed') {
              return res.status(200).json({ status: 'failed' });
