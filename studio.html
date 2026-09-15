@@ -283,10 +283,7 @@
                         document.getElementById('step-loading').style.display = 'none';
                         
                         // Analyse de la réponse brute pour trouver l'URL
-                        let clipUrl = "";
-                        const outputs = statusData.outputs;
-                        let clipUrl = "";
-                        const outputs = statusData.outputs;
+                        let clipUrl = ""; const outputs = statusData.outputs;
                         if (outputs && outputs.songs && outputs.songs.length > 0) {
                             clipUrl = outputs.songs[0].song_path;
                         } else if (Array.isArray(outputs) && outputs.length > 0) {
