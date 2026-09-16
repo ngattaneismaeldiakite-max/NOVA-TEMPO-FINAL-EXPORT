@@ -6,7 +6,6 @@ module.exports = async function handler(req, res) {
         const apiKey = process.env.SUNO_API_KEY;
         if (!apiKey) return res.status(500).json({ error: "La cle API Suno est manquante" });
         
-        // C'est ici que l'adresse a été corrigée !
         const response = await fetch(`https://api.sunoapi.org/api/v1/generate/record-info?taskId=${taskId}`, {
             method: 'GET',
             headers: {
@@ -17,7 +16,6 @@ module.exports = async function handler(req, res) {
 
         const data = await response.json();
         
-        // Si Suno renvoie une erreur (plus de crédits, etc), on l'affiche enfin
         if (data.code && data.code !== 200) {
             return res.status(200).json({ error: data.msg || 'Erreur API Suno' });
         }
@@ -40,9 +38,10 @@ module.exports = async function handler(req, res) {
         const songData = sunoData[0];
         const status = songData.status ? songData.status.toLowerCase() : 'processing'; 
         
-        if (status === 'complete' || status === 'completed') {
+        // CORRECTION : On accepte "success", "complete", "completed", ou si l'URL audio est déjà là !
+        if (status === 'complete' || status === 'completed' || status === 'success' || songData.audio_url || songData.url || songData.song_path) {
             return res.status(200).json({ status: 'completed', outputs: [songData] });
-        } else if (status === 'failed' || status === 'error') {
+        } else if (status === 'failed' || status === 'error' || status === 'fail') {
              return res.status(200).json({ status: 'failed' });
         } else {
              return res.status(200).json({ status: 'processing' });
