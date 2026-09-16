@@ -6,51 +6,44 @@ module.exports = async function handler(req, res) {
         
         let tags = genre;
         switch (genre) {
-            case 'Afrobeat': tags = "afrobeat, log drum, groove bassline, melodic percussion, radio quality"; break;
-            case 'Amapiano': tags = "amapiano, deep log drum, afro house, groovy, amapiano piano riff, shaker rhythm, deep bass"; break;
-            case 'Pop Acoustique': tags = "acoustic pop, emotional, guitar, piano, clear vocal"; break;
-            case 'Rap Français': tags = "french rap, trap beat, hard 808, punchy, urban, french rap flow, trap 808, punchy hi-hats, urban vocal delivery"; break;
-            case 'Coupé Décalé': tags = "coupe decale, fast tempo, festive percussion, call and response vocals, party energy"; break;
-            case 'R&B Soul': tags = "contemporary r&b, smooth soul, romantic, emotional"; break;
-            case 'Reggae Dancehall': tags = "dancehall, reggae pop, sunny, tropical, upbeat"; break;
+            case 'Coupé Décalé': tags = "ivorian coupe decale, atalaku, fast tempo, festive animation, sebene guitar, log drum"; break;
+            case 'Amapiano': tags = "amapiano, deep log drum, south african vibe, groovy shaker, party"; break;
+            case 'Afrobeat': tags = "afrobeat, naija groove, smooth percussion, saxophone"; break;
+            case 'Ndombolo': tags = "ndombolo, congolese rumba, sebene guitar, fast dance"; break;
+            case 'Rap Français': tags = "french rap, trap beat, heavy 808, punchy drill"; break;
+            case 'Zouk': tags = "zouk, kizomba, romantic, slow dance, smooth"; break;
+            default: tags = "afrobeat, log drum"; break;
         }
         
-        const voiceTag = voice === 'female' ? "smooth female vocalist" : (voice === 'duo' ? "soulful male and female duet" : "smooth male vocalist");
-        const finalTags = `${tags}, ${voiceTag}, professional studio quality, clear mix`;
+        const voiceTag = voice === 'female' ? "smooth female vocalist" : (voice === 'duo' ? "male and female duet" : "energetic male vocalist");
+        const finalTags = `${tags}, ${voiceTag}`;
         
-        const apiKey = process.env.PIAPI_KEY;
-        if (!apiKey) return res.status(500).json({ error: "La cle API PiAPI est manquante" });
+        const apiKey = process.env.SUNO_API_KEY;
+        if (!apiKey) return res.status(500).json({ error: "La cle API SUNO est manquante" });
         
-        const response = await fetch('https://api.piapi.ai/api/v1/task', {
+        const response = await fetch('https://api.sunoapi.org/api/v1/generate', {
             method: 'POST',
             headers: {
-                'X-API-Key': apiKey,
+                'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: "music-u",
-                task_type: "generate_music",
-                input: {
-                    gpt_description_prompt: finalTags,
-                    lyrics: lyrics,
-                    lyrics_type: "user"
-                }
+                prompt: lyrics,
+                tags: finalTags,
+                title: "Hit NovaTempo",
+                make_instrumental: false,
+                wait_audio: false
             })
         });
 
-        const rawText = await response.text();
-        let data;
-        try {
-            data = JSON.parse(rawText);
-        } catch (e) {
-            return res.status(500).json({ error: `Erreur PiAPI: ${rawText.substring(0, 150)}` });
+        const data = await response.json();
+        
+        if (!response.ok || !data) {
+            return res.status(500).json({ error: `Erreur API Suno` });
         }
-
-        if (data.code !== 200) {
-            return res.status(500).json({ error: data.message || `API Error PiAPI (Code ${data.code})` });
-        }
-
-        return res.status(200).json({ job_id: data.data.task_id });
+        
+        const jobId = Array.isArray(data) ? data[0].id : data.id;
+        return res.status(200).json({ job_id: jobId });
     } catch (error) {
         return res.status(500).json({ error: "Erreur serveur: " + error.message });
     }
