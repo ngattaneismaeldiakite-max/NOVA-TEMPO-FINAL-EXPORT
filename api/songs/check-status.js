@@ -3,29 +3,34 @@ module.exports = async function handler(req, res) {
     
     try {
         const taskId = req.query.id;
-        const apiKey = process.env.PIAPI_KEY;
-        if (!apiKey) return res.status(500).json({ error: "La cle API PiAPI est manquante" });
+        const apiKey = process.env.SUNO_API_KEY;
+        if (!apiKey) return res.status(500).json({ error: "La cle API Suno est manquante" });
         
-        const response = await fetch(`https://api.piapi.ai/api/v1/task/${taskId}`, {
+        const response = await fetch(`https://api.sunoapi.org/api/v1/generate?ids=${taskId}`, {
             method: 'GET',
             headers: {
-                'X-API-Key': apiKey,
+                'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
             }
         });
 
-        const data = await response.json().catch(() => ({}));
+        const data = await response.json();
         
-        if (data.code && data.code !== 200) {
-            return res.status(500).json({ error: data.message || 'API Error PiAPI' });
-        }
+        let songData;
+        if (Array.isArray(data)) songData = data[0];
+        else if (data.data && Array.isArray(data.data)) songData = data.data[0];
+        else songData = data;
+        
+        if (!songData) return res.status(200).json({ status: 'processing' });
 
-        const status = data.data ? data.data.status : 'pending'; 
+        const status = songData.status || 'pending'; 
         
-        if (status === 'completed') {
-            const outputs = data.data.output;
-            return res.status(200).json({ status: 'completed', outputs: outputs });
-        } else if (status === 'failed') {
+        if (status === 'complete' || status === 'completed') {
+            return res.status(200).json({ 
+                status: 'completed', 
+                outputs: [songData] 
+            });
+        } else if (status === 'failed' || status === 'error') {
              return res.status(200).json({ status: 'failed' });
         } else {
              return res.status(200).json({ status: 'processing' });
