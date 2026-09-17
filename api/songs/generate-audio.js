@@ -25,7 +25,7 @@ module.exports = async function handler(req, res) {
             prompt: lyrics,
             style: `${styleParams}, ${voiceTag}`,
             title: "Hit NovaTempo",
-            model: "V5.5",
+            model: "V6", // CORRECTION ICI : passage au modèle V6 autorisé
             callBackUrl: "https://example.com/callback"
         };
         
