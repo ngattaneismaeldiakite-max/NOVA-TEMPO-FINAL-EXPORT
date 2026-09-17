@@ -16,8 +16,10 @@
         }
         body { background-color: var(--dark); color: white; font-family: 'Inter', sans-serif; }
         .glass-panel {
-            background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 24px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
         }
         .tag {
             padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer;
@@ -50,6 +52,7 @@
     </div>
 
     <main class="max-w-4xl mx-auto space-y-8">
+        <!-- ETAPE 1 : INSPIRATION -->
         <div id="step1-inspiration" class="glass-panel p-8">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
                 <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">1</span>
@@ -62,21 +65,20 @@
                     <div class="tag" onclick="selectOccasion(this, 'anniversaire')">🎂 Anniversaire</div>
                     <div class="tag" onclick="selectOccasion(this, 'amour')">❤️ Amour</div>
                     <div class="tag" onclick="selectOccasion(this, 'hommage')">🙏 Hommage</div>
-                    <div class="tag" onclick="selectOccasion(this, 'fete')">🎉 Fête (Enjaillement)</div>
+                    <div class="tag" onclick="selectOccasion(this, 'fete')">🎉 Fête</div>
                     <div class="tag" onclick="selectOccasion(this, 'libre')">✍️ Sujet libre</div>
                 </div>
             </div>
 
             <div class="mb-6">
                 <p class="text-slate-400 mb-3 text-sm font-semibold uppercase tracking-wider">Style Musical</p>
-                <input type="hidden" id="lyrics-genre-val" value="Coupé Décalé">
+                <input type="hidden" id="lyrics-genre-val" value="Afrobeat">
                 <div class="flex flex-wrap gap-3" id="genre-tags">
-                    <div class="tag active" onclick="selectTag(this, 'lyrics-genre-val', 'Coupé Décalé')">🕺 Coupé Décalé</div>
+                    <div class="tag active" onclick="selectTag(this, 'lyrics-genre-val', 'Afrobeat')">🥁 Afrobeat</div>
                     <div class="tag" onclick="selectTag(this, 'lyrics-genre-val', 'Amapiano')">🎹 Amapiano</div>
-                    <div class="tag" onclick="selectTag(this, 'lyrics-genre-val', 'Afrobeat')">🌍 Afrobeat</div>
-                    <div class="tag" onclick="selectTag(this, 'lyrics-genre-val', 'Ndombolo')">🎸 Ndombolo</div>
-                    <div class="tag" onclick="selectTag(this, 'lyrics-genre-val', 'Rap Français')">🎤 Rap / Drill</div>
-                    <div class="tag" onclick="selectTag(this, 'lyrics-genre-val', 'Zouk')">💞 Zouk / Kizomba</div>
+                    <div class="tag" onclick="selectTag(this, 'lyrics-genre-val', 'Coupé Décalé')">🕺 Coupé Décalé</div>
+                    <div class="tag" onclick="selectTag(this, 'lyrics-genre-val', 'Rap Français')">🎤 Rap Français</div>
+                    <div class="tag" onclick="selectTag(this, 'lyrics-genre-val', 'Zouk')">💃 Zouk</div>
                 </div>
             </div>
 
@@ -90,6 +92,7 @@
             </button>
         </div>
 
+        <!-- ETAPE 2 : PAROLES -->
         <div id="step2-lyrics" class="glass-panel p-8 hidden">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
                 <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">2</span>
@@ -98,6 +101,7 @@
             <textarea id="generated-lyrics-text" rows="12" class="font-mono text-sm mb-6"></textarea>
         </div>
 
+        <!-- ETAPE 3 : AUDIO -->
         <div id="step3-audio" class="glass-panel p-8 hidden">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
                 <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">3</span>
@@ -108,7 +112,7 @@
                 <p class="text-slate-400 mb-3 text-sm font-semibold uppercase tracking-wider">Type de voix</p>
                 <input type="hidden" id="audio-voice-val" value="male">
                 <div class="flex flex-wrap gap-3" id="voice-tags">
-                    <div class="tag active" onclick="selectTag(this, 'audio-voice-val', 'male')">👦 Voix Masculine</div>
+                    <div class="tag active" onclick="selectTag(this, 'audio-voice-val', 'male')">👨 Voix Masculine</div>
                     <div class="tag" onclick="selectTag(this, 'audio-voice-val', 'female')">👩 Voix Féminine</div>
                     <div class="tag" onclick="selectTag(this, 'audio-voice-val', 'duo')">👫 Duo Mixte</div>
                 </div>
@@ -119,12 +123,14 @@
             </button>
         </div>
 
+        <!-- ECRAN DE CHARGEMENT -->
         <div id="step-loading" class="glass-panel p-12 text-center hidden">
             <i class="fa-solid fa-compact-disc fa-spin text-5xl text-green-500 mb-6"></i>
-            <h3 class="text-2xl font-bold mb-2">Suno compose votre Hit...</h3>
-            <p id="loading-text" class="text-slate-400">Cela prend généralement 1 à 2 minutes.</p>
+            <h3 class="text-2xl font-bold mb-2">L'IA compose votre Hit...</h3>
+            <p id="loading-text" class="text-slate-400">Cela prend généralement 2 à 3 minutes.</p>
         </div>
 
+        <!-- ECRAN DE SUCCES -->
         <div id="success-player" class="glass-panel p-8 text-center hidden border-green-500/50">
             <h2 class="text-3xl font-black text-green-500 mb-6">🎧 Votre Hit est prêt !</h2>
             <audio id="final-audio" controls class="w-full rounded-full shadow-lg outline-none"></audio>
@@ -171,7 +177,7 @@
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Écriture en cours...'; 
         btn.disabled = true;
         document.getElementById('step2-lyrics').style.display = 'block';
-        lyricsBox.value = "L'IA prépare votre texte..."; 
+        lyricsBox.value = "Le cerveau chauffe... L'IA prépare ton texte !"; 
         lyricsBox.disabled = true;
 
         try {
@@ -218,7 +224,19 @@
             if (!response.ok || data.error) throw new Error(data.error || "Erreur API");
 
             const jobId = data.job_id;
+            let attempts = 0; // COMPTEUR DE TENTATIVES
+            
             const pollInterval = setInterval(async () => {
+                attempts++;
+                
+                // LIMITE DE 40 TENTATIVES (~2 minutes)
+                if (attempts >= 40) {
+                    clearInterval(pollInterval);
+                    alert("La génération prend plus de temps que prévu, veuillez réessayer.");
+                    window.location.reload();
+                    return;
+                }
+                
                 try {
                     const statusRes = await fetch('/api/songs/check-status?id=' + jobId);
                     const statusData = await statusRes.json();
@@ -230,9 +248,9 @@
                         return;
                     }
                     
-                    document.getElementById("loading-text").innerText = "Génération en cours... (" + (statusData.status || "patientez") + ")";
+                    document.getElementById("loading-text").innerText = "Génération en cours... (Statut : " + (statusData.status || "inconnu") + ") - Tentative " + attempts + "/40";
 
-                    if (statusData.status === 'completed' || statusData.status === 'complete') {
+                    if (statusData.status === 'completed') {
                         clearInterval(pollInterval);
                         document.getElementById('step-loading').style.display = 'none';
                         
@@ -247,7 +265,7 @@
                         }
                         
                         if (!clipUrl) {
-                            alert("Erreur: Impossible de trouver l'URL de la chanson.");
+                            alert("Erreur: Impossible de trouver l'URL audio.");
                             window.location.reload();
                             return;
                         }
@@ -255,15 +273,15 @@
                         document.getElementById('success-player').style.display = 'block';
                         document.getElementById('final-audio').src = clipUrl;
                         document.getElementById('final-audio').play();
-                    } else if (statusData.status === 'failed' || statusData.status === 'error') {
+                    } else if (statusData.status === 'failed') {
                         clearInterval(pollInterval); 
-                        alert("Échec de la génération."); 
+                        alert("Échec de la génération de l'audio."); 
                         window.location.reload();
                     }
-                } catch (err) { console.error(err); }
+                } catch (err) { console.error("Erreur Check Status:", err); }
             }, 3000);
         } catch (error) {
-            console.error(error); 
+            console.error("Erreur Generate Audio:", error); 
             alert("Erreur: " + error.message); 
             window.location.reload();
         }
