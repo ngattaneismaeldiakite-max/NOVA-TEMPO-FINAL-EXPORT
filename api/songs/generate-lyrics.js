@@ -4,6 +4,9 @@ module.exports = async function handler(req, res) {
     try {
         const { theme } = req.body;
         const groqApiKey = process.env.GROQ_API_KEY;
+        
+        // Lecture dynamique du modèle via la variable d'environnement (avec la valeur par défaut demandée)
+        const groqModel = process.env.GROQ_MODEL || 'openai/gpt-oss-120b';
 
         if (!groqApiKey) return res.status(500).json({ error: "Clé API Groq manquante" });
 
@@ -24,7 +27,7 @@ RÈGLES IMPORTANTES :
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'llama-3.1-70b-versatile', // C'EST CE MODÈLE QUI A ÉTÉ CORRIGÉ !
+                model: groqModel, 
                 messages: [
                     { role: 'system', content: systemPrompt },
                     { role: 'user', content: `Écris-moi un tube africain sur ce thème : ${theme || 'La fête et la joie de vivre'}` }
