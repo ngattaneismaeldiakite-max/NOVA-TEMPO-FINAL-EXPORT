@@ -20,7 +20,6 @@ header:not(.scrolled) a[href="login.html"],
 header:not(.scrolled) .user-name,
 header:not(.scrolled) .dropdown-icon {
     color: var(--white) !important;
-     /* Pour garantir la lisibilité */
 }
 header:not(.scrolled) nav a:hover,
 header:not(.scrolled) a[href="login.html"]:hover {
@@ -52,18 +51,15 @@ header:not(.scrolled) a[href="login.html"]:hover {
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.04; background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E'); z-index: 1; pointer-events: none;"></div>
 
     <div class="hero-content" style="max-width: 1000px; z-index: 2; width: 100%; position: relative;">
-        <!-- Variable weight main title with refined shadow and gradient -->
         <h1 class="animate-fade-in-up" style="font-family: 'Bricolage Grotesque', sans-serif; color: white; font-size: clamp(2.8rem, 7vw, 6.5rem); line-height: 1.05; letter-spacing: -0.02em;">
             <span style="font-weight: 400; opacity: 0.9;"><span class="brand-name">NovaTempo</span> transforme tes</span><br>
             <span style="font-weight: 900; background: linear-gradient(135deg, #E5C07B 0%, #C87A5B 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PAROLES EN MUSIQUE</span>
         </h1>
         
-        <!-- Premium Kicker repositioned BELOW title -->
         <div class="hero-kicker animate-shimmer delay-1" style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; color: #D4AF37; margin-top: 30px; margin-bottom: 40px; display: flex; align-items: center; justify-content: center; gap: 15px;">
             AU CHAUD ???
         </div>
         
-        <!-- Animated glowing CTA -->
         <div class="animate-bounce-in delay-2" style="margin-top: 20px;">
             <button onclick="fireConfetti(); setTimeout(function(){ window.location.href='signup.html'; }, 600);" class="premium-glow-btn">Tape dedans !</button>
         </div>
@@ -99,48 +95,78 @@ header:not(.scrolled) a[href="login.html"]:hover {
                 </div>
             </div>
         </div>
-    </section>    <section id="showcase" class="showcase-section">
+    </section>    
+
+    <!-- ============================================== -->
+    <!-- NOUVELLE SECTION AUDIO AVEC VOS MUSIQUES       -->
+    <!-- ============================================== -->
+    <section id="showcase" class="showcase-section">
         <h2 class="section-title-3d">Écoutez la Magie de l'IA</h2>
-        <p style="text-align:center; color:#666; margin-bottom:40px; font-size:18px;">Voici quelques exemples de chansons générées sur Nova Tempo.</p>
+        <p style="text-align:center; color:#666; margin-bottom:40px; font-size:18px;">Voici quelques exemples de hits générés sur Nova Tempo.</p>
         
         <div class="showcase-grid">
-            <!-- Sample 1 -->
+            <!-- Exemple 1 : Aicha -->
             <div class="showcase-card">
                 <div class="showcase-cover cover-1">
                     <button class="play-btn">▶</button>
                 </div>
                 <div class="showcase-info">
-                    <h3>Joyeux Anniversaire Maman</h3>
+                    <h3>Aïcha (HitIA)</h3>
                     <span class="showcase-tag">Afro Pop</span>
                 </div>
-                <audio src="#" controls></audio>
+                <audio src="aicha.mp3" controls style="width: 100%; margin-top: 15px; border-radius: 8px;"></audio>
             </div>
 
-            <!-- Sample 2 -->
+            <!-- Exemple 2 : Nova Tempo -->
             <div class="showcase-card">
                 <div class="showcase-cover cover-2">
                     <button class="play-btn">▶</button>
                 </div>
                 <div class="showcase-info">
-                    <h3>Notre Rencontre (Marc & Sophie)</h3>
-                    <span class="showcase-tag">R&B Romantique</span>
+                    <h3>Nova Tempo Vibe</h3>
+                    <span class="showcase-tag">Coupé Décalé</span>
                 </div>
-                <audio src="#" controls></audio>
+                <audio src="NOVA TEMPO.mp3" controls style="width: 100%; margin-top: 15px; border-radius: 8px;"></audio>
             </div>
 
-            <!-- Sample 3 -->
+            <!-- Exemple 3 : Nova Tempo (1) -->
             <div class="showcase-card">
                 <div class="showcase-cover cover-3">
                     <button class="play-btn">▶</button>
                 </div>
                 <div class="showcase-info">
-                    <h3>Hymne de l'Équipe</h3>
-                    <span class="showcase-tag">Rap / Hip-Hop</span>
+                    <h3>Nova Tempo Anthem</h3>
+                    <span class="showcase-tag">Amapiano</span>
                 </div>
-                <audio src="#" controls></audio>
+                <audio src="NOVA TEMPO (1).mp3" controls style="width: 100%; margin-top: 15px; border-radius: 8px;"></audio>
             </div>
         </div>
+
+        <!-- Script pour animer les gros boutons Play -->
+        <script>
+            document.querySelectorAll('.showcase-card').forEach(card => {
+                const playBtn = card.querySelector('.play-btn');
+                const audio = card.querySelector('audio');
+                
+                if (playBtn && audio) {
+                    playBtn.addEventListener('click', () => {
+                        document.querySelectorAll('.showcase-card audio').forEach(a => {
+                            if (a !== audio) { a.pause(); }
+                        });
+                        if (audio.paused) {
+                            audio.play();
+                        } else {
+                            audio.pause();
+                        }
+                    });
+
+                    audio.addEventListener('play', () => playBtn.innerHTML = '⏸');
+                    audio.addEventListener('pause', () => playBtn.innerHTML = '▶');
+                }
+            });
+        </script>
     </section>
+    <!-- ============================================== -->
 
     <section id="comment-ca-marche" class="how-it-works">
         <h2>Comment on cuit le son ? ? C'est un jeu d'enfant ! 🎮</h2>
@@ -163,7 +189,7 @@ header:not(.scrolled) a[href="login.html"]:hover {
         </div>
     </section>
 
-            <section id="tarifs" class="pricing" style="padding: 80px 5%; background-color: #f7f7f8;">
+    <section id="tarifs" class="pricing" style="padding: 80px 5%; background-color: #f7f7f8;">
         <h2 class="section-title-3d">Nos offres</h2>
           <div style="background: rgba(0, 71, 171, 0.05); border-left: 5px solid var(--primary-magenta); padding: 25px 30px; border-radius: 0 16px 16px 0; max-width: 800px; margin: 0 auto 60px auto; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
               <p style="color: #334155; font-size: 18px; line-height: 1.7; margin: 0;">
@@ -310,7 +336,6 @@ if (typeof toggleProfileMenu !== "function") {
 }
 </script>
 <script>
-    // UX Scroll Effects
     window.addEventListener('scroll', function() {
         const header = document.querySelector('header');
         if (window.scrollY > 50) {
@@ -329,7 +354,6 @@ if (typeof toggleProfileMenu !== "function") {
             }
         }
     });
-    // Trigger once on load
     window.dispatchEvent(new Event('scroll'));
 </script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script><script>
@@ -342,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const btn = this.querySelector('button');
                 if(btn) {
                     const originalText = btn.innerHTML;
-                    btn.innerHTML = '✨ C\\'est noté ! ✨';
+                    btn.innerHTML = '✨ C\'est noté ! ✨';
                     btn.style.backgroundColor = '#4CAF50';
                     btn.style.color = 'white';
                     setTimeout(() => {
@@ -360,16 +384,13 @@ document.addEventListener('DOMContentLoaded', function() {
     <script>
         function handlePricingClick(event, plan) {
             event.preventDefault();
-            // Si l'utilisateur est connecté, l'envoyer vers paramètres pour payer
             if (localStorage.getItem('nova_user_id')) {
                 window.location.href = 'parametres.html?plan=' + plan;
             } else {
-                // Sinon l'envoyer vers l'inscription
                 window.location.href = 'signup.html?plan=' + plan;
             }
         }
     </script>
-<!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
@@ -381,7 +402,6 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
-<!--End of Tawk.to Script-->
 <script>
 function fireConfetti() {
     if (typeof confetti === 'function') {
@@ -395,58 +415,3 @@ function fireConfetti() {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
