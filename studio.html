@@ -46,7 +46,7 @@
         <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
             NovaTempo Studio
         </h1>
-        <a href="/" class="text-slate-400 hover:text-white transition-colors">
+        <a href="index.html" class="text-slate-400 hover:text-white transition-colors">
             <i class="fa-solid fa-house mr-2"></i>Accueil
         </a>
     </div>
@@ -134,8 +134,17 @@
         <div id="success-player" class="glass-panel p-8 text-center hidden border-green-500/50">
             <h2 class="text-3xl font-black text-green-500 mb-6">🎧 Votre Hit est prêt !</h2>
             <audio id="final-audio" controls class="w-full rounded-full shadow-lg outline-none"></audio>
+            
+            <div class="mt-6">
+                <button onclick="window.location.href='bibliotheque.html'" class="btn-glow inline-flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-list-music"></i> Voir dans ma bibliothèque
+                </button>
+            </div>
         </div>
     </main>
+
+    <!-- Inclusion de Supabase -->
+    <script src="supabase-client.js"></script>
 
     <script>
     const templates = {
@@ -273,6 +282,23 @@
                         document.getElementById('success-player').style.display = 'block';
                         document.getElementById('final-audio').src = clipUrl;
                         document.getElementById('final-audio').play();
+
+                        // -- SAUVEGARDE AUTOMATIQUE DANS SUPABASE --
+                        const occasionEl = document.querySelector('#occasion-tags .tag.active');
+                        const occasionTxt = occasionEl ? occasionEl.innerText.replace(/[^\w\sàâäéèêëîïôöùûüç]/g, '').trim() : 'Libre';
+                        const dateCreation = new Date().toLocaleDateString('fr-FR');
+                        
+                        if (typeof saveTrackToDatabase === 'function') {
+                            saveTrackToDatabase({
+                                titre: "Chanson " + genre + " - " + dateCreation,
+                                occasion: occasionTxt,
+                                style_musical: genre,
+                                url_audio: clipUrl,
+                                paroles: lyrics
+                            });
+                        }
+                        // ------------------------------------------
+
                     } else if (statusData.status === 'failed') {
                         clearInterval(pollInterval); 
                         alert("Échec de la génération de l'audio."); 
