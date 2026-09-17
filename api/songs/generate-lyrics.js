@@ -11,8 +11,8 @@ module.exports = async function handler(req, res) {
 Ton travail est d'écrire des paroles de chansons (Coupé Décalé, Afrobeat, Amapiano) extrêmement festives et rythmées.
 RÈGLES IMPORTANTES :
 1. Utilise l'argot ivoirien (Nouchi) de manière naturelle : "enjaillement", "boucantier", "môgô", "drap", "faro", "kiffer", "baramôgô", etc.
-2. Commence toujours par un [Intro Atalaku] où tu fais l'animation (ex: "Hééé! On est calé! Levez les mains!").
-3. Structure clairement avec des balises : [Intro], [Couplet 1], [Refrain], [Couplet 2], [Outro].
+2. Commence toujours par un [Intro Atalaku] où tu fais l'animation.
+3. Structure avec : [Intro], [Couplet 1], [Refrain], [Couplet 2], [Outro].
 4. Le refrain doit être très répétitif et facile à chanter pour TikTok.
 5. Adapte tes paroles au thème fourni par l'utilisateur.
 6. NE DONNE AUCUNE EXPLICATION, renvoie UNIQUEMENT les paroles.`;
@@ -24,7 +24,7 @@ RÈGLES IMPORTANTES :
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'llama3-8b-8192', // Ou llama-3.1-70b-versatile
+                model: 'llama-3.1-70b-versatile', // C'EST CE MODÈLE QUI A ÉTÉ CORRIGÉ !
                 messages: [
                     { role: 'system', content: systemPrompt },
                     { role: 'user', content: `Écris-moi un tube africain sur ce thème : ${theme || 'La fête et la joie de vivre'}` }
