@@ -65,9 +65,9 @@
                     <div class="tag" onclick="selectOccasion(this, 'anniversaire')" data-type="anniversaire">🎂 Anniversaire</div>
                     <div class="tag" onclick="selectOccasion(this, 'amour')" data-type="amour">❤️ Amour</div>
                     <div class="tag" onclick="selectOccasion(this, 'hommage')" data-type="hommage">🙏 Hommage</div>
+                    <div class="tag" onclick="selectOccasion(this, 'promotion')" data-type="promotion">📢 Promotion / Événement</div>
                     <div class="tag" onclick="selectOccasion(this, 'fete')" data-type="fete">🎉 Fête</div>
                     <div class="tag" onclick="selectOccasion(this, 'libre')" data-type="libre">✍️ Sujet libre</div>
-                    <div class="tag" onclick="selectOccasion(this, 'promotion')" data-type="promotion">📢 Promotion</div>
                 </div>
             </div>
 
@@ -161,6 +161,59 @@
                 </div>
             </div>
 
+            <!-- CHAMPS PROMOTION / EVENEMENT -->
+            <div class="mb-6 space-y-4 custom-fields-group" id="fields-promotion" style="display:none;">
+                <p class="text-green-400 mb-3 text-sm font-semibold uppercase tracking-wider">Détails de la Promotion</p>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-slate-400 mb-1 text-sm block">Nom du produit/événement *</label>
+                        <input type="text" id="pro-nom" placeholder="Ex: NovaTempo">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 mb-1 text-sm block">Type (Optionnel)</label>
+                        <input type="text" id="pro-type" placeholder="Ex: Restaurant, Concert...">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="text-slate-400 mb-1 text-xs block">Point fort 1</label>
+                        <input type="text" id="pro-point1" placeholder="Ex: Prix bas">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 mb-1 text-xs block">Point fort 2</label>
+                        <input type="text" id="pro-point2" placeholder="Ex: Qualité">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 mb-1 text-xs block">Point fort 3</label>
+                        <input type="text" id="pro-point3" placeholder="Ex: Ambiance">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-slate-400 mb-1 text-sm block">Lieu</label>
+                        <input type="text" id="pro-lieu" placeholder="Ex: Abidjan">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 mb-1 text-sm block">Date</label>
+                        <input type="text" id="pro-date" placeholder="Ex: Ce samedi">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-slate-400 mb-1 text-sm block">Public visé</label>
+                        <input type="text" id="pro-public" placeholder="Ex: les jeunes, les familles">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 mb-1 text-sm block">Appel à l'action</label>
+                        <input type="text" id="pro-action" placeholder="Ex: Venez nombreux, Achetez vite">
+                    </div>
+                </div>
+            </div>
+
             <button id="btn-generate-lyrics" class="btn-glow w-full flex items-center justify-center gap-3" onclick="generateLyrics()">
                 <i class="fa-solid fa-pen-nib"></i>Générer les paroles
             </button>
@@ -221,10 +274,8 @@
 
     <script>
     const templates = {
-        'hommage': "",
         'fete': "C'est pour faire la fête...",
-        'libre': "",
-        'promotion': "Voici les détails de l'événement ou du produit à promouvoir : "
+        'libre': ""
     };
 
     window.selectOccasion = function(element, type) {
@@ -242,6 +293,9 @@
         } else if (type === 'hommage') {
             defaultPrompt.style.display = 'none';
             document.getElementById('fields-hommage').style.display = 'block';
+        } else if (type === 'promotion') {
+            defaultPrompt.style.display = 'none';
+            document.getElementById('fields-promotion').style.display = 'block';
         } else {
             defaultPrompt.style.display = 'block';
             const textarea = document.getElementById('lyrics-prompt');
@@ -281,6 +335,16 @@
             bodyData.valeur = document.getElementById('hom-valeur').value;
             bodyData.souvenir = document.getElementById('hom-souvenir').value;
             bodyData.proches = document.getElementById('hom-proches').value;
+        } else if (occasion === 'promotion') {
+            bodyData.nom_produit = document.getElementById('pro-nom').value;
+            bodyData.type = document.getElementById('pro-type').value;
+            bodyData.point1 = document.getElementById('pro-point1').value;
+            bodyData.point2 = document.getElementById('pro-point2').value;
+            bodyData.point3 = document.getElementById('pro-point3').value;
+            bodyData.lieu = document.getElementById('pro-lieu').value;
+            bodyData.date = document.getElementById('pro-date').value;
+            bodyData.public = document.getElementById('pro-public').value;
+            bodyData.action = document.getElementById('pro-action').value;
         } else {
             bodyData.prompt = document.getElementById('lyrics-prompt').value;
             if (!bodyData.prompt || !bodyData.prompt.trim()) { alert("Veuillez nous raconter votre histoire !"); return; }
