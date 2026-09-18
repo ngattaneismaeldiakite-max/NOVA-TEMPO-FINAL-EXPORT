@@ -75,8 +75,7 @@
         </div>
     </div>
 
-    <!-- On charge supabase et ton client pour la vraie connexion -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- On charge uniquement ton client qui est configuré avec tes vraies clés -->
     <script src="supabase-client.js"></script>
     <script>
         async function handleSignup(event) {
@@ -92,8 +91,10 @@
             const password = document.getElementById('signup-password').value;
 
             try {
-                // 1. Inscription dans la vraie base Supabase
-                const { data, error } = await supabase.auth.signUp({
+                if (!window.supabaseClient) throw new Error("Chargement en cours, réessaie dans une seconde.");
+
+                // Utilisation de la bonne variable window.supabaseClient
+                const { data, error } = await window.supabaseClient.auth.signUp({
                     email: email,
                     password: password,
                     options: { data: { full_name: name } }
@@ -103,16 +104,15 @@
 
                 localStorage.setItem('nova_username', name);
 
-                // 2. Redirection vers le studio si réussi
                 if (data.session) {
                     window.location.href = 'studio.html';
                 } else {
-                    alert('Inscription réussie ! (Vérifie ta boîte mail si Supabase te le demande, sinon connecte-toi)');
+                    alert('Compte créé avec succès ! Connecte-toi.');
                     window.location.href = 'login.html';
                 }
             } catch (error) {
                 console.error("Erreur Inscription:", error.message);
-                alert("Erreur lors de l'inscription : " + error.message);
+                alert("Erreur : " + error.message);
                 btn.innerHTML = originalText;
                 btn.style.opacity = '1';
                 btn.style.pointerEvents = 'auto';
