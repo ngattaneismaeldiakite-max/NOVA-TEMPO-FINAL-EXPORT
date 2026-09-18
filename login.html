@@ -72,8 +72,7 @@
         </div>
     </div>
 
-    <!-- On charge supabase et ton client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- On charge uniquement ton client qui est configuré avec tes vraies clés -->
     <script src="supabase-client.js"></script>
     <script>
         async function handleLogin(event) {
@@ -88,18 +87,19 @@
             const password = document.getElementById('login-password').value;
 
             try {
-                // Vraie vérification du mot de passe avec Supabase
-                const { data, error } = await supabase.auth.signInWithPassword({
+                if (!window.supabaseClient) throw new Error("Chargement en cours, réessaie dans une seconde.");
+
+                // Utilisation de la bonne variable window.supabaseClient
+                const { data, error } = await window.supabaseClient.auth.signInWithPassword({
                     email: email,
                     password: password
                 });
 
                 if (error) throw error;
-                // Si tout est bon, on va au studio
                 window.location.href = 'studio.html';
             } catch (error) {
                 console.error("Erreur Connexion:", error.message);
-                alert("Erreur de connexion : Vérifie ton email ou ton mot de passe.");
+                alert("Erreur de connexion : " + error.message);
                 btn.innerHTML = originalText;
                 btn.style.opacity = '1';
                 btn.style.pointerEvents = 'auto';
