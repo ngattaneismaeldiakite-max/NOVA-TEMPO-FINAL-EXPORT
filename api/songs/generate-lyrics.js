@@ -1,18 +1,12 @@
-const Groq = require('groq-sdk');
+// Plus aucune trace de Groq/IA ici. Tout passe par nos templates.
 
-const groq = new Groq({
-    apiKey: process.env.GROQ_API_KEY
-});
-
-// Liste des occasions supportées par les templates stricts
 const ALLOWED_OCCASIONS = ['amour', 'anniversaire', 'hommage', 'promotion', 'adoration'];
 
 function fillTemplate(template, data, occasion) {
     if (!template) return '';
 
     try {
-        // Remplacement générique pour nettoyer les balises
-        // (La logique reste identique, on remplace selon l'occasion)
+        // Remplacement des variables selon l'occasion
         
         // Amour
         template = template.replace(/\[prenom_destinataire\]/g, data['amour-prenom'] || 'mon amour');
@@ -67,7 +61,7 @@ function fillTemplate(template, data, occasion) {
         return template;
     } catch (error) {
         console.error("Erreur lors du remplissage du template:", error);
-        return template; // Retourne le template brut en cas d'erreur
+        return template; 
     }
 }
 
@@ -86,11 +80,11 @@ module.exports = async (req, res) => {
         const data = req.body;
         const occasion = data.occasion;
 
-        // 1. SI C'EST UNE OCCASION STANDARD (Amour, Anniversaire, Hommage, Promo, Adoration)
+        // VÉRIFICATION : Si l'occasion fait bien partie de nos 5 catégories
         if (ALLOWED_OCCASIONS.includes(occasion)) {
             let templates;
             
-            // Charger le bon fichier de templates selon l'occasion
+            // On charge le bon fichier qui contient tes 50 textes
             switch (occasion) {
                 case 'amour':
                     templates = require('./templates/amour');
@@ -109,44 +103,24 @@ module.exports = async (req, res) => {
                     break;
             }
 
-            // Choisir un template au hasard parmi les 50
+            // La mécanique magique : on choisit un nombre au hasard entre 0 et 49
             const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
             
-            // Remplir le template avec les données du formulaire
+            // On injecte les mots de l'utilisateur dans le texte
             const finalLyrics = fillTemplate(randomTemplate, data, occasion);
 
+            // On renvoie le résultat propre
             return res.status(200).json({ lyrics: finalLyrics });
-        } 
-        
-        // 2. SI L'OCCASION N'EST PAS RECONNUE (Sécurité / Fallback)
-        else {
-            const prompt = `Écris les paroles d'une chanson sur le thème : ${data.prompt}. 
-            Structure la chanson avec [Couplet 1], [Refrain], [Couplet 2], [Refrain], [Pont], [Outro].
-            Ne mets aucun commentaire, juste les paroles.`;
-
-            const completion = await groq.chat.completions.create({
-                messages: [
-                    {
-                        role: "system",
-                        content: "Tu es un parolier professionnel."
-                    },
-                    {
-                        role: "user",
-                        content: prompt
-                    }
-                ],
-                model: "mixtral-8x7b-32768",
-                temperature: 0.7,
-                max_tokens: 1000,
-            });
-
-            return res.status(200).json({ lyrics: completion.choices[0].message.content });
+            
+        } else {
+            // Si l'occasion n'existe pas, on bloque (sécurité)
+            return res.status(400).json({ error: 'Occasion non valide.' });
         }
 
     } catch (error) {
-        console.error('Erreur Groq/Template:', error);
+        console.error('Erreur interne:', error);
         return res.status(500).json({ 
-            error: 'Erreur lors de la génération',
+            error: 'Erreur lors de la génération du texte',
             details: error.message 
         });
     }
