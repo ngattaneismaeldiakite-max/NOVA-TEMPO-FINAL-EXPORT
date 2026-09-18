@@ -27,11 +27,11 @@
         }
         .tag:hover { border-color: var(--primary); color: white; }
         .tag.active { background: var(--metallic-gradient); color: white; border: none; }
-        textarea, select {
+        textarea, select, input[type="text"] {
             width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px; padding: 16px; color: white; outline: none; transition: border-color 0.3s ease;
         }
-        textarea:focus, select:focus { border-color: var(--primary); }
+        textarea:focus, select:focus, input[type="text"]:focus { border-color: var(--primary); }
         .btn-glow {
             background: var(--metallic-gradient); font-weight: bold; border-radius: 30px;
             padding: 16px 32px; transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -62,12 +62,12 @@
             <div class="mb-6">
                 <p class="text-slate-400 mb-3 text-sm font-semibold uppercase tracking-wider">Occasion</p>
                 <div class="flex flex-wrap gap-3" id="occasion-tags">
-                    <div class="tag" onclick="selectOccasion(this, 'anniversaire')">🎂 Anniversaire</div>
-                    <div class="tag" onclick="selectOccasion(this, 'amour')">❤️ Amour</div>
-                    <div class="tag" onclick="selectOccasion(this, 'hommage')">🙏 Hommage</div>
-                    <div class="tag" onclick="selectOccasion(this, 'fete')">🎉 Fête</div>
-                    <div class="tag" onclick="selectOccasion(this, 'libre')">✍️ Sujet libre</div>
-                    <div class="tag" onclick="selectOccasion(this, 'promotion')">📢 Promotion / Événement</div>
+                    <div class="tag" onclick="selectOccasion(this, 'anniversaire')" data-type="anniversaire">🎂 Anniversaire</div>
+                    <div class="tag" onclick="selectOccasion(this, 'amour')" data-type="amour">❤️ Amour</div>
+                    <div class="tag" onclick="selectOccasion(this, 'hommage')" data-type="hommage">🙏 Hommage</div>
+                    <div class="tag" onclick="selectOccasion(this, 'fete')" data-type="fete">🎉 Fête</div>
+                    <div class="tag" onclick="selectOccasion(this, 'libre')" data-type="libre">✍️ Sujet libre</div>
+                    <div class="tag" onclick="selectOccasion(this, 'promotion')" data-type="promotion">📢 Promotion / Événement</div>
                 </div>
             </div>
 
@@ -83,9 +83,31 @@
                 </div>
             </div>
 
-            <div class="mb-6">
+            <!-- Champ libre pour les occasions sans template -->
+            <div class="mb-6" id="default-prompt">
                 <p class="text-slate-400 mb-3 text-sm font-semibold uppercase tracking-wider">L'histoire / L'anecdote</p>
                 <textarea id="lyrics-prompt" rows="4" placeholder="Ex: C'est pour les 30 ans de Marc, il adore le foot, il est très drôle et on fait la fête ce soir..."></textarea>
+            </div>
+
+            <!-- Nouveaux champs pour les templates (Amour / Anniversaire) -->
+            <div class="mb-6 space-y-4" id="custom-fields" style="display:none;">
+                <p class="text-green-400 mb-3 text-sm font-semibold uppercase tracking-wider">Remplissez les détails</p>
+                <div>
+                    <label class="text-slate-400 mb-1 text-sm block">Prénom(s) (Optionnel mais recommandé)</label>
+                    <input type="text" id="tpl-nom" placeholder="Ex: Sarah, ou Sarah et Marc">
+                </div>
+                <div>
+                    <label class="text-slate-400 mb-1 text-sm block">Votre relation (Optionnel)</label>
+                    <input type="text" id="tpl-relation" placeholder="Ex: mon amour, ma femme, mon mari">
+                </div>
+                <div>
+                    <label class="text-slate-400 mb-1 text-sm block">Durée de la relation (Optionnel)</label>
+                    <input type="text" id="tpl-duree" placeholder="Ex: 5 ans, toujours, 10 ans">
+                </div>
+                <div>
+                    <label class="text-slate-400 mb-1 text-sm block">Petite anecdote ou mot doux (Optionnel)</label>
+                    <input type="text" id="tpl-anecdote" placeholder="Ex: ce voyage en Italie, notre premier bisou">
+                </div>
             </div>
 
             <button id="btn-generate-lyrics" class="btn-glow w-full flex items-center justify-center gap-3" onclick="generateLyrics()">
@@ -149,8 +171,6 @@
 
     <script>
     const templates = {
-        'anniversaire': "C'est pour l'anniversaire de [Prénom], qui fête ses [Âge] ans...\n",
-        'amour': "C'est une chanson d'amour pour [Prénom]...",
         'hommage': "C'est une chanson en l'honneur de [Prénom]...",
         'fete': "C'est pour faire la fête...",
         'libre': "",
@@ -163,10 +183,23 @@
         });
         element.style.background = 'var(--metallic-gradient)'; element.style.color = 'white'; element.style.border = 'none'; element.classList.add('active');
 
-        const textarea = document.getElementById('lyrics-prompt');
-        let isTemplate = false;
-        for (let key in templates) { if (textarea.value === templates[key]) isTemplate = true; }
-        if (!textarea.value || isTemplate) { textarea.value = templates[type] || ''; }
+        // GESTION DE L'AFFICHAGE DES CHAMPS TEMPLATES VS GROQ
+        const customFields = document.getElementById('custom-fields');
+        const defaultPrompt = document.getElementById('default-prompt');
+        
+        // On affiche les nouveaux champs précis si c'est Amour ou Anniversaire (qui marchent avec templates)
+        if (type === 'amour' || type === 'anniversaire') {
+            defaultPrompt.style.display = 'none';
+            customFields.style.display = 'block';
+        } else {
+            defaultPrompt.style.display = 'block';
+            customFields.style.display = 'none';
+            
+            const textarea = document.getElementById('lyrics-prompt');
+            let isTemplate = false;
+            for (let key in templates) { if (textarea.value === templates[key]) isTemplate = true; }
+            if (!textarea.value || isTemplate) { textarea.value = templates[type] || ''; }
+        }
     };
 
     window.selectTag = function(element, inputId, value) {
@@ -178,26 +211,35 @@
     };
 
     window.generateLyrics = async function() {
-        const prompt = document.getElementById('lyrics-prompt').value;
         const genre = document.getElementById('lyrics-genre-val').value;
         const occasionEl = document.querySelector('#occasion-tags .tag.active');
-        const occasion = occasionEl ? occasionEl.innerText.replace(/[^\w\sàâäéèêëïîôöùûüç]/gi, '').trim() : 'Libre';
+        const occasion = occasionEl ? occasionEl.getAttribute('data-type') : 'libre';
+
+        let bodyData = { genre: genre, occasion: occasion };
+
+        if (occasion === 'amour' || occasion === 'anniversaire') {
+            bodyData.nom = document.getElementById('tpl-nom').value;
+            bodyData.relation = document.getElementById('tpl-relation').value;
+            bodyData.duree = document.getElementById('tpl-duree').value;
+            bodyData.anecdote = document.getElementById('tpl-anecdote').value;
+        } else {
+            bodyData.prompt = document.getElementById('lyrics-prompt').value;
+            if (!bodyData.prompt || !bodyData.prompt.trim()) { alert("Veuillez nous raconter votre histoire !"); return; }
+        }
 
         const btn = document.getElementById('btn-generate-lyrics');
         const lyricsBox = document.getElementById('generated-lyrics-text');
         
-        if (!prompt || !prompt.trim()) { alert("Veuillez nous raconter votre histoire !"); return; }
-        
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Écriture en cours...'; 
         btn.disabled = true;
         document.getElementById('step2-lyrics').style.display = 'block';
-        lyricsBox.value = "Le cerveau chauffe... L'IA prépare ton texte !"; 
+        lyricsBox.value = "Préparation du texte..."; 
         lyricsBox.disabled = true;
 
         try {
             const response = await fetch('/api/songs/generate-lyrics', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: prompt, genre: genre, occasion: occasion })
+                body: JSON.stringify(bodyData)
             });
             const data = await response.json();
             if (!response.ok || data.error) throw new Error(data.error || "Erreur API");
@@ -238,12 +280,11 @@
             if (!response.ok || data.error) throw new Error(data.error || "Erreur API");
 
             const jobId = data.job_id;
-            let attempts = 0; // COMPTEUR DE TENTATIVES
+            let attempts = 0;
             
             const pollInterval = setInterval(async () => {
                 attempts++;
                 
-                // LIMITE DE 40 TENTATIVES (~2 minutes)
                 if (attempts >= 40) {
                     clearInterval(pollInterval);
                     alert("La génération prend plus de temps que prévu, veuillez réessayer.");
@@ -288,7 +329,6 @@
                         document.getElementById('final-audio').src = clipUrl;
                         document.getElementById('final-audio').play();
 
-                        // -- SAUVEGARDE AUTOMATIQUE DANS SUPABASE --
                         const occasionEl = document.querySelector('#occasion-tags .tag.active');
                         const occasionTxt = occasionEl ? occasionEl.innerText.replace(/[^\w\sàâäéèêëîïôöùûüç]/g, '').trim() : 'Libre';
                         const dateCreation = new Date().toLocaleDateString('fr-FR');
@@ -302,7 +342,6 @@
                                 paroles: lyrics
                             });
                         }
-                        // ------------------------------------------
 
                     } else if (statusData.status === 'failed') {
                         clearInterval(pollInterval); 
