@@ -67,6 +67,7 @@
                     <div class="tag" onclick="selectOccasion(this, 'hommage')">🙏 Hommage</div>
                     <div class="tag" onclick="selectOccasion(this, 'fete')">🎉 Fête</div>
                     <div class="tag" onclick="selectOccasion(this, 'libre')">✍️ Sujet libre</div>
+                    <div class="tag" onclick="selectOccasion(this, 'promotion')">📢 Promotion / Événement</div>
                 </div>
             </div>
 
@@ -152,7 +153,8 @@
         'amour': "C'est une chanson d'amour pour [Prénom]...",
         'hommage': "C'est une chanson en l'honneur de [Prénom]...",
         'fete': "C'est pour faire la fête...",
-        'libre': ""
+        'libre': "",
+        'promotion': "Voici les détails de l'événement ou du produit à promouvoir : "
     };
 
     window.selectOccasion = function(element, type) {
@@ -178,6 +180,9 @@
     window.generateLyrics = async function() {
         const prompt = document.getElementById('lyrics-prompt').value;
         const genre = document.getElementById('lyrics-genre-val').value;
+        const occasionEl = document.querySelector('#occasion-tags .tag.active');
+        const occasion = occasionEl ? occasionEl.innerText.replace(/[^\w\sàâäéèêëïîôöùûüç]/gi, '').trim() : 'Libre';
+
         const btn = document.getElementById('btn-generate-lyrics');
         const lyricsBox = document.getElementById('generated-lyrics-text');
         
@@ -192,7 +197,7 @@
         try {
             const response = await fetch('/api/songs/generate-lyrics', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: prompt, genre: genre })
+                body: JSON.stringify({ prompt: prompt, genre: genre, occasion: occasion })
             });
             const data = await response.json();
             if (!response.ok || data.error) throw new Error(data.error || "Erreur API");
