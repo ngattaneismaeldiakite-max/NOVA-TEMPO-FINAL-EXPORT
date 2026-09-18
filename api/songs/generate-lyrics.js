@@ -7,21 +7,21 @@ function fillTemplate(template, data) {
     
     const replaceVar = (tag, value) => {
         if (!value || value.trim() === '') {
-            // Si la variable est vide, on la retire et on essaie d'effacer la virgule ou l'espace juste avant/après
+            // Si la variable est vide, on la retire et on efface la virgule ou l'espace juste avant/après
             text = text.replace(new RegExp(`[\\s,]*${tag}[\\s,]*`, 'g'), ' ');
         } else {
             text = text.replace(new RegExp(tag, 'g'), value.trim());
         }
     };
 
-    // Variables pour Amour / Anniversaire (Accolades {})
+    // Variables pour Amour / Anniversaire
     replaceVar('\\{NOM\\}', data.nom);
     replaceVar('\\{RELATION\\}', data.relation);
     replaceVar('\\{ANECDOTE\\}', data.anecdote);
     replaceVar('\\{DUREE_RELATION\\}', data.duree);
     replaceVar('\\{AGE\\}', data.age);
     
-    // Variables pour Hommage (Crochets [])
+    // Variables pour Hommage
     replaceVar('\\[nom\\]', data.nom);
     replaceVar('\\[lien\\]', data.lien);
     replaceVar('\\[qualite1\\]', data.qualite1);
@@ -30,6 +30,17 @@ function fillTemplate(template, data) {
     replaceVar('\\[souvenir\\]', data.souvenir);
     replaceVar('\\[valeur\\]', data.valeur);
     replaceVar('\\[proches\\]', data.proches);
+    
+    // Variables pour Promotion / Evénement
+    replaceVar('\\[nom_produit\\]', data.nom_produit);
+    replaceVar('\\[type\\]', data.type);
+    replaceVar('\\[point1\\]', data.point1);
+    replaceVar('\\[point2\\]', data.point2);
+    replaceVar('\\[point3\\]', data.point3);
+    replaceVar('\\[lieu\\]', data.lieu);
+    replaceVar('\\[date\\]', data.date);
+    replaceVar('\\[public\\]', data.public);
+    replaceVar('\\[action\\]', data.action);
 
     // Nettoyage final des doubles espaces ou virgules en trop
     return text.replace(/\s+/g, ' ').replace(/,\s*,/g, ',').trim();
@@ -42,7 +53,8 @@ module.exports = async function handler(req, res) {
         const { 
             prompt, genre, occasion, 
             nom, relation, anecdote, duree, age,
-            lien, qualite1, qualite2, qualite3, souvenir, valeur, proches 
+            lien, qualite1, qualite2, qualite3, souvenir, valeur, proches,
+            nom_produit, type, point1, point2, point3, lieu, date, public, action
         } = req.body;
         
         const currentOccasion = (occasion || "").toLowerCase().trim();
@@ -62,7 +74,8 @@ module.exports = async function handler(req, res) {
                     
                     const finalLyrics = fillTemplate(selectedTemplate, {
                         nom, relation, anecdote, duree, age,
-                        lien, qualite1, qualite2, qualite3, souvenir, valeur, proches
+                        lien, qualite1, qualite2, qualite3, souvenir, valeur, proches,
+                        nom_produit, type, point1, point2, point3, lieu, date, public, action
                     });
 
                     // On retourne directement les paroles sans appeler Groq !
@@ -92,10 +105,6 @@ module.exports = async function handler(req, res) {
             styleInstruction += `STYLE ROMANTIQUE : Vocabulaire centré sur l'amour, les sentiments, la douceur et la passion. AUCUN mot dur.\n`;
         } else {
             styleInstruction += `STYLE ADAPTÉ : Adapte le vocabulaire au style musical ("${genre}").\n`;
-        }
-
-        if (currentOccasion.includes("promotion") || currentOccasion.includes("événement") || currentOccasion.includes("evenement")) {
-            styleInstruction += `\nATTENTION - OCCASION PROMOTIONNELLE : L'utilisateur raconte une histoire pour faire la promotion d'un événement/produit. Fais-en une chanson publicitaire très entraînante !\n`;
         }
 
         const systemPrompt = `Tu es un parolier professionnel de musique. Tu dois écrire les paroles d'une chanson.
