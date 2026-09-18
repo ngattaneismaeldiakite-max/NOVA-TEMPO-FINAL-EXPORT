@@ -1,0 +1,3204 @@
+module.exports = [
+`--- INTRO ---
+[nom_de_dieu]…
+Me voici devant Toi.
+Silence.
+Écoute.
+
+--- COUPLET 1 ---
+Je me tiens devant Ta face,
+Petit, fragile, mais appelé.
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et moi, je ne suis que poussière.
+
+Tu ne me rejettes pas,
+Tu m'accueilles tel que je suis.
+Ta sainteté ne m'effraie plus,
+Elle me purifie.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu es saint,
+Tu es saint, Tu es saint.
+[nom_de_dieu], Tu es saint,
+Et je m'incline devant Toi.
+
+Rien n'est plus grand que Toi,
+Rien n'est plus pur que Toi.
+[nom_de_dieu], Tu es saint,
+Et je T'adore.
+
+--- COUPLET 2 ---
+Qui suis-je pour Te contempler ?
+Qui suis-je pour prononcer Ton nom ?
+Et pourtant Tu m'appelles,
+Tu me tends la main.
+
+[verset]
+Ta parole me purifie,
+Ta présence me transforme.
+[nom_de_dieu], devant Ta sainteté,
+Je deviens ce que Tu veux que je sois.
+
+--- PONT ---
+Saint, saint, saint,
+Tu es saint.
+Je ne peux que m'incliner,
+Je ne peux que T'adorer.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu es saint,
+Tu es saint, Tu es saint.
+[nom_de_dieu], Tu es saint,
+Et je m'incline devant Toi.
+
+Rien n'est plus grand que Toi,
+Rien n'est plus pur que Toi.
+[nom_de_dieu], Tu es saint,
+Et je T'adore.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Saint.
+Saint.
+Saint.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu es digne.
+Digne de tout.
+Digne de moi.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Tu mérites tout honneur.
+Je ne viens pas Te demander,
+Je viens Te reconnaître.
+
+Tu es digne de ma voix,
+Digne de mon souffle,
+Digne de chaque battement de mon cœur,
+Digne de ma vie entière.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu es digne,
+Digne de gloire, digne d'honneur.
+[nom_de_dieu], Tu es digne,
+Digne de tout, digne de moi.
+
+Je T'élève, je T'adore,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu es digne,
+Digne pour toujours.
+
+--- COUPLET 2 ---
+Tu n'as pas besoin de ma louange,
+Et pourtant Tu la désires.
+Tu n'as pas besoin de mon amour,
+Et pourtant Tu m'aimes.
+
+[verset]
+Alors je viens, les mains vides,
+Mais le cœur plein.
+[nom_de_dieu], Tu es digne,
+Et je Te donne ce que j'ai.
+
+--- PONT ---
+Digne, digne, digne,
+Tu es digne.
+De gloire, d'honneur, de puissance,
+Tu es digne.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu es digne,
+Digne de gloire, digne d'honneur.
+[nom_de_dieu], Tu es digne,
+Digne de tout, digne de moi.
+
+Je T'élève, je T'adore,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu es digne,
+Digne pour toujours.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Digne.
+Digne.
+Digne.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Purifie-moi.
+Lave-moi.
+Je viens à Toi.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Rien en Toi n'est souillé.
+Moi, je porte mes taches,
+Mes erreurs, mes manques.
+
+Mais Tu ne me repousses pas,
+Tu me prends dans Tes bras.
+Ta sainteté me lave,
+Ta pureté me restaure.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu es pur,
+Pur et parfait, pur et saint.
+[nom_de_dieu], Tu es pur,
+Et je viens me purifier.
+
+Lave-moi dans Ta présence,
+Renouvelle mon cœur.
+[nom_de_dieu], Tu es pur,
+Et je T'adore.
+
+--- COUPLET 2 ---
+Je ne cherche pas à Te cacher,
+Tu vois tout, Tu sais tout.
+Alors je m'ouvre devant Toi,
+Sans masque, sans peur.
+
+[verset]
+Ta grâce me couvre,
+Ton amour me relève.
+[nom_de_dieu], dans Ta pureté,
+Je trouve ma liberté.
+
+--- PONT ---
+Pur, pur, pur,
+Tu es pur.
+Lave-moi, renouvelle-moi,
+Rends-moi pur.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu es pur,
+Pur et parfait, pur et saint.
+[nom_de_dieu], Tu es pur,
+Et je viens me purifier.
+
+Lave-moi dans Ta présence,
+Renouvelle mon cœur.
+[nom_de_dieu], Tu es pur,
+Et je T'adore.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Pur.
+Pur.
+Pur.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Il n'y a personne comme Toi.
+Personne.
+Personne.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et rien ne T'égale.
+J'ai cherché ailleurs,
+Je n'ai rien trouvé.
+
+Tout ce qui brille n'est qu'ombre,
+Tout ce qui séduit n'est que poussière.
+Toi seul es la vérité,
+Toi seul es la lumière.
+
+--- REFRAIN ---
+[nom_de_dieu], rien ne T'égale,
+Rien ne T'égale, rien ne T'atteint.
+[nom_de_dieu], rien ne T'égale,
+Tu es unique, Tu es tout.
+
+Je Te cherche, je Te trouve,
+Je Te trouve, je T'adore.
+[nom_de_dieu], rien ne T'égale,
+Et rien ne T'égalera.
+
+--- COUPLET 2 ---
+J'ai parcouru des chemins,
+J'ai cherché des réponses.
+Et chaque fois, je reviens,
+À Toi, à Toi seul.
+
+[verset]
+Ta parole est la vérité,
+Ta présence est la paix.
+[nom_de_dieu], rien ne T'égale,
+Et je T'adore à jamais.
+
+--- PONT ---
+Rien, rien, rien,
+Rien ne T'égale.
+Toi seul, Toi seul,
+Toi seul es digne.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], rien ne T'égale,
+Rien ne T'égale, rien ne T'atteint.
+[nom_de_dieu], rien ne T'égale,
+Tu es unique, Tu es tout.
+
+Je Te cherche, je Te trouve,
+Je Te trouve, je T'adore.
+[nom_de_dieu], rien ne T'égale,
+Et rien ne T'égalera.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Rien.
+Rien.
+Rien ne T'égale.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Je retire mes sandales.
+Je m'approche.
+Me voici.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et je me tiens à distance.
+Non pas par peur,
+Mais par respect.
+
+Tu es feu, Tu es flamme,
+Tu es tout ce qui consume le mal.
+Et moi, je viens me consumer,
+Pour renaître purifié.
+
+--- REFRAIN ---
+[nom_de_dieu], devant Ta sainteté,
+Je m'incline, je me rends.
+[nom_de_dieu], devant Ta sainteté,
+Je reconnais qui Tu es.
+
+Tu es saint, Tu es grand,
+Tu es tout, Tu es Roi.
+[nom_de_dieu], devant Ta sainteté,
+Je T'adore.
+
+--- COUPLET 2 ---
+Qui suis-je pour Te contempler ?
+Qui suis-je pour prononcer Ton nom ?
+Et pourtant Tu m'appelles,
+Tu me tends la main.
+
+[verset]
+Ta sainteté ne m'effraie plus,
+Elle me rassure.
+[nom_de_dieu], dans Ta sainteté,
+Je trouve ma sécurité.
+
+--- PONT ---
+Saint, saint, saint,
+Tu es saint.
+Je m'incline, je me rends,
+Tu es saint.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], devant Ta sainteté,
+Je m'incline, je me rends.
+[nom_de_dieu], devant Ta sainteté,
+Je reconnais qui Tu es.
+
+Tu es saint, Tu es grand,
+Tu es tout, Tu es Roi.
+[nom_de_dieu], devant Ta sainteté,
+Je T'adore.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Devant Toi.
+Devant Toi.
+Devant Toi.
+Pour toujours.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu sièges.
+Tu règnes.
+Tu es Roi.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu sièges sur Ton trône.
+Le ciel est Ton marchepied,
+La terre est Ton ouvrage.
+
+Rien ne T'échappe,
+Rien ne T'atteint.
+Tu regardes l'univers,
+Et Tu souris.
+
+--- REFRAIN ---
+[nom_de_dieu], sur Ton trône,
+Tu règnes, Tu es Roi.
+[nom_de_dieu], sur Ton trône,
+Tu es majesté, Tu es tout.
+
+Je T'élève, je T'adore,
+Je reconnais Ton règne.
+[nom_de_dieu], sur Ton trône,
+Tu es Seigneur pour toujours.
+
+--- COUPLET 2 ---
+Les rois de la terre passent,
+Les empires s'effondrent.
+Mais Ton trône demeure,
+Pour toujours affermi.
+
+[verset]
+Ta justice est parfaite,
+Ta vérité est lumière.
+[nom_de_dieu], sur Ton trône,
+Tu es le Roi des rois.
+
+--- PONT ---
+Règne, règne, règne,
+Tu règnes.
+Sur tout, sur tous,
+Tu règnes.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], sur Ton trône,
+Tu règnes, Tu es Roi.
+[nom_de_dieu], sur Ton trône,
+Tu es majesté, Tu es tout.
+
+Je T'élève, je T'adore,
+Je reconnais Ton règne.
+[nom_de_dieu], sur Ton trône,
+Tu es Seigneur pour toujours.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Roi.
+Roi.
+Roi.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Roi.
+Roi des rois.
+Seigneur des seigneurs.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu portes la couronne.
+Aucun roi ne T'égale,
+Aucun empire ne T'atteint.
+
+Tu commandes aux vents,
+Tu commandes aux mers.
+Ta voix fait trembler la terre,
+Et pourtant Tu me parles doucement.
+
+--- REFRAIN ---
+[nom_de_dieu], Roi des rois,
+Tu règnes sur tout, Tu es Roi.
+[nom_de_dieu], Roi des rois,
+Tu es majesté, Tu es tout.
+
+Je T'élève, je T'adore,
+Je reconnais Ton règne.
+[nom_de_dieu], Roi des rois,
+Tu es Seigneur pour toujours.
+
+--- COUPLET 2 ---
+Les couronnes de la terre,
+Ne sont que poussière devant Toi.
+Ton règne n'a pas de fin,
+Ta majesté n'a pas d'égal.
+
+[verset]
+Ta justice est parfaite,
+Ta vérité est lumière.
+[nom_de_dieu], Roi des rois,
+Tu es le Roi des rois.
+
+--- PONT ---
+Roi, Roi, Roi,
+Tu es Roi.
+Digne, digne, digne,
+Tu es digne.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Roi des rois,
+Tu règnes sur tout, Tu es Roi.
+[nom_de_dieu], Roi des rois,
+Tu es majesté, Tu es tout.
+
+Je T'élève, je T'adore,
+Je reconnais Ton règne.
+[nom_de_dieu], Roi des rois,
+Tu es Seigneur pour toujours.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Roi des rois.
+Roi des rois.
+Roi des rois.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ta majesté.
+Ta splendeur.
+Ta gloire.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ta majesté me dépasse.
+Je ne peux pas Te saisir,
+Je ne peux que T'adorer.
+
+Tu es plus grand que mes pensées,
+Plus grand que mes mots.
+Ta majesté remplit le ciel,
+Et pourtant Tu descends vers moi.
+
+--- REFRAIN ---
+[nom_de_dieu], Ta majesté,
+Remplit le ciel, remplit ma vie.
+[nom_de_dieu], Ta majesté,
+Me dépasse, me saisit.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ta majesté,
+Est ma joie, mon honneur.
+
+--- COUPLET 2 ---
+Je lève les yeux vers Toi,
+Et je vois Ta splendeur.
+Je baisse les yeux vers moi,
+Et je vois Ta grâce.
+
+[verset]
+Ta majesté m'éblouit,
+Ta bonté me rassure.
+[nom_de_dieu], dans Ta majesté,
+Je trouve ma sécurité.
+
+--- PONT ---
+Majesté, majesté, majesté,
+Ta majesté.
+Splendeur, splendeur, splendeur,
+Ta splendeur.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ta majesté,
+Remplit le ciel, remplit ma vie.
+[nom_de_dieu], Ta majesté,
+Me dépasse, me saisit.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ta majesté,
+Est ma joie, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ta majesté.
+Ta majesté.
+Ta majesté.
+Pour toujours.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu règnes.
+Aujourd'hui.
+Demain.
+Toujours.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu règnes sur tout.
+Sur les cieux, sur la terre,
+Sur les rois, sur les peuples.
+
+Rien ne T'échappe,
+Rien ne T'atteint.
+Ton règne est éternel,
+Ta puissance est sans fin.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu règnes,
+Tu règnes sur tout, Tu es Roi.
+[nom_de_dieu], Tu règnes,
+Tu es souverain, Tu es tout.
+
+Je T'élève, je T'adore,
+Je reconnais Ton règne.
+[nom_de_dieu], Tu règnes,
+Tu es Seigneur pour toujours.
+
+--- COUPLET 2 ---
+Les nations s'agitent,
+Les royaumes s'effondrent.
+Mais Ton trône demeure,
+Pour toujours affermi.
+
+[verset]
+Ta justice est parfaite,
+Ta vérité est lumière.
+[nom_de_dieu], Tu règnes,
+Tu es le Roi des rois.
+
+--- PONT ---
+Règne, règne, règne,
+Tu règnes.
+Sur tout, sur tous,
+Tu règnes.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu règnes,
+Tu règnes sur tout, Tu es Roi.
+[nom_de_dieu], Tu règnes,
+Tu es souverain, Tu es tout.
+
+Je T'élève, je T'adore,
+Je reconnais Ton règne.
+[nom_de_dieu], Tu règnes,
+Tu es Seigneur pour toujours.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Tu règnes.
+Tu règnes.
+Tu règnes.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Je viens les mains vides.
+Mais le cœur plein.
+Prends tout.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es digne de tout.
+Digne de ma voix,
+Digne de ma vie.
+
+Je n'ai rien à T'offrir,
+Que ce que Tu m'as donné.
+Alors je Te le rends,
+Comme un sacrifice vivant.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu es digne,
+Digne de tout, digne de moi.
+[nom_de_dieu], Tu es digne,
+Digne de gloire, digne de foi.
+
+Je T'offre ma vie,
+Je T'offre mon cœur.
+[nom_de_dieu], Tu es digne,
+Digne de tout, mon Seigneur.
+
+--- COUPLET 2 ---
+Tu n'as pas besoin de mes dons,
+Tu possèdes tout déjà.
+Mais Tu désires mon cœur,
+Et c'est ce que je Te donne.
+
+[verset]
+Prends ma vie, prends mes jours,
+Prends mes rêves, prends mes pas.
+[nom_de_dieu], Tu es digne,
+Et je Te donne tout de moi.
+
+--- PONT ---
+Digne, digne, digne,
+Tu es digne.
+De tout, de moi,
+Tu es digne.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu es digne,
+Digne de tout, digne de moi.
+[nom_de_dieu], Tu es digne,
+Digne de gloire, digne de foi.
+
+Je T'offre ma vie,
+Je T'offre mon cœur.
+[nom_de_dieu], Tu es digne,
+Digne de tout, mon Seigneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Prends tout.
+Prends tout.
+Prends tout.
+Je T'appartiens.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Avant tout.
+Après tout.
+Toujours.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu existais avant les siècles.
+Avant que la terre soit formée,
+Avant que la lumière soit créée.
+
+Tu n'as pas de commencement,
+Tu n'auras pas de fin.
+Tu es, Tu étais, Tu seras,
+Pour toujours le même.
+
+--- REFRAIN ---
+[nom_de_dieu], avant les siècles,
+Tu es, Tu étais, Tu seras.
+[nom_de_dieu], avant les siècles,
+Tu es éternel, Tu es Roi.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], avant les siècles,
+Tu es éternel, Tu es tout.
+
+--- COUPLET 2 ---
+Le temps passe, les années s'envolent,
+Les générations se succèdent.
+Mais Toi, Tu restes,
+Inchangé, inébranlable.
+
+[verset]
+Ta fidélité traverse les âges,
+Ta bonté ne s'épuise pas.
+[nom_de_dieu], avant les siècles,
+Tu es, et Tu seras.
+
+--- PONT ---
+Éternel, éternel, éternel,
+Tu es éternel.
+Avant, maintenant, après,
+Tu es éternel.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], avant les siècles,
+Tu es, Tu étais, Tu seras.
+[nom_de_dieu], avant les siècles,
+Tu es éternel, Tu es Roi.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], avant les siècles,
+Tu es éternel, Tu es tout.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Avant.
+Maintenant.
+Après.
+Toujours.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Les années passent.
+Toi, Tu restes.
+Merci.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu ne changes jamais.
+Les saisons passent,
+Les hommes changent.
+
+Mais Toi, Tu restes le même,
+Hier, aujourd'hui, demain.
+Ta parole est stable,
+Ta promesse est fidèle.
+
+--- REFRAIN ---
+[nom_de_dieu], jamais Tu ne changes,
+Jamais Tu ne changes, jamais.
+[nom_de_dieu], jamais Tu ne changes,
+Tu es fidèle, Tu es vrai.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], jamais Tu ne changes,
+Tu es mon rocher, ma foi.
+
+--- COUPLET 2 ---
+Quand tout vacille autour de moi,
+Quand tout s'effondre,
+Tu restes debout,
+Inébranlable, fidèle.
+
+[verset]
+Ta constance me rassure,
+Ta fidélité me porte.
+[nom_de_dieu], jamais Tu ne changes,
+Et je Te fais confiance.
+
+--- PONT ---
+Fidèle, fidèle, fidèle,
+Tu es fidèle.
+Hier, aujourd'hui, demain,
+Tu es fidèle.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], jamais Tu ne changes,
+Jamais Tu ne changes, jamais.
+[nom_de_dieu], jamais Tu ne changes,
+Tu es fidèle, Tu es vrai.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], jamais Tu ne changes,
+Tu es mon rocher, ma foi.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Jamais.
+Jamais.
+Jamais Tu ne changes.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Infini.
+Sans limite.
+Sans fin.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es infini.
+Mes pensées ne peuvent Te contenir,
+Mes mots ne peuvent Te décrire.
+
+Tu es plus grand que l'univers,
+Plus profond que les océans.
+Tu es infini,
+Et pourtant Tu me connais.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu es infini,
+Tu es infini, Tu es tout.
+[nom_de_dieu], Tu es infini,
+Tu me dépasses, Tu me remplis.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu es infini,
+Et je T'adore pour toujours.
+
+--- COUPLET 2 ---
+Je ne peux pas Te comprendre,
+Je ne peux que Te contempler.
+Mon esprit s'incline,
+Mon cœur T'adore.
+
+[verset]
+Ta grandeur me dépasse,
+Ta bonté me saisit.
+[nom_de_dieu], dans Ton infinité,
+Je trouve mon repos.
+
+--- PONT ---
+Infini, infini, infini,
+Tu es infini.
+Sans limite, sans fin,
+Tu es infini.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu es infini,
+Tu es infini, Tu es tout.
+[nom_de_dieu], Tu es infini,
+Tu me dépasses, Tu me remplis.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu es infini,
+Et je T'adore pour toujours.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Infini.
+Infini.
+Infini.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Pour toujours.
+Ton règne.
+Pour toujours.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ton règne est pour toujours.
+Les rois passent,
+Les empires s'effondrent.
+
+Mais Ton trône demeure,
+Pour toujours affermi.
+Ta parole est éternelle,
+Ta promesse est sans fin.
+
+--- REFRAIN ---
+[nom_de_dieu], pour toujours,
+Ton règne dure, pour toujours.
+[nom_de_dieu], pour toujours,
+Tu es Roi, Tu es tout.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], pour toujours,
+Tu es éternel, Tu es tout.
+
+--- COUPLET 2 ---
+Rien ne peut T'arrêter,
+Rien ne peut Te limiter.
+Ton amour est éternel,
+Ta bonté sans fin.
+
+[verset]
+Ta fidélité traverse les âges,
+Ta grâce ne s'épuise pas.
+[nom_de_dieu], pour toujours,
+Tu es, et Tu seras.
+
+--- PONT ---
+Toujours, toujours, toujours,
+Pour toujours.
+Ton règne, Ton amour,
+Pour toujours.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], pour toujours,
+Ton règne dure, pour toujours.
+[nom_de_dieu], pour toujours,
+Tu es Roi, Tu es tout.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], pour toujours,
+Tu es éternel, Tu es tout.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Pour toujours.
+Pour toujours.
+Pour toujours.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Hier.
+Aujourd'hui.
+Demain.
+Le même.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es le même toujours.
+Hier Tu étais fidèle,
+Aujourd'hui Tu l'es encore.
+
+Demain Tu le seras,
+Pour toujours Tu le resteras.
+Ta constance me rassure,
+Ta fidélité me porte.
+
+--- REFRAIN ---
+[nom_de_dieu], le même toujours,
+Hier, aujourd'hui, demain.
+[nom_de_dieu], le même toujours,
+Tu es fidèle, Tu es vrai.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], le même toujours,
+Tu es mon rocher, ma foi.
+
+--- COUPLET 2 ---
+Les saisons changent,
+Les hommes passent.
+Mais Toi, Tu restes,
+Le même, pour toujours.
+
+[verset]
+Ta parole est stable,
+Ta promesse est sûre.
+[nom_de_dieu], le même toujours,
+Et je Te fais confiance.
+
+--- PONT ---
+Le même, le même, le même,
+Tu es le même.
+Hier, aujourd'hui, demain,
+Tu es le même.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], le même toujours,
+Hier, aujourd'hui, demain.
+[nom_de_dieu], le même toujours,
+Tu es fidèle, Tu es vrai.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], le même toujours,
+Tu es mon rocher, ma foi.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Le même.
+Le même.
+Le même.
+Pour toujours.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu es lumière.
+Dans les ténèbres.
+Tu brilles.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es la lumière du monde.
+Là où Tu passes,
+Les ténèbres fuient.
+
+Là où Tu parles,
+La vérité éclate.
+Tu éclaires mes pas,
+Tu guides ma route.
+
+--- REFRAIN ---
+[nom_de_dieu], lumière du monde,
+Tu brilles dans les ténèbres.
+[nom_de_dieu], lumière du monde,
+Tu éclaires, Tu révèles.
+
+Je marche dans Ta lumière,
+Je vis dans Ta clarté.
+[nom_de_dieu], lumière du monde,
+Tu es ma vérité.
+
+--- COUPLET 2 ---
+Sans Toi, je serais perdu,
+Dans l'obscurité, sans repère.
+Mais Tu es venu,
+Et Tu as chassé la nuit.
+
+[verset]
+Ta lumière me guide,
+Ta vérité me libère.
+[nom_de_dieu], lumière du monde,
+Je Te suivrai toujours.
+
+--- PONT ---
+Lumière, lumière, lumière,
+Tu es lumière.
+Éclat, éclat, éclat,
+Tu es lumière.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], lumière du monde,
+Tu brilles dans les ténèbres.
+[nom_de_dieu], lumière du monde,
+Tu éclaires, Tu révèles.
+
+Je marche dans Ta lumière,
+Je vis dans Ta clarté.
+[nom_de_dieu], lumière du monde,
+Tu es ma vérité.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Lumière.
+Lumière.
+Lumière.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ta gloire.
+Elle brille.
+Partout.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ta gloire brille.
+Dans le ciel, dans la terre,
+Dans les cœurs qui T'accueillent.
+
+Ta splendeur est visible,
+Pour ceux qui veulent voir.
+Ta lumière éclaire,
+Pour ceux qui veulent croire.
+
+--- REFRAIN ---
+[nom_de_dieu], Ta gloire brille,
+Elle brille dans nos vies.
+[nom_de_dieu], Ta gloire brille,
+Elle éclaire, elle unit.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ta gloire brille,
+Et elle brille pour toujours.
+
+--- COUPLET 2 ---
+Même dans les moments sombres,
+Ta gloire reste présente.
+Même quand je ne la vois pas,
+Elle est là, lumineuse.
+
+[verset]
+Ouvre mes yeux, Seigneur,
+Pour voir Ta splendeur.
+[nom_de_dieu], Ta gloire brille,
+Et elle éclaire mon cœur.
+
+--- PONT ---
+Gloire, gloire, gloire,
+Ta gloire.
+Splendeur, splendeur, splendeur,
+Ta splendeur.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ta gloire brille,
+Elle brille dans nos vies.
+[nom_de_dieu], Ta gloire brille,
+Elle éclaire, elle unit.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ta gloire brille,
+Et elle brille pour toujours.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ta gloire.
+Ta gloire.
+Ta gloire.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Éclaire-moi.
+Guide-moi.
+Marche avec moi.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu éclaires mes pas.
+Sans Toi, je marcherais dans le noir,
+Sans Toi, je serais perdu.
+
+Mais Ta parole est une lampe,
+Ta présence est une lumière.
+Chaque pas que je fais,
+Est éclairé par Toi.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu éclaires mes pas,
+Tu guides ma route, Tu es là.
+[nom_de_dieu], Tu éclaires mes pas,
+Tu es ma lumière, ma foi.
+
+Je marche dans Ta clarté,
+Je vis dans Ta vérité.
+[nom_de_dieu], Tu éclaires mes pas,
+Et je Te suivrai toujours.
+
+--- COUPLET 2 ---
+Quand la route est sombre,
+Quand le chemin est difficile,
+Tu es là, lumière fidèle,
+Tu me guides, Tu me relèves.
+
+[verset]
+Ta parole est une lampe,
+Ta présence est un feu.
+[nom_de_dieu], Tu éclaires mes pas,
+Et je marche sans peur.
+
+--- PONT ---
+Éclaire, éclaire, éclaire,
+Tu éclaires.
+Guide, guide, guide,
+Tu guides.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu éclaires mes pas,
+Tu guides ma route, Tu es là.
+[nom_de_dieu], Tu éclaires mes pas,
+Tu es ma lumière, ma foi.
+
+Je marche dans Ta clarté,
+Je vis dans Ta vérité.
+[nom_de_dieu], Tu éclaires mes pas,
+Et je Te suivrai toujours.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Éclaire.
+Éclaire.
+Éclaire.
+Pour toujours.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu es feu.
+Tu consumes.
+Tu purifies.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es un feu dévorant.
+Tu consumes le mal,
+Tu purifies le cœur.
+
+Rien ne résiste à Ta flamme,
+Rien ne T'échappe.
+Tu brûles ce qui doit brûler,
+Tu gardes ce qui doit rester.
+
+--- REFRAIN ---
+[nom_de_dieu], feu dévorant,
+Tu purifies, Tu consumes.
+[nom_de_dieu], feu dévorant,
+Tu es saint, Tu es lumière.
+
+Je viens me consumer,
+Je viens me purifier.
+[nom_de_dieu], feu dévorant,
+Je T'adore, je T'appartiens.
+
+--- COUPLET 2 ---
+Que Ta flamme me purifie,
+Que Ta lumière me transforme.
+Que tout ce qui n'est pas de Toi,
+Disparaisse dans Ton feu.
+
+[verset]
+Consume mes impuretés,
+Renouvelle mon cœur.
+[nom_de_dieu], feu dévorant,
+Fais de moi un feu pour Toi.
+
+--- PONT ---
+Feu, feu, feu,
+Tu es feu.
+Consume, consume, consume,
+Tu consumes.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], feu dévorant,
+Tu purifies, Tu consumes.
+[nom_de_dieu], feu dévorant,
+Tu es saint, Tu es lumière.
+
+Je viens me consumer,
+Je viens me purifier.
+[nom_de_dieu], feu dévorant,
+Je T'adore, je T'appartiens.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Feu.
+Feu.
+Feu.
+Consume-moi.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ta splendeur.
+Elle m'éblouit.
+Elle me dépasse.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ta splendeur m'éblouit.
+Je ne peux pas Te regarder en face,
+Tu es trop lumineux.
+
+Mais Tu m'as donné des yeux,
+Pour voir Ta bonté.
+Tu m'as donné un cœur,
+Pour sentir Ta beauté.
+
+--- REFRAIN ---
+[nom_de_dieu], Ta splendeur,
+Elle m'éblouit, elle me dépasse.
+[nom_de_dieu], Ta splendeur,
+Elle m'éclaire, elle me remplit.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ta splendeur,
+Est ma joie, mon honneur.
+
+--- COUPLET 2 ---
+Chaque étoile dans le ciel,
+Chaque lever de soleil,
+Me rappelle Ta splendeur,
+Me rappelle Ta grandeur.
+
+[verset]
+Ouvre mes yeux, Seigneur,
+Pour voir Ta beauté.
+[nom_de_dieu], Ta splendeur,
+Remplit mon cœur de paix.
+
+--- PONT ---
+Splendeur, splendeur, splendeur,
+Ta splendeur.
+Beauté, beauté, beauté,
+Ta beauté.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ta splendeur,
+Elle m'éblouit, elle me dépasse.
+[nom_de_dieu], Ta splendeur,
+Elle m'éclaire, elle me remplit.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ta splendeur,
+Est ma joie, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ta splendeur.
+Ta splendeur.
+Ta splendeur.
+Pour toujours.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ton amour.
+Il me dépasse.
+Il me saisit.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ton amour me dépasse.
+Je ne peux pas le comprendre,
+Je ne peux que le recevoir.
+
+Tu m'aimes sans condition,
+Tu m'aimes sans mesure.
+Même quand je T'oublie,
+Toi, Tu ne m'oublies pas.
+
+--- REFRAIN ---
+[nom_de_dieu], Ton amour,
+Il me saisit, il me dépasse.
+[nom_de_dieu], Ton amour,
+Il me guérit, il me relève.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ton amour,
+Est ma force, mon honneur.
+
+--- COUPLET 2 ---
+Ton amour n'est pas comme celui des hommes,
+Il ne dépend pas de mes mérites.
+Il est gratuit, il est total,
+Il est éternel, il est réel.
+
+[verset]
+Ta grâce me couvre,
+Ta bonté me poursuit.
+[nom_de_dieu], dans Ton amour,
+Je trouve mon repos.
+
+--- PONT ---
+Amour, amour, amour,
+Ton amour.
+Grâce, grâce, grâce,
+Ta grâce.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ton amour,
+Il me saisit, il me dépasse.
+[nom_de_dieu], Ton amour,
+Il me guérit, il me relève.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ton amour,
+Est ma force, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ton amour.
+Ton amour.
+Ton amour.
+Pour toujours.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ta grâce.
+Je ne la mérite pas.
+Et pourtant.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ta grâce est infinie.
+Je ne la mérite pas,
+Et pourtant Tu me la donnes.
+
+Tu m'as sauvé sans que je demande,
+Tu m'as aimé sans que je comprenne.
+Ta grâce est un cadeau,
+Que je reçois à genoux.
+
+--- REFRAIN ---
+[nom_de_dieu], grâce infinie,
+Tu me sauves, Tu me relèves.
+[nom_de_dieu], grâce infinie,
+Tu me pardonnes, Tu me guéris.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], grâce infinie,
+Est ma vie, mon honneur.
+
+--- COUPLET 2 ---
+Je ne peux pas Te rendre,
+Ce que Tu m'as donné.
+Alors je Te donne ma vie,
+En retour de Ton amour.
+
+[verset]
+Ta miséricorde est grande,
+Ta bonté est sans fin.
+[nom_de_dieu], dans Ta grâce,
+Je trouve ma liberté.
+
+--- PONT ---
+Grâce, grâce, grâce,
+Ta grâce.
+Merci, merci, merci,
+Pour Ta grâce.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], grâce infinie,
+Tu me sauves, Tu me relèves.
+[nom_de_dieu], grâce infinie,
+Tu me pardonnes, Tu me guéris.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], grâce infinie,
+Est ma vie, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ta grâce.
+Ta grâce.
+Ta grâce.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Avant que je Te cherche.
+Tu m'as cherché.
+Avant que je T'aime.
+Tu m'as aimé.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu m'as aimé le premier.
+Avant que je sache prononcer Ton nom,
+Tu étais déjà là.
+
+Tu m'as cherché quand j'étais perdu,
+Tu m'as trouvé quand je fuyais.
+Tu m'as aimé quand je ne T'aimais pas,
+Tu m'as attendu quand je doutais.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu m'as aimé le premier,
+Tu m'as aimé, Tu m'as cherché.
+[nom_de_dieu], Tu m'as aimé le premier,
+Tu m'as sauvé, Tu m'as trouvé.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu m'as aimé le premier,
+Et je T'aimerai pour toujours.
+
+--- COUPLET 2 ---
+Ton amour m'a précédé,
+Ta grâce m'a devancé.
+Je ne peux que Te répondre,
+Par un cœur reconnaissant.
+
+[verset]
+Tu m'as appelé par mon nom,
+Tu m'as choisi avant ma naissance.
+[nom_de_dieu], dans Ton amour,
+Je suis enfin moi-même.
+
+--- PONT ---
+Premier, premier, premier,
+Tu m'as aimé le premier.
+Merci, merci, merci,
+Pour Ton amour.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu m'as aimé le premier,
+Tu m'as aimé, Tu m'as cherché.
+[nom_de_dieu], Tu m'as aimé le premier,
+Tu m'as sauvé, Tu m'as trouvé.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu m'as aimé le premier,
+Et je T'aimerai pour toujours.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Le premier.
+Le premier.
+Le premier.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ta miséricorde.
+Elle me couvre.
+Elle me relève.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ta miséricorde est grande.
+Chaque matin, elle se renouvelle,
+Chaque jour, elle me relève.
+
+Je ne mérite pas Ton pardon,
+Et pourtant Tu me le donnes.
+Je ne mérite pas Ta bonté,
+Et pourtant Tu m'en couvres.
+
+--- REFRAIN ---
+[nom_de_dieu], Ta miséricorde,
+Elle me couvre, elle me relève.
+[nom_de_dieu], Ta miséricorde,
+Elle me pardonne, elle me lave.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ta miséricorde,
+Est ma paix, mon honneur.
+
+--- COUPLET 2 ---
+Quand je tombe, Tu me relèves,
+Quand je faute, Tu me pardonnes.
+Ta miséricorde ne s'épuise pas,
+Elle est nouvelle chaque matin.
+
+[verset]
+Ta bonté me poursuit,
+Ta grâce me précède.
+[nom_de_dieu], dans Ta miséricorde,
+Je trouve mon repos.
+
+--- PONT ---
+Merci, merci, merci,
+Pour Ta miséricorde.
+Merci, merci, merci,
+Pour Ton pardon.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ta miséricorde,
+Elle me couvre, elle me relève.
+[nom_de_dieu], Ta miséricorde,
+Elle me pardonne, elle me lave.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ta miséricorde,
+Est ma paix, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ta miséricorde.
+Ta miséricorde.
+Ta miséricorde.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu es amour.
+Pas seulement Tu aimes.
+Tu ES amour.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es amour.
+Ce n'est pas seulement ce que Tu fais,
+C'est ce que Tu es.
+
+Ton essence est amour,
+Ta nature est bonté.
+Tout ce que Tu fais,
+Découle de qui Tu es.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu es amour,
+Tu es amour, Tu es tout.
+[nom_de_dieu], Tu es amour,
+Tu me remplis, Tu me dépasse.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu es amour,
+Et je T'aime pour toujours.
+
+--- COUPLET 2 ---
+Je ne peux pas Te séparer de l'amour,
+Ils sont une seule et même chose.
+Alors quand je T'adore,
+C'est l'amour que j'adore.
+
+[verset]
+Apprends-moi à aimer,
+Comme Toi Tu aimes.
+[nom_de_dieu], Tu es amour,
+Rends-moi semblable à Toi.
+
+--- PONT ---
+Amour, amour, amour,
+Tu es amour.
+Amour, amour, amour,
+Tu es tout.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu es amour,
+Tu es amour, Tu es tout.
+[nom_de_dieu], Tu es amour,
+Tu me remplis, Tu me dépasse.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu es amour,
+Et je T'aime pour toujours.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Tu es amour.
+Tu es amour.
+Tu es amour.
+Pour toujours.`,
+`--- INTRO ---
+[nom_de_dieu]…
+Tu es rocher.
+Tu es forteresse.
+Tu es refuge.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es mon rocher.
+Quand tout tremble autour de moi,
+Tu restes inébranlable.
+
+Tu es ma forteresse,
+Tu es mon refuge.
+En Toi je trouve la sécurité,
+En Toi je trouve la paix.
+
+--- REFRAIN ---
+[nom_de_dieu], Rocher éternel,
+Tu es solide, Tu es fidèle.
+[nom_de_dieu], Rocher éternel,
+Tu me protèges, Tu me relèves.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], Rocher éternel,
+Tu es ma force, ma foi.
+
+--- COUPLET 2 ---
+Quand les tempêtes arrivent,
+Quand les épreuves frappent,
+Tu es là, inébranlable,
+Tu me tiens, Tu me portes.
+
+[verset]
+Ta puissance me rassure,
+Ta fidélité me porte.
+[nom_de_dieu], dans Ta force,
+Je trouve mon repos.
+
+--- PONT ---
+Rocher, rocher, rocher,
+Tu es rocher.
+Forteresse, forteresse, forteresse,
+Tu es forteresse.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Rocher éternel,
+Tu es solide, Tu es fidèle.
+[nom_de_dieu], Rocher éternel,
+Tu me protèges, Tu me relèves.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], Rocher éternel,
+Tu es ma force, ma foi.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Rocher.
+Rocher.
+Rocher.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tout-puissant.
+Rien ne T'arrête.
+Rien ne T'atteint.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es tout-puissant.
+Tu commandes aux vents,
+Tu commandes aux mers.
+
+Ta voix fait trembler la terre,
+Ta puissance n'a pas de limite.
+Rien ne T'échappe,
+Rien ne T'atteint.
+
+--- REFRAIN ---
+[nom_de_dieu], Tout-puissant,
+Tu règnes sur tout, Tu es Roi.
+[nom_de_dieu], Tout-puissant,
+Tu es majesté, Tu es tout.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tout-puissant,
+Tu es ma force, mon honneur.
+
+--- COUPLET 2 ---
+Les montagnes se déplacent,
+Les océans se calment.
+À Ta voix, tout obéit,
+À Ta présence, tout s'incline.
+
+[verset]
+Ta puissance me rassure,
+Ta force me protège.
+[nom_de_dieu], dans Ta puissance,
+Je trouve ma sécurité.
+
+--- PONT ---
+Puissant, puissant, puissant,
+Tu es puissant.
+Fort, fort, fort,
+Tu es fort.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tout-puissant,
+Tu règnes sur tout, Tu es Roi.
+[nom_de_dieu], Tout-puissant,
+Tu es majesté, Tu es tout.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tout-puissant,
+Tu es ma force, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Tout-puissant.
+Tout-puissant.
+Tout-puissant.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ta force.
+Elle me porte.
+Elle me relève.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ta force me porte.
+Quand je suis faible,
+Tu es ma force.
+
+Quand je tombe,
+Tu me relèves.
+Quand je doute,
+Tu me rassures.
+
+--- REFRAIN ---
+[nom_de_dieu], Ta force me porte,
+Elle me relève, elle me fortifie.
+[nom_de_dieu], Ta force me porte,
+Elle me soutient, elle me guérit.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], Ta force me porte,
+Tu es ma force, ma foi.
+
+--- COUPLET 2 ---
+Je ne suis pas fort par moi-même,
+Mais je suis fort en Toi.
+Ta puissance se manifeste,
+Dans ma faiblesse.
+
+[verset]
+Quand je suis faible, je suis fort,
+Car Ta force me porte.
+[nom_de_dieu], dans Ta puissance,
+Je trouve ma victoire.
+
+--- PONT ---
+Force, force, force,
+Ta force.
+Puissance, puissance, puissance,
+Ta puissance.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ta force me porte,
+Elle me relève, elle me fortifie.
+[nom_de_dieu], Ta force me porte,
+Elle me soutient, elle me guérit.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], Ta force me porte,
+Tu es ma force, ma foi.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ta force.
+Ta force.
+Ta force.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu es bouclier.
+Tu es refuge.
+Tu me protèges.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es mon bouclier.
+Quand les flèches volent,
+Tu me protèges.
+
+Tu es mon refuge,
+Quand les tempêtes frappent.
+En Toi je suis en sécurité,
+En Toi je trouve la paix.
+
+--- REFRAIN ---
+[nom_de_dieu], Bouclier et refuge,
+Tu me protèges, Tu me rassures.
+[nom_de_dieu], Bouclier et refuge,
+Tu me défends, Tu me sécurises.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], Bouclier et refuge,
+Tu es ma paix, ma foi.
+
+--- COUPLET 2 ---
+Quand l'ennemi attaque,
+Quand la peur m'envahit,
+Tu es là, bouclier fidèle,
+Tu me protèges, Tu me couvres.
+
+[verset]
+Sous Tes ailes, je me repose,
+Dans Ton ombre, je suis en paix.
+[nom_de_dieu], dans Ta protection,
+Je trouve ma sécurité.
+
+--- PONT ---
+Bouclier, bouclier, bouclier,
+Tu es bouclier.
+Refuge, refuge, refuge,
+Tu es refuge.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Bouclier et refuge,
+Tu me protèges, Tu me rassures.
+[nom_de_dieu], Bouclier et refuge,
+Tu me défends, Tu me sécurises.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], Bouclier et refuge,
+Tu es ma paix, ma foi.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Bouclier.
+Refuge.
+Paix.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Rien.
+Rien ne T'arrête.
+Rien.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et rien ne T'arrête.
+Ni les montagnes,
+Ni les océans.
+
+Ni les rois,
+Ni les empires.
+Rien ne T'arrête,
+Rien ne Te limite.
+
+--- REFRAIN ---
+[nom_de_dieu], rien ne T'arrête,
+Rien ne T'arrête, rien ne T'atteint.
+[nom_de_dieu], rien ne T'arrête,
+Tu es tout-puissant, Tu es Roi.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], rien ne T'arrête,
+Tu es ma force, mon honneur.
+
+--- COUPLET 2 ---
+Quand Tu décides,
+Rien ne peut changer.
+Quand Tu parles,
+Rien ne peut résister.
+
+[verset]
+Ta volonté s'accomplit,
+Ta parole s'accomplit.
+[nom_de_dieu], dans Ta puissance,
+Je trouve ma victoire.
+
+--- PONT ---
+Rien, rien, rien,
+Rien ne T'arrête.
+Tout, tout, tout,
+Tout Te répond.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], rien ne T'arrête,
+Rien ne T'arrête, rien ne T'atteint.
+[nom_de_dieu], rien ne T'arrête,
+Tu es tout-puissant, Tu es Roi.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], rien ne T'arrête,
+Tu es ma force, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Rien.
+Rien.
+Rien ne T'arrête.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Me voici.
+Dans Ta présence.
+Rien d'autre ne compte.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et je suis dans Ta présence.
+Ici, tout s'apaise,
+Ici, tout prend sens.
+
+Loin de Toi, je suis agité,
+Près de Toi, je suis en paix.
+Ta présence est mon refuge,
+Ta présence est ma maison.
+
+--- REFRAIN ---
+[nom_de_dieu], dans Ta présence,
+Je trouve la paix, je trouve le repos.
+[nom_de_dieu], dans Ta présence,
+Je suis chez moi, je suis sauvé.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], dans Ta présence,
+Je ne veux plus jamais partir.
+
+--- COUPLET 2 ---
+Je pourrais rester ici pour toujours,
+À contempler Ta beauté.
+Rien ne m'attire ailleurs,
+Rien ne me sépare de Toi.
+
+[verset]
+Ta présence me remplit,
+Ta présence me transforme.
+[nom_de_dieu], dans Ta présence,
+Je deviens ce que Tu veux.
+
+--- PONT ---
+Présence, présence, présence,
+Ta présence.
+Je ne veux plus partir,
+Je reste avec Toi.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], dans Ta présence,
+Je trouve la paix, je trouve le repos.
+[nom_de_dieu], dans Ta présence,
+Je suis chez moi, je suis sauvé.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], dans Ta présence,
+Je ne veux plus jamais partir.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ta présence.
+Ta présence.
+Ta présence.
+Pour toujours.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu me parles.
+Dans le silence.
+J'écoute.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu me parles.
+Pas dans le bruit,
+Mais dans le silence.
+
+Pas dans la tempête,
+Mais dans le souffle doux.
+Ta voix me guide,
+Ta voix me rassure.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu me parles,
+Tu me parles, je T'écoute.
+[nom_de_dieu], Tu me parles,
+Ta voix me guide, me rassure.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu me parles,
+Et je T'écoute pour toujours.
+
+--- COUPLET 2 ---
+Apprends-moi à écouter,
+À reconnaître Ta voix.
+Apprends-moi à me taire,
+Pour entendre Ton souffle.
+
+[verset]
+Ta parole est ma lumière,
+Ta voix est ma direction.
+[nom_de_dieu], parle encore,
+Je suis là, j'écoute.
+
+--- PONT ---
+Parle, parle, parle,
+Tu me parles.
+J'écoute, j'écoute, j'écoute,
+Je T'écoute.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu me parles,
+Tu me parles, je T'écoute.
+[nom_de_dieu], Tu me parles,
+Ta voix me guide, me rassure.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu me parles,
+Et je T'écoute pour toujours.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Parle.
+Parle.
+Parle.
+J'écoute.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ton souffle.
+En moi.
+Il me fait vivre.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ton souffle est en moi.
+Sans Lui, je serais sec,
+Sans Lui, je serais mort.
+
+Ton souffle me donne vie,
+Ton souffle me renouvelle.
+Chaque respiration,
+Est un cadeau de Toi.
+
+--- REFRAIN ---
+[nom_de_dieu], Ton souffle en moi,
+Il me donne vie, il me renouvelle.
+[nom_de_dieu], Ton souffle en moi,
+Il me transforme, il me relève.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ton souffle en moi,
+Est ma vie, mon honneur.
+
+--- COUPLET 2 ---
+Souffle encore sur moi,
+Ravive la flamme.
+Souffle encore, Seigneur,
+Je veux vivre de Toi.
+
+[verset]
+Ton Esprit me guide,
+Ta présence m'habite.
+[nom_de_dieu], dans Ton souffle,
+Je trouve ma force.
+
+--- PONT ---
+Souffle, souffle, souffle,
+Ton souffle.
+Vie, vie, vie,
+Ta vie.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ton souffle en moi,
+Il me donne vie, il me renouvelle.
+[nom_de_dieu], Ton souffle en moi,
+Il me transforme, il me relève.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ton souffle en moi,
+Est ma vie, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ton souffle.
+Ton souffle.
+Ton souffle.
+En moi.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Je T'appartiens.
+Pas à moitié.
+Entièrement.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et je T'appartiens.
+Pas une partie de moi,
+Mais tout entier.
+
+Mon cœur, mon âme, mon esprit,
+Tout est à Toi.
+Ma vie, mes jours, mes nuits,
+Tout T'appartient.
+
+--- REFRAIN ---
+[nom_de_dieu], je T'appartiens,
+Je T'appartiens, corps et âme.
+[nom_de_dieu], je T'appartiens,
+Je T'appartiens, pour toujours.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], je T'appartiens,
+Je suis à Toi, mon honneur.
+
+--- COUPLET 2 ---
+Je ne veux plus m'appartenir,
+Je veux vivre pour Toi.
+Prends ma vie entre Tes mains,
+Fais-en ce que Tu veux.
+
+[verset]
+Que Ta volonté soit faite,
+Dans ma vie, chaque jour.
+[nom_de_dieu], je T'appartiens,
+Et je le proclame aujourd'hui.
+
+--- PONT ---
+À Toi, à Toi, à Toi,
+Je T'appartiens.
+Tout, tout, tout,
+Tout est à Toi.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], je T'appartiens,
+Je T'appartiens, corps et âme.
+[nom_de_dieu], je T'appartiens,
+Je T'appartiens, pour toujours.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], je T'appartiens,
+Je suis à Toi, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+À Toi.
+À Toi.
+À Toi.
+Pour toujours.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu me connais.
+Mieux que moi-même.
+Tu m'aimes.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu me connais.
+Tu connais mes pensées,
+Avant que je les pense.
+
+Tu connais mes doutes,
+Avant que je les dise.
+Et pourtant Tu m'aimes,
+Sans condition.
+
+--- REFRAIN ---
+[nom_de_dieu], Ton intimité,
+Tu me connais, Tu me comprends.
+[nom_de_dieu], Ton intimité,
+Tu me sondes, Tu me remplis.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], dans Ton intimité,
+Je trouve ma paix, mon honneur.
+
+--- COUPLET 2 ---
+Je n'ai rien à Te cacher,
+Tu vois tout déjà.
+Alors je m'ouvre devant Toi,
+Sans peur, sans masque.
+
+[verset]
+Tu connais mon cœur,
+Tu connais mes faiblesses.
+[nom_de_dieu], dans Ton intimité,
+Je trouve ma liberté.
+
+--- PONT ---
+Intimité, intimité, intimité,
+Ton intimité.
+Connaissance, connaissance, connaissance,
+Tu me connais.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ton intimité,
+Tu me connais, Tu me comprends.
+[nom_de_dieu], Ton intimité,
+Tu me sondes, Tu me remplis.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], dans Ton intimité,
+Je trouve ma paix, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Tu me connais.
+Tu me connais.
+Tu me connais.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Fidèle.
+Hier.
+Aujourd'hui.
+Demain.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es fidèle.
+Chaque promesse que Tu fais,
+Tu la tiens.
+
+Chaque parole que Tu dis,
+Tu l'accomplis.
+Tu n'as jamais manqué,
+Tu ne manqueras jamais.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu es fidèle,
+Fidèle toujours, fidèle encore.
+[nom_de_dieu], Tu es fidèle,
+Tu tiens Tes promesses, Tu es sûr.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], Tu es fidèle,
+Tu es mon rocher, ma foi.
+
+--- COUPLET 2 ---
+Quand je doute, Tu restes,
+Quand je fuis, Tu m'attends.
+Ta fidélité ne dépend pas,
+De ma fidélité à moi.
+
+[verset]
+Ta parole est stable,
+Ta promesse est sûre.
+[nom_de_dieu], dans Ta fidélité,
+Je trouve mon repos.
+
+--- PONT ---
+Fidèle, fidèle, fidèle,
+Tu es fidèle.
+Toujours, toujours, toujours,
+Tu es fidèle.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu es fidèle,
+Fidèle toujours, fidèle encore.
+[nom_de_dieu], Tu es fidèle,
+Tu tiens Tes promesses, Tu es sûr.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], Tu es fidèle,
+Tu es mon rocher, ma foi.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Fidèle.
+Fidèle.
+Fidèle.
+Pour toujours.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ta promesse.
+Je m'y accroche.
+Elle est ma force.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ta promesse est sûre.
+Le ciel et la terre passeront,
+Mais Ta parole demeure.
+
+Tu as promis, Tu tiendras,
+Tu as dit, Tu feras.
+Ta promesse est mon ancrage,
+Ta promesse est ma foi.
+
+--- REFRAIN ---
+[nom_de_dieu], Ta promesse,
+Elle est sûre, elle est fidèle.
+[nom_de_dieu], Ta promesse,
+Elle me porte, elle me relève.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], dans Ta promesse,
+Je trouve ma paix, ma foi.
+
+--- COUPLET 2 ---
+Même quand je ne vois pas,
+Même quand je ne comprends pas,
+Ta promesse reste,
+Elle ne s'efface pas.
+
+[verset]
+Je marche par la foi,
+Pas par ce que je vois.
+[nom_de_dieu], dans Ta promesse,
+Je trouve ma force.
+
+--- PONT ---
+Promesse, promesse, promesse,
+Ta promesse.
+Sûre, sûre, sûre,
+Elle est sûre.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ta promesse,
+Elle est sûre, elle est fidèle.
+[nom_de_dieu], Ta promesse,
+Elle me porte, elle me relève.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], dans Ta promesse,
+Je trouve ma paix, ma foi.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ta promesse.
+Ta promesse.
+Ta promesse.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Jamais.
+Tu ne m'abandonnes.
+Jamais.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et jamais Tu ne m'abandonnes.
+Même quand je T'oublie,
+Tu restes là.
+
+Même quand je fuis,
+Tu me suis.
+Même quand je tombe,
+Tu me relèves.
+
+--- REFRAIN ---
+[nom_de_dieu], jamais Tu ne m'abandonnes,
+Jamais Tu ne me laisses, jamais.
+[nom_de_dieu], jamais Tu ne m'abandonnes,
+Tu es fidèle, Tu es vrai.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], jamais Tu ne m'abandonnes,
+Tu es mon rocher, ma foi.
+
+--- COUPLET 2 ---
+Quand je me sens seul,
+Quand je doute,
+Tu es là, invisible mais présent,
+Tu me tiens, Tu me portes.
+
+[verset]
+Ta fidélité me rassure,
+Ta présence me console.
+[nom_de_dieu], dans Ton amour,
+Je trouve mon repos.
+
+--- PONT ---
+Jamais, jamais, jamais,
+Jamais Tu ne m'abandonnes.
+Toujours, toujours, toujours,
+Tu es avec moi.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], jamais Tu ne m'abandonnes,
+Jamais Tu ne me laisses, jamais.
+[nom_de_dieu], jamais Tu ne m'abandonnes,
+Tu es fidèle, Tu es vrai.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], jamais Tu ne m'abandonnes,
+Tu es mon rocher, ma foi.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Jamais.
+Jamais.
+Jamais.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ta constance.
+Elle me rassure.
+Elle me porte.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ta constance me rassure.
+Le monde change,
+Les hommes passent.
+
+Mais Toi, Tu restes,
+Toujours le même.
+Ta constance est mon ancrage,
+Ta fidélité est ma force.
+
+--- REFRAIN ---
+[nom_de_dieu], Ta constance,
+Elle me rassure, elle me porte.
+[nom_de_dieu], Ta constance,
+Elle me tient, elle me fortifie.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], dans Ta constance,
+Je trouve ma paix, ma foi.
+
+--- COUPLET 2 ---
+Quand tout vacille,
+Quand tout s'effondre,
+Tu restes là,
+Inébranlable.
+
+[verset]
+Ta parole est stable,
+Ta promesse est sûre.
+[nom_de_dieu], dans Ta constance,
+Je trouve mon repos.
+
+--- PONT ---
+Constance, constance, constance,
+Ta constance.
+Stable, stable, stable,
+Tu es stable.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ta constance,
+Elle me rassure, elle me porte.
+[nom_de_dieu], Ta constance,
+Elle me tient, elle me fortifie.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], dans Ta constance,
+Je trouve ma paix, ma foi.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ta constance.
+Ta constance.
+Ta constance.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu as dit.
+Tu as fait.
+Tu tiens parole.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu tiens parole.
+Chaque promesse que Tu fais,
+Tu l'accomplis.
+
+Chaque parole que Tu dis,
+Tu la réalises.
+Tu n'as jamais manqué,
+Tu ne manqueras jamais.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu tiens parole,
+Tu tiens parole, Tu es fidèle.
+[nom_de_dieu], Tu tiens parole,
+Tu es sûr, Tu es vrai.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], Tu tiens parole,
+Tu es mon rocher, ma foi.
+
+--- COUPLET 2 ---
+Ce que Tu as promis,
+Tu le feras.
+Ce que Tu as dit,
+Tu l'accompliras.
+
+[verset]
+Ta parole est vérité,
+Ta promesse est sûre.
+[nom_de_dieu], dans Ta fidélité,
+Je trouve mon repos.
+
+--- PONT ---
+Parole, parole, parole,
+Tu tiens parole.
+Fidèle, fidèle, fidèle,
+Tu es fidèle.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu tiens parole,
+Tu tiens parole, Tu es fidèle.
+[nom_de_dieu], Tu tiens parole,
+Tu es sûr, Tu es vrai.
+
+Je m'appuie sur Toi,
+Je me repose en Toi.
+[nom_de_dieu], Tu tiens parole,
+Tu es mon rocher, ma foi.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Tu tiens parole.
+Tu tiens parole.
+Tu tiens parole.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Souverain.
+Sur tout.
+Sur tous.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es souverain.
+Tu règnes sur les nations,
+Tu règnes sur les rois.
+
+Rien n'échappe à Ta volonté,
+Rien ne résiste à Ton dessein.
+Tu conduis l'histoire,
+Tu diriges les temps.
+
+--- REFRAIN ---
+[nom_de_dieu], Souverain,
+Tu règnes sur tout, Tu es Roi.
+[nom_de_dieu], Souverain,
+Tu diriges, Tu conduis.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Souverain,
+Tu es ma paix, mon honneur.
+
+--- COUPLET 2 ---
+Même quand je ne comprends pas,
+Même quand je ne vois pas,
+Tu es souverain,
+Et Tu sais ce que Tu fais.
+
+[verset]
+Ta sagesse est parfaite,
+Ta volonté est bonne.
+[nom_de_dieu], dans Ta souveraineté,
+Je trouve mon repos.
+
+--- PONT ---
+Souverain, souverain, souverain,
+Tu es souverain.
+Sur tout, sur tous,
+Tu es souverain.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Souverain,
+Tu règnes sur tout, Tu es Roi.
+[nom_de_dieu], Souverain,
+Tu diriges, Tu conduis.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Souverain,
+Tu es ma paix, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Souverain.
+Souverain.
+Souverain.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ton dessein.
+Il est parfait.
+Je m'y abandonne.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ton dessein est parfait.
+Tu sais ce qui est bon,
+Tu sais ce qui est juste.
+
+Ce que Tu permets,
+Tu le permets pour un bien.
+Ce que Tu accomplis,
+Tu l'accomplis avec sagesse.
+
+--- REFRAIN ---
+[nom_de_dieu], Ton dessein,
+Il est parfait, il est bon.
+[nom_de_dieu], Ton dessein,
+Il me guide, il me conduit.
+
+Je m'abandonne à Toi,
+Je me remets entre Tes mains.
+[nom_de_dieu], dans Ton dessein,
+Je trouve ma paix, mon chemin.
+
+--- COUPLET 2 ---
+Je ne comprends pas toujours,
+Mais je Te fais confiance.
+Tu vois plus loin que moi,
+Tu sais ce qui est bon.
+
+[verset]
+Que Ta volonté soit faite,
+Dans ma vie, chaque jour.
+[nom_de_dieu], dans Ton dessein,
+Je trouve mon repos.
+
+--- PONT ---
+Dessein, dessein, dessein,
+Ton dessein.
+Parfait, parfait, parfait,
+Il est parfait.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ton dessein,
+Il est parfait, il est bon.
+[nom_de_dieu], Ton dessein,
+Il me guide, il me conduit.
+
+Je m'abandonne à Toi,
+Je me remets entre Tes mains.
+[nom_de_dieu], dans Ton dessein,
+Je trouve ma paix, mon chemin.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ton dessein.
+Ton dessein.
+Ton dessein.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu conduis.
+L'histoire.
+Depuis toujours.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu conduis l'histoire.
+Les empires se lèvent,
+Les empires tombent.
+
+Mais Ta main est là,
+Invisible mais présente.
+Tu diriges les nations,
+Tu conduis les temps.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu conduis l'histoire,
+Tu diriges, Tu accomplis.
+[nom_de_dieu], Tu conduis l'histoire,
+Tu es souverain, Tu es Roi.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu conduis l'histoire,
+Tu es ma paix, mon honneur.
+
+--- COUPLET 2 ---
+Rien ne se passe sans Toi,
+Rien n'échappe à Ta main.
+Tu es là depuis toujours,
+Tu seras là jusqu'à la fin.
+
+[verset]
+Ta sagesse est infinie,
+Ta bonté est éternelle.
+[nom_de_dieu], dans Ta souveraineté,
+Je trouve mon repos.
+
+--- PONT ---
+Tu conduis, Tu conduis, Tu conduis,
+Tu conduis l'histoire.
+Tu diriges, Tu diriges, Tu diriges,
+Tu diriges tout.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu conduis l'histoire,
+Tu diriges, Tu accomplis.
+[nom_de_dieu], Tu conduis l'histoire,
+Tu es souverain, Tu es Roi.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu conduis l'histoire,
+Tu es ma paix, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Tu conduis.
+Tu conduis.
+Tu conduis.
+Toujours.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ton règne.
+Éternel.
+Sans fin.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ton règne est éternel.
+Les rois passent,
+Les empires s'effondrent.
+
+Mais Ton trône demeure,
+Pour toujours affermi.
+Ta domination est sans fin,
+Ta royauté n'a pas de limite.
+
+--- REFRAIN ---
+[nom_de_dieu], Ton règne est éternel,
+Il dure toujours, il ne finit pas.
+[nom_de_dieu], Ton règne est éternel,
+Tu es Roi, Tu es là.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ton règne est éternel,
+Il est ma paix, mon honneur.
+
+--- COUPLET 2 ---
+Aucun pouvoir ne T'égale,
+Aucune autorité ne T'atteint.
+Tu es le Roi des rois,
+Le Seigneur des seigneurs.
+
+[verset]
+Ta justice est parfaite,
+Ta vérité est lumière.
+[nom_de_dieu], dans Ton règne,
+Je trouve ma sécurité.
+
+--- PONT ---
+Règne, règne, règne,
+Ton règne.
+Éternel, éternel, éternel,
+Il est éternel.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ton règne est éternel,
+Il dure toujours, il ne finit pas.
+[nom_de_dieu], Ton règne est éternel,
+Tu es Roi, Tu es là.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ton règne est éternel,
+Il est ma paix, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ton règne.
+Ton règne.
+Ton règne.
+Éternel.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu es Seigneur.
+Pas seulement pour les autres.
+Pour moi.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es Seigneur.
+Pas seulement dans les livres,
+Mais dans ma vie.
+
+Pas seulement dans les églises,
+Mais dans mon cœur.
+Tu es le Seigneur de ma vie,
+Le Roi de mon histoire.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu es Seigneur,
+Tu es Seigneur de ma vie.
+[nom_de_dieu], Tu es Seigneur,
+Tu es mon Roi, mon appui.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu es Seigneur,
+Tu es ma paix, mon honneur.
+
+--- COUPLET 2 ---
+Je Te reconnais comme Roi,
+Je Te proclame Seigneur.
+Que Ta volonté soit faite,
+Dans ma vie, chaque jour.
+
+[verset]
+Tu es digne de régner,
+Digne de conduire.
+[nom_de_dieu], Tu es Seigneur,
+Et je T'appartiens.
+
+--- PONT ---
+Seigneur, Seigneur, Seigneur,
+Tu es Seigneur.
+Roi, Roi, Roi,
+Tu es Roi.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu es Seigneur,
+Tu es Seigneur de ma vie.
+[nom_de_dieu], Tu es Seigneur,
+Tu es mon Roi, mon appui.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu es Seigneur,
+Tu es ma paix, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Tu es Seigneur.
+Tu es Seigneur.
+Tu es Seigneur.
+À jamais.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Agneau.
+Tu T'es donné.
+Pour moi.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu es l'Agneau.
+Tu T'es donné pour moi,
+Tu as porté mes fautes.
+
+Tu n'as rien gardé,
+Tu as tout offert.
+Ton sacrifice m'a sauvé,
+Ton amour m'a racheté.
+
+--- REFRAIN ---
+[nom_de_dieu], Agneau de Dieu,
+Tu T'es donné, Tu m'as sauvé.
+[nom_de_dieu], Agneau de Dieu,
+Tu m'as racheté, Tu m'as libéré.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Agneau de Dieu,
+Tu es ma vie, mon honneur.
+
+--- COUPLET 2 ---
+Je ne méritais pas ce don,
+Je ne méritais pas ce prix.
+Et pourtant Tu T'es donné,
+Par amour, sans condition.
+
+[verset]
+Ton sang m'a purifié,
+Ta mort m'a donné la vie.
+[nom_de_dieu], Agneau de Dieu,
+Je Te dois tout, ma vie.
+
+--- PONT ---
+Agneau, Agneau, Agneau,
+Tu es l'Agneau.
+Merci, merci, merci,
+Pour Ton sacrifice.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Agneau de Dieu,
+Tu T'es donné, Tu m'as sauvé.
+[nom_de_dieu], Agneau de Dieu,
+Tu m'as racheté, Tu m'as libéré.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Agneau de Dieu,
+Tu es ma vie, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Agneau.
+Agneau.
+Agneau.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Tu T'es donné.
+Sans rien attendre.
+Par amour.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Tu T'es donné.
+Tu n'as pas gardé Ta vie,
+Tu l'as offerte.
+
+Tu n'as pas fui la croix,
+Tu l'as portée.
+Par amour pour moi,
+Tu T'es sacrifié.
+
+--- REFRAIN ---
+[nom_de_dieu], Tu T'es donné,
+Tu T'es donné pour moi.
+[nom_de_dieu], Tu T'es donné,
+Par amour, par grâce, par foi.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu T'es donné,
+Et je Te donne ma vie.
+
+--- COUPLET 2 ---
+Comment Te remercier,
+Pour un tel sacrifice ?
+Comment Te rendre,
+Ce que Tu m'as donné ?
+
+[verset]
+Je Te donne ma vie,
+En retour de Ton amour.
+[nom_de_dieu], Tu T'es donné,
+Et je me donne à Toi.
+
+--- PONT ---
+Donné, donné, donné,
+Tu T'es donné.
+Merci, merci, merci,
+Pour Ton amour.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Tu T'es donné,
+Tu T'es donné pour moi.
+[nom_de_dieu], Tu T'es donné,
+Par amour, par grâce, par foi.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Tu T'es donné,
+Et je Te donne ma vie.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Tu T'es donné.
+Tu T'es donné.
+Tu T'es donné.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Ton sang.
+Il m'a lavé.
+Il m'a purifié.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et Ton sang m'a lavé.
+Mes fautes étaient nombreuses,
+Ton sang les a effacées.
+
+Mes taches étaient profondes,
+Ton sang les a purifiées.
+Je suis blanchi, je suis lavé,
+Je suis nouveau en Toi.
+
+--- REFRAIN ---
+[nom_de_dieu], Ton sang m'a lavé,
+Il m'a purifié, il m'a libéré.
+[nom_de_dieu], Ton sang m'a lavé,
+Il m'a blanchi, il m'a sauvé.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ton sang m'a lavé,
+Et je suis nouveau en Toi.
+
+--- COUPLET 2 ---
+Je ne porte plus ma honte,
+Je ne porte plus mes fautes.
+Ton sang a tout effacé,
+Je suis libre, je suis sauvé.
+
+[verset]
+Plus de condamnation,
+Plus de culpabilité.
+[nom_de_dieu], dans Ton sang,
+Je trouve ma liberté.
+
+--- PONT ---
+Lavé, lavé, lavé,
+Je suis lavé.
+Purifié, purifié, purifié,
+Je suis purifié.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], Ton sang m'a lavé,
+Il m'a purifié, il m'a libéré.
+[nom_de_dieu], Ton sang m'a lavé,
+Il m'a blanchi, il m'a sauvé.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], Ton sang m'a lavé,
+Et je suis nouveau en Toi.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Ton sang.
+Ton sang.
+Ton sang.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+Racheté.
+À un grand prix.
+Par amour.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et je suis racheté.
+Tu as payé le prix,
+Un prix que je ne pouvais pas payer.
+
+Tu m'as libéré de l'esclavage,
+Tu m'as sorti des ténèbres.
+Je T'appartiens maintenant,
+Non par contrainte, mais par amour.
+
+--- REFRAIN ---
+[nom_de_dieu], je suis racheté,
+Tu m'as racheté, Tu m'as libéré.
+[nom_de_dieu], je suis racheté,
+Tu m'as sauvé, Tu m'as aimé.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], je suis racheté,
+Et je T'appartiens, mon honneur.
+
+--- COUPLET 2 ---
+Je n'étais pas libre,
+J'étais prisonnier.
+Mais Tu es venu,
+Et Tu m'as délivré.
+
+[verset]
+Ton sang a payé le prix,
+Ton amour m'a libéré.
+[nom_de_dieu], dans Ta rédemption,
+Je trouve ma liberté.
+
+--- PONT ---
+Racheté, racheté, racheté,
+Je suis racheté.
+Libéré, libéré, libéré,
+Je suis libéré.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], je suis racheté,
+Tu m'as racheté, Tu m'as libéré.
+[nom_de_dieu], je suis racheté,
+Tu m'as sauvé, Tu m'as aimé.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], je suis racheté,
+Et je T'appartiens, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Racheté.
+Racheté.
+Racheté.
+Merci.`,
+
+`--- INTRO ---
+[nom_de_dieu]…
+La croix.
+Ton sacrifice.
+Merci.
+
+--- COUPLET 1 ---
+Tu es [attribut1], Tu es [attribut2], Tu es [attribut3],
+Et je Te remercie pour la croix.
+Là où Tu T'es donné,
+Là où Tu m'as sauvé.
+
+Chaque clou, chaque douleur,
+Chaque goutte de sang,
+C'était pour moi,
+C'était par amour.
+
+--- REFRAIN ---
+[nom_de_dieu], merci pour la croix,
+Merci pour Ton sacrifice, merci pour Toi.
+[nom_de_dieu], merci pour la croix,
+Merci pour Ton amour, merci pour Ta foi.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], merci pour la croix,
+Merci pour tout, mon honneur.
+
+--- COUPLET 2 ---
+Je ne peux pas oublier,
+Ce que Tu as fait pour moi.
+La croix est ma mémoire,
+Ton amour est ma force.
+
+[verset]
+Que ma vie soit un merci,
+Un chant de reconnaissance.
+[nom_de_dieu], dans Ton sacrifice,
+Je trouve ma délivrance.
+
+--- PONT ---
+Merci, merci, merci,
+Pour la croix.
+Merci, merci, merci,
+Pour Ton amour.
+
+--- REFRAIN FINAL ---
+[nom_de_dieu], merci pour la croix,
+Merci pour Ton sacrifice, merci pour Toi.
+[nom_de_dieu], merci pour la croix,
+Merci pour Ton amour, merci pour Ta foi.
+
+Je T'adore, je T'élève,
+Je Te proclame Seigneur.
+[nom_de_dieu], merci pour la croix,
+Merci pour tout, mon honneur.
+
+--- OUTRO ---
+[nom_de_dieu]…
+Merci.
+Merci.
+Merci.
+Pour toujours.`
+];
