@@ -1,0 +1,910 @@
+module.exports = [
+`{NOM}, aujourd'hui c'est ton jour
+Et le monde se réunit pour te célébrer
+{RELATION}, tu mérites cette joie, ce bonheur
+Car tu as donné tant de sourires autour de toi
+
+Joyeux anniversaire, {NOM}
+Que cette journée soit remplie de lumière
+Que chaque moment soit doux et précieux
+Et que tu sentes combien tu comptes
+
+Nous te souhaitons une belle année encore
+Pleine de santé, de paix et de bénédictions
+{NOM}, tu es une bénédiction pour nous tous
+Que Dieu te garde et te protège toujours`,
+
+`{NOM}, joyeux anniversaire !
+Aujourd'hui, c'est ta fête
+Et nous sommes tous heureux d'être avec toi
+Que tu sentes la joie qui t'entoure
+
+{RELATION}, tu mérites le meilleur
+Et nous te le souhaitons de tout cœur
+Que Dieu te bénisse richement
+Et que cette année soit magnifique pour toi`,
+
+`Rassemble la famille, réunis tes amis
+Car aujourd'hui, c'est le jour de {NOM}
+{RELATION}, tu as grandi entouré d'amour
+Et l'amour te revient aujourd'hui
+
+Chaque sourire autour de cette table
+Chaque rire, chaque embrassade
+C'est notre manière de te dire : tu es précieux
+Tu es aimé, tu es célébré
+
+Joyeux anniversaire, {NOM}
+Que cette fête remplisse ton cœur
+Et que chaque jour de cette année nouvelle
+Te rappelle combien tu comptes`,
+
+`{NOM}, ton jour est arrivé
+Et nous sommes tous réunis pour toi
+Pas besoin de grands mots
+Juste de la gratitude, juste de l'amour
+
+{RELATION}, tu es une belle personne
+Et cela mérite d'être célébré
+Que Dieu te bénisse abondamment
+Que la santé soit avec toi
+Que la paix soit dans ton cœur`,
+
+`{NOM}, tu apportes de la lumière
+Partout où tu passes, les gens sourient
+Aujourd'hui, nous te renvoyons cette lumière
+Car tu la mérites
+
+{RELATION}, tu as un don spécial
+Celui de rendre les autres heureux
+Sans chercher à l'être toi-même
+C'est une vraie beauté
+
+Joyeux anniversaire
+Que cette année te ramène ce que tu donnes
+Que Dieu prenne soin de toi
+Comme tu prends soin des autres`,
+
+`{NOM}, merci d'être toi
+Merci d'exister dans nos vies
+Merci de nous avoir fait rire et réfléchir
+Merci de nous avoir montré la force
+
+Aujourd'hui, nous célébrons ton existence
+Tout simplement, tout honnêtement
+{RELATION}, tu as une place unique
+Que personne ne peut remplir
+
+Joyeux anniversaire, {NOM}
+Que cette journée soit douce
+Que cette année soit belle
+Et que Dieu continue à te bénir`,
+
+`La joie que tu portes, {NOM}, est contagieuse
+Elle nous atteint tous, sans exception
+{RELATION}, tu es source de bonheur
+Et ça se voit à ta façon de vivre
+
+Aujourd'hui, c'est notre tour
+De te donner cette joie que tu donnes
+De te montrer le beau que tu es
+De te célébrer comme tu le mérites
+
+Joyeux anniversaire, {NOM}
+Que Dieu sème encore plus de joie dans ton cœur
+Que chaque jour de cette nouvelle année
+Soit un jour de lumière et de paix`,
+
+`{NOM}, quand je pense à toi
+Je pense à la gratitude
+Tu as donné sans attendre de retour
+Tu as aimé sans compter
+
+{RELATION}, tu es rare dans ce monde
+Où tout devient transaction
+Mais toi, tu continues à donner
+C'est ça qu'on célèbre aujourd'hui
+
+Joyeux anniversaire, {NOM}
+Que la vie te rende tout ça
+Que Dieu t'accorde ses meilleures bénédictions
+Et que tu saches combien tu es aimé`,
+
+`Arrête-toi un moment, {NOM}
+Regarde autour de toi
+Vois tous ceux qui t'aiment
+Vois toute cette beauté que tu as créée
+
+{RELATION}, ce que tu as bâti
+Ce n'est pas par chance
+C'est par ton cœur, ta persévérance
+C'est par qui tu es vraiment
+
+Aujourd'hui, nous te le rappelons
+Joyeux anniversaire, {NOM}
+Tu mérites un jour qui soit uniquement pour toi
+Et toute l'année qui suit`,
+
+`{NOM}, en ce jour spécial
+Nous te remercions simplement
+D'être qui tu es
+De nous avoir permis de te connaître
+
+{RELATION}, c'est un privilège
+D'avoir quelqu'un comme toi
+Quelqu'un de bon, de vrai, de fiable
+Quelqu'un qui nous inspire
+
+Joyeux anniversaire, {NOM}
+Que Dieu te bénisse richement
+Que chaque année qui vient
+Soit encore plus belle que celle-ci`,
+
+`{NOM}, tu es spécial pour moi
+{RELATION}, c'est une chance de t'avoir dans ma vie
+{ANECDOTE} — c'est un souvenir que je garderai toujours
+Tu m'as montré ce que signifie vraiment aimer
+
+Aujourd'hui, je veux que tu saches
+Combien tu es aimé et apprécié
+Pour ce que tu es, pas pour ce que tu fais
+Pour ta bonté, ta patience, ta présence
+
+Merci d'être toi, {NOM}
+Merci pour chaque jour partagé
+Que Dieu te bénisse richement
+Et que la vie te rende tout l'amour que tu donnes`,
+
+`{NOM}, je t'aime
+Pas pour les raisons que les autres donnent
+Mais pour mille petites choses
+Qui font de toi, toi
+
+{RELATION}, tu as une manière
+De rendre les gens meilleurs
+Sans dire un mot, sans rien faire
+Juste en étant là
+
+Joyeux anniversaire, {NOM}
+Que tu sentes cet amour aujourd'hui
+Comme tu le sens toujours
+Mais encore plus fort`,
+
+`{NOM}, entre toi et moi
+Il y a quelque chose de spécial
+Une compréhension sans paroles
+Une amitié sans condition
+
+{ANECDOTE} — c'est un moment où j'ai su
+Que tu serais toujours important pour moi
+{RELATION}, tu es plus qu'un lien
+Tu es une partie de mon histoire
+
+Joyeux anniversaire, {NOM}
+Que cette année nous rapproche encore
+Que nous continuions à créer des souvenirs
+Et que tu saches : tu ne seras jamais seul`,
+
+`{NOM}, dans les moments difficiles
+Tu as été là sans poser de questions
+{RELATION}, c'est ça qu'on reconnaît
+Quelqu'un qui aime vraiment
+
+Tu n'as pas attendu d'être demandé
+Tu as vu la besoin et tu as agi
+C'est une rareté, {NOM}
+Et ça mérite d'être célébré
+
+Joyeux anniversaire, {NOM}
+Que tu reçoives autant que tu donnes
+Que Dieu prenne soin de toi
+Comme tu prends soin de ceux que tu aimes`,
+
+`{NOM}, quand je suis avec toi
+Je me sens meilleur
+Je vois le monde différemment
+C'est comme si tu tenais un miroir
+
+{RELATION}, tu me montres qui je peux être
+Sans jugement, sans pression
+Juste avec amour et confiance
+C'est rare, et je le sais
+
+Merci pour cela, {NOM}
+Joyeux anniversaire à celui/celle qui m'aide à grandir
+Que Dieu bénisse ton chemin
+Et que tu saches combien tu comptes`,
+
+`{NOM}, ce n'est pas ce que tu fais
+C'est ta présence qui change tout
+Juste te savoir là
+Ça suffit parfois
+
+{RELATION}, tu as ce don
+De rendre un moment ordinaire magnifique
+{ANECDOTE} — c'était un jour normal
+Mais avec toi, c'était special
+
+Joyeux anniversaire, {NOM}
+Que chaque moment de cette année
+Soit magique parce que toi, tu existes
+Et que Dieu te garde toujours près de nous`,
+
+`{NOM}, avec toi, on croit encore
+En la bonté, en l'amour, en la beauté
+{RELATION}, tu es notre espérance
+Qu'il existe des gens bons
+
+Tu ne le sais peut-être pas
+Mais tu sauves les gens juste en étant toi
+Avec ta gentillesse, ton sourire
+Ton amour sans prétention
+
+Joyeux anniversaire, {NOM}
+Que Dieu te bénisse abondamment
+Et que tu continues à nous sauver
+Avec qui tu es`,
+
+`{NOM}, les années passent
+Mais certaines personnes restent à jamais
+{RELATION}, tu es de celles-là
+Pour moi, tu seras toujours là
+
+{ANECDOTE} — ce souvenir ne s'effacera jamais
+Parce qu'il est lié à toi
+Et toi, tu es éternel
+Dans mon cœur et dans ma vie
+
+Joyeux anniversaire, {NOM}
+Que nous vieillissions ensemble
+Que nous créions encore des souvenirs
+Et que notre lien reste indestructible`,
+
+`{NOM}, avec toi, j'ose être moi
+Avec toi, je n'ai pas peur
+{RELATION}, tu m'as permis de baisser les armes
+Et c'est un cadeau magnifique
+
+Tu m'as montré qu'on peut être vulnérable
+Et que ce n'est pas une faiblesse
+C'est une force, une beauté
+Une manière d'aimer vraiment
+
+Merci pour cela, {NOM}
+Joyeux anniversaire
+Que Dieu te protège comme tu m'as protégé
+Et que je puisse te rendre ce cadeau`,
+
+`{NOM}, j'ai pas besoin de mots
+Pour te dire ce que tu représentes
+{RELATION}, tu es une bénédiction
+Dans le vrai sens du terme
+
+Quand j'ai besoin de force, c'est toi que j'appelle
+Quand j'ai besoin de conseil, c'est toi que j'écoute
+Quand j'ai besoin d'amour, tu es déjà là
+C'est ça, une vraie bénédiction
+
+Joyeux anniversaire, {NOM}
+Que Dieu te bénisse comme tu nous bénis
+Et que chaque jour de cette année
+Te rappelle combien tu es aimé`,
+
+`{NOM}, en regardant ton parcours
+On voit quelqu'un qui n'a jamais baissé les bras
+Tu as avancé avec courage et dignité
+Et tu nous montres le chemin
+
+{RELATION}, tu es notre exemple
+Pas par tes grands discours, mais par tes actes
+{ANECDOTE} — voilà qui tu es vraiment
+Quelqu'un sur qui on peut compter
+
+À {AGE} ans, tu peux être fier
+D'avoir construit une belle vie
+D'avoir aidé ceux qui t'entourent
+D'avoir grandi en honneur et en sagesse
+
+Joyeux anniversaire, {NOM}
+Que Dieu continue de te bénir
+Et que tu voies longtemps les fruits de tes efforts`,
+
+`{NOM}, tu as connu des moments durs
+Mais tu ne t'es pas arrêté
+{RELATION}, c'est ça qu'on admire
+La capacité à continuer malgré tout
+
+Tu as transformé tes épreuves en force
+Tes failures en sagesse
+Tes larmes en détermination
+C'est l'essence même du courage
+
+À {AGE} ans, tu peux regarder derrière
+Et voir que tu as grandi
+Que tu as appris, que tu as changé
+Pour devenir plus fort
+
+Joyeux anniversaire, {NOM}
+Que Dieu te donne la force de continuer
+Et que tu saches : tu ne seras jamais seul dans tes luttes`,
+
+`{NOM}, tu changes les vies autour de toi
+Et parfois tu ne t'en rends même pas compte
+{RELATION}, il y a des gens qui existent mieux
+Parce que tu as agi
+
+{ANECDOTE} — c'est un exemple de ton impact
+Une trace que tu laisses partout
+C'est une responsabilité, d'avoir ce pouvoir
+Et tu la assumes avec grâce
+
+À {AGE} ans, tu peux être fier
+De l'héritage que tu construis
+Des gens que tu inspires
+Des vies que tu touches
+
+Joyeux anniversaire, {NOM}
+Que Dieu multiplie ton impact
+Et que tu continues à faire la différence`,
+
+`{NOM}, dans un monde qui change trop vite
+Tu restes ancré dans tes valeurs
+{RELATION}, c'est admirable, c'est rare
+Tu es un roc au milieu de la tempête
+
+Tu fais ce qui est juste, pas ce qui est facile
+Tu dis la vérité, même quand elle fait mal
+Tu aides, même quand personne ne regarde
+C'est ça, une personne de caractère
+
+À {AGE} ans, tu l'as prouvé
+Que l'intégrité n'est pas une faiblesse
+Que les valeurs ont un prix
+Et que tu es prêt à le payer
+
+Joyeux anniversaire, {NOM}
+Que Dieu renforce ta conviction
+Et que tu inspires d'autres à suivre ton chemin`,
+
+`{NOM}, tu donnes plus que tu ne reçois
+Et c'est une forme de noblesse
+{RELATION}, tu es riche d'une autre manière
+Rich d'un cœur qui donne sans compter
+
+Tu as aidé ceux qui ne pouvaient rien te rendre
+Tu as donné sans demander de reconnaissance
+Tu as partagé ce que tu avais
+Même quand tu n'avais presque rien
+
+À {AGE} ans, c'est ton héritage
+Pas les choses que tu possèdes
+Mais les gens que tu as aidés
+Les sourires que tu as crées
+
+Joyeux anniversaire, {NOM}
+Que Dieu multiplie tes ressources
+Pour que tu continues à donner`,
+
+`{NOM}, tu dépasses tes limites
+Chaque jour, tu te bats pour plus
+{RELATION}, c'est admirable de te voir grandir
+De te voir viser plus haut
+
+Tu as compris que le meilleur de soi
+Ne s'atteint qu'en se dépassant
+{ANECDOTE} — c'est un moment où j'ai vu
+Que tu étais destiné à plus
+
+À {AGE} ans, tu n'as pas fini
+Tu commences à peine à briller
+Le meilleur est devant toi
+Et nous sommes impatients de voir
+
+Joyeux anniversaire, {NOM}
+Que Dieu te donne la force de continuer
+Et que tu atteigmes tous tes rêves`,
+
+`{NOM}, tu as l'âge de la sagesse maintenant
+Ou du moins, tu la recherches avec sérieux
+{RELATION}, c'est une belle chose à voir
+Quelqu'un qui veut vraiment comprendre
+
+Tu écoutes plus que tu ne parles
+Tu réfléchis avant d'agir
+Tu reconnaît tes erreurs et tu en apprends
+C'est la marque du sage
+
+À {AGE} ans, tu es sur le bon chemin
+Celui de la vraie compréhension
+Celui où on se connaît vraiment
+Et où on accepte qui on est
+
+Joyeux anniversaire, {NOM}
+Que Dieu continue de t'enseigner
+Et que ta sagesse inspire ceux qui t'entourent`,
+
+`{NOM}, les gens te suivent
+Pas par peur, mais par respect
+{RELATION}, tu as ce don de rassembler
+De montrer la direction
+
+Tu dirige avec le cœur
+Tu n'oublies jamais d'où tu viens
+Tu élèves les autres en montant
+C'est un vrai leader
+
+À {AGE} ans, tu as prouvé
+Que le leadership n'est pas une position
+C'est une façon d'être
+Une manière d'aimer les gens
+
+Joyeux anniversaire, {NOM}
+Que Dieu te donne la sagesse de bien mener
+Et que tu continues à élever ceux autour de toi`,
+
+`{NOM}, tu portes l'héritage de ceux avant toi
+Et tu le transmets à ceux après toi
+{RELATION}, tu es un maillon important
+D'une chaîne qui commence avant et continue après
+
+Tu comprends que tu ne suis pas seul
+Que tu dois honorer le passé
+Et préparer l'avenir
+C'est une responsabilité magnifique
+
+À {AGE} ans, tu le fais avec grâce
+Tu prends soin de la flamme
+Et tu la passes à la génération suivante
+C'est une vraie fierté
+
+Joyeux anniversaire, {NOM}
+Que Dieu bénis ta mission
+Et que tu continues à être le lien`,
+
+`{NOM}, tu tiens tes promesses
+Même quand c'est difficile, même quand c'est coûteux
+{RELATION}, on peut se fier à toi
+Et ce n'est pas rien
+
+Tu dis ce que tu penses
+Tu fais ce que tu dis
+Tu es la même personne partout
+C'est rare et c'est précieux
+
+À {AGE} ans, c'est ton superpouvoit
+C'est ce qui te rend différent
+C'est ce qui te rend admiré
+C'est ce qui te rend respecté
+
+Joyeux anniversaire, {NOM}
+Que Dieu protège ton intégrité
+Et que tu continues à briller
+Par qui tu es vraiment`,
+
+`{NOM}, les années passent mais les souvenirs restent
+{ANECDOTE} — c'était un si beau moment
+Je me souviens comme si c'était hier
+De ta rire, de ta voix, de ta gentillesse
+
+{RELATION}, tu es devenu la personne
+Que je savais que tu serais
+Et je suis heureux d'avoir grandi à tes côtés
+D'avoir vécu tous ces instants précieux
+
+Chaque anniversaire me rapproche de toi
+Parce que chaque année, tu deviens plus cher à mon cœur
+Les souvenirs s'accumulent
+Et ils sont plus précieux que l'or
+
+Joyeux anniversaire, {NOM}
+Que nous continuions à faire de beaux souvenirs ensemble
+Que la vie soit douce avec toi
+Et que Dieu te protège toujours`,
+
+`{NOM}, j'aime voyager dans mes souvenirs
+Et chaque fois, tu es là
+{RELATION}, tu es la constante dans ma vie
+Le point d'ancrage qui ne bouge pas
+
+{ANECDOTE} — combien de fois j'ai revisite ce moment
+Combien de fois j'ai ressenti cette douceur
+C'est parce que tu étais là
+Et tu continues d'être là
+
+À {AGE} ans maintenant
+Tu es plus toi que jamais
+Et les souvenirs que nous créons
+Sont encore plus précieux
+
+Joyeux anniversaire, {NOM}
+Merci d'être dans mes souvenirs
+Et merci d'être dans mon présent`,
+
+`{NOM}, beaucoup de choses ont changé
+Mais tu es resté le même
+{RELATION}, c'est une force tranquille
+Celle de la constance
+
+J'aime que je puisse revenir à toi
+Et trouver toujours la même warmth
+Toujours la même bienveillance
+Toujours l'amour qu'on se connaît
+
+{ANECDOTE} — ce que j'aime, c'est que
+Ce souvenir est vrai, pas coloré par le temps
+C'est resté pur, comme toi
+
+Joyeux anniversaire, {NOM}
+Que tu restes toujours cette lumière
+Constante et vraie`,
+
+`{NOM}, je me souviens quand tu étais petit
+Insouciant, rêveur, plein d'énergie
+{RELATION}, c'était beau de te voir grandir
+Sans jamais perdre cette étincelle
+
+{ANECDOTE} — je vois encore cet instant
+Où j'ai su que tu serais une belle personne
+Et tu l'es devenu, magnifiquement
+
+À {AGE} ans, tu gardes cette pureté
+Même avec tout ce que la vie t'a donné
+C'est ça qu'on admiré chez toi
+
+Joyeux anniversaire, {NOM}
+Que tu gardes toujours cet enfant en toi
+Qui croit aux belles choses`,
+
+`{NOM}, j'ai eu le privilège de te voir grandir
+De te voir transformer, mais rester toi
+{RELATION}, c'est poétique, cette transformation
+De la chenille au papillon, tout en restant soi
+
+Tu as changé, c'est vrai
+Mais ta essence est restée intacte
+{ANECDOTE} — c'est un exemple
+De comment on peut évoluer sans se perdre
+
+À {AGE} ans, tu es maturité et enfance
+Tu es sagesse et innocence
+C'est l'équilibre parfait
+
+Joyeux anniversaire, {NOM}
+Que tu continues cette belle transformation
+Vers celui/celle que tu es destiné à être`,
+
+`{NOM}, quand je pense à tous les moments
+Que nous avons partagés
+La gratitude m'envahit
+{RELATION}, merci d'avoir été là
+
+{ANECDOTE} — c'est un moment qui m'a façonné
+Parce que tu étais là
+Merci d'avoir participé à ma vie
+De m'avoir aidé à devenir moi
+
+Et maintenant, à {AGE} ans
+Tu continues d'être cette personne
+Qui enrichit la vie de ceux autour
+Que tu sois toujours béni pour cela
+
+Joyeux anniversaire, {NOM}
+Merci pour tous les souvenirs
+Et pour tous ceux à venir`,
+
+`{NOM}, il y a des moments qu'on oublie
+Et des moments qu'on emporte éternellement
+{RELATION}, tu es un moment éternel
+Pour moi, pour nous
+
+{ANECDOTE} — cet instant n'est pas figé
+Il continue de vivre dans mon cœur
+De façon plus vivante que la réalité
+Parce qu'il est lié à toi
+
+À {AGE} ans, tu es plus vivant que jamais
+Pas seulement ici et maintenant
+Mais dans chaque souvenir qu'on partage
+Chaque moment qu'on crée
+
+Joyeux anniversaire, {NOM}
+Que tu vives éternellement
+Dans nos cœurs et dans nos souvenirs`,
+
+`{NOM}, le temps nous a rendus sage
+Pas juste en années, mais en expérience
+{RELATION}, on voit la beauté maintenant
+Dans les choses qu'on n'appréciais pas avant
+
+{ANECDOTE} — aujourd'hui, je vois ce moment
+Avec des yeux neufs
+Et j'y vois une profondeur
+Que je n'avais pas vue à ce moment
+
+À {AGE} ans, tu comprends peut-être aussi
+Que le temps n'est pas un ennemi
+Mais un allié, un ami
+Qui nous rend plus vrai
+
+Joyeux anniversaire, {NOM}
+Qu'avec l'âge, tu trouves plus de paix
+Et que tu saches : c'était beau avant
+Et c'est beau maintenant`,
+
+`{NOM}, il y a une connexion entre nous
+Qu'aucun temps n'peut briser
+{RELATION}, elle était là à l'enfance
+Et elle est toujours là aujourd'hui
+
+{ANECDOTE} — notre lien s'est forgé
+À travers des moments simples
+Mais chargés de vrai
+De vraie humanité
+
+À {AGE} ans, cette connexion
+Est devenue plus profonde
+Plus complexe, plus belle
+C'est un trésor qu'on protège
+
+Joyeux anniversaire, {NOM}
+Que cette connexion dure éternellement
+Et que nous continuions à grandir ensemble
+À travers le temps et ses changements`,
+
+`{NOM}, tu es mon héritage maintenant
+Pas en richesses matérielles
+Mais en souvenirs, en amour, en sagesse
+{RELATION}, tu es ce que je laisse derrière moi
+
+{ANECDOTE} — chaque moment avec toi
+Est un pierre dans mon héritage
+Une fondation pour celui/celle que tu deviens
+Et que tu laisserasseras
+
+À {AGE} ans, tu commences peut-être
+À devenir héritage pour d'autres
+À laisser une trace
+Que d'autres continueront
+
+Joyeux anniversaire, {NOM}
+Que tu vive dignement cet héritage
+Et que tu le transmettes avec beauté
+À ceux qui viendront après`,
+
+`{NOM}, je vais être honnête
+Tu es l'une des personnes les plus précieuses dans ma vie
+{RELATION}, tu es quelqu'un qu'on peut respecter
+Quelqu'un qui fait la différence juste en étant là
+
+{ANECDOTE} — c'est un exemple de ce que tu es
+Quelqu'un de bon, de vrai, de fiable
+Tu n'as pas besoin de faire le spectacle
+Ton cœur parle pour toi
+
+À {AGE} ans, tu le sais maintenant
+Ce qui compte vraiment, c'est la bonté
+La famille, les vrais amis, la paix intérieure
+Et toi, tu as tout cela
+
+Joyeux anniversaire, {NOM}
+Que Dieu te donne des années longues et heureuses
+Que tu continues à être la belle personne que tu es
+Et que tu sentes toujours notre amour autour de toi`,
+
+`{NOM}, tu as une valeur
+Qu'on ne peut pas mesurer
+{RELATION}, ce que tu apportes
+Ne se calcule pas en chiffres
+
+C'est dans la façon de traiter les gens
+C'est dans l'écoute sans jugement
+C'est dans l'aide donnée en silence
+C'est dans l'amour qui ne compte pas
+
+{ANECDOTE} — tu me l'as montré
+Que la vraie richesse, c'est pas matériel
+C'est la capacité à aimer
+Et tu l'as en abondance
+
+Joyeux anniversaire, {NOM}
+À quelqu'un qui comprend vraiment
+Que c'est lui/elle qui enrichit les autres
+Et pas l'inverse`,
+
+`{NOM}, je te fais confiance
+Sans condition, sans limite
+{RELATION}, c'est rare dans cette vie
+D'avoir quelqu'un en qui on peut croire
+
+Tu ne m'as jamais déçu
+Tu m'as parfois surpris
+Mais jamais déçu
+Et ça, c'est précieux
+
+{ANECDOTE} — dans ce moment-là
+Tu aurais pu me laisser tomber
+Mais tu ne l'as pas fait
+Et c'est pour ça que tu es unique
+
+À {AGE} ans, tu as gagné cette confiance
+Par des années de loyauté
+De présence, de bienveillance
+Continue comme ça
+
+Joyeux anniversaire, {NOM}
+Que Dieu te protège toujours
+Et que tu saches : je suis avec toi
+Quoi qu'il arrive`,
+
+`{NOM}, je te respecte
+Pas pour ce que tu as
+Mais pour qui tu es
+{RELATION}, c'est une chose qu'on donne rarement
+
+Tu fais tes choix, même diffiles
+Tu assumes tes responsabilités
+Tu ne blâme pas les autres
+Tu prends ta vie en main
+
+{ANECDOTE} — quand tu as fait ce choix
+J'ai su que tu méritais mon respect
+Parce que c'était dur
+Mais tu l'a fait quand même
+
+À {AGE} ans, tu as gagné le respect
+D'un monde qui doute de tout
+C'est un accomplissement
+
+Joyeux anniversaire, {NOM}
+Que tu continues à mériter ce respect
+Et que tu le gardes toute ta vie`,
+
+`{NOM}, tu es vrai
+Dans un monde de façades et de mensonges
+Tu restes toi-même
+{RELATION}, c'est un acte de courage
+
+Tu ne joues pas un rôle
+Tu n'essaie pas de plaire à tout le monde
+Tu es simplement toi
+Et c'est assez, c'est même magnifique
+
+{ANECDOTE} — c'est ce que j'ai aimé
+Que tu sois juste naturel
+Sans effort, sans artifice
+Juste vrai
+
+À {AGE} ans, continue à être toi
+Le monde a besoin de ça
+De personnes qui ne se cachent pas
+Qui s'acceptent
+
+Joyeux anniversaire, {NOM}
+Que tu gardes cette authenticité
+Comme un trésor
+Parce que c'est ton plus grand atout`,
+
+`{NOM}, tu m'as appris ce que ça veut dire
+D'être vraiment solidaire
+{RELATION}, pas juste en paroles
+Mais en actes, en présence, en sacrifice
+
+Tu as donné de ton temps
+Quand tu n'en avais pas
+Tu as partagé ce que tu avais
+Même quand tu n'en avais peu
+
+{ANECDOTE} — ce geste-là
+Je ne l'oublierai jamais
+Parce que ça m'a sauvé
+Et ça m'a changé
+
+À {AGE} ans, tu dois le savoir
+Que tu as fait une différence
+Réelle, tangible, durable
+Dans la vie de quelqu'un
+
+Joyeux anniversaire, {NOM}
+Que Dieu te rend le bien que tu fais
+Et que tu continues à être cette lumière
+Pour ceux qui en ont besoin`,
+
+`{NOM}, tu n'as pas arrêté d'évoluer
+Tu continues à apprendre, à grandir
+{RELATION}, c'est une beauté chez toi
+Cette humilité d'apprendre toujours
+
+Tu reconnaît tes erreurs
+Tu les transformes en sagesse
+Tu changes d'avis quand tu te trompes
+C'est ça, la vraie force
+
+{ANECDOTE} — je t'ai vu changer
+Et c'était pas facile pour toi
+Mais tu l'a fait quand même
+Pour devenir meilleur
+
+À {AGE} ans, tu n'a pas terminé
+Le meilleur est devant
+Et je suis heureux de te voir continuer
+
+Joyeux anniversaire, {NOM}
+Que Dieu te donne la sagesse
+De continuer à croître
+Et à devenir toujours plus toi`,
+
+`{NOM}, dans une vie qui bouge trop vite
+Tu es une ancre
+{RELATION}, tu es quelque chose de stable
+Quelque chose sur laquelle on peut compter
+
+Pas rigide, mais stable
+Pas immobile, mais ancré
+Tu changes mais tu restes toi
+C'est une qualité rare
+
+{ANECDOTE} — quand tout s'effondrait
+Tu étais là, calme, présent
+Tu n'as pas besoin de dire grand chose
+Ta seule présence suffit
+
+À {AGE} ans, tu es cette stabilité
+Que beaucoup cherchent
+Et que peu trouvent
+Cherish this in yourself
+
+Joyeux anniversaire, {NOM}
+Que Dieu te garde stable
+Et que tu continues à être l'ancre
+Pour ceux qui t'aiment`,
+
+`{NOM}, tu as du courage
+Pas le courage bruyant
+Mais le courage silencieux
+{RELATION}, celui de continuer malgré la peur
+
+Tu fais ce qui est bien
+Même quand c'est difficile
+Tu marches vers tes rêves
+Même quand le chemin est sombre
+
+{ANECDOTE} — je t'ai vu avoir peur
+Et continuer quand même
+C'est ça le vrai courage
+Pas l'absence de peur, mais avancer malgré
+
+À {AGE} ans, tu as prouvé
+Que tu es courageux
+Maintenant continue
+Le monde a besoin de ton courage
+
+Joyeux anniversaire, {NOM}
+Que Dieu te donne la force
+De continuer à être brave
+Et de savoir que c'est assez`,
+
+`{NOM}, je t'aime
+Pas parce que tu dois être quelque chose
+Pas parce que tu dois faire quelque chose
+Juste parce que tu es toi
+{RELATION}, c'est l'amour vrai
+
+Pas conditionnel, pas éphémère
+Pas demandant, pas jugeant
+Juste là, permanent, stable
+
+{ANECDOTE} — un jour tu comprendras
+Que cet amour-là
+C'est le plus beau cadeau qu'on puisse recevoir
+Et tu l'as de ma part
+
+À {AGE} ans, tu dois savoir
+Que tu es aimé
+Complètement, sans réserve
+Pour qui tu es
+
+Joyeux anniversaire, {NOM}
+Que tu sentes cet amour aujourd'hui
+Que tu le portes toute l'année
+Et que tu saches : c'est éternel`
+];
