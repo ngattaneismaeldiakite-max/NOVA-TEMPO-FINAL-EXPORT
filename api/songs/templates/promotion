@@ -1,0 +1,1800 @@
+module.exports = [
+`--- INTRO ACCROCHE ---
+Écoutez bien, écoutez tous,
+Il y a du nouveau, et c'est pour vous !
+[nom_produit] arrive, [nom_produit] est là,
+Et vous n'avez jamais vu ça !
+
+--- COUPLET 1 ---
+[nom_produit], c'est ce qu'il vous faut,
+Pour vivre quelque chose de nouveau.
+[point1], [point2], [point3],
+Voilà pourquoi vous allez aimer.
+
+--- REFRAIN ---
+[nom_produit], venez découvrir,
+[nom_produit], venez profiter !
+C'est maintenant, ne manquez pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Que vous soyez de [public] ou d'ailleurs,
+[nom_produit] vous ouvre son cœur.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], venez découvrir,
+[nom_produit], venez profiter !
+C'est maintenant, ne manquez pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+[nom_produit] !
+On vous attend, venez nombreux,
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Sortez vos agendas, notez bien la date,
+[nom_produit] arrive, et ça va faire du bruit !
+À [lieu], le [date],
+[nom_produit], c'est l'événement de l'année !
+
+--- COUPLET 1 ---
+[nom_produit], c'est LE rendez-vous,
+Celui qui va marquer, celui qui rend fou.
+[point1], [point2], [point3],
+Tout est réuni pour vous faire vibrer.
+
+--- REFRAIN ---
+[nom_produit], venez nombreux,
+[nom_produit], c'est sérieux !
+À [lieu], le [date],
+[nom_produit], ne le manquez pas !
+
+--- COUPLET 2 ---
+Que vous veniez seul ou accompagné,
+[nom_produit] va vous étonner.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], venez nombreux,
+[nom_produit], c'est sérieux !
+À [lieu], le [date],
+[nom_produit], ne le manquez pas !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+À [lieu], le [date] !
+[nom_produit], on vous attend !
+[nom_produit], à très bientôt !`,
+
+`--- INTRO ACCROCHE ---
+Il y a du nouveau dans la ville,
+Et ce nouveau, il est bien !
+[nom_produit] débarque, [nom_produit] arrive,
+Et ça va changer vos vies !
+
+--- COUPLET 1 ---
+[nom_produit], c'est la nouveauté,
+Celle qui va vous impressionner.
+[point1], [point2], [point3],
+Voilà ce qui fait sa force.
+
+--- REFRAIN ---
+[nom_produit], le nouveau venu,
+[nom_produit], vous n'avez jamais vu !
+Venez voir, venez tester,
+[nom_produit], vous allez adorer !
+
+--- COUPLET 2 ---
+Pour [public], c'est fait exprès,
+[nom_produit] répond à vos souhaits.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le nouveau venu,
+[nom_produit], vous n'avez jamais vu !
+Venez voir, venez tester,
+[nom_produit], vous allez adorer !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le nouveau, c'est maintenant !
+[nom_produit], venez découvrir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+J'ai une invitation pour vous,
+Et je pense qu'elle va vous plaire.
+[nom_produit] vous ouvre ses portes,
+[nom_produit], venez voir ce qu'il apporte !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un nom,
+C'est une expérience, une passion.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], on vous invite,
+[nom_produit], venez vite !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit] a ce qu'il vous faut, à toute heure.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], on vous invite,
+[nom_produit], venez vite !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Venez, on vous attend !
+[nom_produit], c'est maintenant !
+[nom_produit], à très bientôt !`,
+
+`--- INTRO ACCROCHE ---
+On vous a promis quelque chose,
+Et on tient toujours nos promesses.
+[nom_produit], c'est la promesse tenue,
+[nom_produit], venez voir ce qui vous attend !
+
+--- COUPLET 1 ---
+[nom_produit], c'est un engagement,
+Celui de vous donner le meilleur, maintenant.
+[point1], [point2], [point3],
+Voilà ce qu'on vous garantit.
+
+--- REFRAIN ---
+[nom_produit], la promesse tenue,
+[nom_produit], vous n'aurez pas perdu !
+Venez voir, venez juger,
+[nom_produit], vous allez adorer !
+
+--- COUPLET 2 ---
+Pour [public], c'est fait exprès,
+[nom_produit], c'est du concret.
+[action], et vous verrez,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], la promesse tenue,
+[nom_produit], vous n'aurez pas perdu !
+Venez voir, venez juger,
+[nom_produit], vous allez adorer !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+La promesse est tenue !
+[nom_produit], venez vérifier !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On a un rendez-vous avec vous,
+Et on ne compte pas vous laisser partir.
+[nom_produit], c'est le lieu, c'est le moment,
+[nom_produit], venez vivre l'instant !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un endroit,
+C'est une expérience qui ne s'oublie pas.
+[point1], [point2], [point3],
+Voilà ce qui vous attend là-bas.
+
+--- REFRAIN ---
+[nom_produit], c'est le rendez-vous,
+[nom_produit], venez, on compte sur vous !
+À [lieu], le [date],
+[nom_produit], ne le manquez pas !
+
+--- COUPLET 2 ---
+Que vous soyez [public] ou curieux,
+[nom_produit] va vous rendre heureux.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], c'est le rendez-vous,
+[nom_produit], venez, on compte sur vous !
+À [lieu], le [date],
+[nom_produit], ne le manquez pas !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+À [lieu], le [date] !
+[nom_produit], on vous attend !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+Vous avez attendu, vous avez patienté,
+Et maintenant, tout va changer.
+[nom_produit] se révèle enfin,
+[nom_produit], c'est le début, pas la fin !
+
+--- COUPLET 1 ---
+[nom_produit], c'est ce que vous attendiez,
+Sans le savoir, vous le cherchiez.
+[point1], [point2], [point3],
+Voilà ce qui fait sa valeur.
+
+--- REFRAIN ---
+[nom_produit], la révélation,
+[nom_produit], voilà la solution !
+Venez voir, venez tester,
+[nom_produit], vous allez adorer !
+
+--- COUPLET 2 ---
+Pour [public], c'est fait sur mesure,
+[nom_produit], c'est la vraie aventure.
+[action], sans plus attendre,
+[nom_produit], vous allez comprendre.
+
+--- REFRAIN FINAL ---
+[nom_produit], la révélation,
+[nom_produit], voilà la solution !
+Venez voir, venez tester,
+[nom_produit], vous allez adorer !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+La révélation, c'est maintenant !
+[nom_produit], venez découvrir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Tous ensemble, on vous appelle,
+[nom_produit] vous attend, c'est pour ça qu'on est là !
+Que vous soyez d'ici ou d'ailleurs,
+[nom_produit], venez, on est tous frères !
+
+--- COUPLET 1 ---
+[nom_produit], c'est un rassemblement,
+Un moment de partage, un moment de vie.
+[point1], [point2], [point3],
+Voilà ce qui nous réunit.
+
+--- REFRAIN ---
+[nom_produit], on se rassemble,
+[nom_produit], venez, on est ensemble !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'être invité,
+[nom_produit], tout le monde est convié.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], on se rassemble,
+[nom_produit], venez, on est ensemble !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Tous ensemble !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+Il y a des choses qu'on n'oublie pas,
+Et [nom_produit] en fait partie.
+[nom_produit], c'est une expérience unique,
+[nom_produit], venez vivre quelque chose d'unique !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un service,
+C'est un moment qui vous marque, qui vous dépasse.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], l'expérience unique,
+[nom_produit], venez vivre quelque chose d'unique !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], l'expérience unique,
+[nom_produit], venez vivre quelque chose d'unique !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+L'expérience unique !
+[nom_produit], venez vivre !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+C'est officiel, c'est maintenant,
+[nom_produit] ouvre ses portes, c'est le grand moment !
+On a travaillé pour ça, on l'a fait pour vous,
+[nom_produit], venez, c'est le rendez-vous !
+
+--- COUPLET 1 ---
+[nom_produit], c'est le grand lancement,
+Celui qu'on attendait depuis longtemps.
+[point1], [point2], [point3],
+Voilà ce qu'on vous a préparé.
+
+--- REFRAIN ---
+[nom_produit], le grand lancement,
+[nom_produit], venez, c'est le moment !
+À [lieu], le [date],
+[nom_produit], ne le manquez pas !
+
+--- COUPLET 2 ---
+Pour [public], c'est un cadeau,
+[nom_produit], c'est du nouveau.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le grand lancement,
+[nom_produit], venez, c'est le moment !
+À [lieu], le [date],
+[nom_produit], ne le manquez pas !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+C'est le grand lancement !
+[nom_produit], à [lieu], le [date] !
+[nom_produit], on vous attend !`,
+
+`--- INTRO ACCROCHE ---
+On lance un appel, écoutez bien,
+[nom_produit] a besoin de vous, c'est pour demain !
+Que vous soyez prêt ou pas,
+[nom_produit], venez, on compte sur vous !
+
+--- COUPLET 1 ---
+[nom_produit], c'est l'occasion,
+Celle qu'il ne faut pas manquer.
+[point1], [point2], [point3],
+Voilà pourquoi vous devez venir.
+
+--- REFRAIN ---
+[nom_produit], on vous appelle,
+[nom_produit], venez, c'est essentiel !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de réfléchir longtemps,
+[nom_produit], c'est maintenant.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], on vous appelle,
+[nom_produit], venez, c'est essentiel !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+On compte sur vous !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+On vous a préparé une surprise,
+Et elle va vous plaire, c'est promis !
+[nom_produit] arrive, [nom_produit] est là,
+[nom_produit], venez voir ce qu'on a pour vous !
+
+--- COUPLET 1 ---
+[nom_produit], c'est la surprise du moment,
+Celle qui va marquer les esprits.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], la surprise,
+[nom_produit], ouvrez les yeux, c'est permis !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], la surprise,
+[nom_produit], ouvrez les yeux, c'est permis !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+La surprise du moment !
+[nom_produit], venez découvrir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On vous lance un défi,
+Et on sait que vous allez gagner.
+[nom_produit], c'est le challenge,
+[nom_produit], venez montrer ce que vous valez !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un jeu,
+C'est une occasion de vous dépasser.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], relevez le défi,
+[nom_produit], venez, on compte sur vous ici !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'être un champion,
+[nom_produit], il suffit d'être présent.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], relevez le défi,
+[nom_produit], venez, on compte sur vous ici !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Relevez le défi !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+C'est la fête, c'est la célébration,
+[nom_produit] vous invite à la maison !
+Que vous soyez d'ici ou d'ailleurs,
+[nom_produit], venez, on va faire de l'ambiance !
+
+--- COUPLET 1 ---
+[nom_produit], c'est un moment de joie,
+Un moment qu'on partage, un moment qu'on vit.
+[point1], [point2], [point3],
+Voilà ce qui vous attend là-bas.
+
+--- REFRAIN ---
+[nom_produit], on célèbre,
+[nom_produit], venez, on va faire la fête !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'invitation,
+[nom_produit], tout le monde est convié.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], on célèbre,
+[nom_produit], venez, on va faire la fête !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+C'est la fête !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+Il y a des occasions qu'il ne faut pas rater,
+Et [nom_produit] en fait partie.
+[nom_produit], c'est maintenant ou jamais,
+[nom_produit], venez, on vous attend !
+
+--- COUPLET 1 ---
+[nom_produit], c'est l'opportunité,
+Celle qui peut changer votre quotidien.
+[point1], [point2], [point3],
+Voilà pourquoi il faut venir.
+
+--- REFRAIN ---
+[nom_produit], saisissez l'occasion,
+[nom_produit], venez, c'est la bonne saison !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], saisissez l'occasion,
+[nom_produit], venez, c'est la bonne saison !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+L'occasion, c'est maintenant !
+[nom_produit], venez vite !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Il y a du nouveau, et c'est pour vous,
+[nom_produit] arrive, [nom_produit] est partout !
+Que vous soyez prêt ou pas,
+[nom_produit], venez découvrir ça !
+
+--- COUPLET 1 ---
+[nom_produit], c'est la nouveauté,
+Celle qui va faire parler.
+[point1], [point2], [point3],
+Voilà ce qui fait sa force.
+
+--- REFRAIN ---
+[nom_produit], la nouveauté,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], la nouveauté,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+La nouveauté, c'est maintenant !
+[nom_produit], venez découvrir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Il y a un moment pour tout,
+Et ce moment, c'est maintenant.
+[nom_produit], c'est le moment parfait,
+[nom_produit], venez, on vous attend !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un instant,
+C'est un souvenir que vous garderez longtemps.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], le moment parfait,
+[nom_produit], venez, c'est fait pour vous, c'est fait !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de réfléchir longtemps,
+[nom_produit], c'est maintenant.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le moment parfait,
+[nom_produit], venez, c'est fait pour vous, c'est fait !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le moment, c'est maintenant !
+[nom_produit], venez vite !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On a fait nos preuves, on a montré qui on est,
+[nom_produit], c'est la confiance, c'est la qualité.
+[nom_produit], venez vérifier par vous-même,
+[nom_produit], c'est du sérieux, c'est du vrai.
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un nom,
+C'est une réputation, une garantie.
+[point1], [point2], [point3],
+Voilà pourquoi on vous fait confiance.
+
+--- REFRAIN ---
+[nom_produit], faites-nous confiance,
+[nom_produit], venez, c'est la référence !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], faites-nous confiance,
+[nom_produit], venez, c'est la référence !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+La confiance, c'est nous !
+[nom_produit], venez vérifier !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Vous l'avez attendu, vous l'avez réclamé,
+[nom_produit] est de retour, et c'est pour tout casser !
+Que vous soyez d'ici ou d'ailleurs,
+[nom_produit], venez, on est de retour !
+
+--- COUPLET 1 ---
+[nom_produit], c'est le grand retour,
+Celui que tout le monde attendait.
+[point1], [point2], [point3],
+Voilà ce qu'on vous a préparé.
+
+--- REFRAIN ---
+[nom_produit], de retour parmi vous,
+[nom_produit], venez, on compte sur vous !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de réfléchir longtemps,
+[nom_produit], c'est maintenant.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], de retour parmi vous,
+[nom_produit], venez, on compte sur vous !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le retour, c'est maintenant !
+[nom_produit], venez nombreux !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On a une histoire à célébrer,
+Et [nom_produit] en est le cœur.
+[nom_produit], c'est notre fierté,
+[nom_produit], venez célébrer avec nous !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'une entreprise,
+C'est une famille, une vision, une mission.
+[point1], [point2], [point3],
+Voilà ce qui fait notre force.
+
+--- REFRAIN ---
+[nom_produit], on célèbre avec vous,
+[nom_produit], venez, on compte sur vous !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'invitation,
+[nom_produit], tout le monde est convié.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], on célèbre avec vous,
+[nom_produit], venez, on compte sur vous !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+On célèbre avec vous !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+On ne va pas vous mentir,
+Tout le monde parle de [nom_produit] dans le quartier !
+[nom_produit], c'est la rumeur qui monte,
+[nom_produit], venez voir par vous-même !
+
+--- COUPLET 1 ---
+[nom_produit], on en parle partout,
+Et ce n'est pas pour rien du tout.
+[point1], [point2], [point3],
+Voilà pourquoi ça buzz.
+
+--- REFRAIN ---
+[nom_produit], tout le monde en parle,
+[nom_produit], venez, c'est le moment, c'est l'heure !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], tout le monde en parle,
+[nom_produit], venez, c'est le moment, c'est l'heure !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Tout le monde en parle !
+[nom_produit], venez voir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Il y a une première fois pour tout,
+Et [nom_produit] vous attend pour la vôtre.
+[nom_produit], c'est maintenant,
+[nom_produit], venez vivre votre première fois !
+
+--- COUPLET 1 ---
+[nom_produit], c'est une expérience,
+Celle qui marque, celle qu'on n'oublie pas.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], venez essayer,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- COUPLET 2 ---
+Pas besoin de réfléchir longtemps,
+[nom_produit], c'est le moment.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], venez essayer,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Votre première fois !
+[nom_produit], venez vivre !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On ne fait pas les choses à moitié,
+Avec [nom_produit], la qualité est garantie.
+[nom_produit], c'est du solide,
+[nom_produit], venez vérifier, c'est du vrai !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un nom,
+C'est une exigence, une passion.
+[point1], [point2], [point3],
+Voilà ce qui fait notre différence.
+
+--- REFRAIN ---
+[nom_produit], la qualité d'abord,
+[nom_produit], venez, c'est de l'or !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], la qualité d'abord,
+[nom_produit], venez, c'est de l'or !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+La qualité, c'est nous !
+[nom_produit], venez vérifier !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On est chaud, on est prêt,
+[nom_produit] débarque, et ça va faire du bruit !
+[nom_produit], c'est l'énergie,
+[nom_produit], venez, on va tout casser !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un événement,
+C'est une vibe, un moment, un mouvement.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], l'énergie du moment,
+[nom_produit], venez, on vous attend !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'hésiter,
+[nom_produit], il faut y aller.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], l'énergie du moment,
+[nom_produit], venez, on vous attend !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+C'est l'énergie !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+Ici, on est une famille,
+Et [nom_produit] fait partie de la maison.
+[nom_produit], c'est plus qu'un nom,
+[nom_produit], venez rejoindre la famille !
+
+--- COUPLET 1 ---
+[nom_produit], c'est un esprit,
+Celui du partage, celui de l'unité.
+[point1], [point2], [point3],
+Voilà ce qui nous rassemble.
+
+--- REFRAIN ---
+[nom_produit], rejoignez la famille,
+[nom_produit], venez, on est tous unis !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'être invité,
+[nom_produit], tout le monde est convié.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], rejoignez la famille,
+[nom_produit], venez, on est tous unis !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Rejoignez la famille !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+`--- INTRO ACCROCHE ---
+Écoutez bien cette info,
+[nom_produit] casse les prix, c'est du nouveau !
+[nom_produit], c'est l'affaire du moment,
+[nom_produit], venez, c'est maintenant !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un prix,
+C'est une valeur, c'est une qualité.
+[point1], [point2], [point3],
+Voilà ce qui fait notre force.
+
+--- REFRAIN ---
+[nom_produit], le prix imbattable,
+[nom_produit], venez, c'est incroyable !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le prix imbattable,
+[nom_produit], venez, c'est incroyable !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le prix imbattable !
+[nom_produit], venez vite !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Tout le monde n'y a pas accès,
+Et [nom_produit] fait partie de ces raretés.
+[nom_produit], c'est l'exclusivité,
+[nom_produit], venez découvrir ce privilège !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un service,
+C'est une expérience réservée à quelques-uns.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], l'exclusivité,
+[nom_produit], venez, c'est pour vous, c'est réservé !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'hésiter,
+[nom_produit], il faut y aller.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], l'exclusivité,
+[nom_produit], venez, c'est pour vous, c'est réservé !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+L'exclusivité !
+[nom_produit], venez découvrir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On a gardé ce qui compte,
+Et on a ajouté ce qui manque.
+[nom_produit], c'est la tradition renouvelée,
+[nom_produit], venez voir ce qu'on a fait !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un produit,
+C'est un héritage qu'on fait vivre.
+[point1], [point2], [point3],
+Voilà ce qui fait notre identité.
+
+--- REFRAIN ---
+[nom_produit], la tradition renouvelée,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], la tradition renouvelée,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+La tradition renouvelée !
+[nom_produit], venez découvrir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Le grand jour est arrivé,
+[nom_produit] ouvre enfin ses portes !
+[nom_produit], c'est maintenant,
+[nom_produit], venez, c'est le grand jour !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'une date,
+C'est un moment qu'on attendait.
+[point1], [point2], [point3],
+Voilà ce qu'on vous a préparé.
+
+--- REFRAIN ---
+[nom_produit], le grand jour est là,
+[nom_produit], venez, on compte sur vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de réfléchir longtemps,
+[nom_produit], c'est maintenant.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le grand jour est là,
+[nom_produit], venez, on compte sur vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le grand jour !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+On a construit quelque chose de solide,
+Et [nom_produit] en est la preuve.
+[nom_produit], c'est notre héritage,
+[nom_produit], venez partager notre histoire !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un nom,
+C'est une histoire, une vision, une passion.
+[point1], [point2], [point3],
+Voilà ce qui fait notre fierté.
+
+--- REFRAIN ---
+[nom_produit], notre héritage,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'invitation,
+[nom_produit], tout le monde est convié.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], notre héritage,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Notre héritage vivant !
+[nom_produit], venez partager !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Il y a des choses qu'on ne présente plus,
+Et [nom_produit] en fait partie.
+[nom_produit], c'est l'incontournable,
+[nom_produit], venez voir pourquoi tout le monde en parle !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un nom,
+C'est une référence, une institution.
+[point1], [point2], [point3],
+Voilà ce qui fait sa légende.
+
+--- REFRAIN ---
+[nom_produit], l'incontournable,
+[nom_produit], venez, c'est indispensable !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], l'incontournable,
+[nom_produit], venez, c'est indispensable !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+L'incontournable !
+[nom_produit], venez découvrir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On vous garantit une chose,
+Avec [nom_produit], vous allez sourire !
+[nom_produit], c'est la bonne humeur,
+[nom_produit], venez, on va vous faire plaisir !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un service,
+C'est une joie, un moment, un sourire.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], le sourire garanti,
+[nom_produit], venez, c'est promis !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de réfléchir longtemps,
+[nom_produit], c'est le moment.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le sourire garanti,
+[nom_produit], venez, c'est promis !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le sourire garanti !
+[nom_produit], venez nombreux !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Le moment de vérité est arrivé,
+[nom_produit] se présente devant vous.
+[nom_produit], c'est notre engagement,
+[nom_produit], venez juger par vous-même !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un produit,
+C'est une promesse qu'on tient.
+[point1], [point2], [point3],
+Voilà ce qu'on vous garantit.
+
+--- REFRAIN ---
+[nom_produit], le moment de vérité,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le moment de vérité,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le moment de vérité !
+[nom_produit], venez vérifier !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Il y a des choses qui se vivent,
+Et [nom_produit] en fait partie.
+[nom_produit], c'est une expérience,
+[nom_produit], venez vivre quelque chose de grand !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un moment,
+C'est un souvenir qui reste.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], l'expérience à vivre,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- COUPLET 2 ---
+Pas besoin de réfléchir longtemps,
+[nom_produit], c'est maintenant.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], l'expérience à vivre,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+L'expérience à vivre !
+[nom_produit], venez vivre !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On rassemble les grands aujourd'hui,
+[nom_produit] vous invite à rejoindre le cercle !
+[nom_produit], c'est le moment,
+[nom_produit], venez, on vous attend !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un nom,
+C'est un cercle, une famille, une vision.
+[point1], [point2], [point3],
+Voilà ce qui fait notre force.
+
+--- REFRAIN ---
+[nom_produit], rejoignez le cercle,
+[nom_produit], venez, on vous attend, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'être invité,
+[nom_produit], tout le monde est convié.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], rejoignez le cercle,
+[nom_produit], venez, on vous attend, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Rejoignez le cercle !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+Ici, on ne triche pas,
+Avec [nom_produit], c'est du vrai, c'est du vrai.
+[nom_produit], c'est l'authenticité,
+[nom_produit], venez goûter à la vérité !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un produit,
+C'est une tradition, une histoire, un savoir-faire.
+[point1], [point2], [point3],
+Voilà ce qui fait notre valeur.
+
+--- REFRAIN ---
+[nom_produit], le goût du vrai,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le goût du vrai,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le goût du vrai !
+[nom_produit], venez goûter !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On avait promis, on a tenu,
+[nom_produit] est là, comme prévu.
+[nom_produit], c'est la promesse tenue,
+[nom_produit], venez vérifier par vous-même !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un engagement,
+C'est une parole qu'on respecte.
+[point1], [point2], [point3],
+Voilà ce qu'on vous garantit.
+
+--- REFRAIN ---
+[nom_produit], la promesse tenue,
+[nom_produit], venez, on ne vous a pas menti !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], la promesse tenue,
+[nom_produit], venez, on ne vous a pas menti !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+La promesse tenue !
+[nom_produit], venez vérifier !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Préparez vos sens,
+[nom_produit] arrive pour les réveiller.
+[nom_produit], c'est une expérience,
+[nom_produit], venez ressentir quelque chose de fort !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un moment,
+C'est une émotion qui vous traverse.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], l'éveil des sens,
+[nom_produit], venez, c'est pour vous, c'est intense !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- COUPLET 2 ---
+Pas besoin de réfléchir longtemps,
+[nom_produit], c'est maintenant.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], l'éveil des sens,
+[nom_produit], venez, c'est pour vous, c'est intense !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+L'éveil des sens !
+[nom_produit], venez ressentir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On est de retour, plus forts que jamais,
+[nom_produit] revient, et ça va faire du bruit !
+[nom_produit], c'est le grand retour,
+[nom_produit], venez célébrer avec nous !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un retour,
+C'est une renaissance, une nouvelle ère.
+[point1], [point2], [point3],
+Voilà ce qu'on vous a préparé.
+
+--- REFRAIN ---
+[nom_produit], le grand retour,
+[nom_produit], venez, on est là pour toujours !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de réfléchir longtemps,
+[nom_produit], c'est maintenant.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le grand retour,
+[nom_produit], venez, on est là pour toujours !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le grand retour !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+On a écrit une histoire,
+Et [nom_produit] continue de l'écrire.
+[nom_produit], c'est notre aventure,
+[nom_produit], venez écrire la suite avec nous !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un nom,
+C'est une histoire qui se construit chaque jour.
+[point1], [point2], [point3],
+Voilà ce qui fait notre force.
+
+--- REFRAIN ---
+[nom_produit], l'histoire continue,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'invitation,
+[nom_produit], tout le monde est convié.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], l'histoire continue,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+L'histoire continue !
+[nom_produit], venez écrire avec nous !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Pourquoi chercher compliqué,
+Quand [nom_produit] est là, tout est réglé ?
+[nom_produit], c'est le choix évident,
+[nom_produit], venez voir, c'est différent !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'une option,
+C'est la solution, la bonne décision.
+[point1], [point2], [point3],
+Voilà pourquoi c'est évident.
+
+--- REFRAIN ---
+[nom_produit], le choix évident,
+[nom_produit], venez, c'est pour vous, maintenant !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le choix évident,
+[nom_produit], venez, c'est pour vous, maintenant !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le choix évident !
+[nom_produit], venez vite !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Il y a un lien qui nous unit,
+Et [nom_produit] en est le symbole.
+[nom_produit], c'est plus qu'un nom,
+[nom_produit], venez rejoindre le mouvement !
+
+--- COUPLET 1 ---
+[nom_produit], c'est une communauté,
+Un lieu de partage, une famille.
+[point1], [point2], [point3],
+Voilà ce qui nous rassemble.
+
+--- REFRAIN ---
+[nom_produit], le lien qui unit,
+[nom_produit], venez, on est tous réunis !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'être invité,
+[nom_produit], tout le monde est convié.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le lien qui unit,
+[nom_produit], venez, on est tous réunis !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le lien qui unit !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+Il y a des instants qui ne reviennent pas,
+Et [nom_produit] en est un.
+[nom_produit], c'est l'instant magique,
+[nom_produit], venez le vivre maintenant !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un moment,
+C'est une émotion qui vous transforme.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], l'instant magique,
+[nom_produit], venez, c'est pour vous, c'est unique !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- COUPLET 2 ---
+Pas besoin de réfléchir longtemps,
+[nom_produit], c'est maintenant.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], l'instant magique,
+[nom_produit], venez, c'est pour vous, c'est unique !
+Que vous soyez [public] ou curieux,
+[nom_produit], vous allez être heureux !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+L'instant magique !
+[nom_produit], venez vivre !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On a relevé le défi,
+Et [nom_produit] en est la preuve.
+[nom_produit], c'est la réussite,
+[nom_produit], venez voir ce qu'on a accompli !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un projet,
+C'est une victoire, une fierté.
+[point1], [point2], [point3],
+Voilà ce qu'on a construit.
+
+--- REFRAIN ---
+[nom_produit], le défi relevé,
+[nom_produit], venez, on l'a fait, c'est prouvé !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le défi relevé,
+[nom_produit], venez, on l'a fait, c'est prouvé !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le défi relevé !
+[nom_produit], venez voir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+C'est la fête du peuple,
+[nom_produit] vous invite à célébrer !
+[nom_produit], c'est pour tout le monde,
+[nom_produit], venez, on va faire la fête !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un événement,
+C'est un moment de joie, un moment de partage.
+[point1], [point2], [point3],
+Voilà ce qui vous attend.
+
+--- REFRAIN ---
+[nom_produit], on célèbre ensemble,
+[nom_produit], venez, on est tous ensemble !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'invitation,
+[nom_produit], tout le monde est convié.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], on célèbre ensemble,
+[nom_produit], venez, on est tous ensemble !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+On célèbre ensemble !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+On a pris un pari,
+Et [nom_produit] prouve qu'on a eu raison.
+[nom_produit], c'est le pari gagné,
+[nom_produit], venez voir ce qu'on a osé !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'une idée,
+C'est une vision devenue réalité.
+[point1], [point2], [point3],
+Voilà ce qu'on a accompli.
+
+--- REFRAIN ---
+[nom_produit], le pari gagné,
+[nom_produit], venez, on a osé, on a gagné !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le pari gagné,
+[nom_produit], venez, on a osé, on a gagné !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le pari gagné !
+[nom_produit], venez voir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Au cœur de la ville, il y a quelque chose,
+Et cette chose, c'est [nom_produit].
+[nom_produit], c'est notre fierté,
+[nom_produit], venez découvrir notre quartier !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un lieu,
+C'est une âme, une histoire, une culture.
+[point1], [point2], [point3],
+Voilà ce qui fait notre identité.
+
+--- REFRAIN ---
+[nom_produit], le cœur de la ville,
+[nom_produit], venez, c'est pour vous, c'est utile !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le cœur de la ville,
+[nom_produit], venez, c'est pour vous, c'est utile !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le cœur de la ville !
+[nom_produit], venez découvrir !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+On a une surprise pour aujourd'hui,
+Et [nom_produit] en est le nom.
+[nom_produit], c'est la surprise du jour,
+[nom_produit], venez voir, c'est pour vous !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un cadeau,
+C'est un moment, une joie, un réveil.
+[point1], [point2], [point3],
+Voilà ce qu'on vous offre.
+
+--- REFRAIN ---
+[nom_produit], la surprise du jour,
+[nom_produit], venez, c'est pour vous, mon amour !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de réfléchir longtemps,
+[nom_produit], c'est maintenant.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], la surprise du jour,
+[nom_produit], venez, c'est pour vous, mon amour !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+La surprise du jour !
+[nom_produit], venez vite !
+[nom_produit], c'est pour vous !`,
+
+`--- INTRO ACCROCHE ---
+Aujourd'hui, tout commence,
+[nom_produit] ouvre une nouvelle page.
+[nom_produit], c'est le nouveau départ,
+[nom_produit], venez écrire avec nous !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un début,
+C'est une promesse, une vision, un avenir.
+[point1], [point2], [point3],
+Voilà ce qu'on vous propose.
+
+--- REFRAIN ---
+[nom_produit], le nouveau départ,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin d'attendre demain,
+[nom_produit], c'est maintenant.
+[action], et vous verrez,
+[nom_produit], vous allez adorer.
+
+--- REFRAIN FINAL ---
+[nom_produit], le nouveau départ,
+[nom_produit], venez, c'est pour vous, c'est pour ça !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Le nouveau départ !
+[nom_produit], venez nombreux !
+[nom_produit], c'est maintenant !`,
+
+`--- INTRO ACCROCHE ---
+Grâce à vous, on est là aujourd'hui,
+Et [nom_produit] vous dit merci.
+[nom_produit], c'est votre réussite,
+[nom_produit], venez célébrer avec nous !
+
+--- COUPLET 1 ---
+[nom_produit], c'est plus qu'un nom,
+C'est une histoire écrite avec vous.
+[point1], [point2], [point3],
+Voilà ce qu'on vous doit.
+
+--- REFRAIN ---
+[nom_produit], merci à vous,
+[nom_produit], venez, c'est grâce à vous, c'est pour vous !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- COUPLET 2 ---
+Pas besoin de chercher ailleurs,
+[nom_produit], c'est le meilleur.
+[action], sans hésiter,
+[nom_produit], vous allez aimer.
+
+--- REFRAIN FINAL ---
+[nom_produit], merci à vous,
+[nom_produit], venez, c'est grâce à vous, c'est pour vous !
+Que vous soyez [public] ou pas,
+[nom_produit], c'est fait pour vous, c'est pour ça !
+
+--- OUTRO / CALL TO ACTION ---
+[nom_produit] !
+Merci à vous !
+[nom_produit], on vous attend !
+[nom_produit], c'est pour vous !`
+];
