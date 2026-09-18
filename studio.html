@@ -67,7 +67,7 @@
                     <div class="tag" onclick="selectOccasion(this, 'hommage')" data-type="hommage">🙏 Hommage</div>
                     <div class="tag" onclick="selectOccasion(this, 'fete')" data-type="fete">🎉 Fête</div>
                     <div class="tag" onclick="selectOccasion(this, 'libre')" data-type="libre">✍️ Sujet libre</div>
-                    <div class="tag" onclick="selectOccasion(this, 'promotion')" data-type="promotion">📢 Promotion / Événement</div>
+                    <div class="tag" onclick="selectOccasion(this, 'promotion')" data-type="promotion">📢 Promotion</div>
                 </div>
             </div>
 
@@ -83,30 +83,81 @@
                 </div>
             </div>
 
-            <!-- Champ libre pour les occasions sans template -->
             <div class="mb-6" id="default-prompt">
                 <p class="text-slate-400 mb-3 text-sm font-semibold uppercase tracking-wider">L'histoire / L'anecdote</p>
-                <textarea id="lyrics-prompt" rows="4" placeholder="Ex: C'est pour les 30 ans de Marc, il adore le foot, il est très drôle et on fait la fête ce soir..."></textarea>
+                <textarea id="lyrics-prompt" rows="4" placeholder="Ex: C'est pour les 30 ans de Marc, il adore le foot..."></textarea>
             </div>
 
-            <!-- Nouveaux champs pour les templates (Amour / Anniversaire) -->
-            <div class="mb-6 space-y-4" id="custom-fields" style="display:none;">
-                <p class="text-green-400 mb-3 text-sm font-semibold uppercase tracking-wider">Remplissez les détails</p>
+            <!-- CHAMPS AMOUR / ANNIVERSAIRE -->
+            <div class="mb-6 space-y-4 custom-fields-group" id="fields-amour" style="display:none;">
+                <p class="text-green-400 mb-3 text-sm font-semibold uppercase tracking-wider">Détails (Amour / Anniversaire)</p>
                 <div>
-                    <label class="text-slate-400 mb-1 text-sm block">Prénom(s) (Optionnel mais recommandé)</label>
+                    <label class="text-slate-400 mb-1 text-sm block">Prénom(s)</label>
                     <input type="text" id="tpl-nom" placeholder="Ex: Sarah, ou Sarah et Marc">
                 </div>
                 <div>
-                    <label class="text-slate-400 mb-1 text-sm block">Votre relation (Optionnel)</label>
-                    <input type="text" id="tpl-relation" placeholder="Ex: mon amour, ma femme, mon mari">
+                    <label class="text-slate-400 mb-1 text-sm block">Votre relation</label>
+                    <input type="text" id="tpl-relation" placeholder="Ex: mon frère, ma mère">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-slate-400 mb-1 text-sm block">Âge célébré</label>
+                        <input type="text" id="tpl-age" placeholder="Ex: 30">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 mb-1 text-sm block">Durée de la relation</label>
+                        <input type="text" id="tpl-duree" placeholder="Ex: 5 ans, toujours">
+                    </div>
                 </div>
                 <div>
-                    <label class="text-slate-400 mb-1 text-sm block">Durée de la relation (Optionnel)</label>
-                    <input type="text" id="tpl-duree" placeholder="Ex: 5 ans, toujours, 10 ans">
+                    <label class="text-slate-400 mb-1 text-sm block">Petite anecdote</label>
+                    <input type="text" id="tpl-anecdote" placeholder="Ex: notre voyage en Italie">
                 </div>
+            </div>
+
+            <!-- CHAMPS HOMMAGE -->
+            <div class="mb-6 space-y-4 custom-fields-group" id="fields-hommage" style="display:none;">
+                <p class="text-green-400 mb-3 text-sm font-semibold uppercase tracking-wider">Détails de l'Hommage</p>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-slate-400 mb-1 text-sm block">Prénom(s) honoré(s) *</label>
+                        <input type="text" id="hom-nom" placeholder="Ex: Jean, ou Maman">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 mb-1 text-sm block">Son lien avec vous</label>
+                        <input type="text" id="hom-lien" placeholder="Ex: mon père, notre ami">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="text-slate-400 mb-1 text-xs block">Qualité 1</label>
+                        <input type="text" id="hom-qualite1" placeholder="Ex: courageux">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 mb-1 text-xs block">Qualité 2</label>
+                        <input type="text" id="hom-qualite2" placeholder="Ex: généreux">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 mb-1 text-xs block">Qualité 3</label>
+                        <input type="text" id="hom-qualite3" placeholder="Ex: sincère">
+                    </div>
+                </div>
+
                 <div>
-                    <label class="text-slate-400 mb-1 text-sm block">Petite anecdote ou mot doux (Optionnel)</label>
-                    <input type="text" id="tpl-anecdote" placeholder="Ex: ce voyage en Italie, notre premier bisou">
+                    <label class="text-slate-400 mb-1 text-sm block">Valeur qu'il/elle incarne</label>
+                    <input type="text" id="hom-valeur" placeholder="Ex: le respect, la paix">
+                </div>
+                
+                <div>
+                    <label class="text-slate-400 mb-1 text-sm block">Souvenir marquant</label>
+                    <input type="text" id="hom-souvenir" placeholder="Ex: le jour où tu m'as soutenu">
+                </div>
+
+                <div>
+                    <label class="text-slate-400 mb-1 text-sm block">Signé par qui ? (Proches)</label>
+                    <input type="text" id="hom-proches" placeholder="Ex: toute la famille">
                 </div>
             </div>
 
@@ -166,12 +217,11 @@
         </div>
     </main>
 
-    <!-- Inclusion de Supabase -->
     <script src="supabase-client.js"></script>
 
     <script>
     const templates = {
-        'hommage': "C'est une chanson en l'honneur de [Prénom]...",
+        'hommage': "",
         'fete': "C'est pour faire la fête...",
         'libre': "",
         'promotion': "Voici les détails de l'événement ou du produit à promouvoir : "
@@ -183,18 +233,17 @@
         });
         element.style.background = 'var(--metallic-gradient)'; element.style.color = 'white'; element.style.border = 'none'; element.classList.add('active');
 
-        // GESTION DE L'AFFICHAGE DES CHAMPS TEMPLATES VS GROQ
-        const customFields = document.getElementById('custom-fields');
+        document.querySelectorAll('.custom-fields-group').forEach(el => el.style.display = 'none');
         const defaultPrompt = document.getElementById('default-prompt');
         
-        // On affiche les nouveaux champs précis si c'est Amour ou Anniversaire (qui marchent avec templates)
         if (type === 'amour' || type === 'anniversaire') {
             defaultPrompt.style.display = 'none';
-            customFields.style.display = 'block';
+            document.getElementById('fields-amour').style.display = 'block';
+        } else if (type === 'hommage') {
+            defaultPrompt.style.display = 'none';
+            document.getElementById('fields-hommage').style.display = 'block';
         } else {
             defaultPrompt.style.display = 'block';
-            customFields.style.display = 'none';
-            
             const textarea = document.getElementById('lyrics-prompt');
             let isTemplate = false;
             for (let key in templates) { if (textarea.value === templates[key]) isTemplate = true; }
@@ -221,7 +270,17 @@
             bodyData.nom = document.getElementById('tpl-nom').value;
             bodyData.relation = document.getElementById('tpl-relation').value;
             bodyData.duree = document.getElementById('tpl-duree').value;
+            bodyData.age = document.getElementById('tpl-age').value;
             bodyData.anecdote = document.getElementById('tpl-anecdote').value;
+        } else if (occasion === 'hommage') {
+            bodyData.nom = document.getElementById('hom-nom').value;
+            bodyData.lien = document.getElementById('hom-lien').value;
+            bodyData.qualite1 = document.getElementById('hom-qualite1').value;
+            bodyData.qualite2 = document.getElementById('hom-qualite2').value;
+            bodyData.qualite3 = document.getElementById('hom-qualite3').value;
+            bodyData.valeur = document.getElementById('hom-valeur').value;
+            bodyData.souvenir = document.getElementById('hom-souvenir').value;
+            bodyData.proches = document.getElementById('hom-proches').value;
         } else {
             bodyData.prompt = document.getElementById('lyrics-prompt').value;
             if (!bodyData.prompt || !bodyData.prompt.trim()) { alert("Veuillez nous raconter votre histoire !"); return; }
