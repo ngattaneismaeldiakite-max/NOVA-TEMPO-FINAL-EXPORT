@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Profil - Nova Tempo</title>
+    <title>Mon Profil & Rechargement - Nova Tempo</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
@@ -106,14 +106,56 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
 
-        /* Profile Area */
-        .profile-grid {
+        /* Top Grid : Infos & Solde */
+        .top-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
-        .profile-panel {
+        .panel {
+            background: #FFFFFF;
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(17,18,22,0.04);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.03);
+        }
+
+        h2 { margin-top: 0; margin-bottom: 1.5rem; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
+
+        .profile-info { font-size: 1rem; color: rgba(17, 18, 22, 0.6); font-weight: 500; }
+        .profile-info strong { color: var(--nova-noir); display: block; margin-top: 0.3rem; font-size: 1.2rem; font-weight: 700; }
+
+        /* Affichage Solde */
+        .balance-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .credit-number {
+            font-family: 'Instrument Serif', serif;
+            font-size: 4.5rem;
+            font-weight: normal;
+            font-style: italic;
+            color: var(--nova-corail);
+            line-height: 1;
+        }
+        .balance-text p {
+            margin: 0;
+            color: rgba(17, 18, 22, 0.6);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .balance-text strong {
+            display: block;
+            color: var(--nova-noir);
+            font-size: 1.1rem;
+            margin-top: 0.3rem;
+        }
+
+        /* SECTION PRIX (NOUVEAU) */
+        .pricing-section {
             background: #FFFFFF;
             padding: 3rem;
             border-radius: var(--radius-lg);
@@ -121,74 +163,145 @@
             box-shadow: 0 8px 30px rgba(0,0,0,0.03);
         }
 
-        h2 { margin-top: 0; margin-bottom: 2rem; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
-
-        .profile-info {
-            font-size: 1rem;
-            margin-bottom: 2rem;
-            color: rgba(17, 18, 22, 0.6);
-            font-weight: 500;
-        }
-
-        .profile-info strong {
-            color: var(--nova-noir);
-            display: block;
-            margin-top: 0.5rem;
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        .credit-box {
-            background: var(--nova-blanc-casse);
-            border: 1px solid rgba(17, 18, 22, 0.05);
-            padding: 2.5rem;
-            border-radius: var(--radius-md);
+        .pricing-section h2 {
             text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .credit-number {
-            font-family: 'Instrument Serif', serif;
-            font-size: 5rem;
-            font-weight: normal;
-            font-style: italic;
-            color: var(--nova-corail);
-            line-height: 1;
-            margin: 1rem 0;
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
         }
 
-        /* Bouton FedaPay avec le Signature Gradient */
-        .btn-pay {
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(90deg, var(--nova-violet), var(--nova-corail), var(--nova-orange), var(--nova-jaune));
-            background-size: 200% 200%;
-            border: none;
+        .pack-card {
+            background: var(--nova-blanc-casse);
+            border: 1px solid rgba(17,18,22,0.08);
             border-radius: var(--radius-md);
-            color: white;
-            font-weight: 700;
-            font-size: 1.1rem;
-            font-family: 'Satoshi', sans-serif;
-            cursor: pointer;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
             transition: all 0.3s ease;
-            margin-top: 1.5rem;
-            box-shadow: 0 4px 15px rgba(232, 111, 90, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pack-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        }
+
+        /* Mise en avant Pack 3 (Meilleur Choix) */
+        .pack-card.popular {
+            background: #FFFFFF;
+            border: 2px solid var(--nova-corail);
+            box-shadow: 0 15px 40px rgba(232, 111, 90, 0.12);
+            transform: translateY(-10px);
+        }
+        .pack-card.popular:hover { transform: translateY(-15px); }
+
+        .pack-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .badge-popular {
+            background: linear-gradient(90deg, var(--nova-violet), var(--nova-corail), var(--nova-orange));
+            color: white;
+            box-shadow: 0 4px 15px rgba(232, 111, 90, 0.3);
+        }
+
+        .badge-eco {
+            background: rgba(232, 111, 90, 0.1);
+            color: var(--nova-corail);
+            border: 1px solid rgba(232, 111, 90, 0.2);
+        }
+
+        .pack-name {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: rgba(17,18,22,0.5);
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .pack-price {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--nova-noir);
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.8rem;
+            gap: 0.3rem;
         }
 
-        .btn-pay:hover {
-            transform: translateY(-2px);
+        .pack-price span {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: rgba(17,18,22,0.5);
+        }
+
+        .pack-desc {
+            font-size: 1rem;
+            color: rgba(17,18,22,0.7);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .btn-pack {
+            width: 100%;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 1.05rem;
+            font-family: 'Satoshi', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--nova-noir);
+            border: 2px solid rgba(17,18,22,0.1);
+        }
+        .btn-outline:hover {
+            border-color: var(--nova-corail);
+            color: var(--nova-corail);
+            background: rgba(232, 111, 90, 0.05);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(90deg, var(--nova-violet), var(--nova-corail), var(--nova-orange));
+            background-size: 200% 200%;
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(232, 111, 90, 0.2);
+        }
+        .btn-gradient:hover {
             box-shadow: 0 8px 25px rgba(232, 111, 90, 0.3);
             background-position: 100% 0;
         }
 
+        @media (max-width: 1000px) {
+            .pricing-grid { grid-template-columns: 1fr; gap: 3rem; margin-top: 2rem; }
+            .pack-card.popular { transform: none; }
+            .pack-card.popular:hover { transform: translateY(-5px); }
+        }
         @media (max-width: 900px) {
             .dashboard-container { flex-direction: column; }
             .sidebar { width: auto; border-right: none; border-bottom: 1px solid rgba(17,18,22,0.05); padding: 1.5rem; }
             .main-content { padding: 2rem 1.5rem; }
-            .profile-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .top-grid { grid-template-columns: 1fr; gap: 1.5rem; }
         }
     </style>
 </head>
@@ -210,7 +323,7 @@
             <header class="header">
                 <div>
                     <h1>Mon <span class="serif-italic">profil</span></h1>
-                    <div class="header-subtitle">Gestion de votre compte et de vos crédits.</div>
+                    <div class="header-subtitle">Gérez vos informations et rechargez vos crédits.</div>
                 </div>
                 <div class="user-info">
                     <span id="userEmail" class="user-email">...</span>
@@ -220,35 +333,73 @@
                 </div>
             </header>
 
-            <div class="profile-grid">
-                <!-- Infos du compte -->
-                <div class="profile-panel">
-                    <h2>Informations</h2>
-                    <div class="profile-info">
+            <!-- Ligne du haut -->
+            <div class="top-grid">
+                <div class="panel">
+                    <h2>Informations du compte</h2>
+                    <div class="profile-info" style="margin-bottom: 1.5rem;">
                         Adresse E-mail
                         <strong id="displayEmail">Chargement...</strong>
                     </div>
-                    <div class="profile-info" style="margin-top:2.5rem;">
+                    <div class="profile-info">
                         Date d'inscription
                         <strong id="displayDate">Chargement...</strong>
                     </div>
                 </div>
 
-                <!-- Achat de crédits -->
-                <div class="profile-panel">
-                    <h2>Portefeuille</h2>
-                    <div class="credit-box">
-                        <p style="color:rgba(17, 18, 22, 0.6); font-weight:700; font-size:0.9rem; margin:0;">CRÉDITS DISPONIBLES</p>
+                <div class="panel">
+                    <h2>Portefeuille actuel</h2>
+                    <div class="balance-container">
                         <div class="credit-number" id="displayCredits">0</div>
-                        <p style="color:rgba(17, 18, 22, 0.5); font-size:0.9rem; margin:0;">1 Crédit = 1 Musique complète</p>
-                        
-                        <!-- C'est ce bouton qu'on va relier à FedaPay juste après ! -->
-                        <button class="btn-pay" id="buyCreditsBtn">
-                            <i class="fas fa-bolt"></i> Recharger (500 FCFA)
-                        </button>
+                        <div class="balance-text">
+                            <p>Crédits disponibles</p>
+                            <strong>Librement utilisables</strong>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Grille de Prix -->
+            <div class="pricing-section">
+                <h2>Recharger vos <span class="serif-italic">crédits</span></h2>
+                
+                <div class="pricing-grid">
+                    
+                    <!-- Formule 1 -->
+                    <div class="pack-card">
+                        <div>
+                            <div class="pack-name">UNITAIRE</div>
+                            <div class="pack-price">1 000 <span>FCFA</span></div>
+                            <div class="pack-desc">1 création musicale personnalisée (haute qualité & téléchargeable).</div>
+                        </div>
+                        <button class="btn-pack btn-outline" onclick="initiatePayment(1000, 1)">Choisir ce pack</button>
+                    </div>
+
+                    <!-- Formule 3 (Meilleur Choix) -->
+                    <div class="pack-card popular">
+                        <div class="pack-badge badge-popular">Meilleur choix</div>
+                        <div>
+                            <div class="pack-name">PACK 3</div>
+                            <div class="pack-price">2 500 <span>FCFA</span></div>
+                            <div class="pack-desc">3 créations musicales personnalisées (haute qualité & téléchargeables).</div>
+                        </div>
+                        <button class="btn-pack btn-gradient" onclick="initiatePayment(2500, 3)">Choisir ce pack</button>
+                    </div>
+
+                    <!-- Formule 5 (Économique) -->
+                    <div class="pack-card">
+                        <div class="pack-badge badge-eco">Le plus économique</div>
+                        <div>
+                            <div class="pack-name">PACK 5</div>
+                            <div class="pack-price">4 000 <span>FCFA</span></div>
+                            <div class="pack-desc">5 créations musicales personnalisées (haute qualité & téléchargeables).</div>
+                        </div>
+                        <button class="btn-pack btn-outline" onclick="initiatePayment(4000, 5)">Choisir ce pack</button>
+                    </div>
+
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -280,16 +431,18 @@
             };
             await fetchCredits();
 
-            document.getElementById('buyCreditsBtn').addEventListener('click', () => {
-                alert("Le design est validé ! On va maintenant connecter FedaPay ici.");
-            });
-
             document.getElementById('logoutBtn').addEventListener('click', async (e) => {
                 e.preventDefault();
                 await window.supabaseClient.auth.signOut();
                 window.location.href = '/login.html';
             });
         });
+
+        // Fonction appelée lors du clic sur un pack
+        function initiatePayment(price, credits) {
+            // Cette fonction sera remplacée par l'ouverture du widget FedaPay/Wave à la prochaine étape !
+            alert(`Vous avez sélectionné le pack à ${price} FCFA pour ${credits} chansons.\n\nL'intégration de Wave/FedaPay arrive à la prochaine étape !`);
+        }
     </script>
 </body>
 </html>
