@@ -492,11 +492,10 @@
     </div>
 
     <script>
-        // --- N'OUBLIE PAS DE METTRE TES CLÉS ICI ---
-        const supabaseUrl = 'URL_SUPABASE_ICI';
-        const supabaseKey = 'CLE_ANON_ICI';
+        // TES CLÉS SONT DÉJÀ INTÉGRÉES ICI !
+        const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
+        const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-        // -------------------------------------------
 
         document.addEventListener('DOMContentLoaded', async () => {
             let currentUserId = null;
@@ -512,7 +511,7 @@
             currentUserId = session.user.id;
             document.getElementById('userEmail').textContent = session.user.email;
 
-            // 1. Récupérer le vrai nombre de crédits depuis la base de données
+            // 1. Récupérer le vrai nombre de crédits
             const fetchCredits = async () => {
                 const { data: profile } = await window.supabaseClient
                     .from('profiles')
@@ -587,7 +586,6 @@
 
                 const payload = { occasion: occasion };
 
-                // Remplissage des champs...
                 if (occasion === 'amour') {
                     payload['amour-prenom'] = document.getElementById('amour-prenom').value;
                     payload['amour-surnom'] = document.getElementById('amour-surnom').value;
