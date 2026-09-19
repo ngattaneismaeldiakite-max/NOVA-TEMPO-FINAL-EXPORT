@@ -3,22 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Tempo - Transformez vos moments en musique</title>
+    <title>Nova Tempo - Votre musique sur mesure</title>
     
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
-            --nova-violet: #7B5193;
-            --nova-corail: #E86F5A;
-            --nova-orange: #F18A40;
-            --nova-jaune: #F2A841;
-            --nova-blanc-casse: #F7F4EE;
-            --nova-noir: #111216;
-            --radius-sm: 12px;
-            --radius-md: 18px;
+            --bg-dark: #06060A;
+            --text-light: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --neon-lime: #D4FF00;
+            --card-bg: #111118;
+            --radius-md: 16px;
             --radius-lg: 24px;
         }
 
@@ -26,17 +23,9 @@
             margin: 0;
             padding: 0;
             font-family: 'Satoshi', sans-serif;
-            background-color: var(--nova-blanc-casse);
-            color: var(--nova-noir);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             overflow-x: hidden;
-        }
-
-        .serif-italic {
-            font-family: 'Instrument Serif', serif;
-            font-style: italic;
-            font-weight: normal;
-            color: var(--nova-corail);
-            font-size: 1.15em;
         }
 
         /* NAVIGATION */
@@ -47,246 +36,399 @@
             padding: 1.5rem 5%;
             max-width: 1400px;
             margin: 0 auto;
+            position: relative;
+            z-index: 100;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 900;
-            color: var(--nova-noir);
-            letter-spacing: -0.02em;
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
+            color: var(--text-light);
             text-decoration: none;
-        }
-
-        .logo-burst {
-            color: var(--nova-corail);
-            font-size: 1.2rem;
-            margin-top: -8px;
-        }
-
-        .nav-actions {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 0.5rem;
         }
 
-        .nav-link {
-            color: rgba(17, 18, 22, 0.7);
+        .logo i {
+            color: var(--neon-lime);
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-center a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .nav-center a:hover {
+            color: var(--neon-lime);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-right a {
             text-decoration: none;
             font-weight: 600;
-            transition: color 0.2s ease;
-        }
-
-        .nav-link:hover { color: var(--nova-noir); }
-
-        .btn-nav {
-            padding: 0.8rem 1.5rem;
-            background: linear-gradient(90deg, var(--nova-violet), var(--nova-corail), var(--nova-orange));
-            background-size: 200% 200%;
-            border: none;
-            border-radius: var(--radius-sm);
-            color: white;
-            font-weight: 700;
-            text-decoration: none;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(232, 111, 90, 0.2);
         }
 
-        .btn-nav:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(232, 111, 90, 0.3);
-            background-position: 100% 0;
+        .btn-login {
+            color: var(--text-light);
+        }
+        .btn-login:hover {
+            color: var(--neon-lime);
+        }
+
+        .btn-signup {
+            background-color: var(--neon-lime);
+            color: var(--bg-dark);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 800;
+        }
+        .btn-signup:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 255, 0, 0.4);
         }
 
         /* HERO SECTION */
         .hero {
-            padding: 8rem 5% 6rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: space-between;
+            padding: 4rem 5% 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+            z-index: 10;
+        }
+
+        .surtitle {
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
         }
 
         .hero h1 {
-            font-size: 5.5rem;
+            font-size: 4.5rem;
             font-weight: 900;
             line-height: 1.1;
-            letter-spacing: -0.04em;
+            letter-spacing: -0.02em;
             margin: 0 0 1.5rem 0;
-            max-width: 1000px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 .highlight {
+            color: var(--neon-lime);
+            font-style: italic;
         }
 
         .hero p {
-            font-size: 1.4rem;
-            color: rgba(17, 18, 22, 0.6);
-            margin: 0 0 3rem 0;
-            font-weight: 500;
-            max-width: 600px;
-            line-height: 1.5;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
         }
 
-        .btn-main {
-            padding: 1.2rem 2.5rem;
-            font-size: 1.2rem;
-            background: linear-gradient(90deg, var(--nova-violet), var(--nova-corail), var(--nova-orange), var(--nova-jaune));
-            background-size: 200% 200%;
-            border: none;
-            border-radius: 50px;
-            color: white;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(232, 111, 90, 0.25);
+        .btn-hero {
             display: inline-flex;
             align-items: center;
             gap: 1rem;
+            background-color: var(--neon-lime);
+            color: var(--bg-dark);
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
-        .btn-main:hover {
+        .btn-hero:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(232, 111, 90, 0.35);
-            background-position: 100% 0;
+            box-shadow: 0 10px 30px rgba(212, 255, 0, 0.3);
         }
 
-        /* ÉTAPES - FONCTIONNEMENT */
-        .steps-section {
+        .hero-image {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+            z-index: 5;
+        }
+
+        .hero-image img {
+            max-width: 90%;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lueur derrière l'image */
+        .hero-glow {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(212, 255, 0, 0.2) 0%, rgba(6,6,10,0) 70%);
+            z-index: 1;
+            filter: blur(40px);
+        }
+
+        /* OCCASIONS (GRID IMAGES RÉALISTES) */
+        .occasions-section {
             padding: 6rem 5%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .section-title {
-            text-align: center;
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            margin-bottom: 4rem;
-            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
         }
 
-        .steps-grid {
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .occ-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 4rem;
-        }
-
-        .step-card {
-            text-align: center;
-        }
-
-        .step-icon {
-            width: 80px;
-            height: 80px;
-            background: #FFFFFF;
-            border-radius: var(--radius-lg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2rem;
-            color: var(--nova-corail);
-            margin: 0 auto 2rem;
-            border: 1px solid rgba(17,18,22,0.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-        }
-
-        .step-card h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; }
-        .step-card p { color: rgba(17, 18, 22, 0.6); font-size: 1.1rem; line-height: 1.6; }
-
-        /* SECTION CONTRASTE (PRODUIT) */
-        .product-section {
-            background-color: var(--nova-noir);
-            color: var(--nova-blanc-casse);
-            padding: 8rem 5%;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        .product-section h2 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.03em;
-        }
-
-        .product-section .serif-italic {
-            color: var(--nova-orange);
-        }
-
-        .product-section p {
-            font-size: 1.3rem;
-            color: rgba(247, 244, 238, 0.6);
-            max-width: 700px;
-            margin: 0 auto 4rem;
-        }
-
-        .product-mockup {
-            background: #FFFFFF;
-            border-radius: var(--radius-lg);
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 3rem;
-            color: var(--nova-noir);
-            text-align: left;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
-        }
-
-        /* SECTION OCCASIONS */
-        .occasions-section {
-            padding: 8rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .occasions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .occ-card {
-            background: #FFFFFF;
-            padding: 2.5rem 1.5rem;
-            border-radius: var(--radius-lg);
-            text-align: center;
-            border: 1px solid rgba(17,18,22,0.05);
+            position: relative;
+            height: 220px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            text-decoration: none;
+            display: block;
+        }
+
+        .occ-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .occ-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .occ-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+
+        .occ-card h3 {
+            color: var(--text-light);
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        /* SECTION CRÉEZ ÉCOUTEZ PARTAGEZ (AVEC LES VINYLES) */
+        .features-section {
+            background: linear-gradient(to bottom, #06060A, #0A0A15);
+            padding: 8rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 4rem;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-text h2 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .feature-text h2 span {
+            display: block;
+        }
+
+        .feature-text p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 450px;
+        }
+
+        /* ANIMATION DES 3 VINYLES */
+        .vinyl-container {
+            flex: 1;
+            position: relative;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .vinyl-wrapper {
+            position: absolute;
             transition: all 0.3s ease;
         }
 
-        .occ-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(232, 111, 90, 0.08);
-            border-color: rgba(232, 111, 90, 0.2);
+        .vw-1 { left: 10%; top: 20px; z-index: 1; transform: scale(0.7); filter: brightness(0.5); }
+        .vw-2 { right: 10%; top: 40px; z-index: 2; transform: scale(0.8); filter: brightness(0.7); }
+        .vw-3 { left: 50%; transform: translateX(-50%); bottom: 20px; z-index: 3; }
+
+        .vinyl {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: repeating-radial-gradient( #111, #111 4px, #1a1a1a 5px, #1a1a1a 8px );
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: spin 4s linear infinite;
         }
 
-        .occ-card i {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--nova-corail);
+        .vw-1 .vinyl { animation-duration: 5s; }
+        .vw-2 .vinyl { animation-duration: 4.5s; animation-direction: reverse; }
+
+        .vinyl-label {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--label-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #000;
         }
 
-        .occ-card h3 { font-size: 1.3rem; font-weight: 800; margin: 0; }
-
-        /* FOOTER */
-        footer {
-            background-color: var(--nova-blanc-casse);
-            padding: 4rem 5%;
-            text-align: center;
-            border-top: 1px solid rgba(17, 18, 22, 0.05);
+        .vinyl-hole {
+            width: 15px;
+            height: 15px;
+            background: #06060A;
+            border-radius: 50%;
         }
 
-        .footer-logo { font-size: 1.5rem; font-weight: 900; color: var(--nova-noir); margin-bottom: 1rem; }
-        footer p { color: rgba(17, 18, 22, 0.5); font-size: 0.9rem; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* RESPONSIVE */
+        /* FOOTER ICONS */
+        .bottom-icons {
+            display: flex;
+            justify-content: space-between;
+            padding: 4rem 5% 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .icon-box { display: flex; flex-direction: column; gap: 1rem; }
+        .icon-circle {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem;
+        }
+        .icon-box h4 { margin: 0; font-size: 1.1rem; }
+        .icon-box p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
+
+        /* MODALES (FENÊTRES POPUP) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active { display: flex; opacity: 1; }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 90%;
+            max-width: 700px;
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute; top: 20px; right: 25px;
+            background: none; border: none;
+            color: var(--text-muted); font-size: 1.5rem;
+            cursor: pointer; transition: color 0.2s;
+        }
+        .close-modal:hover { color: var(--neon-lime); }
+
+        .modal-content h2 { color: var(--neon-lime); font-size: 2rem; margin-top: 0; margin-bottom: 2rem; }
+        .modal-content h3 { font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.5rem; color: #FFF; }
+        .modal-content p { color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
+
+        /* Tarifs dans la modale */
+        .pack-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+        .pack-box { border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 12px; text-align: center; }
+        .pack-box.highlight { border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); }
+        .pack-box h4 { margin: 0 0 1rem 0; font-size: 1rem; color: var(--text-muted); }
+        .pack-box .price { font-size: 1.8rem; font-weight: 900; color: #FFF; margin-bottom: 1rem; }
+
+        /* Témoignages dans la modale */
+        .review-box { background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem; border-left: 4px solid var(--neon-lime); }
+        .review-box p { font-style: italic; margin-bottom: 0.5rem; }
+        .review-author { font-weight: 700; color: #FFF; font-size: 0.9rem; }
+
         @media (max-width: 900px) {
-            .hero h1 { font-size: 3.5rem; }
-            .steps-grid { grid-template-columns: 1fr; gap: 3rem; }
-            .product-section h2 { font-size: 2.5rem; }
-            .nav-actions .nav-link { display: none; }
+            .hero { flex-direction: column; text-align: center; padding-top: 2rem; }
+            .hero-content { margin-bottom: 3rem; }
+            .hero h1 { font-size: 3rem; }
+            .nav-center { display: none; }
+            .occ-grid { grid-template-columns: 1fr; }
+            .features-section { flex-direction: column; text-align: center; }
+            .bottom-icons { flex-direction: column; gap: 2rem; }
+            .pack-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -294,95 +436,217 @@
 
     <!-- NAVIGATION -->
     <nav>
-        <a href="/" class="logo">NOVA<span class="logo-burst">✦</span>TEMPO</a>
-        <div class="nav-actions">
-            <a href="/login.html" class="nav-link">Se connecter</a>
-            <a href="/signup.html" class="btn-nav">Créer un compte</a>
+        <a href="/" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
+        <div class="nav-center">
+            <a onclick="openModal('modal-tarifs')">Tarifs</a>
+            <a onclick="openModal('modal-faq')">Questions Fréquentes</a>
+            <a onclick="openModal('modal-temoignages')">Témoignages</a>
+        </div>
+        <div class="nav-right">
+            <a href="/login.html" class="btn-login">Connexion</a>
+            <a href="/signup.html" class="btn-signup">Inscription</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
     <section class="hero">
-        <h1>Transformez vos <span class="serif-italic">moments</span> en musique.</h1>
-        <p>Plus qu'une simple chanson. Une émotion sur mesure générée à partir de votre propre histoire pour ceux que vous aimez.</p>
-        <a href="/signup.html" class="btn-main">
-            Créer ma première chanson <i class="fas fa-arrow-right"></i>
-        </a>
-    </section>
-
-    <!-- SECTION ÉTAPES -->
-    <section class="steps-section">
-        <h2 class="section-title">Créez. Écoutez. <span class="serif-italic">Partagez.</span></h2>
-        <div class="steps-grid">
-            <div class="step-card">
-                <div class="step-icon"><i class="fas fa-calendar-day"></i></div>
-                <h3>1. L'occasion</h3>
-                <p>Anniversaire, mariage, déclaration ou hommage. Choisissez le contexte de votre émotion.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-icon"><i class="fas fa-pen-nib"></i></div>
-                <h3>2. Votre histoire</h3>
-                <p>Prénom, souvenirs marquants, qualités... Confiez-nous les détails qui rendent ce moment unique.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-icon"><i class="fas fa-headphones"></i></div>
-                <h3>3. La magie</h3>
-                <p>Notre technologie assemble les mots parfaits pour donner naissance à votre chanson personnalisée.</p>
-            </div>
+        <div class="hero-content">
+            <div class="surtitle">YOUR STORY. YOUR SOUND.</div>
+            <h1>NOVATEMPO AU SERVICE DE VOS <span class="highlight">ÉMOTIONS</span></h1>
+            <p>Créez des chansons personnalisées pour toutes vos occasions. Rapide, simple, puissant.</p>
+            <a href="/signup.html" class="btn-hero">
+                Créer ma chanson <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
-    </section>
-
-    <!-- SECTION PRODUIT (Rupture contraste) -->
-    <section class="product-section">
-        <h2>Votre histoire mérite <br> d'être <span class="serif-italic">écoutée</span>.</h2>
-        <p>Accédez à un studio de création intuitif, élégant et pensé pour vous accompagner pas à pas.</p>
-        
-        <div class="product-mockup">
-            <div style="display: flex; gap: 2rem; align-items: center;">
-                <div style="flex: 1;">
-                    <h3 style="font-size: 1.8rem; font-weight: 800; margin-top:0;">Le Studio Nova Tempo</h3>
-                    <p style="color: rgba(17,18,22,0.6); line-height:1.6;">Une interface sans distraction où vos émotions prennent vie. Historique complet, gestion de compte simplifiée, et génération instantanée.</p>
-                    <a href="/signup.html" style="color: var(--nova-corail); font-weight:700; text-decoration:none; display:inline-block; margin-top:1rem;">Découvrir le Studio ✦</a>
-                </div>
-                <div style="flex: 1; background: var(--nova-blanc-casse); border-radius: 12px; height: 200px; display:flex; justify-content:center; align-items:center; border: 1px solid rgba(17,18,22,0.1);">
-                    <i class="fas fa-music" style="font-size: 4rem; color: rgba(17,18,22,0.1);"></i>
-                </div>
-            </div>
+        <div class="hero-image">
+            <div class="hero-glow"></div>
+            <!-- Image réaliste de la jeune femme noire au casque, avec lumière néon -->
+            <img src="https://images.unsplash.com/photo-1612089286820-2f9543e8a156?q=80&w=800&auto=format&fit=crop" alt="Jeune femme noire écoutant de la musique au casque">
         </div>
     </section>
 
     <!-- SECTION OCCASIONS -->
     <section class="occasions-section">
-        <h2 class="section-title">Pour chaque <span class="serif-italic">émotion</span></h2>
-        <div class="occasions-grid">
-            <div class="occ-card">
-                <i class="fas fa-heart"></i>
-                <h3>Amour</h3>
+        <h2 class="section-title">Des musiques pour chaque instant</h2>
+        <p class="section-subtitle">Amour, fête, réussite, hommage... chaque émotion a sa mélodie.</p>
+
+        <div class="occ-grid">
+            <!-- Amour -->
+            <a href="/signup.html" class="occ-card">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600&auto=format&fit=crop" alt="Amour">
+                <div class="occ-overlay"><h3>Amour</h3></div>
+            </a>
+            <!-- Anniversaire -->
+            <a href="/signup.html" class="occ-card">
+                <img src="https://images.unsplash.com/photo-1530103862676-de3c9de59f9e?q=80&w=600&auto=format&fit=crop" alt="Anniversaire">
+                <div class="occ-overlay"><h3>Anniversaire</h3></div>
+            </a>
+            <!-- Mariage -->
+            <a href="/signup.html" class="occ-card">
+                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600&auto=format&fit=crop" alt="Mariage">
+                <div class="occ-overlay"><h3>Mariage</h3></div>
+            </a>
+            <!-- Motivation -->
+            <a href="/signup.html" class="occ-card">
+                <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=600&auto=format&fit=crop" alt="Motivation">
+                <div class="occ-overlay"><h3>Motivation</h3></div>
+            </a>
+            <!-- Hommage -->
+            <a href="/signup.html" class="occ-card">
+                <img src="https://images.unsplash.com/photo-1494697536454-6f39e2cc972d?q=80&w=600&auto=format&fit=crop" alt="Hommage">
+                <div class="occ-overlay"><h3>Hommage</h3></div>
+            </a>
+            <!-- Autre -->
+            <a href="/signup.html" class="occ-card">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop" alt="Concert">
+                <div class="occ-overlay"><h3>Autre</h3></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- SECTION FONCTIONNALITÉ (VINYLES) -->
+    <section class="features-section">
+        <div class="feature-text">
+            <h2>
+                <span>Créez.</span>
+                <span>Écoutez.</span>
+                <span style="color:var(--neon-lime);">Partagez.</span>
+            </h2>
+            <p>Une expérience fluide, intuitive et inspirante, pensée pour vous. NovaTempo transforme vos histoires en véritables chefs-d'œuvre musicaux.</p>
+            <a href="/signup.html" class="btn-hero" style="font-size: 1rem; padding: 1rem 2rem;">Commencer <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <!-- Animation des 3 disques Vinyles -->
+        <div class="vinyl-container">
+            <div class="vinyl-wrapper vw-1">
+                <div class="vinyl"><div class="vinyl-label" style="--label-color: #FF0066;"><div class="vinyl-hole"></div></div></div>
             </div>
-            <div class="occ-card">
-                <i class="fas fa-gift"></i>
-                <h3>Anniversaire</h3>
+            <div class="vinyl-wrapper vw-2">
+                <div class="vinyl"><div class="vinyl-label" style="--label-color: #0044FF;"><div class="vinyl-hole"></div></div></div>
             </div>
-            <div class="occ-card">
-                <i class="fas fa-dove"></i>
-                <h3>Hommage</h3>
-            </div>
-            <div class="occ-card">
-                <i class="fas fa-star"></i>
-                <h3>Événement</h3>
-            </div>
-            <div class="occ-card">
-                <i class="fas fa-hands-praying"></i>
-                <h3>Adoration</h3>
+            <div class="vinyl-wrapper vw-3">
+                <div class="vinyl"><div class="vinyl-label" style="--label-color: #D4FF00;"><div class="vinyl-hole"></div></div></div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-logo">NOVA<span class="logo-burst">✦</span>TEMPO</div>
-        <p>&copy; 2024 Nova Tempo. Votre histoire. Notre musique.</p>
-    </footer>
+    <!-- BOTTOM ICONS -->
+    <section class="bottom-icons">
+        <div style="width: 100%; display: flex; justify-content: space-between;">
+            <div class="icon-box">
+                <div class="icon-circle" style="color:#D4FF00; border-color:#D4FF00;"><i class="fas fa-magic"></i></div>
+                <h4>Créer</h4>
+                <p>En quelques clics</p>
+            </div>
+            <div class="icon-box">
+                <div class="icon-circle" style="color:#FF0066; border-color:#FF0066;"><i class="fas fa-sliders-h"></i></div>
+                <h4>Personnaliser</h4>
+                <p>Selon vos envies</p>
+            </div>
+            <div class="icon-box">
+                <div class="icon-circle" style="color:#D4FF00; border-color:#D4FF00;"><i class="fas fa-play"></i></div>
+                <h4>Écouter</h4>
+                <p>En haute qualité</p>
+            </div>
+            <div class="icon-box">
+                <div class="icon-circle" style="color:#0044FF; border-color:#0044FF;"><i class="fas fa-share-nodes"></i></div>
+                <h4>Partager</h4>
+                <p>Avec ceux que vous aimez</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- MODALES (FENÊTRES CACHÉES POUR LE MENU)        -->
+    <!-- ============================================== -->
+
+    <!-- Modale Tarifs -->
+    <div class="modal-overlay" id="modal-tarifs" onclick="closeModal(event, 'modal-tarifs')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="document.getElementById('modal-tarifs').classList.remove('active')"><i class="fas fa-times"></i></button>
+            <h2>Nos Tarifs Simples</h2>
+            <p>Une tarification transparente par volume. 1 crédit = 1 chanson complète personnalisée, téléchargeable et en haute qualité.</p>
+            
+            <div class="pack-grid">
+                <div class="pack-box">
+                    <h4>UNITAIRE</h4>
+                    <div class="price">1 000F</div>
+                    <p style="font-size: 0.9rem;">1 Chanson</p>
+                </div>
+                <div class="pack-box highlight">
+                    <h4 style="color:var(--neon-lime);">PACK 3</h4>
+                    <div class="price">2 500F</div>
+                    <p style="font-size: 0.9rem;">3 Chansons</p>
+                </div>
+                <div class="pack-box">
+                    <h4>PACK 5</h4>
+                    <div class="price">4 000F</div>
+                    <p style="font-size: 0.9rem;">5 Chansons</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/signup.html" class="btn-signup" style="text-decoration: none;">Créer un compte pour acheter</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale FAQ -->
+    <div class="modal-overlay" id="modal-faq" onclick="closeModal(event, 'modal-faq')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="document.getElementById('modal-faq').classList.remove('active')"><i class="fas fa-times"></i></button>
+            <h2>Questions Fréquentes</h2>
+            
+            <h3>Combien de temps prend la création ?</h3>
+            <p>C'est quasiment instantané ! Une fois votre histoire remplie, notre technologie génère votre chanson sur mesure en quelques secondes.</p>
+
+            <h3>Puis-je télécharger la musique ?</h3>
+            <p>Oui, absolument. Toutes vos créations sont sauvegardées dans votre espace "Mes Créations" et vous pouvez copier les paroles ou les exporter.</p>
+
+            <h3>Quels sont les styles disponibles ?</h3>
+            <p>Nous proposons plusieurs styles comme l'Afrobeats, la Pop, le R&B, l'Acoustique, le Gospel et le Rap. Vous choisissez l'ambiance qui vous correspond.</p>
+
+            <h3>Dois-je utiliser tous mes crédits le même jour ?</h3>
+            <p>Non, vos crédits sont liés à votre compte et n'expirent pas. Achetez un pack de 5 aujourd'hui et utilisez-les tout au long de l'année pour différents événements.</p>
+        </div>
+    </div>
+
+    <!-- Modale Témoignages -->
+    <div class="modal-overlay" id="modal-temoignages" onclick="closeModal(event, 'modal-temoignages')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="document.getElementById('modal-temoignages').classList.remove('active')"><i class="fas fa-times"></i></button>
+            <h2>Témoignages</h2>
+            <p>Ce qu'ils ont ressenti en utilisant Nova Tempo :</p>
+            
+            <div class="review-box">
+                <p>"J'ai fait une chanson pour les 30 ans de mon frère avec des anecdotes de notre enfance. Il a eu les larmes aux yeux. C'est le meilleur cadeau possible !"</p>
+                <div class="review-author">— Sarah K.</div>
+            </div>
+            
+            <div class="review-box">
+                <p>"Je voulais déclarer ma flamme de façon originale. La chanson RnB créée par NovaTempo a fait tout le travail, elle a adoré l'attention aux détails."</p>
+                <div class="review-author">— Marc T.</div>
+            </div>
+            
+            <div class="review-box">
+                <p>"Incroyable facilité d'utilisation. En 3 minutes, j'avais un texte touchant et parfait pour la remise de diplôme de ma fille."</p>
+                <div class="review-author">— Aline M.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS POUR LES MODALES -->
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(event, modalId) {
+            // Ferme si on clique en dehors du contenu de la modale
+            if (event.target.id === modalId) {
+                document.getElementById(modalId).classList.remove('active');
+            }
+        }
+    </script>
 
 </body>
 </html>
