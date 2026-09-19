@@ -131,6 +131,68 @@
             font-size: 1.5rem;
         }
 
+        /* -- NOUVEAU : Grille d'Occasions Esthétique -- */
+        .occasion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .occasion-card {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .occasion-card i {
+            font-size: 2.5rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .occasion-card span {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .occasion-card:hover {
+            background: rgba(255,51,102,0.05);
+            border-color: rgba(255,51,102,0.3);
+            transform: translateY(-3px);
+        }
+        
+        .occasion-card:hover i, .occasion-card:hover span {
+            color: var(--text);
+        }
+
+        /* État Actif/Sélectionné */
+        .occasion-card.active {
+            background: rgba(255,51,102,0.1);
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(255,51,102,0.15);
+        }
+        
+        .occasion-card.active i {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        .occasion-card.active span {
+            color: var(--text);
+        }
+        /* ------------------------------------------- */
+
         /* Formulaires */
         .form-group {
             margin-bottom: 1.5rem;
@@ -143,7 +205,7 @@
             color: var(--text-muted);
         }
 
-        select, input[type="text"], textarea {
+        input[type="text"] {
             width: 100%;
             padding: 1rem;
             background: rgba(255,255,255,0.05);
@@ -154,17 +216,18 @@
             box-sizing: border-box;
         }
 
-        select {
-            appearance: none;
-            cursor: pointer;
-        }
-
         .occasion-fields {
             background: rgba(0,0,0,0.2);
             padding: 1.5rem;
-            border-radius: 8px;
+            border-radius: 12px;
             margin-bottom: 1.5rem;
             border: 1px solid rgba(255,51,102,0.2);
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hidden {
@@ -196,9 +259,9 @@
         .btn-generate:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none;
         }
 
-        /* Style spécifique pour les paroles */
         .lyrics-display {
             background: rgba(0,0,0,0.3);
             padding: 1.5rem;
@@ -245,7 +308,6 @@
             display: none;
         }
 
-        /* Responsive */
         @media (max-width: 900px) {
             .dashboard-container {
                 flex-direction: column;
@@ -294,20 +356,41 @@
                     <div id="errorBox" class="error-message"></div>
 
                     <form id="generateForm">
+                        
+                        <!-- NOUVEAU : Sélection Visuelle de l'Occasion -->
                         <div class="form-group">
-                            <label for="occasion">Occasion *</label>
-                            <select id="occasion" required>
-                                <option value="">Choisir une occasion...</option>
-                                <option value="amour">Déclaration d'amour</option>
-                                <option value="anniversaire">Anniversaire</option>
-                                <option value="hommage">Hommage</option>
-                                <option value="promotion">Promotion / Événement</option>
-                                <option value="adoration">Louange et Adoration</option>
-                            </select>
+                            <label style="margin-bottom: 1rem;">1. Choisissez une occasion *</label>
+                            
+                            <div class="occasion-grid" id="occasionCards">
+                                <div class="occasion-card" data-value="amour">
+                                    <i class="fas fa-heart"></i>
+                                    <span>Amour</span>
+                                </div>
+                                <div class="occasion-card" data-value="anniversaire">
+                                    <i class="fas fa-birthday-cake"></i>
+                                    <span>Anniversaire</span>
+                                </div>
+                                <div class="occasion-card" data-value="hommage">
+                                    <i class="fas fa-dove"></i>
+                                    <span>Hommage</span>
+                                </div>
+                                <div class="occasion-card" data-value="promotion">
+                                    <i class="fas fa-rocket"></i>
+                                    <span>Événement</span>
+                                </div>
+                                <div class="occasion-card" data-value="adoration">
+                                    <i class="fas fa-hands-praying"></i>
+                                    <span>Adoration</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Champ caché qui enregistre le choix de l'utilisateur -->
+                            <input type="hidden" id="occasion" required>
                         </div>
 
                         <!-- CHAMPS : AMOUR -->
                         <div id="fields-amour" class="occasion-fields hidden">
+                            <label style="color:var(--primary); margin-bottom:1rem; font-size:1.1rem;"><i class="fas fa-heart"></i> Déclaration d'amour</label>
                             <div class="form-group">
                                 <label>Prénom du destinataire *</label>
                                 <input type="text" id="amour-prenom" placeholder="Ex: Sophie">
@@ -336,6 +419,7 @@
 
                         <!-- CHAMPS : ANNIVERSAIRE -->
                         <div id="fields-anniversaire" class="occasion-fields hidden">
+                            <label style="color:var(--primary); margin-bottom:1rem; font-size:1.1rem;"><i class="fas fa-birthday-cake"></i> Anniversaire</label>
                             <div class="form-group">
                                 <label>Prénom *</label>
                                 <input type="text" id="anniv-prenom" placeholder="Ex: Thomas">
@@ -364,6 +448,7 @@
 
                         <!-- CHAMPS : HOMMAGE -->
                         <div id="fields-hommage" class="occasion-fields hidden">
+                            <label style="color:var(--primary); margin-bottom:1rem; font-size:1.1rem;"><i class="fas fa-dove"></i> Hommage</label>
                             <div class="form-group">
                                 <label>Prénom de la personne *</label>
                                 <input type="text" id="hommage-nom" placeholder="Ex: Papa, Marie...">
@@ -400,13 +485,14 @@
 
                         <!-- CHAMPS : PROMOTION -->
                         <div id="fields-promotion" class="occasion-fields hidden">
+                            <label style="color:var(--primary); margin-bottom:1rem; font-size:1.1rem;"><i class="fas fa-rocket"></i> Promotion / Événement</label>
                             <div class="form-group">
                                 <label>Nom du produit / événement / entreprise *</label>
                                 <input type="text" id="pro-nom" placeholder="Ex: Le festival d'été, Ma super app...">
                             </div>
                             <div class="form-group">
                                 <label>Type de produit/événement (Optionnel)</label>
-                                <input type="text" id="pro-type" placeholder="Ex: Un festival de musique, Une application révolutionnaire...">
+                                <input type="text" id="pro-type" placeholder="Ex: Un festival de musique, Une application...">
                             </div>
                             <div class="form-group">
                                 <label>Point fort 1 *</label>
@@ -440,20 +526,21 @@
 
                         <!-- CHAMPS : ADORATION -->
                         <div id="fields-adoration" class="occasion-fields hidden">
+                            <label style="color:var(--primary); margin-bottom:1rem; font-size:1.1rem;"><i class="fas fa-hands-praying"></i> Louange et Adoration</label>
                             <div class="form-group">
-                                <label>Nom de Dieu / Titre (ex: Jésus, Éternel, Yahweh) *</label>
-                                <input type="text" id="ado-nom" placeholder="Ex: Jésus">
+                                <label>Nom de Dieu / Titre *</label>
+                                <input type="text" id="ado-nom" placeholder="Ex: Jésus, Yahweh">
                             </div>
                             <div class="form-group">
-                                <label>Attribut 1 (ex: Puissant, Bon) *</label>
+                                <label>Attribut 1 *</label>
                                 <input type="text" id="ado-attribut1" placeholder="Ex: Puissant">
                             </div>
                             <div class="form-group">
-                                <label>Attribut 2 (ex: Saint, Miséricordieux) *</label>
+                                <label>Attribut 2 *</label>
                                 <input type="text" id="ado-attribut2" placeholder="Ex: Saint">
                             </div>
                             <div class="form-group">
-                                <label>Attribut 3 (ex: Majestueux, Merveilleux) *</label>
+                                <label>Attribut 3 *</label>
                                 <input type="text" id="ado-attribut3" placeholder="Ex: Merveilleux">
                             </div>
                             <div class="form-group">
@@ -466,7 +553,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Verset biblique préféré (Optionnel)</label>
-                                <input type="text" id="ado-verset" placeholder="Ex: Psaume 23, Jean 3:16">
+                                <input type="text" id="ado-verset" placeholder="Ex: Psaume 23">
                             </div>
                         </div>
 
@@ -492,7 +579,6 @@
     </div>
 
     <script>
-        // TES CLÉS SONT DÉJÀ INTÉGRÉES ICI !
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
@@ -511,7 +597,6 @@
             currentUserId = session.user.id;
             document.getElementById('userEmail').textContent = session.user.email;
 
-            // 1. Récupérer le vrai nombre de crédits
             const fetchCredits = async () => {
                 const { data: profile } = await window.supabaseClient
                     .from('profiles')
@@ -528,8 +613,10 @@
             };
             await fetchCredits();
 
-            // Gestion du formulaire
-            const occasionSelect = document.getElementById('occasion');
+            // -- GESTION DE LA NOUVELLE GRILLE VISUELLE --
+            const occasionCards = document.querySelectorAll('.occasion-card');
+            const hiddenOccasionInput = document.getElementById('occasion');
+            
             const fieldsMap = {
                 amour: 'fields-amour',
                 anniversaire: 'fields-anniversaire',
@@ -538,30 +625,44 @@
                 adoration: 'fields-adoration'
             };
 
-            occasionSelect.addEventListener('change', (e) => {
-                Object.values(fieldsMap).forEach(id => {
-                    document.getElementById(id).classList.add('hidden');
-                    const inputs = document.getElementById(id).querySelectorAll('input');
-                    inputs.forEach(input => {
-                        if (input.previousElementSibling.textContent.includes('*')) {
-                            input.removeAttribute('required');
-                        }
-                    });
-                });
+            occasionCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // 1. Enlever la couleur de toutes les cartes
+                    occasionCards.forEach(c => c.classList.remove('active'));
+                    
+                    // 2. Allumer la carte cliquée
+                    card.classList.add('active');
+                    
+                    // 3. Mémoriser le choix dans le champ caché
+                    const selected = card.getAttribute('data-value');
+                    hiddenOccasionInput.value = selected;
 
-                const selected = e.target.value;
-                if (fieldsMap[selected]) {
-                    const block = document.getElementById(fieldsMap[selected]);
-                    block.classList.remove('hidden');
-                    const inputs = block.querySelectorAll('input');
-                    inputs.forEach(input => {
-                        if (input.previousElementSibling.textContent.includes('*')) {
-                            input.setAttribute('required', 'true');
-                        }
+                    // 4. Cacher tous les formulaires et désactiver les champs obligatoires
+                    Object.values(fieldsMap).forEach(id => {
+                        document.getElementById(id).classList.add('hidden');
+                        const inputs = document.getElementById(id).querySelectorAll('input');
+                        inputs.forEach(input => {
+                            if (input.previousElementSibling.textContent.includes('*')) {
+                                input.removeAttribute('required');
+                            }
+                        });
                     });
-                }
+
+                    // 5. Afficher le bon formulaire
+                    if (fieldsMap[selected]) {
+                        const block = document.getElementById(fieldsMap[selected]);
+                        block.classList.remove('hidden');
+                        const inputs = block.querySelectorAll('input');
+                        inputs.forEach(input => {
+                            if (input.previousElementSibling.textContent.includes('*')) {
+                                input.setAttribute('required', 'true');
+                            }
+                        });
+                    }
+                });
             });
 
+            // Gestion du formulaire
             const form = document.getElementById('generateForm');
             const submitBtn = document.getElementById('submitBtn');
             const errorBox = document.getElementById('errorBox');
@@ -571,16 +672,15 @@
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
-                // 2. Bloquer si pas de crédit
                 if (currentCredits <= 0) {
                     showError("Vous n'avez plus de crédits ! Veuillez recharger votre compte pour continuer.");
                     return;
                 }
 
-                const occasion = document.getElementById('occasion').value;
+                const occasion = hiddenOccasionInput.value;
 
                 if (!occasion) {
-                    showError('Veuillez sélectionner une occasion.');
+                    showError('Veuillez cliquer sur une carte pour choisir une occasion.');
                     return;
                 }
 
@@ -650,7 +750,6 @@
 
                     const finalLyrics = data.lyrics;
 
-                    // 3. Sauvegarder dans l'historique ET retirer 1 crédit
                     await window.supabaseClient.from('creations').insert({
                         user_id: currentUserId,
                         occasion: occasion,
