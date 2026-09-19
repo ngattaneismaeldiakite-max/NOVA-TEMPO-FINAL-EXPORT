@@ -103,7 +103,6 @@
         .waveform { display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 1.5rem; height: 50px; }
         .bar { width: 6px; border-radius: 50px; animation: wave 1s ease-in-out infinite; }
         
-        /* Couleurs Neon pour le chargement */
         .bar1 { background: var(--neon-lime); height: 20px; animation-delay: 0.0s; }
         .bar2 { background: var(--neon-pink); height: 40px; animation-delay: 0.1s; }
         .bar3 { background: var(--neon-blue); height: 50px; animation-delay: 0.2s; }
@@ -171,15 +170,14 @@
                             <input type="hidden" id="occasion" required>
                         </div>
 
-                        <!-- Étape 2 : Style -->
+                        <!-- Étape 2 : Style (MISE À JOUR) -->
                         <div class="form-group">
                             <label style="margin-bottom: 1rem; color:var(--neon-lime);">2. Style musical *</label>
                             <div class="style-grid" id="styleCards">
-                                <div class="style-pill" data-value="afrobeats">Afrobeats</div>
-                                <div class="style-pill" data-value="pop">Pop</div>
-                                <div class="style-pill" data-value="rnb">R&B</div>
-                                <div class="style-pill" data-value="acoustique">Acoustique</div>
+                                <div class="style-pill" data-value="afrobeat">Afrobeat</div>
+                                <div class="style-pill" data-value="coupé décalé">Coupé Décalé</div>
                                 <div class="style-pill" data-value="gospel">Gospel</div>
+                                <div class="style-pill" data-value="zouk">Zouk</div>
                                 <div class="style-pill" data-value="rap">Rap</div>
                             </div>
                             <input type="hidden" id="musicStyle" required>
@@ -269,7 +267,7 @@
         </main>
     </div>
 
-    <!-- Le même script JS que précédemment, il ne change pas -->
+    <!-- Script intact -->
     <script>
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
