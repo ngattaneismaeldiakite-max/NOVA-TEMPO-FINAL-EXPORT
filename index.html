@@ -2,214 +2,387 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Nova Tempo - Des sons sur-mesure pour s'enjailler</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-@keyframes scroll-right {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0%); }
-}
-    body { overflow-x: hidden; width: 100%; max-width: 100vw; }
-</style>
-<style>
-/* Spécifique à la page d'accueil : texte blanc quand le menu est transparent sur l'image sombre */
-header:not(.scrolled) nav a,
-header:not(.scrolled) a[href="login.html"],
-header:not(.scrolled) .user-name,
-header:not(.scrolled) .dropdown-icon {
-    color: var(--white) !important;
-}
-header:not(.scrolled) nav a:hover,
-header:not(.scrolled) a[href="login.html"]:hover {
-    color: var(--primary-yellow) !important;
-}
-    body { overflow-x: hidden; width: 100%; max-width: 100vw; }
-</style>
-    <!-- SEO & Favicon -->
-    <link rel="icon" type="image/png" href="logo.png">
-    <meta name="description" content="Nova Tempo - L'intelligence artificielle qui transforme vos mots en chansons magiques. Cuisine ton hit afro ou pop en quelques secondes. S'enjailler n'a jamais été aussi facile !.">
-    <meta name="theme-color" content="#0047AB">
-    <meta property="og:title" content="Nova Tempo - Créez votre musique IA">
-    <meta property="og:description" content="Transforme tes mots en chansons magiques avec Nova Tempo. Facile, rapide et super fun !">
-    <meta property="og:image" content="hero.jpg">
-<link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Tempo - Transformez vos moments en musique</title>
+    
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --nova-violet: #7B5193;
+            --nova-corail: #E86F5A;
+            --nova-orange: #F18A40;
+            --nova-jaune: #F2A841;
+            --nova-blanc-casse: #F7F4EE;
+            --nova-noir: #111216;
+            --radius-sm: 12px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Satoshi', sans-serif;
+            background-color: var(--nova-blanc-casse);
+            color: var(--nova-noir);
+            overflow-x: hidden;
+        }
+
+        .serif-italic {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-weight: normal;
+            color: var(--nova-corail);
+            font-size: 1.15em;
+        }
+
+        /* NAVIGATION */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--nova-noir);
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            text-decoration: none;
+        }
+
+        .logo-burst {
+            color: var(--nova-corail);
+            font-size: 1.2rem;
+            margin-top: -8px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: rgba(17, 18, 22, 0.7);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover { color: var(--nova-noir); }
+
+        .btn-nav {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(90deg, var(--nova-violet), var(--nova-corail), var(--nova-orange));
+            background-size: 200% 200%;
+            border: none;
+            border-radius: var(--radius-sm);
+            color: white;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(232, 111, 90, 0.2);
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(232, 111, 90, 0.3);
+            background-position: 100% 0;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 8rem 5% 6rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 5.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.04em;
+            margin: 0 0 1.5rem 0;
+            max-width: 1000px;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: rgba(17, 18, 22, 0.6);
+            margin: 0 0 3rem 0;
+            font-weight: 500;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        .btn-main {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.2rem;
+            background: linear-gradient(90deg, var(--nova-violet), var(--nova-corail), var(--nova-orange), var(--nova-jaune));
+            background-size: 200% 200%;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(232, 111, 90, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(232, 111, 90, 0.35);
+            background-position: 100% 0;
+        }
+
+        /* ÉTAPES - FONCTIONNEMENT */
+        .steps-section {
+            padding: 6rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 4rem;
+            letter-spacing: -0.03em;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+        }
+
+        .step-card {
+            text-align: center;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: #FFFFFF;
+            border-radius: var(--radius-lg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: var(--nova-corail);
+            margin: 0 auto 2rem;
+            border: 1px solid rgba(17,18,22,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        }
+
+        .step-card h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .step-card p { color: rgba(17, 18, 22, 0.6); font-size: 1.1rem; line-height: 1.6; }
+
+        /* SECTION CONTRASTE (PRODUIT) */
+        .product-section {
+            background-color: var(--nova-noir);
+            color: var(--nova-blanc-casse);
+            padding: 8rem 5%;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .product-section h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .product-section .serif-italic {
+            color: var(--nova-orange);
+        }
+
+        .product-section p {
+            font-size: 1.3rem;
+            color: rgba(247, 244, 238, 0.6);
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .product-mockup {
+            background: #FFFFFF;
+            border-radius: var(--radius-lg);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem;
+            color: var(--nova-noir);
+            text-align: left;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        /* SECTION OCCASIONS */
+        .occasions-section {
+            padding: 8rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .occasions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .occ-card {
+            background: #FFFFFF;
+            padding: 2.5rem 1.5rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            border: 1px solid rgba(17,18,22,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .occ-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(232, 111, 90, 0.08);
+            border-color: rgba(232, 111, 90, 0.2);
+        }
+
+        .occ-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--nova-corail);
+        }
+
+        .occ-card h3 { font-size: 1.3rem; font-weight: 800; margin: 0; }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--nova-blanc-casse);
+            padding: 4rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(17, 18, 22, 0.05);
+        }
+
+        .footer-logo { font-size: 1.5rem; font-weight: 900; color: var(--nova-noir); margin-bottom: 1rem; }
+        footer p { color: rgba(17, 18, 22, 0.5); font-size: 0.9rem; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 3.5rem; }
+            .steps-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .product-section h2 { font-size: 2.5rem; }
+            .nav-actions .nav-link { display: none; }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo"><img src="logo.png" style="background: rgba(255,255,255,0.95); padding: 8px 16px; border-radius: 12px; height: 40px; width: auto; vertical-align: middle;" alt="Logo Nova Tempo" style="height: 40px; width: auto; margin-right: 10px; vertical-align: middle;"></div>
-        
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <a href="login.html" style="color: var(--text-main); text-decoration: none; font-weight: bold;">Connexion</a>
-            <a href="signup.html" class="cta-nav">S'inscrire</a>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="/" class="logo">NOVA<span class="logo-burst">✦</span>TEMPO</a>
+        <div class="nav-actions">
+            <a href="/login.html" class="nav-link">Se connecter</a>
+            <a href="/signup.html" class="btn-nav">Créer un compte</a>
         </div>
-    </header>
+    </nav>
 
-    <section class="hero" id="hero-section" style="position: relative; background-image: linear-gradient(to bottom, rgba(15, 12, 10, 0.85), rgba(15, 12, 10, 0.95)), url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; padding: 180px 5% 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; min-height: 85vh; overflow: hidden;">
-    <!-- Organic Noise Overlay -->
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.04; background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E'); z-index: 1; pointer-events: none;"></div>
-
-    <div class="hero-content" style="max-width: 1000px; z-index: 2; width: 100%; position: relative;">
-        <h1 class="animate-fade-in-up" style="font-family: 'Bricolage Grotesque', sans-serif; color: white; font-size: clamp(2.8rem, 7vw, 6.5rem); line-height: 1.05; letter-spacing: -0.02em;">
-            <span style="font-weight: 400; opacity: 0.9;"><span class="brand-name">NovaTempo</span> transforme tes</span><br>
-            <span style="font-weight: 900; background: linear-gradient(135deg, #E5C07B 0%, #C87A5B 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PAROLES EN MUSIQUE</span>
-        </h1>
-        
-        <div class="hero-kicker animate-shimmer delay-1" style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; color: #D4AF37; margin-top: 30px; margin-bottom: 40px; display: flex; align-items: center; justify-content: center; gap: 15px;">
-            AU CHAUD ???
-        </div>
-        
-        <div class="animate-bounce-in delay-2" style="margin-top: 20px;">
-            <button onclick="fireConfetti(); setTimeout(function(){ window.location.href='signup.html'; }, 600);" class="premium-glow-btn">Tape dedans !</button>
-        </div>
-    </div>
-</section>
-
-    <section class="crucial-info reveal">
-        <div class="stats-container">
-            <div class="trust-badge">
-                <div class="avatars">
-    <img src="user1.jpg" alt="Utilisateur 1" style="object-fit:cover;">
-    <img src="user2.jpg" alt="Utilisateur 2" style="object-fit:cover;">
-    <img src="user3.jpg" alt="Utilisateur 3" style="object-fit:cover;">
-    <img src="user4.jpg" alt="Utilisateur 4" style="object-fit:cover;">
-</div>
-                <div class="trust-text">
-                    <div class="stars">★★★★★</div>
-                    <p>Rejoint par <strong>+ de 2000 utilisateurs</strong></p>
-                </div>
-            </div>
-            <div class="benefits-row reveal">
-                <div class="benefit-item">
-                    <div class="benefit-icon">✨</div>
-                    <span>100% Sur Mesure</span>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">🎧</div>
-                    <span>Qualité propre, rien à dire</span>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">⚡</div>
-                    <span>Prêt en 3 min</span>
-                </div>
-            </div>
-        </div>
-    </section>    
-
-    <!-- ============================================== -->
-    <!-- SECTION AUDIO AVEC VOS MUSIQUES               -->
-    <!-- ============================================== -->
-    <section id="showcase" class="showcase-section">
-        <h2 class="section-title-3d">Écoutez la Magie de l'IA</h2>
-        <p style="text-align:center; color:#666; margin-bottom:40px; font-size:18px;">Voici quelques exemples de hits générés sur Nova Tempo.</p>
-        
-        <div class="showcase-grid">
-            <!-- Exemple 1 : Aicha -->
-            <div class="showcase-card">
-                <div class="showcase-cover cover-1">
-                    <button class="play-btn">▶</button>
-                </div>
-                <div class="showcase-info">
-                    <h3>Écrit Pour Toi, Aïcha</h3>
-                    <span class="showcase-tag">Afro Pop</span>
-                </div>
-                <audio src="aicha.mp3" controls style="width: 100%; margin-top: 15px; border-radius: 8px;"></audio>
-            </div>
-
-            <!-- Exemple 2 : Merci Maman -->
-            <div class="showcase-card">
-                <div class="showcase-cover cover-2">
-                    <button class="play-btn">▶</button>
-                </div>
-                <div class="showcase-info">
-                    <h3>Merci Maman</h3>
-                    <span class="showcase-tag">Coupé Décalé</span>
-                </div>
-                <!-- ON UTILISE MAINTENANT maman.mp3 -->
-                <audio src="maman.mp3" controls style="width: 100%; margin-top: 15px; border-radius: 8px;"></audio>
-            </div>
-
-            <!-- Exemple 3 : NOVA TEMPO -->
-            <div class="showcase-card">
-                <div class="showcase-cover cover-3">
-                    <button class="play-btn">▶</button>
-                </div>
-                <div class="showcase-info">
-                    <h3>NOVA TEMPO — Ta Vie En Chanson</h3>
-                    <span class="showcase-tag">Amapiano</span>
-                </div>
-                <!-- ON UTILISE MAINTENANT son.mp3 -->
-                <audio src="son.mp3" controls style="width: 100%; margin-top: 15px; border-radius: 8px;"></audio>
-            </div>
-        </div>
-
-        <!-- Script pour animer les gros boutons Play -->
-        <script>
-            document.querySelectorAll('.showcase-card').forEach(card => {
-                const playBtn = card.querySelector('.play-btn');
-                const audio = card.querySelector('audio');
-                
-                if (playBtn && audio) {
-                    playBtn.addEventListener('click', () => {
-                        document.querySelectorAll('.showcase-card audio').forEach(a => {
-                            if (a !== audio) { a.pause(); }
-                        });
-                        if (audio.paused) {
-                            audio.play();
-                        } else {
-                            audio.pause();
-                        }
-                    });
-
-                    audio.addEventListener('play', () => playBtn.innerHTML = '⏸');
-                    audio.addEventListener('pause', () => playBtn.innerHTML = '▶');
-                }
-            });
-        </script>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1>Transformez vos <span class="serif-italic">moments</span> en musique.</h1>
+        <p>Plus qu'une simple chanson. Une émotion sur mesure générée à partir de votre propre histoire pour ceux que vous aimez.</p>
+        <a href="/signup.html" class="btn-main">
+            Créer ma première chanson <i class="fas fa-arrow-right"></i>
+        </a>
     </section>
-    <!-- ============================================== -->
 
-    <section id="comment-ca-marche" class="how-it-works">
-        <h2>Comment on cuit le son ? ? C'est un jeu d'enfant ! 🎮</h2>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h3>Définissez l'intention</h3>
-                <p>Souhaitez-vous partager un instant de pur bonheur, rendre un vibrant hommage ou sublimer l'histoire de votre entreprise ? Posez le cadre et choisissez l'ambiance musicale.</p>
+    <!-- SECTION ÉTAPES -->
+    <section class="steps-section">
+        <h2 class="section-title">Créez. Écoutez. <span class="serif-italic">Partagez.</span></h2>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-icon"><i class="fas fa-calendar-day"></i></div>
+                <h3>1. L'occasion</h3>
+                <p>Anniversaire, mariage, déclaration ou hommage. Choisissez le contexte de votre émotion.</p>
             </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <h3>Racontez votre histoire</h3>
-                <p>Partagez vos souvenirs marquants, la vision de votre projet ou les traits de caractère de votre destinataire. Notre technologie <span class="brand-name">NovaTempo</span> sculpte vos mots pour en faire des paroles percutantes.</p>
+            <div class="step-card">
+                <div class="step-icon"><i class="fas fa-pen-nib"></i></div>
+                <h3>2. Votre histoire</h3>
+                <p>Prénom, souvenirs marquants, qualités... Confiez-nous les détails qui rendent ce moment unique.</p>
             </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3>Déclenchez l'émotion</h3>
-                <p>En moins de 3 minutes, votre morceau exclusif est prêt. Téléchargez-le et créez un véritable impact émotionnel auprès de votre audience ou de vos proches.</p>
+            <div class="step-card">
+                <div class="step-icon"><i class="fas fa-headphones"></i></div>
+                <h3>3. La magie</h3>
+                <p>Notre technologie assemble les mots parfaits pour donner naissance à votre chanson personnalisée.</p>
             </div>
         </div>
     </section>
 
-    <section id="tarifs" class="pricing" style="padding: 80px 5%; background-color: #f7f7f8;">
-        <h2 class="section-title-3d">Nos offres</h2>
-          <div style="background: rgba(0, 71, 171, 0.05); border-left: 5px solid var(--primary-magenta); padding: 25px 30px; border-radius: 0 16px 16px 0; max-width: 800px; margin: 0 auto 60px auto; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
-              <p style="color: #334155; font-size: 18px; line-height: 1.7; margin: 0;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-magenta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 12px; margin-top: -3px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                  Un compositeur professionnel facture en moyenne 50 000 à 100 000 FCFA. Nova Tempo te l'offre en quelques minutes, <strong style="color: var(--primary-yellow); font-size: 20px;">dès 1 500 FCFA.</strong>
-              </p>
-          </div>
+    <!-- SECTION PRODUIT (Rupture contraste) -->
+    <section class="product-section">
+        <h2>Votre histoire mérite <br> d'être <span class="serif-italic">écoutée</span>.</h2>
+        <p>Accédez à un studio de création intuitif, élégant et pensé pour vous accompagner pas à pas.</p>
         
-        <div class="plans" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1100px; margin: 0 auto; align-items: flex-start;">
-            
-            <!-- Offre Essai -->
-            <div class="plan" style="flex: 1; min-width: 320px; max-width: 380px; background: white; border-radius: 20px; padding: 40px 30px;  text-align: left; transition: transform 0.3s; border: 1px solid #eaeaea; border-top: 6px solid var(--primary-magenta);">
-                <h3 style="font-size: 24px; margin-bottom: 5px; color: #1e293b;">Essai</h3>
-                <p style="color: #64748b; font-size: 15px; margin-bottom: 25px; height: 22px;">Idéal pour tester l'IA</p>
-                <div class="price" style="font-size: 42px; font-weight: 900; color: #0a0a0a; margin-bottom: 30px; border-bottom: 1px solid #eaeaea; padding-bottom: 30px;">1 500<span style="font-size: 18px; color: #64748b; font-weight: 600;"> FCFA</span></div>
-                
-                <ul style="list-style: none; padding: 0; margin: 0 0 35px 0; text-align: left;">
-                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #475569; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> <strong>1 Chanson</strong> complète</li>
-                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #475569; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Qualité Standard (MP3)</li>
-                    <li style="display: flex; align-items: center; margin-bottom: 15px; color: #475569; font-size: 15px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Téléchargement immédiat</li>
-                    <li style="
+        <div class="product-mockup">
+            <div style="display: flex; gap: 2rem; align-items: center;">
+                <div style="flex: 1;">
+                    <h3 style="font-size: 1.8rem; font-weight: 800; margin-top:0;">Le Studio Nova Tempo</h3>
+                    <p style="color: rgba(17,18,22,0.6); line-height:1.6;">Une interface sans distraction où vos émotions prennent vie. Historique complet, gestion de compte simplifiée, et génération instantanée.</p>
+                    <a href="/signup.html" style="color: var(--nova-corail); font-weight:700; text-decoration:none; display:inline-block; margin-top:1rem;">Découvrir le Studio ✦</a>
+                </div>
+                <div style="flex: 1; background: var(--nova-blanc-casse); border-radius: 12px; height: 200px; display:flex; justify-content:center; align-items:center; border: 1px solid rgba(17,18,22,0.1);">
+                    <i class="fas fa-music" style="font-size: 4rem; color: rgba(17,18,22,0.1);"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION OCCASIONS -->
+    <section class="occasions-section">
+        <h2 class="section-title">Pour chaque <span class="serif-italic">émotion</span></h2>
+        <div class="occasions-grid">
+            <div class="occ-card">
+                <i class="fas fa-heart"></i>
+                <h3>Amour</h3>
+            </div>
+            <div class="occ-card">
+                <i class="fas fa-gift"></i>
+                <h3>Anniversaire</h3>
+            </div>
+            <div class="occ-card">
+                <i class="fas fa-dove"></i>
+                <h3>Hommage</h3>
+            </div>
+            <div class="occ-card">
+                <i class="fas fa-star"></i>
+                <h3>Événement</h3>
+            </div>
+            <div class="occ-card">
+                <i class="fas fa-hands-praying"></i>
+                <h3>Adoration</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">NOVA<span class="logo-burst">✦</span>TEMPO</div>
+        <p>&copy; 2024 Nova Tempo. Votre histoire. Notre musique.</p>
+    </footer>
+
+</body>
+</html>
