@@ -186,11 +186,9 @@
     </div>
 
     <script>
-        // --- INITIALISATION DE SUPABASE ICI ---
-        const supabaseUrl = 'URL_SUPABASE_ICI';
-        const supabaseKey = 'CLE_ANON_ICI';
+        const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
+        const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-        // ---------------------------------------
 
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('signupForm');
@@ -203,7 +201,6 @@
                 errorBox.style.display = 'block';
             }
 
-            // INSCRIPTION GOOGLE
             googleBtn.addEventListener('click', async () => {
                 try {
                     const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
@@ -218,7 +215,6 @@
                 }
             });
 
-            // INSCRIPTION EMAIL CLASSIQUE
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
