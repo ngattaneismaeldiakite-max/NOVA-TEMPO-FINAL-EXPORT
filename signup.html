@@ -5,27 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - Nova Tempo</title>
     
-    <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #FF3366;
-            --bg-dark: #0A0A0A;
-            --bg-card: #1A1A1A;
-            --text: #FFFFFF;
-            --text-muted: #888888;
+            --nova-violet: #7B5193;
+            --nova-corail: #E86F5A;
+            --nova-orange: #F18A40;
+            --nova-jaune: #F2A841;
+            --nova-blanc-casse: #F7F4EE;
+            --nova-noir: #111216;
+            --radius-sm: 12px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text);
+            font-family: 'Satoshi', sans-serif;
+            background-color: var(--nova-blanc-casse);
+            color: var(--nova-noir);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,61 +36,90 @@
         }
 
         .auth-container {
-            background: var(--bg-card);
-            padding: 3rem;
-            border-radius: 15px;
+            background: #FFFFFF;
+            padding: 4rem 3rem;
+            border-radius: var(--radius-lg);
             width: 100%;
             max-width: 400px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(17, 18, 22, 0.04);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
             text-align: center;
         }
 
         .logo {
-            font-size: 2rem;
-            font-weight: 800;
+            font-size: 1.8rem;
+            font-weight: 900;
             margin-bottom: 2rem;
-            background: linear-gradient(45deg, var(--primary), #FF8833);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--nova-noir);
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.2rem;
         }
 
-        /* --- Bouton Google --- */
+        .logo-burst {
+            color: var(--nova-corail);
+            font-size: 1.4rem;
+            margin-top: -10px;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+        }
+
+        .serif-italic {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-weight: normal;
+            color: var(--nova-corail);
+            font-size: 1.15em;
+        }
+
         .btn-google {
             width: 100%;
-            padding: 1rem;
-            background: white;
-            color: #333;
-            border: none;
-            border-radius: 8px;
+            padding: 1.1rem;
+            background: var(--nova-blanc-casse);
+            color: var(--nova-noir);
+            border: 1px solid rgba(17, 18, 22, 0.1);
+            border-radius: var(--radius-sm);
             font-weight: 600;
             font-size: 1rem;
+            font-family: 'Satoshi', sans-serif;
             cursor: pointer;
-            margin-bottom: 1.5rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 0.5rem;
-            transition: 0.3s;
+            gap: 0.8rem;
+            transition: all 0.2s ease;
         }
+
         .btn-google:hover {
-            background: #f0f0f0;
+            background: #FFFFFF;
+            border-color: rgba(17, 18, 22, 0.2);
             transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
         }
 
         .divider {
             text-align: center;
-            margin-bottom: 1.5rem;
-            color: var(--text-muted);
+            margin: 2rem 0;
+            color: rgba(17, 18, 22, 0.4);
             font-size: 0.9rem;
             position: relative;
+            font-weight: 500;
         }
         .divider::before, .divider::after {
             content: '';
             position: absolute;
             top: 50%;
-            width: 25%;
+            width: 30%;
             height: 1px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(17, 18, 22, 0.1);
         }
         .divider::before { left: 0; }
         .divider::after { right: 0; }
@@ -101,69 +133,94 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: var(--text-muted);
+            font-size: 0.95rem;
+            color: var(--nova-noir);
         }
 
         input {
             width: 100%;
-            padding: 1rem;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: var(--text);
-            font-family: inherit;
+            padding: 1.1rem 1.2rem;
+            background: var(--nova-blanc-casse);
+            border: 1px solid rgba(17, 18, 22, 0.08);
+            border-radius: var(--radius-sm);
+            color: var(--nova-noir);
+            font-family: 'Satoshi', sans-serif;
+            font-size: 1rem;
             box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--nova-corail);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 4px rgba(232, 111, 90, 0.1);
         }
 
         .btn-submit {
             width: 100%;
-            padding: 1rem;
-            background: linear-gradient(45deg, var(--primary), #FF8833);
+            padding: 1.2rem;
+            background: linear-gradient(90deg, var(--nova-violet), var(--nova-corail), var(--nova-orange), var(--nova-jaune));
+            background-size: 200% 200%;
             border: none;
-            border-radius: 8px;
+            border-radius: var(--radius-md);
             color: white;
-            font-weight: 800;
+            font-weight: 700;
             font-size: 1.1rem;
+            font-family: 'Satoshi', sans-serif;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 15px rgba(232, 111, 90, 0.2);
         }
 
         .btn-submit:hover {
-            opacity: 0.9;
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(232, 111, 90, 0.3);
+            background-position: 100% 0;
         }
 
         .error-message {
-            color: var(--primary);
-            background: rgba(255,51,102,0.1);
+            color: var(--nova-corail);
+            background: rgba(232, 111, 90, 0.1);
             padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
             display: none;
         }
 
         .links {
-            margin-top: 1.5rem;
-            color: var(--text-muted);
+            margin-top: 2rem;
+            color: rgba(17, 18, 22, 0.6);
+            font-size: 0.95rem;
         }
 
         .links a {
-            color: var(--primary);
+            color: var(--nova-noir);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
+            border-bottom: 1px solid var(--nova-noir);
+            padding-bottom: 2px;
+            transition: 0.2s;
+        }
+
+        .links a:hover {
+            color: var(--nova-corail);
+            border-bottom-color: var(--nova-corail);
         }
     </style>
 </head>
 <body>
     <div class="auth-container">
-        <div class="logo">NOVA TEMPO</div>
-        <h2 style="margin-top:0; margin-bottom: 2rem;">Créer un compte</h2>
+        <div class="logo">NOVA<span class="logo-burst">✦</span>TEMPO</div>
+        <h2>Écrire la <span class="serif-italic">musique</span></h2>
 
         <div id="errorBox" class="error-message"></div>
 
-        <!-- Bouton Google -->
         <button id="googleBtn" type="button" class="btn-google">
-            <i class="fab fa-google"></i> S'inscrire avec Google
+            <i class="fab fa-google" style="color: #DB4437;"></i> S'inscrire avec Google
         </button>
 
         <div class="divider">ou avec un email</div>
@@ -175,13 +232,13 @@
             </div>
             <div class="form-group">
                 <label>Mot de passe</label>
-                <input type="password" id="password" required minlength="6">
+                <input type="password" id="password" required minlength="6" placeholder="6 caractères minimum">
             </div>
             <button type="submit" class="btn-submit" id="submitBtn">Créer mon compte</button>
         </form>
 
         <div class="links">
-            <p>Déjà un compte ? <a href="/login.html">Se connecter</a></p>
+            <p>Déjà une histoire ? <a href="/login.html">Se connecter</a></p>
         </div>
     </div>
 
@@ -205,9 +262,7 @@
                 try {
                     const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
                         provider: 'google',
-                        options: {
-                            redirectTo: window.location.origin + '/studio.html'
-                        }
+                        options: { redirectTo: window.location.origin + '/studio.html' }
                     });
                     if (error) throw error;
                 } catch (error) {
@@ -217,7 +272,6 @@
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
 
@@ -227,8 +281,7 @@
                     errorBox.style.display = 'none';
 
                     const { data, error } = await window.supabaseClient.auth.signUp({
-                        email: email,
-                        password: password,
+                        email: email, password: password,
                     });
 
                     if (error) throw error;
@@ -236,9 +289,7 @@
 
                 } catch (error) {
                     let msg = error.message;
-                    if (msg.includes("User already registered")) {
-                        msg = "Cet email est déjà utilisé.";
-                    }
+                    if (msg.includes("User already registered")) msg = "Cet email est déjà utilisé.";
                     showError(msg);
                 } finally {
                     submitBtn.disabled = false;
