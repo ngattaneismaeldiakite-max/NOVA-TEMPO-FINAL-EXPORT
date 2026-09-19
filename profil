@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - Nova Tempo</title>
+    
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #FF3366;
+            --bg-dark: #0A0A0A;
+            --bg-card: #1A1A1A;
+            --text: #FFFFFF;
+            --text-muted: #888888;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--primary), #FF8833);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-bottom: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text);
+            background: rgba(255, 51, 102, 0.1);
+        }
+
+        .nav-links i {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .credits-badge {
+            background: rgba(255, 51, 102, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Profil Area */
+        h1 {
+            margin-top: 0;
+            font-size: 2rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .profile-panel {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .profile-info {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .profile-info strong {
+            color: var(--text);
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .credit-box {
+            background: rgba(255, 51, 102, 0.05);
+            border: 1px dashed var(--primary);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .credit-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(45deg, #00C853, #64DD17);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn-pay:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 200, 83, 0.3);
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: auto;
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">NOVA TEMPO</div>
+            <ul class="nav-links">
+                <li><a href="/studio.html"><i class="fas fa-music"></i> Studio</a></li>
+                <li><a href="/creations.html"><i class="fas fa-list"></i> Mes Créations</a></li>
+                <li><a href="/profil.html" class="active"><i class="fas fa-user"></i> Mon Profil</a></li>
+                <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h1>Mon Profil</h1>
+                <div class="user-info">
+                    <span id="userEmail" class="text-muted">...</span>
+                    <div class="credits-badge">
+                        <i class="fas fa-coins"></i> <span id="creditCount">--</span> crédits
+                    </div>
+                </div>
+            </header>
+
+            <div class="profile-grid">
+                <!-- Infos du compte -->
+                <div class="profile-panel">
+                    <h2>Informations du compte</h2>
+                    <br>
+                    <div class="profile-info">
+                        Adresse E-mail de connexion :
+                        <strong id="displayEmail">Chargement...</strong>
+                    </div>
+                    <div class="profile-info" style="margin-top:2rem;">
+                        Date d'inscription :
+                        <strong id="displayDate">Chargement...</strong>
+                    </div>
+                </div>
+
+                <!-- Achat de crédits -->
+                <div class="profile-panel">
+                    <h2>Portefeuille</h2>
+                    <br>
+                    <div class="credit-box">
+                        <p style="color:var(--text-muted); font-weight:600;">CRÉDITS DISPONIBLES</p>
+                        <div class="credit-number" id="displayCredits">0</div>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">1 Crédit = 1 Génération de paroles</p>
+                        
+                        <button class="btn-pay" id="buyCreditsBtn">
+                            <i class="fas fa-shopping-cart"></i> Acheter 1 Crédit (500 FCFA)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // TES CLÉS SONT DÉJÀ INTÉGRÉES ICI !
+        const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
+        const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
+        window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            let currentUserId = null;
+
+            // Vérification de connexion
+            const { data: { session }, error } = await window.supabaseClient.auth.getSession();
+            
+            if (error || !session) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            currentUserId = session.user.id;
+            
+            // Affichage Email
+            document.getElementById('userEmail').textContent = session.user.email;
+            document.getElementById('displayEmail').textContent = session.user.email;
+
+            // Affichage Date d'inscription
+            const dateObj = new Date(session.user.created_at);
+            document.getElementById('displayDate').textContent = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+            // Récupérer les crédits
+            const fetchCredits = async () => {
+                const { data: profile } = await window.supabaseClient
+                    .from('profiles')
+                    .select('credits')
+                    .eq('id', currentUserId)
+                    .single();
+                
+                if (profile) {
+                    document.getElementById('creditCount').textContent = profile.credits;
+                    document.getElementById('displayCredits').textContent = profile.credits;
+                }
+            };
+            await fetchCredits();
+
+            // Bouton de paiement (FedaPay viendra ici)
+            document.getElementById('buyCreditsBtn').addEventListener('click', () => {
+                alert("L'intégration de FedaPay est en cours de configuration !");
+            });
+
+            // Déconnexion
+            document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                await window.supabaseClient.auth.signOut();
+                window.location.href = '/login.html';
+            });
+        });
+    </script>
+</body>
+</html>
