@@ -7,7 +7,6 @@
     
     <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="/supabase-client.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -188,6 +187,10 @@
     </div>
 
     <script>
+        const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
+        const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
+        window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('loginForm');
             const submitBtn = document.getElementById('submitBtn');
@@ -199,13 +202,11 @@
                 errorBox.style.display = 'block';
             }
 
-            // CONNEXION GOOGLE
             googleBtn.addEventListener('click', async () => {
                 try {
                     const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
                         provider: 'google',
                         options: {
-                            // Redirige vers le studio après la connexion Google
                             redirectTo: window.location.origin + '/studio.html'
                         }
                     });
@@ -215,7 +216,6 @@
                 }
             });
 
-            // CONNEXION EMAIL CLASSIQUE
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
