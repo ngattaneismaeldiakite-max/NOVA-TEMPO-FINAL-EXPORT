@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Créations - Nova Tempo</title>
+    
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #FF3366;
+            --bg-dark: #0A0A0A;
+            --bg-card: #1A1A1A;
+            --text: #FFFFFF;
+            --text-muted: #888888;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--primary), #FF8833);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-bottom: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text);
+            background: rgba(255, 51, 102, 0.1);
+        }
+
+        .nav-links i {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .credits-badge {
+            background: rgba(255, 51, 102, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Créations */
+        h1 {
+            margin-top: 0;
+            font-size: 2rem;
+        }
+
+        .creations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .creation-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .creation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .creation-date {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .creation-badge {
+            background: rgba(255, 51, 102, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .creation-lyrics {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .btn-copy {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .btn-copy:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem;
+            background: var(--bg-card);
+            border-radius: 15px;
+            border: 1px dashed rgba(255,255,255,0.2);
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .loader {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 3rem;
+            color: var(--primary);
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: auto;
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">NOVA TEMPO</div>
+            <ul class="nav-links">
+                <li><a href="/studio.html"><i class="fas fa-music"></i> Studio</a></li>
+                <li><a href="/creations.html" class="active"><i class="fas fa-list"></i> Mes Créations</a></li>
+                <li><a href="/profil.html"><i class="fas fa-user"></i> Mon Profil</a></li>
+                <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h1>Mon Historique</h1>
+                <div class="user-info">
+                    <span id="userEmail" class="text-muted">...</span>
+                    <div class="credits-badge">
+                        <i class="fas fa-coins"></i> <span id="creditCount">--</span> crédits
+                    </div>
+                </div>
+            </header>
+
+            <div id="loader" class="loader">
+                <i class="fas fa-circle-notch fa-spin fa-2x"></i>
+                <p style="margin-top: 1rem;">Chargement de vos chansons...</p>
+            </div>
+
+            <div id="creationsGrid" class="creations-grid" style="display: none;">
+                <!-- Les cartes seront injectées ici par JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // TES CLÉS SONT DÉJÀ INTÉGRÉES ICI !
+        const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
+        const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
+        window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            let currentUserId = null;
+
+            // Vérification de connexion
+            const { data: { session }, error } = await window.supabaseClient.auth.getSession();
+            
+            if (error || !session) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            currentUserId = session.user.id;
+            document.getElementById('userEmail').textContent = session.user.email;
+
+            // Récupérer les crédits
+            const fetchCredits = async () => {
+                const { data: profile } = await window.supabaseClient
+                    .from('profiles')
+                    .select('credits')
+                    .eq('id', currentUserId)
+                    .single();
+                
+                if (profile) {
+                    document.getElementById('creditCount').textContent = profile.credits;
+                } else {
+                    document.getElementById('creditCount').textContent = '0';
+                }
+            };
+            await fetchCredits();
+
+            // Récupérer les créations
+            const fetchCreations = async () => {
+                const grid = document.getElementById('creationsGrid');
+                const loader = document.getElementById('loader');
+
+                const { data: creations, error: fetchError } = await window.supabaseClient
+                    .from('creations')
+                    .select('*')
+                    .eq('user_id', currentUserId)
+                    .order('created_at', { ascending: false });
+
+                loader.style.display = 'none';
+                grid.style.display = 'grid';
+
+                if (fetchError) {
+                    grid.innerHTML = `<div class="empty-state">Erreur de chargement.</div>`;
+                    return;
+                }
+
+                if (!creations || creations.length === 0) {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-folder-open"></i>
+                            <h3>Aucune création</h3>
+                            <p>Vous n'avez pas encore généré de chanson.</p>
+                            <br>
+                            <a href="/studio.html" style="color:var(--primary); text-decoration:none; font-weight:bold;">Créer ma première chanson</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                creations.forEach(c => {
+                    // Formater la date
+                    const dateObj = new Date(c.created_at);
+                    const dateStr = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+                    
+                    // Formater l'occasion
+                    const occasionFormat = c.occasion.charAt(0).toUpperCase() + c.occasion.slice(1);
+
+                    const card = document.createElement('div');
+                    card.className = 'creation-card';
+                    card.innerHTML = `
+                        <div class="creation-header">
+                            <span class="creation-badge">${occasionFormat}</span>
+                            <span class="creation-date">${dateStr}</span>
+                        </div>
+                        <div class="creation-lyrics">${c.lyrics}</div>
+                        <button class="btn-copy" onclick="copyToClipboard(this)">
+                            <i class="fas fa-copy"></i> Copier le texte
+                        </button>
+                    `;
+                    grid.appendChild(card);
+                });
+            };
+
+            await fetchCreations();
+
+            // Déconnexion
+            document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                await window.supabaseClient.auth.signOut();
+                window.location.href = '/login.html';
+            });
+        });
+
+        // Fonction pour copier le texte
+        function copyToClipboard(button) {
+            const lyricsDiv = button.previousElementSibling;
+            const textToCopy = lyricsDiv.innerText;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copié !';
+                button.style.color = '#FF3366';
+                button.style.borderColor = '#FF3366';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.color = 'white';
+                    button.style.borderColor = 'rgba(255,255,255,0.1)';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
