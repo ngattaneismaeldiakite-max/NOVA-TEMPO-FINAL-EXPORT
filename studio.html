@@ -492,14 +492,11 @@
     </div>
 
     <script>
-        // --- INITIALISATION DE SUPABASE ICI ---
-        const supabaseUrl = 'URL_SUPABASE_ICI';
-        const supabaseKey = 'CLE_ANON_ICI';
+        const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
+        const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-        // ---------------------------------------
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // VÉRIFICATION DE L'AUTHENTIFICATION
             const { data: { session }, error } = await window.supabaseClient.auth.getSession();
             
             if (error || !session) {
@@ -510,7 +507,6 @@
             document.getElementById('userEmail').textContent = session.user.email;
             document.getElementById('creditCount').textContent = '3';
 
-            // GESTION DU DÉROULANT DES OCCASIONS
             const occasionSelect = document.getElementById('occasion');
             const fieldsMap = {
                 amour: 'fields-amour',
@@ -544,7 +540,6 @@
                 }
             });
 
-            // SOUMISSION DU FORMULAIRE ET APPEL API
             const form = document.getElementById('generateForm');
             const submitBtn = document.getElementById('submitBtn');
             const errorBox = document.getElementById('errorBox');
@@ -561,12 +556,10 @@
                     return;
                 }
 
-                // Préparer les données pour l'API
                 const payload = {
                     occasion: occasion
                 };
 
-                // Ajouter les champs spécifiques selon l'occasion
                 if (occasion === 'amour') {
                     payload['amour-prenom'] = document.getElementById('amour-prenom').value;
                     payload['amour-surnom'] = document.getElementById('amour-surnom').value;
@@ -646,7 +639,6 @@
                 }
             });
 
-            // Gérer la déconnexion
             document.getElementById('logoutBtn').addEventListener('click', async (e) => {
                 e.preventDefault();
                 await window.supabaseClient.auth.signOut();
