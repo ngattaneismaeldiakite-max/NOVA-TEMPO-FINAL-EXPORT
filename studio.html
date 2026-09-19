@@ -7,19 +7,19 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
-            --nova-violet: #7B5193;
-            --nova-corail: #E86F5A;
-            --nova-orange: #F18A40;
-            --nova-jaune: #F2A841;
-            --nova-blanc-casse: #F7F4EE;
-            --nova-noir: #111216;
+            --bg-dark: #06060A;
+            --card-bg: #111118;
+            --text-light: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --neon-lime: #D4FF00;
+            --neon-pink: #FF0066;
+            --neon-blue: #0044FF;
             --radius-sm: 12px;
-            --radius-md: 18px;
+            --radius-md: 16px;
             --radius-lg: 24px;
         }
 
@@ -27,97 +27,95 @@
             margin: 0;
             padding: 0;
             font-family: 'Satoshi', sans-serif;
-            background-color: var(--nova-blanc-casse);
-            color: var(--nova-noir);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             min-height: 100vh;
-        }
-
-        .serif-italic {
-            font-family: 'Instrument Serif', serif;
-            font-style: italic;
-            font-weight: normal;
-            color: var(--nova-corail);
-            font-size: 1.15em;
         }
 
         .dashboard-container { display: flex; min-height: 100vh; }
 
         /* Sidebar */
-        .sidebar { width: 260px; background-color: var(--nova-blanc-casse); padding: 2.5rem 2rem; border-right: 1px solid rgba(17, 18, 22, 0.05); }
-        .logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 3rem; color: var(--nova-noir); letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.2rem; }
-        .logo-burst { color: var(--nova-corail); font-size: 1.2rem; margin-top: -10px; }
+        .sidebar { width: 260px; background-color: var(--bg-dark); padding: 2.5rem 2rem; border-right: 1px solid rgba(255, 255, 255, 0.05); }
+        .logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 3rem; color: var(--text-light); letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; }
+        .logo i { color: var(--neon-lime); }
+        
         .nav-links { list-style: none; padding: 0; }
         .nav-links li { margin-bottom: 0.5rem; }
-        .nav-links a { color: rgba(17, 18, 22, 0.6); text-decoration: none; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; border-radius: var(--radius-sm); transition: all 0.2s ease; }
-        .nav-links a:hover { color: var(--nova-noir); background: rgba(17, 18, 22, 0.03); }
-        .nav-links a.active { color: var(--nova-corail); background: rgba(232, 111, 90, 0.08); }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; border-radius: var(--radius-sm); transition: all 0.2s ease; }
+        .nav-links a:hover { color: var(--text-light); background: rgba(255, 255, 255, 0.03); }
+        .nav-links a.active { color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); border: 1px solid rgba(212, 255, 0, 0.1); }
 
         /* Main Content */
         .main-content { flex: 1; padding: 3rem 4rem; max-width: 1200px; margin: 0 auto; }
         .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
-        h1 { margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; }
-        .header-subtitle { margin-top: 0.5rem; color: rgba(17, 18, 22, 0.6); font-size: 1.1rem; font-weight: 500; }
+        h1 { margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; text-transform: uppercase; }
+        .header-subtitle { margin-top: 0.5rem; color: var(--text-muted); font-size: 1.1rem; font-weight: 500; }
         
         .user-info { display: flex; align-items: center; gap: 1.5rem; }
-        .user-email { font-size: 0.9rem; font-weight: 500; color: rgba(17, 18, 22, 0.6); }
-        .credits-badge { background: #FFFFFF; padding: 0.6rem 1.2rem; border-radius: 50px; border: 1px solid rgba(17, 18, 22, 0.1); color: var(--nova-noir); font-weight: 700; font-size: 0.9rem; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .user-email { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+        .credits-badge { background: rgba(255,255,255,0.05); padding: 0.6rem 1.2rem; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-light); font-weight: 700; font-size: 0.9rem; }
+        .credits-badge i { color: var(--neon-lime); }
 
         /* Studio Area */
         .studio-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; }
-        .creation-panel, .preview-panel { background: #FFFFFF; padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid rgba(17,18,22,0.04); box-shadow: 0 8px 30px rgba(0,0,0,0.03); }
-        h2 { margin-top: 0; margin-bottom: 2rem; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+        .creation-panel, .preview-panel { background: var(--card-bg); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        h2 { margin-top: 0; margin-bottom: 2rem; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
 
-        /* Occasions (Étape 1) */
+        /* Occasions */
         .occasion-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
-        .occasion-card { background: #FFFFFF; border: 1px solid rgba(17,18,22,0.1); border-radius: var(--radius-md); padding: 1.5rem 0.5rem; text-align: center; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
-        .occasion-card i { font-size: 1.8rem; color: rgba(17,18,22,0.4); transition: all 0.2s ease; }
-        .occasion-card span { font-weight: 600; font-size: 0.9rem; color: rgba(17,18,22,0.6); transition: all 0.2s ease; }
-        .occasion-card:hover { border-color: rgba(17,18,22,0.2); transform: translateY(-2px); }
-        .occasion-card.active { background: rgba(232, 111, 90, 0.04); border-color: var(--nova-corail); box-shadow: 0 4px 15px rgba(232, 111, 90, 0.1); }
-        .occasion-card.active i, .occasion-card.active span { color: var(--nova-corail); }
+        .occasion-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-md); padding: 1.5rem 0.5rem; text-align: center; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
+        .occasion-card i { font-size: 1.8rem; color: var(--text-muted); transition: all 0.2s ease; }
+        .occasion-card span { font-weight: 600; font-size: 0.9rem; color: var(--text-muted); transition: all 0.2s ease; }
+        .occasion-card:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+        .occasion-card.active { background: rgba(212, 255, 0, 0.05); border-color: var(--neon-lime); box-shadow: 0 4px 15px rgba(212, 255, 0, 0.1); }
+        .occasion-card.active i, .occasion-card.active span { color: var(--neon-lime); }
 
-        /* Styles musicaux (Étape 2) */
+        /* Styles musicaux */
         .style-grid { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2.5rem; }
-        .style-pill { background: #FFFFFF; border: 1px solid rgba(17,18,22,0.1); padding: 0.6rem 1.2rem; border-radius: 50px; font-weight: 600; font-size: 0.9rem; color: rgba(17,18,22,0.6); cursor: pointer; transition: all 0.2s ease; }
-        .style-pill:hover { border-color: rgba(17,18,22,0.3); color: var(--nova-noir); }
-        .style-pill.active { background: rgba(232, 111, 90, 0.08); border-color: var(--nova-corail); color: var(--nova-corail); }
+        .style-pill { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); padding: 0.6rem 1.2rem; border-radius: 50px; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); cursor: pointer; transition: all 0.2s ease; }
+        .style-pill:hover { border-color: rgba(255,255,255,0.3); color: var(--text-light); }
+        .style-pill.active { background: rgba(212, 255, 0, 0.05); border-color: var(--neon-lime); color: var(--neon-lime); }
 
-        /* Inputs (Étape 3) */
+        /* Inputs */
         .form-group { margin-bottom: 1.5rem; }
-        label { display: block; margin-bottom: 0.6rem; font-weight: 600; font-size: 0.95rem; color: var(--nova-noir); }
-        .label-hint { color: rgba(17,18,22,0.5); font-weight: 400; font-size: 0.85rem; margin-left: 0.5rem; }
-        input[type="text"] { width: 100%; padding: 1rem 1.2rem; background: var(--nova-blanc-casse); border: 1px solid rgba(17,18,22,0.08); border-radius: var(--radius-sm); color: var(--nova-noir); font-family: 'Satoshi', sans-serif; font-size: 1rem; box-sizing: border-box; transition: all 0.2s ease; }
-        input[type="text"]:focus { outline: none; border-color: var(--nova-corail); background: #FFFFFF; box-shadow: 0 0 0 4px rgba(232, 111, 90, 0.1); }
-        input::placeholder { color: rgba(17,18,22,0.3); }
+        label { display: block; margin-bottom: 0.6rem; font-weight: 600; font-size: 0.95rem; color: var(--text-light); }
+        .label-hint { color: var(--text-muted); font-weight: 400; font-size: 0.85rem; margin-left: 0.5rem; }
+        
+        input[type="text"] { width: 100%; padding: 1rem 1.2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-sm); color: var(--text-light); font-family: 'Satoshi', sans-serif; font-size: 1rem; box-sizing: border-box; transition: all 0.2s ease; }
+        input[type="text"]:focus { outline: none; border-color: var(--neon-lime); background: rgba(255,255,255,0.05); box-shadow: 0 0 0 4px rgba(212, 255, 0, 0.1); }
+        input::placeholder { color: rgba(255,255,255,0.2); }
 
         .occasion-fields { animation: fadeIn 0.4s ease; margin-bottom: 2rem; }
-        .occasion-title { color: var(--nova-corail); font-family: 'Instrument Serif', serif; font-size: 1.8rem; font-style: italic; margin-bottom: 1.5rem; display: block; border-bottom: 1px solid rgba(17,18,22,0.05); padding-bottom: 0.5rem; }
+        .occasion-title { color: var(--neon-lime); font-size: 1.2rem; font-weight: 800; margin-bottom: 1.5rem; display: block; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; text-transform: uppercase; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
         .hidden { display: none; }
 
-        .btn-generate { width: 100%; padding: 1.2rem; background: linear-gradient(90deg, var(--nova-violet), var(--nova-corail), var(--nova-orange), var(--nova-jaune)); background-size: 200% 200%; border: none; border-radius: var(--radius-md); color: white; font-family: 'Satoshi', sans-serif; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 0.8rem; box-shadow: 0 4px 15px rgba(232, 111, 90, 0.2); }
-        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(232, 111, 90, 0.3); background-position: 100% 0; }
+        .btn-generate { width: 100%; padding: 1.2rem; background: var(--neon-lime); border: none; border-radius: var(--radius-md); color: var(--bg-dark); font-family: 'Satoshi', sans-serif; font-weight: 900; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 0.8rem; box-shadow: 0 4px 15px rgba(212, 255, 0, 0.2); text-transform: uppercase; }
+        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 255, 0, 0.4); }
         .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-        .lyrics-display { background: var(--nova-blanc-casse); padding: 2rem; border-radius: var(--radius-sm); min-height: 250px; white-space: pre-wrap; font-family: 'Satoshi', sans-serif; font-size: 1rem; line-height: 1.7; margin-top: 1rem; border: 1px solid rgba(17,18,22,0.05); color: var(--nova-noir); }
-        .error-message { color: var(--nova-corail); background: rgba(232, 111, 90, 0.1); padding: 1rem 1.5rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-weight: 500; display: none; }
+        .lyrics-display { background: rgba(255,255,255,0.02); padding: 2rem; border-radius: var(--radius-sm); min-height: 250px; white-space: pre-wrap; font-family: 'Satoshi', sans-serif; font-size: 1rem; line-height: 1.7; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.05); color: var(--text-light); }
+        .error-message { color: #FF0066; background: rgba(255, 0, 102, 0.1); padding: 1rem 1.5rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-weight: 600; display: none; border: 1px solid rgba(255, 0, 102, 0.2); }
 
-        /* Loader Waveform */
+        /* Loader Waveform Neon */
         .loader { display: none; margin: 4rem auto; text-align: center; }
         .loader.active { display: block; }
         .waveform { display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 1.5rem; height: 50px; }
-        .bar { width: 6px; border-radius: 50px; background: var(--nova-corail); animation: wave 1s ease-in-out infinite; }
-        .bar1 { background: var(--nova-violet); height: 20px; animation-delay: 0.0s; }
-        .bar2 { background: var(--nova-corail); height: 40px; animation-delay: 0.1s; }
-        .bar3 { background: var(--nova-orange); height: 50px; animation-delay: 0.2s; }
-        .bar4 { background: var(--nova-corail); height: 35px; animation-delay: 0.3s; }
-        .bar5 { background: var(--nova-jaune);  height: 25px; animation-delay: 0.4s; }
-        @keyframes wave { 0%, 100% { transform: scaleY(0.4); opacity: 0.6; } 50% { transform: scaleY(1.1); opacity: 1; } }
-        .loader-text { font-family: 'Instrument Serif', serif; font-size: 1.6rem; font-style: italic; color: var(--nova-noir); margin: 0; opacity: 0.9; }
+        .bar { width: 6px; border-radius: 50px; animation: wave 1s ease-in-out infinite; }
+        
+        /* Couleurs Neon pour le chargement */
+        .bar1 { background: var(--neon-lime); height: 20px; animation-delay: 0.0s; }
+        .bar2 { background: var(--neon-pink); height: 40px; animation-delay: 0.1s; }
+        .bar3 { background: var(--neon-blue); height: 50px; animation-delay: 0.2s; }
+        .bar4 { background: var(--neon-pink); height: 35px; animation-delay: 0.3s; }
+        .bar5 { background: var(--neon-lime); height: 25px; animation-delay: 0.4s; }
+        
+        @keyframes wave { 0%, 100% { transform: scaleY(0.4); opacity: 0.6; box-shadow: none; } 50% { transform: scaleY(1.1); opacity: 1; box-shadow: 0 0 10px currentColor; } }
+        .loader-text { font-size: 1.2rem; font-weight: 700; color: var(--text-light); margin: 0; opacity: 0.9; }
 
         @media (max-width: 900px) {
             .dashboard-container { flex-direction: column; }
-            .sidebar { width: auto; border-right: none; border-bottom: 1px solid rgba(17,18,22,0.05); padding: 1.5rem; }
+            .sidebar { width: auto; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; }
             .main-content { padding: 2rem 1.5rem; }
             .studio-grid { grid-template-columns: 1fr; }
         }
@@ -127,7 +125,7 @@
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="logo">NOVA<span class="logo-burst">✦</span>TEMPO</div>
+            <div class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</div>
             <ul class="nav-links">
                 <li><a href="/studio.html" class="active"><i class="fas fa-music"></i> Studio</a></li>
                 <li><a href="/creations.html"><i class="fas fa-list"></i> Mes Créations</a></li>
@@ -140,13 +138,13 @@
         <main class="main-content">
             <header class="header">
                 <div>
-                    <h1>Créer une <span class="serif-italic">chanson</span></h1>
-                    <div class="header-subtitle">Transformez vos moments en musique.</div>
+                    <h1>Créer une chanson</h1>
+                    <div class="header-subtitle">NovaTempo au service de vos émotions.</div>
                 </div>
                 <div class="user-info">
                     <span id="userEmail" class="user-email">...</span>
                     <div class="credits-badge">
-                        <i class="fas fa-coins" style="color:var(--nova-corail);"></i> <span id="creditCount">--</span> crédits
+                        <i class="fas fa-bolt"></i> <span id="creditCount">--</span> crédits
                     </div>
                 </div>
             </header>
@@ -154,7 +152,7 @@
             <div class="studio-grid">
                 <!-- Panneau de création -->
                 <div class="creation-panel">
-                    <h2>Votre histoire. <span class="serif-italic">Notre musique.</span></h2>
+                    <h2>VOTRE HISTOIRE.</h2>
                     
                     <div id="errorBox" class="error-message"></div>
 
@@ -162,7 +160,7 @@
                         
                         <!-- Étape 1 : Occasion -->
                         <div class="form-group">
-                            <label style="margin-bottom: 1rem;">1. Choisissez l'occasion *</label>
+                            <label style="margin-bottom: 1rem; color:var(--neon-lime);">1. Choisissez l'occasion *</label>
                             <div class="occasion-grid" id="occasionCards">
                                 <div class="occasion-card" data-value="amour"><i class="fas fa-heart"></i><span>Amour</span></div>
                                 <div class="occasion-card" data-value="anniversaire"><i class="fas fa-gift"></i><span>Anniversaire</span></div>
@@ -175,7 +173,7 @@
 
                         <!-- Étape 2 : Style -->
                         <div class="form-group">
-                            <label style="margin-bottom: 1rem;">2. Style musical *</label>
+                            <label style="margin-bottom: 1rem; color:var(--neon-lime);">2. Style musical *</label>
                             <div class="style-grid" id="styleCards">
                                 <div class="style-pill" data-value="afrobeats">Afrobeats</div>
                                 <div class="style-pill" data-value="pop">Pop</div>
@@ -188,9 +186,8 @@
                         </div>
 
                         <!-- Étape 3 : Champs dynamiques -->
-                        <!-- CHAMPS : AMOUR -->
                         <div id="fields-amour" class="occasion-fields hidden">
-                            <span class="occasion-title">3. Votre histoire (Amour)</span>
+                            <span class="occasion-title">3. Paramètres (Amour)</span>
                             <div class="form-group"><label>Prénom du destinataire *</label><input type="text" id="amour-prenom" placeholder="Ex: Sophie"></div>
                             <div class="form-group"><label>Surnom <span class="label-hint">Optionnel</span></label><input type="text" id="amour-surnom" placeholder="Ex: Mon ange"></div>
                             <div class="form-group"><label>Une qualité clé *</label><input type="text" id="amour-qualite1" placeholder="Ex: Ta douceur"></div>
@@ -199,9 +196,8 @@
                             <div class="form-group"><label>Un souvenir marquant <span class="label-hint">Optionnel</span></label><input type="text" id="amour-souvenir" placeholder="Ex: Notre voyage à Rome"></div>
                         </div>
 
-                        <!-- CHAMPS : ANNIVERSAIRE -->
                         <div id="fields-anniversaire" class="occasion-fields hidden">
-                            <span class="occasion-title">3. Votre histoire (Anniversaire)</span>
+                            <span class="occasion-title">3. Paramètres (Anniversaire)</span>
                             <div class="form-group"><label>Prénom *</label><input type="text" id="anniv-prenom" placeholder="Ex: Thomas"></div>
                             <div class="form-group"><label>Âge <span class="label-hint">Optionnel</span></label><input type="text" id="anniv-age" placeholder="Ex: 30"></div>
                             <div class="form-group"><label>Qualité principale *</label><input type="text" id="anniv-qualite1" placeholder="Ex: Ta bonne humeur"></div>
@@ -210,9 +206,8 @@
                             <div class="form-group"><label>Message spécial *</label><input type="text" id="anniv-message" placeholder="Ex: Ne change jamais"></div>
                         </div>
 
-                        <!-- CHAMPS : HOMMAGE -->
                         <div id="fields-hommage" class="occasion-fields hidden">
-                            <span class="occasion-title">3. Votre histoire (Hommage)</span>
+                            <span class="occasion-title">3. Paramètres (Hommage)</span>
                             <div class="form-group"><label>Prénom de la personne *</label><input type="text" id="hommage-nom" placeholder="Ex: Papa, Marie..."></div>
                             <div class="form-group"><label>Votre lien <span class="label-hint">Optionnel</span></label><input type="text" id="hommage-lien" placeholder="Ex: Mon père, mon ami d'enfance..."></div>
                             <div class="form-group"><label>Qualité 1 *</label><input type="text" id="hommage-qualite1" placeholder="Ex: Son grand cœur"></div>
@@ -223,9 +218,8 @@
                             <div class="form-group"><label>Qui rend cet hommage ? <span class="label-hint">Optionnel</span></label><input type="text" id="hommage-proches" placeholder="Ex: Tes enfants, toute la famille..."></div>
                         </div>
 
-                        <!-- CHAMPS : PROMOTION -->
                         <div id="fields-promotion" class="occasion-fields hidden">
-                            <span class="occasion-title">3. Votre histoire (Événement)</span>
+                            <span class="occasion-title">3. Paramètres (Événement)</span>
                             <div class="form-group"><label>Nom du produit / événement / entreprise *</label><input type="text" id="pro-nom" placeholder="Ex: Le festival d'été, Ma super app..."></div>
                             <div class="form-group"><label>Type de produit/événement <span class="label-hint">Optionnel</span></label><input type="text" id="pro-type" placeholder="Ex: Un festival de musique..."></div>
                             <div class="form-group"><label>Point fort 1 *</label><input type="text" id="pro-point1" placeholder="Ex: Innovant"></div>
@@ -237,9 +231,8 @@
                             <div class="form-group"><label>Action attendue <span class="label-hint">Optionnel</span></label><input type="text" id="pro-action" placeholder="Ex: Téléchargez l'app, Venez nombreux..."></div>
                         </div>
 
-                        <!-- CHAMPS : ADORATION -->
                         <div id="fields-adoration" class="occasion-fields hidden">
-                            <span class="occasion-title">3. Votre histoire (Adoration)</span>
+                            <span class="occasion-title">3. Paramètres (Adoration)</span>
                             <div class="form-group"><label>Nom de Dieu / Titre *</label><input type="text" id="ado-nom" placeholder="Ex: Jésus, Yahweh"></div>
                             <div class="form-group"><label>Attribut 1 *</label><input type="text" id="ado-attribut1" placeholder="Ex: Puissant"></div>
                             <div class="form-group"><label>Attribut 2 *</label><input type="text" id="ado-attribut2" placeholder="Ex: Saint"></div>
@@ -250,14 +243,14 @@
                         </div>
 
                         <button type="submit" class="btn-generate" id="submitBtn">
-                            Composer l'émotion <i class="fas fa-arrow-right"></i>
+                            Générer la musique <i class="fas fa-bolt"></i>
                         </button>
                     </form>
                 </div>
 
                 <!-- Panneau de résultat -->
                 <div class="preview-panel">
-                    <h2>Résultat <span class="serif-italic">sur mesure</span></h2>
+                    <h2>NOTRE MUSIQUE.</h2>
                     
                     <div id="loader" class="loader">
                         <div class="waveform">
@@ -267,7 +260,7 @@
                             <div class="bar bar4"></div>
                             <div class="bar bar5"></div>
                         </div>
-                        <p class="loader-text">Nova Tempo compose votre émotion <span style="color:var(--nova-corail);">✦</span></p>
+                        <p class="loader-text">NovaTempo génère l'émotion <i class="fas fa-asterisk" style="color:var(--neon-lime);"></i></p>
                     </div>
 
                     <div id="resultDisplay" class="lyrics-display" style="display: none;"></div>
@@ -276,6 +269,7 @@
         </main>
     </div>
 
+    <!-- Le même script JS que précédemment, il ne change pas -->
     <script>
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
@@ -302,53 +296,32 @@
             };
             await fetchCredits();
 
-            // Gestion des Occasions
             const occasionCards = document.querySelectorAll('.occasion-card');
             const hiddenOccasionInput = document.getElementById('occasion');
-            
-            const fieldsMap = {
-                amour: 'fields-amour',
-                anniversaire: 'fields-anniversaire',
-                hommage: 'fields-hommage',
-                promotion: 'fields-promotion',
-                adoration: 'fields-adoration'
-            };
+            const fieldsMap = { amour: 'fields-amour', anniversaire: 'fields-anniversaire', hommage: 'fields-hommage', promotion: 'fields-promotion', adoration: 'fields-adoration' };
 
             occasionCards.forEach(card => {
                 card.addEventListener('click', () => {
                     occasionCards.forEach(c => c.classList.remove('active'));
                     card.classList.add('active');
-                    
                     const selected = card.getAttribute('data-value');
                     hiddenOccasionInput.value = selected;
-
                     Object.values(fieldsMap).forEach(id => {
                         document.getElementById(id).classList.add('hidden');
                         const inputs = document.getElementById(id).querySelectorAll('input');
-                        inputs.forEach(input => {
-                            if (input.previousElementSibling.textContent.includes('*')) {
-                                input.removeAttribute('required');
-                            }
-                        });
+                        inputs.forEach(input => { if (input.previousElementSibling.textContent.includes('*')) input.removeAttribute('required'); });
                     });
-
                     if (fieldsMap[selected]) {
                         const block = document.getElementById(fieldsMap[selected]);
                         block.classList.remove('hidden');
                         const inputs = block.querySelectorAll('input');
-                        inputs.forEach(input => {
-                            if (input.previousElementSibling.textContent.includes('*')) {
-                                input.setAttribute('required', 'true');
-                            }
-                        });
+                        inputs.forEach(input => { if (input.previousElementSibling.textContent.includes('*')) input.setAttribute('required', 'true'); });
                     }
                 });
             });
 
-            // Gestion des Styles musicaux
             const styleCards = document.querySelectorAll('.style-pill');
             const hiddenStyleInput = document.getElementById('musicStyle');
-
             styleCards.forEach(card => {
                 card.addEventListener('click', () => {
                     styleCards.forEach(c => c.classList.remove('active'));
@@ -365,117 +338,45 @@
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                
-                if (currentCredits <= 0) {
-                    showError("Vous n'avez plus de crédits ! Veuillez recharger votre compte pour continuer.");
-                    return;
-                }
-
+                if (currentCredits <= 0) { showError("Vous n'avez plus de crédits ! Rechargez votre compte."); return; }
                 const occasion = hiddenOccasionInput.value;
-                const style = hiddenStyleInput.value; // NOUVEAU : Récupération du style
+                const style = hiddenStyleInput.value;
+                if (!occasion) { showError('Veuillez choisir l\'occasion.'); return; }
+                if (!style) { showError('Veuillez choisir le style.'); return; }
 
-                if (!occasion) { showError('Veuillez cliquer sur une carte pour choisir l\'occasion.'); return; }
-                if (!style) { showError('Veuillez cliquer sur une pastille pour choisir le style musical.'); return; }
-
-                // Ajout du style dans les données envoyées au serveur
                 const payload = { occasion: occasion, style: style };
-
-                if (occasion === 'amour') {
-                    payload['amour-prenom'] = document.getElementById('amour-prenom').value;
-                    payload['amour-surnom'] = document.getElementById('amour-surnom').value;
-                    payload['amour-qualite1'] = document.getElementById('amour-qualite1').value;
-                    payload['amour-qualite2'] = document.getElementById('amour-qualite2').value;
-                    payload['amour-qualite3'] = document.getElementById('amour-qualite3').value;
-                    payload['amour-souvenir'] = document.getElementById('amour-souvenir').value;
-                } else if (occasion === 'anniversaire') {
-                    payload['anniv-prenom'] = document.getElementById('anniv-prenom').value;
-                    payload['anniv-age'] = document.getElementById('anniv-age').value;
-                    payload['anniv-qualite1'] = document.getElementById('anniv-qualite1').value;
-                    payload['anniv-qualite2'] = document.getElementById('anniv-qualite2').value;
-                    payload['anniv-souvenir'] = document.getElementById('anniv-souvenir').value;
-                    payload['anniv-message'] = document.getElementById('anniv-message').value;
-                } else if (occasion === 'hommage') {
-                    payload['hommage-nom'] = document.getElementById('hommage-nom').value;
-                    payload['hommage-lien'] = document.getElementById('hommage-lien').value;
-                    payload['hommage-qualite1'] = document.getElementById('hommage-qualite1').value;
-                    payload['hommage-qualite2'] = document.getElementById('hommage-qualite2').value;
-                    payload['hommage-qualite3'] = document.getElementById('hommage-qualite3').value;
-                    payload['hommage-souvenir'] = document.getElementById('hommage-souvenir').value;
-                    payload['hommage-valeur'] = document.getElementById('hommage-valeur').value;
-                    payload['hommage-proches'] = document.getElementById('hommage-proches').value;
-                } else if (occasion === 'promotion') {
-                    payload['pro-nom'] = document.getElementById('pro-nom').value;
-                    payload['pro-type'] = document.getElementById('pro-type').value;
-                    payload['pro-point1'] = document.getElementById('pro-point1').value;
-                    payload['pro-point2'] = document.getElementById('pro-point2').value;
-                    payload['pro-point3'] = document.getElementById('pro-point3').value;
-                    payload['pro-lieu'] = document.getElementById('pro-lieu').value;
-                    payload['pro-date'] = document.getElementById('pro-date').value;
-                    payload['pro-public'] = document.getElementById('pro-public').value;
-                    payload['pro-action'] = document.getElementById('pro-action').value;
-                } else if (occasion === 'adoration') {
-                    payload['ado-nom'] = document.getElementById('ado-nom').value;
-                    payload['ado-attribut1'] = document.getElementById('ado-attribut1').value;
-                    payload['ado-attribut2'] = document.getElementById('ado-attribut2').value;
-                    payload['ado-attribut3'] = document.getElementById('ado-attribut3').value;
-                    payload['ado-prenom'] = document.getElementById('ado-prenom').value;
-                    payload['ado-situation'] = document.getElementById('ado-situation').value;
-                    payload['ado-verset'] = document.getElementById('ado-verset').value;
-                }
+                if (occasion === 'amour') { payload['amour-prenom'] = document.getElementById('amour-prenom').value; payload['amour-surnom'] = document.getElementById('amour-surnom').value; payload['amour-qualite1'] = document.getElementById('amour-qualite1').value; payload['amour-qualite2'] = document.getElementById('amour-qualite2').value; payload['amour-qualite3'] = document.getElementById('amour-qualite3').value; payload['amour-souvenir'] = document.getElementById('amour-souvenir').value; }
+                else if (occasion === 'anniversaire') { payload['anniv-prenom'] = document.getElementById('anniv-prenom').value; payload['anniv-age'] = document.getElementById('anniv-age').value; payload['anniv-qualite1'] = document.getElementById('anniv-qualite1').value; payload['anniv-qualite2'] = document.getElementById('anniv-qualite2').value; payload['anniv-souvenir'] = document.getElementById('anniv-souvenir').value; payload['anniv-message'] = document.getElementById('anniv-message').value; }
+                else if (occasion === 'hommage') { payload['hommage-nom'] = document.getElementById('hommage-nom').value; payload['hommage-lien'] = document.getElementById('hommage-lien').value; payload['hommage-qualite1'] = document.getElementById('hommage-qualite1').value; payload['hommage-qualite2'] = document.getElementById('hommage-qualite2').value; payload['hommage-qualite3'] = document.getElementById('hommage-qualite3').value; payload['hommage-souvenir'] = document.getElementById('hommage-souvenir').value; payload['hommage-valeur'] = document.getElementById('hommage-valeur').value; payload['hommage-proches'] = document.getElementById('hommage-proches').value; }
+                else if (occasion === 'promotion') { payload['pro-nom'] = document.getElementById('pro-nom').value; payload['pro-type'] = document.getElementById('pro-type').value; payload['pro-point1'] = document.getElementById('pro-point1').value; payload['pro-point2'] = document.getElementById('pro-point2').value; payload['pro-point3'] = document.getElementById('pro-point3').value; payload['pro-lieu'] = document.getElementById('pro-lieu').value; payload['pro-date'] = document.getElementById('pro-date').value; payload['pro-public'] = document.getElementById('pro-public').value; payload['pro-action'] = document.getElementById('pro-action').value; }
+                else if (occasion === 'adoration') { payload['ado-nom'] = document.getElementById('ado-nom').value; payload['ado-attribut1'] = document.getElementById('ado-attribut1').value; payload['ado-attribut2'] = document.getElementById('ado-attribut2').value; payload['ado-attribut3'] = document.getElementById('ado-attribut3').value; payload['ado-prenom'] = document.getElementById('ado-prenom').value; payload['ado-situation'] = document.getElementById('ado-situation').value; payload['ado-verset'] = document.getElementById('ado-verset').value; }
 
                 try {
-                    submitBtn.disabled = true;
-                    errorBox.style.display = 'none';
-                    resultDisplay.style.display = 'none';
-                    loader.classList.add('active');
-
-                    const response = await fetch('/api/songs/generate-lyrics', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
+                    submitBtn.disabled = true; errorBox.style.display = 'none'; resultDisplay.style.display = 'none'; loader.classList.add('active');
+                    const response = await fetch('/api/songs/generate-lyrics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                     if (!response.ok) throw new Error('Erreur réseau');
-
                     const data = await response.json();
                     if (data.error) throw new Error(data.error);
 
-                    // Optionnel : On peut forcer l'affichage du style choisi au tout début des paroles
                     const formattedStyleName = style.charAt(0).toUpperCase() + style.slice(1);
                     const finalLyrics = "[Style musical : " + formattedStyleName + "]\n\n" + data.lyrics;
 
-                    await window.supabaseClient.from('creations').insert({
-                        user_id: currentUserId,
-                        occasion: occasion,
-                        lyrics: finalLyrics
-                    });
-
+                    await window.supabaseClient.from('creations').insert({ user_id: currentUserId, occasion: occasion, lyrics: finalLyrics });
                     currentCredits -= 1;
                     await window.supabaseClient.from('profiles').update({ credits: currentCredits }).eq('id', currentUserId);
                     document.getElementById('creditCount').textContent = currentCredits;
-
-                    resultDisplay.textContent = finalLyrics;
-                    resultDisplay.style.display = 'block';
-
+                    resultDisplay.textContent = finalLyrics; resultDisplay.style.display = 'block';
                 } catch (error) {
-                    console.error('Erreur:', error);
                     showError('Une erreur est survenue lors de la composition.');
                 } finally {
-                    submitBtn.disabled = false;
-                    loader.classList.remove('active');
+                    submitBtn.disabled = false; loader.classList.remove('active');
                 }
             });
 
             document.getElementById('logoutBtn').addEventListener('click', async (e) => {
-                e.preventDefault();
-                await window.supabaseClient.auth.signOut();
-                window.location.href = '/login.html';
+                e.preventDefault(); await window.supabaseClient.auth.signOut(); window.location.href = '/login.html';
             });
-
-            function showError(message) {
-                errorBox.textContent = message;
-                errorBox.style.display = 'block';
-            }
+            function showError(message) { errorBox.textContent = message; errorBox.style.display = 'block'; }
         });
     </script>
 </body>
