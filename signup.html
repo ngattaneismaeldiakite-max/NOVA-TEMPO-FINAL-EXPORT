@@ -7,7 +7,6 @@
     
     <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="/supabase-client.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -92,7 +91,6 @@
         }
         .divider::before { left: 0; }
         .divider::after { right: 0; }
-        /* ---------------------- */
 
         .form-group {
             margin-bottom: 1.5rem;
@@ -188,6 +186,12 @@
     </div>
 
     <script>
+        // --- INITIALISATION DE SUPABASE ICI ---
+        const supabaseUrl = 'URL_SUPABASE_ICI';
+        const supabaseKey = 'CLE_ANON_ICI';
+        window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+        // ---------------------------------------
+
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('signupForm');
             const submitBtn = document.getElementById('submitBtn');
@@ -232,7 +236,6 @@
                     });
 
                     if (error) throw error;
-
                     window.location.href = '/studio.html';
 
                 } catch (error) {
