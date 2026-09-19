@@ -7,8 +7,6 @@
     
     <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Notre client Supabase -->
-    <script src="/supabase-client.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -472,11 +470,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="prompt">Détails supplémentaires (Optionnel)</label>
-                            <textarea id="prompt" rows="3" placeholder="Ajoutez un détail spécifique..."></textarea>
-                        </div>
-
                         <button type="submit" class="btn-generate" id="submitBtn">
                             <i class="fas fa-magic"></i> Générer les paroles
                         </button>
@@ -490,7 +483,6 @@
                     <div id="loader" class="loader">
                         <div class="spinner"></div>
                         <p>Création des paroles en cours...</p>
-                        <p class="text-muted" style="font-size: 0.9em;">Notre IA compose votre texte sur mesure</p>
                     </div>
 
                     <div id="resultDisplay" class="lyrics-display" style="display: none;"></div>
@@ -500,8 +492,14 @@
     </div>
 
     <script>
+        // --- INITIALISATION DE SUPABASE ICI ---
+        const supabaseUrl = 'URL_SUPABASE_ICI';
+        const supabaseKey = 'CLE_ANON_ICI';
+        window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+        // ---------------------------------------
+
         document.addEventListener('DOMContentLoaded', async () => {
-            // 1. VÉRIFICATION DE L'AUTHENTIFICATION
+            // VÉRIFICATION DE L'AUTHENTIFICATION
             const { data: { session }, error } = await window.supabaseClient.auth.getSession();
             
             if (error || !session) {
@@ -510,11 +508,9 @@
             }
 
             document.getElementById('userEmail').textContent = session.user.email;
-            
-            // Simuler des crédits pour l'instant
             document.getElementById('creditCount').textContent = '3';
 
-            // 2. GESTION DU DÉROULANT DES OCCASIONS
+            // GESTION DU DÉROULANT DES OCCASIONS
             const occasionSelect = document.getElementById('occasion');
             const fieldsMap = {
                 amour: 'fields-amour',
@@ -525,26 +521,20 @@
             };
 
             occasionSelect.addEventListener('change', (e) => {
-                // Cacher tous les champs
                 Object.values(fieldsMap).forEach(id => {
                     document.getElementById(id).classList.add('hidden');
-                    // Désactiver le "required" des champs cachés
                     const inputs = document.getElementById(id).querySelectorAll('input');
                     inputs.forEach(input => {
-                        // On garde en mémoire si c'était requis de base (les champs avec *)
                         if (input.previousElementSibling.textContent.includes('*')) {
                             input.removeAttribute('required');
                         }
                     });
                 });
 
-                // Afficher les champs correspondants
                 const selected = e.target.value;
                 if (fieldsMap[selected]) {
                     const block = document.getElementById(fieldsMap[selected]);
                     block.classList.remove('hidden');
-                    
-                    // Réactiver le "required" uniquement pour les champs étoilés visibles
                     const inputs = block.querySelectorAll('input');
                     inputs.forEach(input => {
                         if (input.previousElementSibling.textContent.includes('*')) {
@@ -554,7 +544,7 @@
                 }
             });
 
-            // 3. SOUMISSION DU FORMULAIRE ET APPEL API
+            // SOUMISSION DU FORMULAIRE ET APPEL API
             const form = document.getElementById('generateForm');
             const submitBtn = document.getElementById('submitBtn');
             const errorBox = document.getElementById('errorBox');
@@ -565,7 +555,6 @@
                 e.preventDefault();
                 
                 const occasion = document.getElementById('occasion').value;
-                const prompt = document.getElementById('prompt').value;
 
                 if (!occasion) {
                     showError('Veuillez sélectionner une occasion.');
@@ -574,7 +563,6 @@
 
                 // Préparer les données pour l'API
                 const payload = {
-                    prompt: prompt,
                     occasion: occasion
                 };
 
@@ -623,13 +611,11 @@
                 }
 
                 try {
-                    // UI : Mode chargement
                     submitBtn.disabled = true;
                     errorBox.style.display = 'none';
                     resultDisplay.style.display = 'none';
                     loader.classList.add('active');
 
-                    // Appel vers notre API Vercel
                     const response = await fetch('/api/songs/generate-lyrics', {
                         method: 'POST',
                         headers: {
@@ -648,7 +634,6 @@
                         throw new Error(data.error);
                     }
 
-                    // Succès : Afficher les paroles
                     resultDisplay.textContent = data.lyrics;
                     resultDisplay.style.display = 'block';
 
@@ -656,7 +641,6 @@
                     console.error('Erreur:', error);
                     showError('Une erreur est survenue lors de la génération.');
                 } finally {
-                    // UI : Remettre le bouton
                     submitBtn.disabled = false;
                     loader.classList.remove('active');
                 }
