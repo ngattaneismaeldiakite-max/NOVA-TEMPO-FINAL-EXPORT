@@ -267,9 +267,9 @@
         <aside class="sidebar">
             <div class="logo">NOVA TEMPO</div>
             <ul class="nav-links">
-                <li><a href="#" class="active"><i class="fas fa-music"></i> Studio</a></li>
-                <li><a href="#"><i class="fas fa-list"></i> Mes Créations</a></li>
-                <li><a href="#"><i class="fas fa-user"></i> Mon Profil</a></li>
+                <li><a href="/studio.html" class="active"><i class="fas fa-music"></i> Studio</a></li>
+                <li><a href="/creations.html"><i class="fas fa-list"></i> Mes Créations</a></li>
+                <li><a href="/profil.html"><i class="fas fa-user"></i> Mon Profil</a></li>
                 <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
             </ul>
         </aside>
@@ -492,11 +492,16 @@
     </div>
 
     <script>
-        const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
-        const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
+        // --- N'OUBLIE PAS DE METTRE TES CLÉS ICI ---
+        const supabaseUrl = 'URL_SUPABASE_ICI';
+        const supabaseKey = 'CLE_ANON_ICI';
         window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+        // -------------------------------------------
 
         document.addEventListener('DOMContentLoaded', async () => {
+            let currentUserId = null;
+            let currentCredits = 0;
+
             const { data: { session }, error } = await window.supabaseClient.auth.getSession();
             
             if (error || !session) {
@@ -504,9 +509,27 @@
                 return;
             }
 
+            currentUserId = session.user.id;
             document.getElementById('userEmail').textContent = session.user.email;
-            document.getElementById('creditCount').textContent = '3';
 
+            // 1. Récupérer le vrai nombre de crédits depuis la base de données
+            const fetchCredits = async () => {
+                const { data: profile } = await window.supabaseClient
+                    .from('profiles')
+                    .select('credits')
+                    .eq('id', currentUserId)
+                    .single();
+                
+                if (profile) {
+                    currentCredits = profile.credits;
+                    document.getElementById('creditCount').textContent = currentCredits;
+                } else {
+                    document.getElementById('creditCount').textContent = '0';
+                }
+            };
+            await fetchCredits();
+
+            // Gestion du formulaire
             const occasionSelect = document.getElementById('occasion');
             const fieldsMap = {
                 amour: 'fields-amour',
@@ -549,6 +572,12 @@
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
+                // 2. Bloquer si pas de crédit
+                if (currentCredits <= 0) {
+                    showError("Vous n'avez plus de crédits ! Veuillez recharger votre compte pour continuer.");
+                    return;
+                }
+
                 const occasion = document.getElementById('occasion').value;
 
                 if (!occasion) {
@@ -556,10 +585,9 @@
                     return;
                 }
 
-                const payload = {
-                    occasion: occasion
-                };
+                const payload = { occasion: occasion };
 
+                // Remplissage des champs...
                 if (occasion === 'amour') {
                     payload['amour-prenom'] = document.getElementById('amour-prenom').value;
                     payload['amour-surnom'] = document.getElementById('amour-surnom').value;
@@ -617,17 +645,25 @@
                         body: JSON.stringify(payload)
                     });
 
-                    if (!response.ok) {
-                        throw new Error('Erreur réseau');
-                    }
+                    if (!response.ok) throw new Error('Erreur réseau');
 
                     const data = await response.json();
-                    
-                    if (data.error) {
-                        throw new Error(data.error);
-                    }
+                    if (data.error) throw new Error(data.error);
 
-                    resultDisplay.textContent = data.lyrics;
+                    const finalLyrics = data.lyrics;
+
+                    // 3. Sauvegarder dans l'historique ET retirer 1 crédit
+                    await window.supabaseClient.from('creations').insert({
+                        user_id: currentUserId,
+                        occasion: occasion,
+                        lyrics: finalLyrics
+                    });
+
+                    currentCredits -= 1;
+                    await window.supabaseClient.from('profiles').update({ credits: currentCredits }).eq('id', currentUserId);
+                    document.getElementById('creditCount').textContent = currentCredits;
+
+                    resultDisplay.textContent = finalLyrics;
                     resultDisplay.style.display = 'block';
 
                 } catch (error) {
