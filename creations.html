@@ -7,127 +7,59 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
-            --nova-violet: #7B5193;
-            --nova-corail: #E86F5A;
-            --nova-orange: #F18A40;
-            --nova-jaune: #F2A841;
-            --nova-blanc-casse: #F7F4EE;
-            --nova-noir: #111216;
-            --radius-sm: 12px;
-            --radius-md: 18px;
+            --bg-dark: #06060A;
+            --card-bg: #111118;
+            --text-light: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --neon-lime: #D4FF00;
+            --radius-md: 16px;
             --radius-lg: 24px;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Satoshi', sans-serif;
-            background-color: var(--nova-blanc-casse);
-            color: var(--nova-noir);
-            min-height: 100vh;
-        }
-
-        .serif-italic {
-            font-family: 'Instrument Serif', serif;
-            font-style: italic;
-            font-weight: normal;
-            color: var(--nova-corail);
-            font-size: 1.15em;
-        }
-
+        body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; }
         .dashboard-container { display: flex; min-height: 100vh; }
 
         /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background-color: var(--nova-blanc-casse);
-            padding: 2.5rem 2rem;
-            border-right: 1px solid rgba(17, 18, 22, 0.05);
-        }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            margin-bottom: 3rem;
-            color: var(--nova-noir);
-            letter-spacing: -0.02em;
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-        }
-        .logo-burst { color: var(--nova-corail); font-size: 1.2rem; margin-top: -10px; }
+        .sidebar { width: 260px; background-color: var(--bg-dark); padding: 2.5rem 2rem; border-right: 1px solid rgba(255, 255, 255, 0.05); }
+        .logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 3rem; color: var(--text-light); letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; }
+        .logo i { color: var(--neon-lime); }
         .nav-links { list-style: none; padding: 0; }
         .nav-links li { margin-bottom: 0.5rem; }
-        .nav-links a {
-            color: rgba(17, 18, 22, 0.6);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.8rem 1rem;
-            border-radius: var(--radius-sm);
-            transition: all 0.2s ease;
-        }
-        .nav-links a:hover { color: var(--nova-noir); background: rgba(17, 18, 22, 0.03); }
-        .nav-links a.active { color: var(--nova-corail); background: rgba(232, 111, 90, 0.08); }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; border-radius: 12px; transition: all 0.2s ease; }
+        .nav-links a:hover { color: var(--text-light); background: rgba(255, 255, 255, 0.03); }
+        .nav-links a.active { color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); border: 1px solid rgba(212, 255, 0, 0.1); }
 
         /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 3rem 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 3rem;
-        }
-        h1 { margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; }
-        .header-subtitle { margin-top: 0.5rem; color: rgba(17, 18, 22, 0.6); font-size: 1.1rem; font-weight: 500; }
+        .main-content { flex: 1; padding: 3rem 4rem; max-width: 1200px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+        h1 { margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; text-transform: uppercase; }
+        .header-subtitle { margin-top: 0.5rem; color: var(--text-muted); font-size: 1.1rem; font-weight: 500; }
         
         .user-info { display: flex; align-items: center; gap: 1.5rem; }
-        .user-email { font-size: 0.9rem; font-weight: 500; color: rgba(17, 18, 22, 0.6); }
-        .credits-badge {
-            background: #FFFFFF;
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            border: 1px solid rgba(17, 18, 22, 0.1);
-            color: var(--nova-noir);
-            font-weight: 700;
-            font-size: 0.9rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
+        .user-email { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+        .credits-badge { background: rgba(255,255,255,0.05); padding: 0.6rem 1.2rem; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-light); font-weight: 700; font-size: 0.9rem; }
+        .credits-badge i { color: var(--neon-lime); }
 
-        /* Créations Grid */
-        .creations-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-        }
+        /* Grid des créations */
+        .creations-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
 
         .creation-card {
-            background: #FFFFFF;
-            padding: 2rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 2.5rem;
             border-radius: var(--radius-lg);
-            border: 1px solid rgba(17,18,22,0.04);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.03);
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             transition: all 0.3s ease;
         }
 
         .creation-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.06);
-            border-color: rgba(17,18,22,0.08);
+            border-color: rgba(212, 255, 0, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 255, 0, 0.08);
         }
 
         .creation-header {
@@ -135,93 +67,59 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .creation-date { color: rgba(17,18,22,0.4); font-size: 0.85rem; font-weight: 600; }
-
-        .creation-badge {
-            background: rgba(232, 111, 90, 0.1);
-            color: var(--nova-corail);
-            padding: 0.4rem 1rem;
+        .occasion-badge {
+            background: rgba(212, 255, 0, 0.1);
+            color: var(--neon-lime);
+            padding: 0.5rem 1rem;
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 800;
-        }
-
-        .creation-lyrics {
-            background: var(--nova-blanc-casse);
-            padding: 1.5rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid rgba(17,18,22,0.05);
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-            color: rgba(17,18,22,0.8);
-        }
-
-        .btn-copy {
-            width: 100%;
-            padding: 1rem;
-            background: #FFFFFF;
-            border: 1px solid rgba(17,18,22,0.1);
-            border-radius: var(--radius-sm);
-            color: var(--nova-noir);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            font-weight: 700;
-            font-family: 'Satoshi', sans-serif;
-            font-size: 0.95rem;
         }
 
-        .btn-copy:hover {
-            border-color: var(--nova-corail);
-            color: var(--nova-corail);
-            background: rgba(232, 111, 90, 0.03);
-        }
+        .creation-date { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+        .lyrics-content { white-space: pre-wrap; font-size: 1.05rem; line-height: 1.7; color: var(--text-light); }
 
         .empty-state {
-            grid-column: 1 / -1;
             text-align: center;
-            padding: 5rem 2rem;
-            background: #FFFFFF;
+            padding: 6rem 2rem;
+            background: var(--card-bg);
             border-radius: var(--radius-lg);
-            border: 2px dashed rgba(17,18,22,0.1);
-            color: rgba(17,18,22,0.5);
+            border: 1px dashed rgba(255,255,255,0.1);
         }
-
-        .empty-state i {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: rgba(17,18,22,0.2);
-        }
-
-        .empty-state a {
-            display: inline-block;
-            margin-top: 1.5rem;
-            color: var(--nova-corail);
+        .empty-state i { font-size: 4rem; color: rgba(255,255,255,0.1); margin-bottom: 1.5rem; }
+        .empty-state h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-light); }
+        .empty-state p { color: var(--text-muted); margin-bottom: 2rem; }
+        
+        .btn-main {
+            background: var(--neon-lime);
+            color: var(--bg-dark);
+            padding: 1rem 2rem;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: 700;
-            padding: 0.8rem 1.5rem;
-            border: 1px solid var(--nova-corail);
-            border-radius: var(--radius-sm);
-            transition: 0.2s;
+            font-weight: 800;
+            display: inline-block;
+            transition: all 0.3s;
+            text-transform: uppercase;
         }
-        .empty-state a:hover { background: rgba(232, 111, 90, 0.05); }
-
-        .loader { text-align: center; grid-column: 1 / -1; padding: 4rem; color: var(--nova-corail); }
+        .btn-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(212, 255, 0, 0.4);
+        }
 
         @media (max-width: 900px) {
             .dashboard-container { flex-direction: column; }
-            .sidebar { width: auto; border-right: none; border-bottom: 1px solid rgba(17,18,22,0.05); padding: 1.5rem; }
+            .sidebar { width: auto; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; }
             .main-content { padding: 2rem 1.5rem; }
+            .creation-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
         }
     </style>
 </head>
@@ -229,7 +127,7 @@
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="logo">NOVA<span class="logo-burst">✦</span>TEMPO</div>
+            <div class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</div>
             <ul class="nav-links">
                 <li><a href="/studio.html"><i class="fas fa-music"></i> Studio</a></li>
                 <li><a href="/creations.html" class="active"><i class="fas fa-list"></i> Mes Créations</a></li>
@@ -242,23 +140,22 @@
         <main class="main-content">
             <header class="header">
                 <div>
-                    <h1>Vos <span class="serif-italic">souvenirs</span></h1>
-                    <div class="header-subtitle">L'historique de vos créations musicales.</div>
+                    <h1>Mes créations</h1>
+                    <div class="header-subtitle">Retrouvez toutes vos histoires musicales.</div>
                 </div>
                 <div class="user-info">
                     <span id="userEmail" class="user-email">...</span>
                     <div class="credits-badge">
-                        <i class="fas fa-coins" style="color:var(--nova-corail);"></i> <span id="creditCount">--</span> crédits
+                        <i class="fas fa-bolt"></i> <span id="creditCount">--</span> crédits
                     </div>
                 </div>
             </header>
 
-            <div id="loader" class="loader">
-                <i class="fas fa-circle-notch fa-spin fa-2x"></i>
-                <p style="margin-top: 1rem; font-family:'Instrument Serif', serif; font-size:1.3rem; font-style:italic;">Ouverture des archives...</p>
+            <div id="loadingMessage" style="color:var(--text-muted); text-align:center; margin-top:2rem;">
+                <i class="fas fa-spinner fa-spin"></i> Chargement de vos créations...
             </div>
 
-            <div id="creationsGrid" class="creations-grid" style="display: none;"></div>
+            <div class="creations-grid" id="creationsGrid"></div>
         </main>
     </div>
 
@@ -268,95 +165,59 @@
         window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
         document.addEventListener('DOMContentLoaded', async () => {
-            let currentUserId = null;
-
             const { data: { session }, error } = await window.supabaseClient.auth.getSession();
             if (error || !session) { window.location.href = '/login.html'; return; }
-
-            currentUserId = session.user.id;
+            
+            const currentUserId = session.user.id;
             document.getElementById('userEmail').textContent = session.user.email;
 
-            const fetchCredits = async () => {
-                const { data: profile } = await window.supabaseClient.from('profiles').select('credits').eq('id', currentUserId).single();
-                if (profile) document.getElementById('creditCount').textContent = profile.credits;
-            };
-            await fetchCredits();
+            // Credits
+            const { data: profile } = await window.supabaseClient.from('profiles').select('credits').eq('id', currentUserId).single();
+            if (profile) document.getElementById('creditCount').textContent = profile.credits;
 
-            const fetchCreations = async () => {
-                const grid = document.getElementById('creationsGrid');
-                const loader = document.getElementById('loader');
+            // Creations
+            const { data: creations, error: fetchError } = await window.supabaseClient
+                .from('creations')
+                .select('*')
+                .eq('user_id', currentUserId)
+                .order('created_at', { ascending: false });
 
-                const { data: creations, error: fetchError } = await window.supabaseClient
-                    .from('creations').select('*').eq('user_id', currentUserId).order('created_at', { ascending: false });
+            const grid = document.getElementById('creationsGrid');
+            const loading = document.getElementById('loadingMessage');
+            loading.style.display = 'none';
 
-                loader.style.display = 'none';
-                grid.style.display = 'grid';
+            if (fetchError || !creations || creations.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-music"></i>
+                        <h3>Aucune création pour le moment</h3>
+                        <p>Votre studio est vide. Il est temps de composer votre première émotion.</p>
+                        <a href="/studio.html" class="btn-main">Créer une chanson</a>
+                    </div>
+                `;
+                return;
+            }
 
-                if (fetchError) {
-                    grid.innerHTML = `<div class="empty-state">Erreur de chargement.</div>`;
-                    return;
-                }
-
-                if (!creations || creations.length === 0) {
-                    grid.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-compact-disc"></i>
-                            <h3 style="font-family:'Instrument Serif', serif; font-size:2rem; font-style:italic; font-weight:normal; color:var(--nova-noir); margin:0;">Le silence complet</h3>
-                            <p>Vous n'avez pas encore généré de chanson.</p>
-                            <a href="/studio.html">Créer ma première musique</a>
-                        </div>
-                    `;
-                    return;
-                }
-
-                creations.forEach(c => {
-                    const dateObj = new Date(c.created_at);
-                    const dateStr = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
-                    const occasionFormat = c.occasion.charAt(0).toUpperCase() + c.occasion.slice(1);
-
-                    const card = document.createElement('div');
-                    card.className = 'creation-card';
-                    card.innerHTML = `
-                        <div class="creation-header">
-                            <span class="creation-badge">${occasionFormat}</span>
-                            <span class="creation-date">${dateStr}</span>
-                        </div>
-                        <div class="creation-lyrics">${c.lyrics}</div>
-                        <button class="btn-copy" onclick="copyToClipboard(this)">
-                            <i class="far fa-copy"></i> Copier les paroles
-                        </button>
-                    `;
-                    grid.appendChild(card);
-                });
-            };
-
-            await fetchCreations();
+            creations.forEach(item => {
+                const dateObj = new Date(item.created_at);
+                const dateStr = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                
+                const card = document.createElement('div');
+                card.className = 'creation-card';
+                card.innerHTML = `
+                    <div class="creation-header">
+                        <div class="occasion-badge"><i class="fas fa-compact-disc"></i> ${item.occasion}</div>
+                        <div class="creation-date">${dateStr}</div>
+                    </div>
+                    <div class="lyrics-content">${item.lyrics}</div>
+                `;
+                grid.appendChild(card);
+            });
 
             document.getElementById('logoutBtn').addEventListener('click', async (e) => {
-                e.preventDefault();
-                await window.supabaseClient.auth.signOut();
-                window.location.href = '/login.html';
+                e.preventDefault(); await window.supabaseClient.auth.signOut(); window.location.href = '/login.html';
             });
         });
-
-        function copyToClipboard(button) {
-            const lyricsDiv = button.previousElementSibling;
-            const textToCopy = lyricsDiv.innerText;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i> Paroles copiées';
-                button.style.borderColor = 'var(--nova-corail)';
-                button.style.color = 'var(--nova-corail)';
-                button.style.background = 'rgba(232, 111, 90, 0.05)';
-                
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.style.borderColor = 'rgba(17,18,22,0.1)';
-                    button.style.color = 'var(--nova-noir)';
-                    button.style.background = '#FFFFFF';
-                }, 2000);
-            });
-        }
     </script>
 </body>
 </html>
