@@ -43,12 +43,7 @@
         .dashboard-container { display: flex; min-height: 100vh; }
 
         /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background-color: var(--nova-blanc-casse);
-            padding: 2.5rem 2rem;
-            border-right: 1px solid rgba(17, 18, 22, 0.05);
-        }
+        .sidebar { width: 260px; background-color: var(--nova-blanc-casse); padding: 2.5rem 2rem; border-right: 1px solid rgba(17, 18, 22, 0.05); }
         .logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 3rem; color: var(--nova-noir); letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.2rem; }
         .logo-burst { color: var(--nova-corail); font-size: 1.2rem; margin-top: -10px; }
         .nav-links { list-style: none; padding: 0; }
@@ -72,7 +67,7 @@
         .creation-panel, .preview-panel { background: #FFFFFF; padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid rgba(17,18,22,0.04); box-shadow: 0 8px 30px rgba(0,0,0,0.03); }
         h2 { margin-top: 0; margin-bottom: 2rem; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
 
-        /* Occasions */
+        /* Occasions (Étape 1) */
         .occasion-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
         .occasion-card { background: #FFFFFF; border: 1px solid rgba(17,18,22,0.1); border-radius: var(--radius-md); padding: 1.5rem 0.5rem; text-align: center; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
         .occasion-card i { font-size: 1.8rem; color: rgba(17,18,22,0.4); transition: all 0.2s ease; }
@@ -81,7 +76,13 @@
         .occasion-card.active { background: rgba(232, 111, 90, 0.04); border-color: var(--nova-corail); box-shadow: 0 4px 15px rgba(232, 111, 90, 0.1); }
         .occasion-card.active i, .occasion-card.active span { color: var(--nova-corail); }
 
-        /* Inputs */
+        /* Styles musicaux (Étape 2) */
+        .style-grid { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2.5rem; }
+        .style-pill { background: #FFFFFF; border: 1px solid rgba(17,18,22,0.1); padding: 0.6rem 1.2rem; border-radius: 50px; font-weight: 600; font-size: 0.9rem; color: rgba(17,18,22,0.6); cursor: pointer; transition: all 0.2s ease; }
+        .style-pill:hover { border-color: rgba(17,18,22,0.3); color: var(--nova-noir); }
+        .style-pill.active { background: rgba(232, 111, 90, 0.08); border-color: var(--nova-corail); color: var(--nova-corail); }
+
+        /* Inputs (Étape 3) */
         .form-group { margin-bottom: 1.5rem; }
         label { display: block; margin-bottom: 0.6rem; font-weight: 600; font-size: 0.95rem; color: var(--nova-noir); }
         .label-hint { color: rgba(17,18,22,0.5); font-weight: 400; font-size: 0.85rem; margin-left: 0.5rem; }
@@ -99,59 +100,20 @@
         .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
         .lyrics-display { background: var(--nova-blanc-casse); padding: 2rem; border-radius: var(--radius-sm); min-height: 250px; white-space: pre-wrap; font-family: 'Satoshi', sans-serif; font-size: 1rem; line-height: 1.7; margin-top: 1rem; border: 1px solid rgba(17,18,22,0.05); color: var(--nova-noir); }
-
         .error-message { color: var(--nova-corail); background: rgba(232, 111, 90, 0.1); padding: 1rem 1.5rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-weight: 500; display: none; }
 
-        /* =========================================
-           NOUVELLE ANIMATION DE CHARGEMENT (WAVEFORM)
-           ========================================= */
-        .loader {
-            display: none;
-            margin: 4rem auto;
-            text-align: center;
-        }
-        
-        .loader.active {
-            display: block;
-        }
-
-        .waveform {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 1.5rem;
-            height: 50px;
-        }
-
-        .bar {
-            width: 6px;
-            border-radius: 50px;
-            background: var(--nova-corail);
-            animation: wave 1s ease-in-out infinite;
-        }
-
-        /* Couleurs du gradient Nova réparties sur la Waveform */
+        /* Loader Waveform */
+        .loader { display: none; margin: 4rem auto; text-align: center; }
+        .loader.active { display: block; }
+        .waveform { display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 1.5rem; height: 50px; }
+        .bar { width: 6px; border-radius: 50px; background: var(--nova-corail); animation: wave 1s ease-in-out infinite; }
         .bar1 { background: var(--nova-violet); height: 20px; animation-delay: 0.0s; }
         .bar2 { background: var(--nova-corail); height: 40px; animation-delay: 0.1s; }
         .bar3 { background: var(--nova-orange); height: 50px; animation-delay: 0.2s; }
         .bar4 { background: var(--nova-corail); height: 35px; animation-delay: 0.3s; }
         .bar5 { background: var(--nova-jaune);  height: 25px; animation-delay: 0.4s; }
-
-        @keyframes wave {
-            0%, 100% { transform: scaleY(0.4); opacity: 0.6; }
-            50% { transform: scaleY(1.1); opacity: 1; }
-        }
-
-        .loader-text {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.6rem;
-            font-style: italic;
-            color: var(--nova-noir);
-            margin: 0;
-            opacity: 0.9;
-        }
-        /* ========================================= */
+        @keyframes wave { 0%, 100% { transform: scaleY(0.4); opacity: 0.6; } 50% { transform: scaleY(1.1); opacity: 1; } }
+        .loader-text { font-family: 'Instrument Serif', serif; font-size: 1.6rem; font-style: italic; color: var(--nova-noir); margin: 0; opacity: 0.9; }
 
         @media (max-width: 900px) {
             .dashboard-container { flex-direction: column; }
@@ -165,9 +127,7 @@
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="logo">
-                NOVA<span class="logo-burst">✦</span>TEMPO
-            </div>
+            <div class="logo">NOVA<span class="logo-burst">✦</span>TEMPO</div>
             <ul class="nav-links">
                 <li><a href="/studio.html" class="active"><i class="fas fa-music"></i> Studio</a></li>
                 <li><a href="/creations.html"><i class="fas fa-list"></i> Mes Créations</a></li>
@@ -200,38 +160,37 @@
 
                     <form id="generateForm">
                         
+                        <!-- Étape 1 : Occasion -->
                         <div class="form-group">
-                            <label style="margin-bottom: 1rem;">1. Choisissez une occasion</label>
-                            
+                            <label style="margin-bottom: 1rem;">1. Choisissez l'occasion *</label>
                             <div class="occasion-grid" id="occasionCards">
-                                <div class="occasion-card" data-value="amour">
-                                    <i class="fas fa-heart"></i>
-                                    <span>Amour</span>
-                                </div>
-                                <div class="occasion-card" data-value="anniversaire">
-                                    <i class="fas fa-gift"></i>
-                                    <span>Anniversaire</span>
-                                </div>
-                                <div class="occasion-card" data-value="hommage">
-                                    <i class="fas fa-dove"></i>
-                                    <span>Hommage</span>
-                                </div>
-                                <div class="occasion-card" data-value="promotion">
-                                    <i class="fas fa-star"></i>
-                                    <span>Événement</span>
-                                </div>
-                                <div class="occasion-card" data-value="adoration">
-                                    <i class="fas fa-hands-praying"></i>
-                                    <span>Adoration</span>
-                                </div>
+                                <div class="occasion-card" data-value="amour"><i class="fas fa-heart"></i><span>Amour</span></div>
+                                <div class="occasion-card" data-value="anniversaire"><i class="fas fa-gift"></i><span>Anniversaire</span></div>
+                                <div class="occasion-card" data-value="hommage"><i class="fas fa-dove"></i><span>Hommage</span></div>
+                                <div class="occasion-card" data-value="promotion"><i class="fas fa-star"></i><span>Événement</span></div>
+                                <div class="occasion-card" data-value="adoration"><i class="fas fa-hands-praying"></i><span>Adoration</span></div>
                             </div>
-                            
                             <input type="hidden" id="occasion" required>
                         </div>
 
+                        <!-- Étape 2 : Style -->
+                        <div class="form-group">
+                            <label style="margin-bottom: 1rem;">2. Style musical *</label>
+                            <div class="style-grid" id="styleCards">
+                                <div class="style-pill" data-value="afrobeats">Afrobeats</div>
+                                <div class="style-pill" data-value="pop">Pop</div>
+                                <div class="style-pill" data-value="rnb">R&B</div>
+                                <div class="style-pill" data-value="acoustique">Acoustique</div>
+                                <div class="style-pill" data-value="gospel">Gospel</div>
+                                <div class="style-pill" data-value="rap">Rap</div>
+                            </div>
+                            <input type="hidden" id="musicStyle" required>
+                        </div>
+
+                        <!-- Étape 3 : Champs dynamiques -->
                         <!-- CHAMPS : AMOUR -->
                         <div id="fields-amour" class="occasion-fields hidden">
-                            <span class="occasion-title">Déclaration d'amour</span>
+                            <span class="occasion-title">3. Votre histoire (Amour)</span>
                             <div class="form-group"><label>Prénom du destinataire *</label><input type="text" id="amour-prenom" placeholder="Ex: Sophie"></div>
                             <div class="form-group"><label>Surnom <span class="label-hint">Optionnel</span></label><input type="text" id="amour-surnom" placeholder="Ex: Mon ange"></div>
                             <div class="form-group"><label>Une qualité clé *</label><input type="text" id="amour-qualite1" placeholder="Ex: Ta douceur"></div>
@@ -242,7 +201,7 @@
 
                         <!-- CHAMPS : ANNIVERSAIRE -->
                         <div id="fields-anniversaire" class="occasion-fields hidden">
-                            <span class="occasion-title">Joyeux Anniversaire</span>
+                            <span class="occasion-title">3. Votre histoire (Anniversaire)</span>
                             <div class="form-group"><label>Prénom *</label><input type="text" id="anniv-prenom" placeholder="Ex: Thomas"></div>
                             <div class="form-group"><label>Âge <span class="label-hint">Optionnel</span></label><input type="text" id="anniv-age" placeholder="Ex: 30"></div>
                             <div class="form-group"><label>Qualité principale *</label><input type="text" id="anniv-qualite1" placeholder="Ex: Ta bonne humeur"></div>
@@ -253,7 +212,7 @@
 
                         <!-- CHAMPS : HOMMAGE -->
                         <div id="fields-hommage" class="occasion-fields hidden">
-                            <span class="occasion-title">Hommage émouvant</span>
+                            <span class="occasion-title">3. Votre histoire (Hommage)</span>
                             <div class="form-group"><label>Prénom de la personne *</label><input type="text" id="hommage-nom" placeholder="Ex: Papa, Marie..."></div>
                             <div class="form-group"><label>Votre lien <span class="label-hint">Optionnel</span></label><input type="text" id="hommage-lien" placeholder="Ex: Mon père, mon ami d'enfance..."></div>
                             <div class="form-group"><label>Qualité 1 *</label><input type="text" id="hommage-qualite1" placeholder="Ex: Son grand cœur"></div>
@@ -266,7 +225,7 @@
 
                         <!-- CHAMPS : PROMOTION -->
                         <div id="fields-promotion" class="occasion-fields hidden">
-                            <span class="occasion-title">Événement & Promotion</span>
+                            <span class="occasion-title">3. Votre histoire (Événement)</span>
                             <div class="form-group"><label>Nom du produit / événement / entreprise *</label><input type="text" id="pro-nom" placeholder="Ex: Le festival d'été, Ma super app..."></div>
                             <div class="form-group"><label>Type de produit/événement <span class="label-hint">Optionnel</span></label><input type="text" id="pro-type" placeholder="Ex: Un festival de musique..."></div>
                             <div class="form-group"><label>Point fort 1 *</label><input type="text" id="pro-point1" placeholder="Ex: Innovant"></div>
@@ -280,7 +239,7 @@
 
                         <!-- CHAMPS : ADORATION -->
                         <div id="fields-adoration" class="occasion-fields hidden">
-                            <span class="occasion-title">Louange & Adoration</span>
+                            <span class="occasion-title">3. Votre histoire (Adoration)</span>
                             <div class="form-group"><label>Nom de Dieu / Titre *</label><input type="text" id="ado-nom" placeholder="Ex: Jésus, Yahweh"></div>
                             <div class="form-group"><label>Attribut 1 *</label><input type="text" id="ado-attribut1" placeholder="Ex: Puissant"></div>
                             <div class="form-group"><label>Attribut 2 *</label><input type="text" id="ado-attribut2" placeholder="Ex: Saint"></div>
@@ -300,7 +259,6 @@
                 <div class="preview-panel">
                     <h2>Résultat <span class="serif-italic">sur mesure</span></h2>
                     
-                    <!-- LE NOUVEAU LOADER WAVEFORM -->
                     <div id="loader" class="loader">
                         <div class="waveform">
                             <div class="bar bar1"></div>
@@ -328,22 +286,13 @@
             let currentCredits = 0;
 
             const { data: { session }, error } = await window.supabaseClient.auth.getSession();
-            
-            if (error || !session) {
-                window.location.href = '/login.html';
-                return;
-            }
+            if (error || !session) { window.location.href = '/login.html'; return; }
 
             currentUserId = session.user.id;
             document.getElementById('userEmail').textContent = session.user.email;
 
             const fetchCredits = async () => {
-                const { data: profile } = await window.supabaseClient
-                    .from('profiles')
-                    .select('credits')
-                    .eq('id', currentUserId)
-                    .single();
-                
+                const { data: profile } = await window.supabaseClient.from('profiles').select('credits').eq('id', currentUserId).single();
                 if (profile) {
                     currentCredits = profile.credits;
                     document.getElementById('creditCount').textContent = currentCredits;
@@ -353,6 +302,7 @@
             };
             await fetchCredits();
 
+            // Gestion des Occasions
             const occasionCards = document.querySelectorAll('.occasion-card');
             const hiddenOccasionInput = document.getElementById('occasion');
             
@@ -395,6 +345,18 @@
                 });
             });
 
+            // Gestion des Styles musicaux
+            const styleCards = document.querySelectorAll('.style-pill');
+            const hiddenStyleInput = document.getElementById('musicStyle');
+
+            styleCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    styleCards.forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    hiddenStyleInput.value = card.getAttribute('data-value');
+                });
+            });
+
             const form = document.getElementById('generateForm');
             const submitBtn = document.getElementById('submitBtn');
             const errorBox = document.getElementById('errorBox');
@@ -410,13 +372,13 @@
                 }
 
                 const occasion = hiddenOccasionInput.value;
+                const style = hiddenStyleInput.value; // NOUVEAU : Récupération du style
 
-                if (!occasion) {
-                    showError('Veuillez cliquer sur une carte pour choisir une occasion.');
-                    return;
-                }
+                if (!occasion) { showError('Veuillez cliquer sur une carte pour choisir l\'occasion.'); return; }
+                if (!style) { showError('Veuillez cliquer sur une pastille pour choisir le style musical.'); return; }
 
-                const payload = { occasion: occasion };
+                // Ajout du style dans les données envoyées au serveur
+                const payload = { occasion: occasion, style: style };
 
                 if (occasion === 'amour') {
                     payload['amour-prenom'] = document.getElementById('amour-prenom').value;
@@ -465,15 +427,11 @@
                     submitBtn.disabled = true;
                     errorBox.style.display = 'none';
                     resultDisplay.style.display = 'none';
-                    
-                    // On affiche le beau loader musical
                     loader.classList.add('active');
 
                     const response = await fetch('/api/songs/generate-lyrics', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
 
@@ -482,7 +440,9 @@
                     const data = await response.json();
                     if (data.error) throw new Error(data.error);
 
-                    const finalLyrics = data.lyrics;
+                    // Optionnel : On peut forcer l'affichage du style choisi au tout début des paroles
+                    const formattedStyleName = style.charAt(0).toUpperCase() + style.slice(1);
+                    const finalLyrics = "[Style musical : " + formattedStyleName + "]\n\n" + data.lyrics;
 
                     await window.supabaseClient.from('creations').insert({
                         user_id: currentUserId,
