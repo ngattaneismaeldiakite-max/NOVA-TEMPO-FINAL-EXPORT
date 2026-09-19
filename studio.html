@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Studio - Nova Tempo</title>
     
-    <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <!-- Typographies NOVA TEMPO (Satoshi & Instrument Serif) -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* DESIGN TOKENS NOVA TEMPO */
         :root {
             --nova-violet: #7B5193;
             --nova-corail: #E86F5A;
@@ -22,7 +18,6 @@
             --nova-jaune: #F2A841;
             --nova-blanc-casse: #F7F4EE;
             --nova-noir: #111216;
-
             --radius-sm: 12px;
             --radius-md: 18px;
             --radius-lg: 24px;
@@ -42,369 +37,127 @@
             font-style: italic;
             font-weight: normal;
             color: var(--nova-corail);
-            font-size: 1.15em; /* Légèrement plus grand pour compenser la hauteur de la police serif */
+            font-size: 1.15em;
         }
 
-        .dashboard-container {
-            display: flex;
-            min-height: 100vh;
-        }
+        .dashboard-container { display: flex; min-height: 100vh; }
 
-        /* Sidebar - Épurée */
+        /* Sidebar */
         .sidebar {
             width: 260px;
             background-color: var(--nova-blanc-casse);
             padding: 2.5rem 2rem;
             border-right: 1px solid rgba(17, 18, 22, 0.05);
         }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            margin-bottom: 3rem;
-            color: var(--nova-noir);
-            letter-spacing: -0.02em;
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-        }
-
-        .logo-burst {
-            color: var(--nova-corail);
-            font-size: 1.2rem;
-            margin-top: -10px;
-        }
-
-        .nav-links {
-            list-style: none;
-            padding: 0;
-        }
-
-        .nav-links li {
-            margin-bottom: 0.5rem;
-        }
-
-        .nav-links a {
-            color: rgba(17, 18, 22, 0.6);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.8rem 1rem;
-            border-radius: var(--radius-sm);
-            transition: all 0.2s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--nova-noir);
-            background: rgba(17, 18, 22, 0.03);
-        }
-
-        .nav-links a.active {
-            color: var(--nova-corail);
-            background: rgba(232, 111, 90, 0.08);
-        }
-
-        .nav-links i {
-            font-size: 1.1rem;
-        }
+        .logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 3rem; color: var(--nova-noir); letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.2rem; }
+        .logo-burst { color: var(--nova-corail); font-size: 1.2rem; margin-top: -10px; }
+        .nav-links { list-style: none; padding: 0; }
+        .nav-links li { margin-bottom: 0.5rem; }
+        .nav-links a { color: rgba(17, 18, 22, 0.6); text-decoration: none; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; border-radius: var(--radius-sm); transition: all 0.2s ease; }
+        .nav-links a:hover { color: var(--nova-noir); background: rgba(17, 18, 22, 0.03); }
+        .nav-links a.active { color: var(--nova-corail); background: rgba(232, 111, 90, 0.08); }
 
         /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 3rem 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 3rem;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            font-weight: 900;
-            letter-spacing: -0.03em;
-        }
-
-        .header-subtitle {
-            margin-top: 0.5rem;
-            color: rgba(17, 18, 22, 0.6);
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .user-email {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: rgba(17, 18, 22, 0.6);
-        }
-
-        .credits-badge {
-            background: #FFFFFF;
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            border: 1px solid rgba(17, 18, 22, 0.1);
-            color: var(--nova-noir);
-            font-weight: 700;
-            font-size: 0.9rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
-
-        /* Studio Area - Surfaces blanches respirantes */
-        .studio-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 3rem;
-        }
-
-        .creation-panel, .preview-panel {
-            background: #FFFFFF;
-            padding: 2.5rem;
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(17,18,22,0.04);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.03);
-        }
-
-        h2 {
-            margin-top: 0;
-            margin-bottom: 2rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
-
-        /* Grille d'Occasions - Style épuré */
-        .occasion-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .occasion-card {
-            background: #FFFFFF;
-            border: 1px solid rgba(17,18,22,0.1);
-            border-radius: var(--radius-md);
-            padding: 1.5rem 0.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .occasion-card i {
-            font-size: 1.8rem;
-            color: rgba(17,18,22,0.4);
-            transition: all 0.2s ease;
-        }
-
-        .occasion-card span {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: rgba(17,18,22,0.6);
-            transition: all 0.2s ease;
-        }
-
-        .occasion-card:hover {
-            border-color: rgba(17,18,22,0.2);
-            transform: translateY(-2px);
-        }
-
-        .occasion-card.active {
-            background: rgba(232, 111, 90, 0.04);
-            border-color: var(--nova-corail);
-            box-shadow: 0 4px 15px rgba(232, 111, 90, 0.1);
-        }
+        .main-content { flex: 1; padding: 3rem 4rem; max-width: 1200px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+        h1 { margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; }
+        .header-subtitle { margin-top: 0.5rem; color: rgba(17, 18, 22, 0.6); font-size: 1.1rem; font-weight: 500; }
         
-        .occasion-card.active i, .occasion-card.active span {
-            color: var(--nova-corail);
-        }
+        .user-info { display: flex; align-items: center; gap: 1.5rem; }
+        .user-email { font-size: 0.9rem; font-weight: 500; color: rgba(17, 18, 22, 0.6); }
+        .credits-badge { background: #FFFFFF; padding: 0.6rem 1.2rem; border-radius: 50px; border: 1px solid rgba(17, 18, 22, 0.1); color: var(--nova-noir); font-weight: 700; font-size: 0.9rem; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
 
-        /* Formulaires */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+        /* Studio Area */
+        .studio-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; }
+        .creation-panel, .preview-panel { background: #FFFFFF; padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid rgba(17,18,22,0.04); box-shadow: 0 8px 30px rgba(0,0,0,0.03); }
+        h2 { margin-top: 0; margin-bottom: 2rem; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
 
-        label {
-            display: block;
-            margin-bottom: 0.6rem;
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--nova-noir);
-        }
+        /* Occasions */
+        .occasion-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+        .occasion-card { background: #FFFFFF; border: 1px solid rgba(17,18,22,0.1); border-radius: var(--radius-md); padding: 1.5rem 0.5rem; text-align: center; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
+        .occasion-card i { font-size: 1.8rem; color: rgba(17,18,22,0.4); transition: all 0.2s ease; }
+        .occasion-card span { font-weight: 600; font-size: 0.9rem; color: rgba(17,18,22,0.6); transition: all 0.2s ease; }
+        .occasion-card:hover { border-color: rgba(17,18,22,0.2); transform: translateY(-2px); }
+        .occasion-card.active { background: rgba(232, 111, 90, 0.04); border-color: var(--nova-corail); box-shadow: 0 4px 15px rgba(232, 111, 90, 0.1); }
+        .occasion-card.active i, .occasion-card.active span { color: var(--nova-corail); }
 
-        .label-hint {
-            color: rgba(17,18,22,0.5);
-            font-weight: 400;
-            font-size: 0.85rem;
-            margin-left: 0.5rem;
-        }
+        /* Inputs */
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.6rem; font-weight: 600; font-size: 0.95rem; color: var(--nova-noir); }
+        .label-hint { color: rgba(17,18,22,0.5); font-weight: 400; font-size: 0.85rem; margin-left: 0.5rem; }
+        input[type="text"] { width: 100%; padding: 1rem 1.2rem; background: var(--nova-blanc-casse); border: 1px solid rgba(17,18,22,0.08); border-radius: var(--radius-sm); color: var(--nova-noir); font-family: 'Satoshi', sans-serif; font-size: 1rem; box-sizing: border-box; transition: all 0.2s ease; }
+        input[type="text"]:focus { outline: none; border-color: var(--nova-corail); background: #FFFFFF; box-shadow: 0 0 0 4px rgba(232, 111, 90, 0.1); }
+        input::placeholder { color: rgba(17,18,22,0.3); }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 1rem 1.2rem;
-            background: var(--nova-blanc-casse);
-            border: 1px solid rgba(17,18,22,0.08);
-            border-radius: var(--radius-sm);
-            color: var(--nova-noir);
-            font-family: 'Satoshi', sans-serif;
-            font-size: 1rem;
-            box-sizing: border-box;
-            transition: all 0.2s ease;
-        }
+        .occasion-fields { animation: fadeIn 0.4s ease; margin-bottom: 2rem; }
+        .occasion-title { color: var(--nova-corail); font-family: 'Instrument Serif', serif; font-size: 1.8rem; font-style: italic; margin-bottom: 1.5rem; display: block; border-bottom: 1px solid rgba(17,18,22,0.05); padding-bottom: 0.5rem; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        .hidden { display: none; }
 
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--nova-corail);
-            background: #FFFFFF;
-            box-shadow: 0 0 0 4px rgba(232, 111, 90, 0.1);
-        }
+        .btn-generate { width: 100%; padding: 1.2rem; background: linear-gradient(90deg, var(--nova-violet), var(--nova-corail), var(--nova-orange), var(--nova-jaune)); background-size: 200% 200%; border: none; border-radius: var(--radius-md); color: white; font-family: 'Satoshi', sans-serif; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 0.8rem; box-shadow: 0 4px 15px rgba(232, 111, 90, 0.2); }
+        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(232, 111, 90, 0.3); background-position: 100% 0; }
+        .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-        input::placeholder {
-            color: rgba(17,18,22,0.3);
-        }
+        .lyrics-display { background: var(--nova-blanc-casse); padding: 2rem; border-radius: var(--radius-sm); min-height: 250px; white-space: pre-wrap; font-family: 'Satoshi', sans-serif; font-size: 1rem; line-height: 1.7; margin-top: 1rem; border: 1px solid rgba(17,18,22,0.05); color: var(--nova-noir); }
 
-        .occasion-fields {
-            animation: fadeIn 0.4s ease;
-            margin-bottom: 2rem;
-        }
+        .error-message { color: var(--nova-corail); background: rgba(232, 111, 90, 0.1); padding: 1rem 1.5rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-weight: 500; display: none; }
 
-        .occasion-title {
-            color: var(--nova-corail);
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.8rem;
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            display: block;
-            border-bottom: 1px solid rgba(17,18,22,0.05);
-            padding-bottom: 0.5rem;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Bouton avec le Gradient Signature NOVA */
-        .btn-generate {
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(90deg, var(--nova-violet), var(--nova-corail), var(--nova-orange), var(--nova-jaune));
-            background-size: 200% 200%;
-            border: none;
-            border-radius: var(--radius-md);
-            color: white;
-            font-family: 'Satoshi', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.8rem;
-            box-shadow: 0 4px 15px rgba(232, 111, 90, 0.2);
-        }
-
-        .btn-generate:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(232, 111, 90, 0.3);
-            background-position: 100% 0;
-        }
-        
-        .btn-generate:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Style spécifique pour les paroles */
-        .lyrics-display {
-            background: var(--nova-blanc-casse);
-            padding: 2rem;
-            border-radius: var(--radius-sm);
-            min-height: 250px;
-            white-space: pre-wrap;
-            font-family: 'Satoshi', sans-serif;
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-top: 1rem;
-            border: 1px solid rgba(17,18,22,0.05);
-            color: var(--nova-noir);
-        }
-
+        /* =========================================
+           NOUVELLE ANIMATION DE CHARGEMENT (WAVEFORM)
+           ========================================= */
         .loader {
             display: none;
-            margin: 3rem auto;
+            margin: 4rem auto;
             text-align: center;
-            color: rgba(17,18,22,0.6);
         }
         
         .loader.active {
             display: block;
         }
 
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(232, 111, 90, 0.2);
-            border-top: 3px solid var(--nova-corail);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .error-message {
-            color: var(--nova-corail);
-            background: rgba(232, 111, 90, 0.1);
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius-sm);
+        .waveform {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
             margin-bottom: 1.5rem;
-            font-weight: 500;
-            display: none;
+            height: 50px;
         }
+
+        .bar {
+            width: 6px;
+            border-radius: 50px;
+            background: var(--nova-corail);
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        /* Couleurs du gradient Nova réparties sur la Waveform */
+        .bar1 { background: var(--nova-violet); height: 20px; animation-delay: 0.0s; }
+        .bar2 { background: var(--nova-corail); height: 40px; animation-delay: 0.1s; }
+        .bar3 { background: var(--nova-orange); height: 50px; animation-delay: 0.2s; }
+        .bar4 { background: var(--nova-corail); height: 35px; animation-delay: 0.3s; }
+        .bar5 { background: var(--nova-jaune);  height: 25px; animation-delay: 0.4s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.4); opacity: 0.6; }
+            50% { transform: scaleY(1.1); opacity: 1; }
+        }
+
+        .loader-text {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            color: var(--nova-noir);
+            margin: 0;
+            opacity: 0.9;
+        }
+        /* ========================================= */
 
         @media (max-width: 900px) {
-            .dashboard-container {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: auto;
-                border-right: none;
-                border-bottom: 1px solid rgba(17,18,22,0.05);
-                padding: 1.5rem;
-            }
-            .main-content {
-                padding: 2rem 1.5rem;
-            }
-            .studio-grid {
-                grid-template-columns: 1fr;
-            }
+            .dashboard-container { flex-direction: column; }
+            .sidebar { width: auto; border-right: none; border-bottom: 1px solid rgba(17,18,22,0.05); padding: 1.5rem; }
+            .main-content { padding: 2rem 1.5rem; }
+            .studio-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -479,174 +232,66 @@
                         <!-- CHAMPS : AMOUR -->
                         <div id="fields-amour" class="occasion-fields hidden">
                             <span class="occasion-title">Déclaration d'amour</span>
-                            <div class="form-group">
-                                <label>Prénom du destinataire *</label>
-                                <input type="text" id="amour-prenom" placeholder="Ex: Sophie">
-                            </div>
-                            <div class="form-group">
-                                <label>Surnom <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="amour-surnom" placeholder="Ex: Mon ange">
-                            </div>
-                            <div class="form-group">
-                                <label>Une qualité clé *</label>
-                                <input type="text" id="amour-qualite1" placeholder="Ex: Ta douceur">
-                            </div>
-                            <div class="form-group">
-                                <label>Une deuxième qualité *</label>
-                                <input type="text" id="amour-qualite2" placeholder="Ex: Ton sourire">
-                            </div>
-                            <div class="form-group">
-                                <label>Une troisième qualité *</label>
-                                <input type="text" id="amour-qualite3" placeholder="Ex: Ta force">
-                            </div>
-                            <div class="form-group">
-                                <label>Un souvenir marquant <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="amour-souvenir" placeholder="Ex: Notre voyage à Rome">
-                            </div>
+                            <div class="form-group"><label>Prénom du destinataire *</label><input type="text" id="amour-prenom" placeholder="Ex: Sophie"></div>
+                            <div class="form-group"><label>Surnom <span class="label-hint">Optionnel</span></label><input type="text" id="amour-surnom" placeholder="Ex: Mon ange"></div>
+                            <div class="form-group"><label>Une qualité clé *</label><input type="text" id="amour-qualite1" placeholder="Ex: Ta douceur"></div>
+                            <div class="form-group"><label>Une deuxième qualité *</label><input type="text" id="amour-qualite2" placeholder="Ex: Ton sourire"></div>
+                            <div class="form-group"><label>Une troisième qualité *</label><input type="text" id="amour-qualite3" placeholder="Ex: Ta force"></div>
+                            <div class="form-group"><label>Un souvenir marquant <span class="label-hint">Optionnel</span></label><input type="text" id="amour-souvenir" placeholder="Ex: Notre voyage à Rome"></div>
                         </div>
 
                         <!-- CHAMPS : ANNIVERSAIRE -->
                         <div id="fields-anniversaire" class="occasion-fields hidden">
                             <span class="occasion-title">Joyeux Anniversaire</span>
-                            <div class="form-group">
-                                <label>Prénom *</label>
-                                <input type="text" id="anniv-prenom" placeholder="Ex: Thomas">
-                            </div>
-                            <div class="form-group">
-                                <label>Âge <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="anniv-age" placeholder="Ex: 30">
-                            </div>
-                            <div class="form-group">
-                                <label>Qualité principale *</label>
-                                <input type="text" id="anniv-qualite1" placeholder="Ex: Ta bonne humeur">
-                            </div>
-                            <div class="form-group">
-                                <label>Deuxième qualité *</label>
-                                <input type="text" id="anniv-qualite2" placeholder="Ex: Ta fidélité">
-                            </div>
-                            <div class="form-group">
-                                <label>Souvenir à rappeler <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="anniv-souvenir" placeholder="Ex: La soirée du nouvel an">
-                            </div>
-                            <div class="form-group">
-                                <label>Message spécial *</label>
-                                <input type="text" id="anniv-message" placeholder="Ex: Ne change jamais">
-                            </div>
+                            <div class="form-group"><label>Prénom *</label><input type="text" id="anniv-prenom" placeholder="Ex: Thomas"></div>
+                            <div class="form-group"><label>Âge <span class="label-hint">Optionnel</span></label><input type="text" id="anniv-age" placeholder="Ex: 30"></div>
+                            <div class="form-group"><label>Qualité principale *</label><input type="text" id="anniv-qualite1" placeholder="Ex: Ta bonne humeur"></div>
+                            <div class="form-group"><label>Deuxième qualité *</label><input type="text" id="anniv-qualite2" placeholder="Ex: Ta fidélité"></div>
+                            <div class="form-group"><label>Souvenir à rappeler <span class="label-hint">Optionnel</span></label><input type="text" id="anniv-souvenir" placeholder="Ex: La soirée du nouvel an"></div>
+                            <div class="form-group"><label>Message spécial *</label><input type="text" id="anniv-message" placeholder="Ex: Ne change jamais"></div>
                         </div>
 
                         <!-- CHAMPS : HOMMAGE -->
                         <div id="fields-hommage" class="occasion-fields hidden">
                             <span class="occasion-title">Hommage émouvant</span>
-                            <div class="form-group">
-                                <label>Prénom de la personne *</label>
-                                <input type="text" id="hommage-nom" placeholder="Ex: Papa, Marie...">
-                            </div>
-                            <div class="form-group">
-                                <label>Votre lien <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="hommage-lien" placeholder="Ex: Mon père, mon ami d'enfance...">
-                            </div>
-                            <div class="form-group">
-                                <label>Qualité 1 *</label>
-                                <input type="text" id="hommage-qualite1" placeholder="Ex: Son grand cœur">
-                            </div>
-                            <div class="form-group">
-                                <label>Qualité 2 *</label>
-                                <input type="text" id="hommage-qualite2" placeholder="Ex: Sa sagesse">
-                            </div>
-                            <div class="form-group">
-                                <label>Qualité 3 *</label>
-                                <input type="text" id="hommage-qualite3" placeholder="Ex: Sa joie de vivre">
-                            </div>
-                            <div class="form-group">
-                                <label>Un beau souvenir <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="hommage-souvenir" placeholder="Ex: Ses récits au coin du feu">
-                            </div>
-                            <div class="form-group">
-                                <label>Une valeur qu'il/elle a transmise *</label>
-                                <input type="text" id="hommage-valeur" placeholder="Ex: Le courage, la persévérance...">
-                            </div>
-                            <div class="form-group">
-                                <label>Qui rend cet hommage ? <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="hommage-proches" placeholder="Ex: Tes enfants, toute la famille...">
-                            </div>
+                            <div class="form-group"><label>Prénom de la personne *</label><input type="text" id="hommage-nom" placeholder="Ex: Papa, Marie..."></div>
+                            <div class="form-group"><label>Votre lien <span class="label-hint">Optionnel</span></label><input type="text" id="hommage-lien" placeholder="Ex: Mon père, mon ami d'enfance..."></div>
+                            <div class="form-group"><label>Qualité 1 *</label><input type="text" id="hommage-qualite1" placeholder="Ex: Son grand cœur"></div>
+                            <div class="form-group"><label>Qualité 2 *</label><input type="text" id="hommage-qualite2" placeholder="Ex: Sa sagesse"></div>
+                            <div class="form-group"><label>Qualité 3 *</label><input type="text" id="hommage-qualite3" placeholder="Ex: Sa joie de vivre"></div>
+                            <div class="form-group"><label>Un beau souvenir <span class="label-hint">Optionnel</span></label><input type="text" id="hommage-souvenir" placeholder="Ex: Ses récits au coin du feu"></div>
+                            <div class="form-group"><label>Une valeur qu'il/elle a transmise *</label><input type="text" id="hommage-valeur" placeholder="Ex: Le courage, la persévérance..."></div>
+                            <div class="form-group"><label>Qui rend cet hommage ? <span class="label-hint">Optionnel</span></label><input type="text" id="hommage-proches" placeholder="Ex: Tes enfants, toute la famille..."></div>
                         </div>
 
                         <!-- CHAMPS : PROMOTION -->
                         <div id="fields-promotion" class="occasion-fields hidden">
                             <span class="occasion-title">Événement & Promotion</span>
-                            <div class="form-group">
-                                <label>Nom du produit / événement / entreprise *</label>
-                                <input type="text" id="pro-nom" placeholder="Ex: Le festival d'été, Ma super app...">
-                            </div>
-                            <div class="form-group">
-                                <label>Type de produit/événement <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="pro-type" placeholder="Ex: Un festival de musique...">
-                            </div>
-                            <div class="form-group">
-                                <label>Point fort 1 *</label>
-                                <input type="text" id="pro-point1" placeholder="Ex: Innovant">
-                            </div>
-                            <div class="form-group">
-                                <label>Point fort 2 *</label>
-                                <input type="text" id="pro-point2" placeholder="Ex: Pas cher">
-                            </div>
-                            <div class="form-group">
-                                <label>Point fort 3 *</label>
-                                <input type="text" id="pro-point3" placeholder="Ex: Écologique">
-                            </div>
-                            <div class="form-group">
-                                <label>Lieu <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="pro-lieu" placeholder="Ex: À Paris, Sur notre site web...">
-                            </div>
-                            <div class="form-group">
-                                <label>Date / Période <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="pro-date" placeholder="Ex: Ce week-end, Disponible maintenant...">
-                            </div>
-                            <div class="form-group">
-                                <label>Public cible <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="pro-public" placeholder="Ex: Les jeunes, Les entrepreneurs...">
-                            </div>
-                            <div class="form-group">
-                                <label>Action attendue <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="pro-action" placeholder="Ex: Téléchargez l'app, Venez nombreux...">
-                            </div>
+                            <div class="form-group"><label>Nom du produit / événement / entreprise *</label><input type="text" id="pro-nom" placeholder="Ex: Le festival d'été, Ma super app..."></div>
+                            <div class="form-group"><label>Type de produit/événement <span class="label-hint">Optionnel</span></label><input type="text" id="pro-type" placeholder="Ex: Un festival de musique..."></div>
+                            <div class="form-group"><label>Point fort 1 *</label><input type="text" id="pro-point1" placeholder="Ex: Innovant"></div>
+                            <div class="form-group"><label>Point fort 2 *</label><input type="text" id="pro-point2" placeholder="Ex: Pas cher"></div>
+                            <div class="form-group"><label>Point fort 3 *</label><input type="text" id="pro-point3" placeholder="Ex: Écologique"></div>
+                            <div class="form-group"><label>Lieu <span class="label-hint">Optionnel</span></label><input type="text" id="pro-lieu" placeholder="Ex: À Paris, Sur notre site web..."></div>
+                            <div class="form-group"><label>Date / Période <span class="label-hint">Optionnel</span></label><input type="text" id="pro-date" placeholder="Ex: Ce week-end, Disponible maintenant..."></div>
+                            <div class="form-group"><label>Public cible <span class="label-hint">Optionnel</span></label><input type="text" id="pro-public" placeholder="Ex: Les jeunes, Les entrepreneurs..."></div>
+                            <div class="form-group"><label>Action attendue <span class="label-hint">Optionnel</span></label><input type="text" id="pro-action" placeholder="Ex: Téléchargez l'app, Venez nombreux..."></div>
                         </div>
 
                         <!-- CHAMPS : ADORATION -->
                         <div id="fields-adoration" class="occasion-fields hidden">
                             <span class="occasion-title">Louange & Adoration</span>
-                            <div class="form-group">
-                                <label>Nom de Dieu / Titre *</label>
-                                <input type="text" id="ado-nom" placeholder="Ex: Jésus, Yahweh">
-                            </div>
-                            <div class="form-group">
-                                <label>Attribut 1 *</label>
-                                <input type="text" id="ado-attribut1" placeholder="Ex: Puissant">
-                            </div>
-                            <div class="form-group">
-                                <label>Attribut 2 *</label>
-                                <input type="text" id="ado-attribut2" placeholder="Ex: Saint">
-                            </div>
-                            <div class="form-group">
-                                <label>Attribut 3 *</label>
-                                <input type="text" id="ado-attribut3" placeholder="Ex: Merveilleux">
-                            </div>
-                            <div class="form-group">
-                                <label>Votre Prénom <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="ado-prenom" placeholder="Ex: Marie">
-                            </div>
-                            <div class="form-group">
-                                <label>Votre situation / Témoignage <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="ado-situation" placeholder="Ex: Il m'a guéri">
-                            </div>
-                            <div class="form-group">
-                                <label>Verset biblique préféré <span class="label-hint">Optionnel</span></label>
-                                <input type="text" id="ado-verset" placeholder="Ex: Psaume 23">
-                            </div>
+                            <div class="form-group"><label>Nom de Dieu / Titre *</label><input type="text" id="ado-nom" placeholder="Ex: Jésus, Yahweh"></div>
+                            <div class="form-group"><label>Attribut 1 *</label><input type="text" id="ado-attribut1" placeholder="Ex: Puissant"></div>
+                            <div class="form-group"><label>Attribut 2 *</label><input type="text" id="ado-attribut2" placeholder="Ex: Saint"></div>
+                            <div class="form-group"><label>Attribut 3 *</label><input type="text" id="ado-attribut3" placeholder="Ex: Merveilleux"></div>
+                            <div class="form-group"><label>Votre Prénom <span class="label-hint">Optionnel</span></label><input type="text" id="ado-prenom" placeholder="Ex: Marie"></div>
+                            <div class="form-group"><label>Votre situation / Témoignage <span class="label-hint">Optionnel</span></label><input type="text" id="ado-situation" placeholder="Ex: Il m'a guéri"></div>
+                            <div class="form-group"><label>Verset biblique préféré <span class="label-hint">Optionnel</span></label><input type="text" id="ado-verset" placeholder="Ex: Psaume 23"></div>
                         </div>
 
                         <button type="submit" class="btn-generate" id="submitBtn">
-                            Générer l'émotion <i class="fas fa-arrow-right"></i>
+                            Composer l'émotion <i class="fas fa-arrow-right"></i>
                         </button>
                     </form>
                 </div>
@@ -655,9 +300,16 @@
                 <div class="preview-panel">
                     <h2>Résultat <span class="serif-italic">sur mesure</span></h2>
                     
+                    <!-- LE NOUVEAU LOADER WAVEFORM -->
                     <div id="loader" class="loader">
-                        <div class="spinner"></div>
-                        <p style="font-family:'Instrument Serif', serif; font-size:1.4rem; font-style:italic;">Création en cours...</p>
+                        <div class="waveform">
+                            <div class="bar bar1"></div>
+                            <div class="bar bar2"></div>
+                            <div class="bar bar3"></div>
+                            <div class="bar bar4"></div>
+                            <div class="bar bar5"></div>
+                        </div>
+                        <p class="loader-text">Nova Tempo compose votre émotion <span style="color:var(--nova-corail);">✦</span></p>
                     </div>
 
                     <div id="resultDisplay" class="lyrics-display" style="display: none;"></div>
@@ -667,7 +319,6 @@
     </div>
 
     <script>
-        // TES CLÉS SONT TOUJOURS LÀ, PRÊTES À L'EMPLOI
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
@@ -814,6 +465,8 @@
                     submitBtn.disabled = true;
                     errorBox.style.display = 'none';
                     resultDisplay.style.display = 'none';
+                    
+                    // On affiche le beau loader musical
                     loader.classList.add('active');
 
                     const response = await fetch('/api/songs/generate-lyrics', {
@@ -846,7 +499,7 @@
 
                 } catch (error) {
                     console.error('Erreur:', error);
-                    showError('Une erreur est survenue lors de la génération.');
+                    showError('Une erreur est survenue lors de la composition.');
                 } finally {
                     submitBtn.disabled = false;
                     loader.classList.remove('active');
