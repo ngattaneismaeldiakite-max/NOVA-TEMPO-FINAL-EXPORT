@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Tempo - Votre musique sur mesure</title>
+    <title>Nova Tempo - Composez vos émotions</title>
     
+    <!-- Polices et Icones -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=instrument-serif@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
+        /* THEME DARK NEON */
         :root {
             --bg-dark: #06060A;
+            --card-bg: #111118;
             --text-light: #FFFFFF;
             --text-muted: rgba(255, 255, 255, 0.6);
             --neon-lime: #D4FF00;
-            --card-bg: #111118;
-            --radius-md: 16px;
-            --radius-lg: 24px;
         }
 
         body {
@@ -33,10 +34,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
+            padding: 1.5rem 4rem;
+            position: absolute;
+            top: 0; left: 0; right: 0;
             z-index: 100;
         }
 
@@ -45,192 +45,197 @@
             font-weight: 900;
             color: var(--text-light);
             text-decoration: none;
+            letter-spacing: -0.02em;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
+        .logo i { color: var(--neon-lime); }
 
-        .logo i {
-            color: var(--neon-lime);
-        }
-
-        .nav-center {
+        .nav-links {
             display: flex;
-            gap: 2.5rem;
-        }
-
-        .nav-center a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .nav-center a:hover {
-            color: var(--neon-lime);
-        }
-
-        .nav-right {
-            display: flex;
+            gap: 2rem;
             align-items: center;
-            gap: 1.5rem;
         }
 
-        .nav-right a {
+        .nav-links a {
+            color: var(--text-light);
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
-            transition: all 0.3s ease;
+            transition: color 0.3s;
         }
+        .nav-links a:hover { color: var(--neon-lime); }
 
-        .btn-login {
-            color: var(--text-light);
-        }
-        .btn-login:hover {
-            color: var(--neon-lime);
-        }
-
-        .btn-signup {
-            background-color: var(--neon-lime);
-            color: var(--bg-dark);
-            padding: 0.8rem 1.8rem;
+        .auth-buttons a {
+            padding: 0.7rem 1.5rem;
             border-radius: 50px;
-            font-weight: 800;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s;
         }
-        .btn-signup:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(212, 255, 0, 0.4);
-        }
+        .btn-login { color: var(--text-light); margin-right: 1rem; }
+        .btn-login:hover { color: var(--neon-lime); }
+        .btn-signup { background-color: var(--neon-lime); color: var(--bg-dark); box-shadow: 0 0 15px rgba(212, 255, 0, 0.2); }
+        .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(212, 255, 0, 0.4); }
 
         /* HERO SECTION */
         .hero {
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 4rem 5% 6rem;
-            max-width: 1400px;
-            margin: 0 auto;
+            padding: 0 4rem;
             position: relative;
+            background: radial-gradient(circle at 80% 30%, rgba(212,255,0,0.08) 0%, rgba(6,6,10,0) 50%);
         }
 
         .hero-content {
-            flex: 1;
-            max-width: 600px;
-            z-index: 10;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+            margin-top: 4rem;
         }
 
-        .surtitle {
-            color: var(--text-muted);
-            font-weight: 700;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 {
+        .hero-text h1 {
             font-size: 4.5rem;
             font-weight: 900;
             line-height: 1.1;
-            letter-spacing: -0.02em;
-            margin: 0 0 1.5rem 0;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
             text-transform: uppercase;
         }
-
-        .hero h1 .highlight {
-            color: var(--neon-lime);
+        .hero-text h1 span {
+            font-family: 'Instrument Serif', serif;
             font-style: italic;
+            color: var(--neon-lime);
+            text-transform: lowercase;
+            font-weight: 400;
+            font-size: 5rem;
         }
 
-        .hero p {
+        .hero-text p {
             font-size: 1.2rem;
             color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
             max-width: 500px;
+            line-height: 1.6;
         }
 
-        .btn-hero {
-            display: inline-flex;
+        /* VINYLS ANIMATION */
+        .vinyl-container {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
             align-items: center;
-            gap: 1rem;
-            background-color: var(--neon-lime);
-            color: var(--bg-dark);
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 900;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
         }
 
-        .btn-hero:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 255, 0, 0.3);
+        .vinyl {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #1a1a1a 30%, #000 70%);
+            border: 2px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: spin 4s linear infinite;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: border-color 0.3s;
         }
+        .vinyl:hover { border-color: var(--neon-lime); }
+
+        .vinyl::before {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: var(--neon-lime);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .vinyl i {
+            color: #000;
+            z-index: 2;
+            font-size: 0.8rem;
+            margin-left: 3px;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .vinyl-text {
+            color: var(--text-light);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .vinyl-text span { display: block; font-size: 0.85rem; color: var(--text-muted); font-weight: 400; text-transform: none; }
 
         .hero-image {
-            flex: 1;
             position: relative;
-            display: flex;
-            justify-content: flex-end;
-            z-index: 5;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            height: 600px;
         }
 
         .hero-image img {
-            max-width: 90%;
-            border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            position: relative;
-            z-index: 2;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 24px;
         }
 
-        /* Lueur derrière l'image */
-        .hero-glow {
-            position: absolute;
-            top: 50%;
-            right: 10%;
-            transform: translateY(-50%);
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(212, 255, 0, 0.2) 0%, rgba(6,6,10,0) 70%);
-            z-index: 1;
-            filter: blur(40px);
-        }
-
-        /* OCCASIONS (GRID IMAGES RÉALISTES) */
+        /* SECTION OCCASIONS (Sans Amour) */
         .occasions-section {
-            padding: 6rem 5%;
+            padding: 6rem 4rem;
+            background: var(--bg-dark);
             max-width: 1400px;
             margin: 0 auto;
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 900;
-            margin-bottom: 0.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
         }
-
         .section-subtitle {
+            text-align: center;
             color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
         }
 
         .occ-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            justify-content: center;
         }
 
         .occ-card {
             position: relative;
-            height: 220px;
-            border-radius: var(--radius-md);
+            height: 250px;
+            border-radius: 20px;
             overflow: hidden;
             text-decoration: none;
-            display: block;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s ease;
+        }
+
+        .occ-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-lime);
+            box-shadow: 0 15px 30px rgba(212, 255, 0, 0.15);
         }
 
         .occ-card img {
@@ -241,194 +246,51 @@
         }
 
         .occ-card:hover img {
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
 
         .occ-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 100%);
+            background: linear-gradient(to top, rgba(6,6,10,0.9) 0%, rgba(6,6,10,0.2) 100%);
             display: flex;
             align-items: flex-end;
-            padding: 1.5rem;
+            padding: 2rem;
         }
 
-        .occ-card h3 {
-            color: var(--text-light);
+        .occ-overlay h3 {
             margin: 0;
-            font-size: 1.4rem;
+            color: var(--text-light);
+            font-size: 1.5rem;
             font-weight: 800;
+            text-transform: uppercase;
         }
 
-        /* SECTION CRÉEZ ÉCOUTEZ PARTAGEZ (AVEC LES VINYLES) */
-        .features-section {
-            background: linear-gradient(to bottom, #06060A, #0A0A15);
-            padding: 8rem 5%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 1400px;
-            margin: 0 auto;
-            gap: 4rem;
-        }
-
-        .feature-text {
-            flex: 1;
-        }
-
-        .feature-text h2 {
-            font-size: 4rem;
-            font-weight: 900;
-            line-height: 1.1;
-            margin: 0 0 1.5rem 0;
-        }
-
-        .feature-text h2 span {
-            display: block;
-        }
-
-        .feature-text p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            max-width: 450px;
-        }
-
-        /* ANIMATION DES 3 VINYLES */
-        .vinyl-container {
-            flex: 1;
-            position: relative;
-            height: 400px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .vinyl-wrapper {
-            position: absolute;
-            transition: all 0.3s ease;
-        }
-
-        .vw-1 { left: 10%; top: 20px; z-index: 1; transform: scale(0.7); filter: brightness(0.5); }
-        .vw-2 { right: 10%; top: 40px; z-index: 2; transform: scale(0.8); filter: brightness(0.7); }
-        .vw-3 { left: 50%; transform: translateX(-50%); bottom: 20px; z-index: 3; }
-
-        .vinyl {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            background: repeating-radial-gradient( #111, #111 4px, #1a1a1a 5px, #1a1a1a 8px );
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: spin 4s linear infinite;
-        }
-
-        .vw-1 .vinyl { animation-duration: 5s; }
-        .vw-2 .vinyl { animation-duration: 4.5s; animation-direction: reverse; }
-
-        .vinyl-label {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--label-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid #000;
-        }
-
-        .vinyl-hole {
-            width: 15px;
-            height: 15px;
-            background: #06060A;
-            border-radius: 50%;
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* FOOTER ICONS */
-        .bottom-icons {
-            display: flex;
-            justify-content: space-between;
-            padding: 4rem 5% 6rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .icon-box { display: flex; flex-direction: column; gap: 1rem; }
-        .icon-circle {
-            width: 50px; height: 50px;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.2);
-            display: flex; justify-content: center; align-items: center;
-            font-size: 1.2rem;
-        }
-        .icon-box h4 { margin: 0; font-size: 1.1rem; }
-        .icon-box p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
-
-        /* MODALES (FENÊTRES POPUP) */
-        .modal-overlay {
+        /* MODALS (Pure CSS) */
+        .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1000;
         }
-
-        .modal-overlay.active { display: flex; opacity: 1; }
-
+        .modal:target { opacity: 1; visibility: visible; }
         .modal-content {
-            background: var(--card-bg);
+            background: var(--card-bg); padding: 3rem; border-radius: 24px;
+            width: 90%; max-width: 600px; position: relative;
             border: 1px solid rgba(255,255,255,0.1);
-            width: 90%;
-            max-width: 700px;
-            border-radius: var(--radius-lg);
-            padding: 3rem;
-            position: relative;
-            max-height: 80vh;
-            overflow-y: auto;
         }
-
-        .close-modal {
-            position: absolute; top: 20px; right: 25px;
-            background: none; border: none;
-            color: var(--text-muted); font-size: 1.5rem;
-            cursor: pointer; transition: color 0.2s;
+        .modal-close {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            color: var(--text-muted); text-decoration: none; font-size: 1.5rem;
         }
-        .close-modal:hover { color: var(--neon-lime); }
+        .modal-close:hover { color: var(--neon-lime); }
+        .modal h2 { margin-top: 0; color: var(--neon-lime); text-transform: uppercase; font-size: 2rem; }
 
-        .modal-content h2 { color: var(--neon-lime); font-size: 2rem; margin-top: 0; margin-bottom: 2rem; }
-        .modal-content h3 { font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.5rem; color: #FFF; }
-        .modal-content p { color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
-
-        /* Tarifs dans la modale */
-        .pack-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 2rem; }
-        .pack-box { border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 12px; text-align: center; }
-        .pack-box.highlight { border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); }
-        .pack-box h4 { margin: 0 0 1rem 0; font-size: 1rem; color: var(--text-muted); }
-        .pack-box .price { font-size: 1.8rem; font-weight: 900; color: #FFF; margin-bottom: 1rem; }
-
-        /* Témoignages dans la modale */
-        .review-box { background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem; border-left: 4px solid var(--neon-lime); }
-        .review-box p { font-style: italic; margin-bottom: 0.5rem; }
-        .review-author { font-weight: 700; color: #FFF; font-size: 0.9rem; }
-
-        @media (max-width: 900px) {
-            .hero { flex-direction: column; text-align: center; padding-top: 2rem; }
-            .hero-content { margin-bottom: 3rem; }
-            .hero h1 { font-size: 3rem; }
-            .nav-center { display: none; }
-            .occ-grid { grid-template-columns: 1fr; }
-            .features-section { flex-direction: column; text-align: center; }
-            .bottom-icons { flex-direction: column; gap: 2rem; }
-            .pack-grid { grid-template-columns: 1fr; }
+        @media (max-width: 1000px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; margin-top: 6rem; }
+            nav { padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: var(--bg-dark); }
+            .hero, .occasions-section { padding: 2rem; }
+            .vinyl-container { justify-content: center; }
         }
     </style>
 </head>
@@ -437,216 +299,125 @@
     <!-- NAVIGATION -->
     <nav>
         <a href="/" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
-        <div class="nav-center">
-            <a onclick="openModal('modal-tarifs')">Tarifs</a>
-            <a onclick="openModal('modal-faq')">Questions Fréquentes</a>
-            <a onclick="openModal('modal-temoignages')">Témoignages</a>
+        <div class="nav-links">
+            <a href="#modal-tarifs">Tarifs</a>
+            <a href="#modal-faq">FAQ</a>
+            <a href="#modal-temoignages">Témoignages</a>
         </div>
-        <div class="nav-right">
+        <div class="auth-buttons">
             <a href="/login.html" class="btn-login">Connexion</a>
-            <a href="/signup.html" class="btn-signup">Inscription</a>
+            <a href="/signup.html" class="btn-signup">Créer une chanson</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-content">
-            <div class="surtitle">YOUR STORY. YOUR SOUND.</div>
-            <h1>NOVATEMPO AU SERVICE DE VOS <span class="highlight">ÉMOTIONS</span></h1>
-            <p>Créez des chansons personnalisées pour toutes vos occasions. Rapide, simple, puissant.</p>
-            <a href="/signup.html" class="btn-hero">
-                Créer ma chanson <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-        <div class="hero-image">
-            <div class="hero-glow"></div>
-            <!-- Image réaliste de la jeune femme noire au casque, avec lumière néon -->
-            <img src="https://images.unsplash.com/photo-1612089286820-2f9543e8a156?q=80&w=800&auto=format&fit=crop" alt="Jeune femme noire écoutant de la musique au casque">
+            <div class="hero-text">
+                <h1>Générez des émotions <span>uniques</span></h1>
+                <p>Oubliez les cadeaux génériques. Avec Nova Tempo, transformez vos sentiments en une musique personnalisée, qualité studio, en quelques secondes.</p>
+                
+                <!-- Vinyles animés -->
+                <div class="vinyl-container">
+                    <div class="vinyl"><i class="fas fa-play"></i></div>
+                    <div class="vinyl" style="animation-delay: -1s;"><i class="fas fa-play"></i></div>
+                    <div class="vinyl" style="animation-delay: -2s;"><i class="fas fa-play"></i></div>
+                    <div class="vinyl-text">
+                        Écoutez
+                        <span>Découvrez nos créations</span>
+                    </div>
+                </div>
+
+                <a href="/signup.html" class="btn-signup" style="display:inline-block; padding: 1.2rem 2.5rem; font-size: 1.1rem;">Essayer gratuitement</a>
+            </div>
+            
+            <div class="hero-image">
+                <!-- IMAGE DE LA FILLE AU CASQUE -->
+                <img src="fille-casque.jpg" alt="Jeune femme écoutant Nova Tempo">
+            </div>
         </div>
     </section>
 
     <!-- SECTION OCCASIONS -->
     <section class="occasions-section">
         <h2 class="section-title">Des musiques pour chaque instant</h2>
-        <p class="section-subtitle">Amour, fête, réussite, hommage... chaque émotion a sa mélodie.</p>
+        <p class="section-subtitle">Mariage, anniversaire, réussite, hommage... chaque émotion a sa mélodie.</p>
 
         <div class="occ-grid">
-            <!-- Amour -->
-            <a href="/signup.html" class="occ-card">
-                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600&auto=format&fit=crop" alt="Amour">
-                <div class="occ-overlay"><h3>Amour</h3></div>
-            </a>
             <!-- Anniversaire -->
             <a href="/signup.html" class="occ-card">
-                <img src="https://images.unsplash.com/photo-1530103862676-de3c9de59f9e?q=80&w=600&auto=format&fit=crop" alt="Anniversaire">
+                <img src="anniversaire.jpg" alt="Anniversaire">
                 <div class="occ-overlay"><h3>Anniversaire</h3></div>
             </a>
             <!-- Mariage -->
             <a href="/signup.html" class="occ-card">
-                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600&auto=format&fit=crop" alt="Mariage">
+                <img src="mariage.jpg" alt="Mariage">
                 <div class="occ-overlay"><h3>Mariage</h3></div>
-            </a>
-            <!-- Motivation -->
-            <a href="/signup.html" class="occ-card">
-                <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=600&auto=format&fit=crop" alt="Motivation">
-                <div class="occ-overlay"><h3>Motivation</h3></div>
             </a>
             <!-- Hommage -->
             <a href="/signup.html" class="occ-card">
-                <img src="https://images.unsplash.com/photo-1494697536454-6f39e2cc972d?q=80&w=600&auto=format&fit=crop" alt="Hommage">
+                <img src="hommage.jpg" alt="Hommage">
                 <div class="occ-overlay"><h3>Hommage</h3></div>
             </a>
-            <!-- Autre -->
+            <!-- Événement -->
             <a href="/signup.html" class="occ-card">
-                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop" alt="Concert">
-                <div class="occ-overlay"><h3>Autre</h3></div>
+                <img src="evenement.jpg" alt="Événement">
+                <div class="occ-overlay"><h3>Événement</h3></div>
+            </a>
+            <!-- Adoration -->
+            <a href="/signup.html" class="occ-card">
+                <img src="adoration.jpg" alt="Adoration">
+                <div class="occ-overlay"><h3>Adoration</h3></div>
             </a>
         </div>
     </section>
 
-    <!-- SECTION FONCTIONNALITÉ (VINYLES) -->
-    <section class="features-section">
-        <div class="feature-text">
-            <h2>
-                <span>Créez.</span>
-                <span>Écoutez.</span>
-                <span style="color:var(--neon-lime);">Partagez.</span>
-            </h2>
-            <p>Une expérience fluide, intuitive et inspirante, pensée pour vous. NovaTempo transforme vos histoires en véritables chefs-d'œuvre musicaux.</p>
-            <a href="/signup.html" class="btn-hero" style="font-size: 1rem; padding: 1rem 2rem;">Commencer <i class="fas fa-arrow-right"></i></a>
-        </div>
-        
-        <!-- Animation des 3 disques Vinyles -->
-        <div class="vinyl-container">
-            <div class="vinyl-wrapper vw-1">
-                <div class="vinyl"><div class="vinyl-label" style="--label-color: #FF0066;"><div class="vinyl-hole"></div></div></div>
-            </div>
-            <div class="vinyl-wrapper vw-2">
-                <div class="vinyl"><div class="vinyl-label" style="--label-color: #0044FF;"><div class="vinyl-hole"></div></div></div>
-            </div>
-            <div class="vinyl-wrapper vw-3">
-                <div class="vinyl"><div class="vinyl-label" style="--label-color: #D4FF00;"><div class="vinyl-hole"></div></div></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- BOTTOM ICONS -->
-    <section class="bottom-icons">
-        <div style="width: 100%; display: flex; justify-content: space-between;">
-            <div class="icon-box">
-                <div class="icon-circle" style="color:#D4FF00; border-color:#D4FF00;"><i class="fas fa-magic"></i></div>
-                <h4>Créer</h4>
-                <p>En quelques clics</p>
-            </div>
-            <div class="icon-box">
-                <div class="icon-circle" style="color:#FF0066; border-color:#FF0066;"><i class="fas fa-sliders-h"></i></div>
-                <h4>Personnaliser</h4>
-                <p>Selon vos envies</p>
-            </div>
-            <div class="icon-box">
-                <div class="icon-circle" style="color:#D4FF00; border-color:#D4FF00;"><i class="fas fa-play"></i></div>
-                <h4>Écouter</h4>
-                <p>En haute qualité</p>
-            </div>
-            <div class="icon-box">
-                <div class="icon-circle" style="color:#0044FF; border-color:#0044FF;"><i class="fas fa-share-nodes"></i></div>
-                <h4>Partager</h4>
-                <p>Avec ceux que vous aimez</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================== -->
-    <!-- MODALES (FENÊTRES CACHÉES POUR LE MENU)        -->
-    <!-- ============================================== -->
-
-    <!-- Modale Tarifs -->
-    <div class="modal-overlay" id="modal-tarifs" onclick="closeModal(event, 'modal-tarifs')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="document.getElementById('modal-tarifs').classList.remove('active')"><i class="fas fa-times"></i></button>
-            <h2>Nos Tarifs Simples</h2>
-            <p>Une tarification transparente par volume. 1 crédit = 1 chanson complète personnalisée, téléchargeable et en haute qualité.</p>
-            
-            <div class="pack-grid">
-                <div class="pack-box">
-                    <h4>UNITAIRE</h4>
-                    <div class="price">1 000F</div>
-                    <p style="font-size: 0.9rem;">1 Chanson</p>
-                </div>
-                <div class="pack-box highlight">
-                    <h4 style="color:var(--neon-lime);">PACK 3</h4>
-                    <div class="price">2 500F</div>
-                    <p style="font-size: 0.9rem;">3 Chansons</p>
-                </div>
-                <div class="pack-box">
-                    <h4>PACK 5</h4>
-                    <div class="price">4 000F</div>
-                    <p style="font-size: 0.9rem;">5 Chansons</p>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="/signup.html" class="btn-signup" style="text-decoration: none;">Créer un compte pour acheter</a>
-            </div>
+    <!-- MODAL TARIFS -->
+    <div id="modal-tarifs" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
+            <h2>Nos Tarifs</h2>
+            <p>Un modèle simple. Haute qualité, téléchargement inclus.</p>
+            <ul style="list-style:none; padding:0; margin-top: 2rem;">
+                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Unitaire :</strong> 1 000 FCFA (1 création)</li>
+                <li style="margin-bottom:1rem; padding:1rem; background:rgba(212, 255, 0, 0.05); border:1px solid var(--neon-lime); border-radius:12px;"><strong>Pack 3 (Populaire) :</strong> 2 500 FCFA (3 créations)</li>
+                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Pack 5 :</strong> 4 000 FCFA (5 créations)</li>
+            </ul>
         </div>
     </div>
 
-    <!-- Modale FAQ -->
-    <div class="modal-overlay" id="modal-faq" onclick="closeModal(event, 'modal-faq')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="document.getElementById('modal-faq').classList.remove('active')"><i class="fas fa-times"></i></button>
+    <!-- MODAL FAQ -->
+    <div id="modal-faq" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
             <h2>Questions Fréquentes</h2>
-            
-            <h3>Combien de temps prend la création ?</h3>
-            <p>C'est quasiment instantané ! Une fois votre histoire remplie, notre technologie génère votre chanson sur mesure en quelques secondes.</p>
-
-            <h3>Puis-je télécharger la musique ?</h3>
-            <p>Oui, absolument. Toutes vos créations sont sauvegardées dans votre espace "Mes Créations" et vous pouvez copier les paroles ou les exporter.</p>
-
-            <h3>Quels sont les styles disponibles ?</h3>
-            <p>Nous proposons plusieurs styles comme l'Afrobeats, la Pop, le R&B, l'Acoustique, le Gospel et le Rap. Vous choisissez l'ambiance qui vous correspond.</p>
-
-            <h3>Dois-je utiliser tous mes crédits le même jour ?</h3>
-            <p>Non, vos crédits sont liés à votre compte et n'expirent pas. Achetez un pack de 5 aujourd'hui et utilisez-les tout au long de l'année pour différents événements.</p>
+            <div style="margin-top:2rem;">
+                <h4 style="color:var(--text-light); margin-bottom:0.5rem;">Comment puis-je récupérer ma musique ?</h4>
+                <p style="color:var(--text-muted); margin-top:0; margin-bottom:1.5rem;">Dès la création terminée, un bouton de téléchargement apparaît dans votre espace Studio.</p>
+                
+                <h4 style="color:var(--text-light); margin-bottom:0.5rem;">Quels sont les moyens de paiement ?</h4>
+                <p style="color:var(--text-muted); margin-top:0;">Nous acceptons Wave et Mobile Money de manière 100% sécurisée.</p>
+            </div>
         </div>
     </div>
 
-    <!-- Modale Témoignages -->
-    <div class="modal-overlay" id="modal-temoignages" onclick="closeModal(event, 'modal-temoignages')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="document.getElementById('modal-temoignages').classList.remove('active')"><i class="fas fa-times"></i></button>
+    <!-- MODAL TEMOIGNAGES -->
+    <div id="modal-temoignages" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
             <h2>Témoignages</h2>
-            <p>Ce qu'ils ont ressenti en utilisant Nova Tempo :</p>
-            
-            <div class="review-box">
-                <p>"J'ai fait une chanson pour les 30 ans de mon frère avec des anecdotes de notre enfance. Il a eu les larmes aux yeux. C'est le meilleur cadeau possible !"</p>
-                <div class="review-author">— Sarah K.</div>
-            </div>
-            
-            <div class="review-box">
-                <p>"Je voulais déclarer ma flamme de façon originale. La chanson RnB créée par NovaTempo a fait tout le travail, elle a adoré l'attention aux détails."</p>
-                <div class="review-author">— Marc T.</div>
-            </div>
-            
-            <div class="review-box">
-                <p>"Incroyable facilité d'utilisation. En 3 minutes, j'avais un texte touchant et parfait pour la remise de diplôme de ma fille."</p>
-                <div class="review-author">— Aline M.</div>
+            <div style="margin-top:2rem;">
+                <div style="padding:1.5rem; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:1rem;">
+                    <p style="font-style:italic; margin-top:0;">"J'ai créé une chanson pour le mariage de ma sœur. Tout le monde pleurait de joie !"</p>
+                    <strong style="color:var(--neon-lime);">— Aminata</strong>
+                </div>
+                <div style="padding:1.5rem; background:rgba(255,255,255,0.05); border-radius:12px;">
+                    <p style="font-style:italic; margin-top:0;">"L'Afrobeat généré pour la promo de ma boutique est incroyable. Rapide et pro."</p>
+                    <strong style="color:var(--neon-lime);">— Cédric</strong>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- SCRIPTS POUR LES MODALES -->
-    <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-
-        function closeModal(event, modalId) {
-            // Ferme si on clique en dehors du contenu de la modale
-            if (event.target.id === modalId) {
-                document.getElementById(modalId).classList.remove('active');
-            }
-        }
-    </script>
 
 </body>
 </html>
