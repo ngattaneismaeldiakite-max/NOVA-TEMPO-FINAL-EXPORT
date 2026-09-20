@@ -101,7 +101,6 @@
 
         /* RESPONSIVE DESIGN (Correction de l'empilement) */
         @media (max-width: 1100px) {
-            /* On passe la barre de navigation en relative pour qu'elle pousse le texte vers le bas ! */
             nav { position: relative; padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: var(--bg-dark); }
             
             .hero { padding: 0 2rem; min-height: calc(100vh - 150px); }
@@ -111,7 +110,6 @@
             .hero-text h1 span { font-size: 4rem; }
             .occasions-section { padding: 6rem 2rem 4rem 2rem; }
             
-            /* Ajustement tablettes */
             .vinyl-container { gap: 2rem; }
             .vinyl { width: 160px; height: 160px; }
             .vinyl.middle { width: 220px; height: 220px; }
@@ -124,7 +122,6 @@
             nav { padding: 1rem; gap: 1.2rem; }
             .nav-links { gap: 1.5rem; }
             
-            /* Le texte redescend joliment */
             .hero-content { margin-bottom: 12rem; margin-top: 2rem; }
             .hero-text h1 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 1rem; }
             .hero-text h1 span { font-size: 3.2rem; }
@@ -171,13 +168,14 @@
             </div>
             
             <div class="vinyl-container">
-                <div class="vinyl" onclick="toggleAudio('audio1', this)" style="background-image: url('pour-toi.jpg?v=1');">
+                <!-- ICI ON A MIS .jpg.png -->
+                <div class="vinyl" onclick="toggleAudio('audio1', this)" style="background-image: url('pour-toi.jpg.png?v=1');">
                     <i class="fas fa-play"></i>
                 </div>
-                <div class="vinyl middle" onclick="toggleAudio('audio3', this)" style="animation-delay: -1s; background-image: url('nova-tempo.jpg?v=1');">
+                <div class="vinyl middle" onclick="toggleAudio('audio3', this)" style="animation-delay: -1s; background-image: url('nova-tempo.jpg.png?v=1');">
                     <i class="fas fa-play"></i>
                 </div>
-                <div class="vinyl" onclick="toggleAudio('audio2', this)" style="animation-delay: -2s; background-image: url('maman.jpg?v=1');">
+                <div class="vinyl" onclick="toggleAudio('audio2', this)" style="animation-delay: -2s; background-image: url('maman.jpg.png?v=1');">
                     <i class="fas fa-play"></i>
                 </div>
             </div>
