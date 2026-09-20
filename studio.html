@@ -97,13 +97,14 @@
                 
                 <div class="form-group">
                     <label class="main-label">1. Pour qui est cette chanson ?</label>
-                    <input type="text" id="target-name" required placeholder="Ex: Ma mère, Mon meilleur ami Marc, Ma femme...">
+                    <input type="text" id="target-name" required placeholder="Ex: Ma mère, Mon copain Marc, Ma femme...">
                 </div>
                 
                 <div class="form-group">
                     <label class="main-label">2. Quelle est l'occasion ?</label>
                     <div class="radio-grid">
                         <label class="radio-card"><input type="radio" name="occasion" value="anniversaire" required onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🎂 Anniversaire</span></label>
+                        <label class="radio-card"><input type="radio" name="occasion" value="amour" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">❤️ Amour</span></label>
                         <label class="radio-card"><input type="radio" name="occasion" value="mariage" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">💍 Mariage</span></label>
                         <label class="radio-card"><input type="radio" name="occasion" value="hommage" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🕊️ Hommage</span></label>
                         <label class="radio-card"><input type="radio" name="occasion" value="adoration" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🙌 Adoration</span></label>
@@ -171,6 +172,20 @@
                 <div class="dynamic-field">
                     <label>Une anecdote amusante à placer ?</label>
                     <input type="text" class="custom-data" data-label="Anecdote" placeholder="Ex: Il perd toujours ses clés">
+                </div>
+            `,
+            'amour': `
+                <div class="dynamic-field">
+                    <label>Quel est son petit surnom ou mot doux ?</label>
+                    <input type="text" class="custom-data" data-label="Surnom" placeholder="Ex: Mon amour, Mon ange, Bébé...">
+                </div>
+                <div class="dynamic-field">
+                    <label>Qu'aimez-vous le plus chez cette personne ?</label>
+                    <input type="text" class="custom-data" data-label="Ce que j'aime chez elle/lui" required placeholder="Ex: Son sourire radieux, sa douceur, sa force...">
+                </div>
+                <div class="dynamic-field">
+                    <label>Un souvenir marquant ou une promesse pour l'avenir ?</label>
+                    <input type="text" class="custom-data" data-label="Souvenir ou Promesse" required placeholder="Ex: Notre premier baiser sous la pluie, je t'aimerai toujours...">
                 </div>
             `,
             'mariage': `
