@@ -1,21 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Nova Tempo</title>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        :root {
+            --bg-dark: #06060A; --card-bg: rgba(17, 17, 24, 0.75);
+            --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6);
+            --neon-lime: #D4FF00; --neon-pink: #FF0066;
+        }
+        body { 
+            margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; 
+            background-color: var(--bg-dark); color: var(--text-light); 
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            background-image: url('login_bg.jpg'); background-size: cover; background-position: center; position: relative;
+        }
+        body::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(6,6,10,0.9) 0%, rgba(6,6,10,0.7) 100%);
+            backdrop-filter: blur(8px); z-index: 0;
+        }
+        .auth-card {
+            position: relative; z-index: 1; background: var(--card-bg);
+            padding: 3rem; border-radius: 24px; width: 100%; max-width: 400px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(20px); text-align: center;
+        }
+        .logo { font-size: 2rem; font-weight: 900; color: var(--text-light); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+        .logo i { color: var(--neon-lime); }
+        h2 { margin: 0 0 0.5rem 0; font-size: 1.8rem; font-weight: 800; }
+        p.subtitle { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1rem; }
+        
+        .input-group { margin-bottom: 1.5rem; text-align: left; }
+        .input-group label { display: block; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600; }
+        
+        .password-wrapper { position: relative; }
+        .password-wrapper input {
+            width: 100%; padding: 1rem; padding-right: 3rem; 
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; color: var(--text-light); font-family: inherit; font-size: 1rem;
+            transition: all 0.3s; box-sizing: border-box;
+        }
+        .password-wrapper i {
+            position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+            color: var(--text-muted); cursor: pointer; transition: color 0.3s; font-size: 1.2rem;
+        }
+        .password-wrapper i:hover { color: var(--neon-lime); }
+        
+        .input-group input:not(.password-wrapper input) {
+            width: 100%; padding: 1rem;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; color: var(--text-light); font-family: inherit; font-size: 1rem;
+            transition: all 0.3s; box-sizing: border-box;
+        }
+        .input-group input:focus { outline: none; border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); box-shadow: 0 0 15px rgba(212, 255, 0, 0.15); }
+        
+        .btn-submit { width: 100%; padding: 1.2rem; background-color: var(--neon-lime); color: var(--bg-dark); border: none; border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; margin-top: 1rem; text-transform: uppercase; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(212, 255, 0, 0.3); }
+        .links { margin-top: 2rem; font-size: 0.95rem; }
+        .links a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; display: block; margin-bottom: 0.8rem; }
+        .links a:hover { color: var(--neon-lime); }
+        .back-home { position: absolute; top: 2rem; left: 2rem; color: var(--text-muted); text-decoration: none; z-index: 10; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s; }
+        .back-home:hover { color: var(--neon-lime); }
+        #error-msg { color: var(--neon-pink); font-size: 0.95rem; margin-top: 1rem; display: none; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-home"><i class="fas fa-arrow-left"></i> Retour au site</a>
+    <div class="auth-card">
+        <a href="/" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
+        <h2>Bon retour</h2>
+        <p class="subtitle">Connectez-vous pour retrouver vos créations.</p>
+        <form id="login-form">
+            <div class="input-group">
+                <label>Adresse Email</label>
+                <input type="email" id="email" placeholder="votre@email.com" required>
+            </div>
+            <div class="input-group">
+                <label>Mot de passe</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="••••••••" required>
+                    <i class="fas fa-eye" id="toggle-password"></i>
+                </div>
+            </div>
+            <p id="error-msg"></p>
+            <button type="submit" class="btn-submit">Se connecter</button>
+        </form>
+        <div class="links">
+            <a href="#">Mot de passe oublié ?</a>
+            <a href="/signup.html" style="color: var(--text-light); margin-top: 1.5rem;">Pas encore de compte ? <strong style="color: var(--neon-lime);">S'inscrire</strong></a>
+        </div>
+    </div>
+    
     <script>
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Correction du système de l'oeil
         const togglePassword = document.getElementById('toggle-password');
         const password = document.getElementById('password');
         
         togglePassword.addEventListener('click', function () {
             if (password.type === 'password') {
-                password.type = 'text'; // On rend visible
+                password.type = 'text';
                 this.classList.remove('fa-eye');
-                this.classList.add('fa-eye-slash'); // On met l'oeil barré
+                this.classList.add('fa-eye-slash');
             } else {
-                password.type = 'password'; // On cache
+                password.type = 'password';
                 this.classList.remove('fa-eye-slash');
-                this.classList.add('fa-eye'); // On remet l'oeil normal
+                this.classList.add('fa-eye');
             }
         });
 
@@ -39,3 +137,5 @@
             }
         });
     </script>
+</body>
+</html>
