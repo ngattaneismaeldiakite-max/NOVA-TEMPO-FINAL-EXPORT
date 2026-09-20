@@ -8,7 +8,6 @@
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Script Supabase -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
     <style>
@@ -38,11 +37,9 @@
         .form-group { margin-bottom: 2.5rem; }
         .form-group label.main-label { display: block; margin-bottom: 1rem; color: var(--text-light); font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* CHAMPS CLASSIQUES ET DYNAMIQUES */
         input[type="text"], textarea { width: 100%; padding: 1.2rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-family: inherit; font-size: 1rem; box-sizing: border-box; transition: all 0.3s; }
         input:focus, textarea:focus { outline: none; border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); box-shadow: 0 0 15px rgba(212, 255, 0, 0.1); }
         
-        /* Style des sous-questions générées dynamiquement */
         .dynamic-field { margin-bottom: 1.2rem; animation: fadeIn 0.5s ease; }
         .dynamic-field label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.95rem; font-weight: 600; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
@@ -58,6 +55,10 @@
         .btn-generate { width: 100%; padding: 1.2rem; background: var(--neon-lime); color: var(--bg-dark); border: none; border-radius: 12px; font-weight: 900; font-size: 1.2rem; cursor: pointer; text-transform: uppercase; margin-top: 2rem; transition: transform 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(212, 255, 0, 0.2); }
         .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212, 255, 0, 0.4); }
         .btn-generate:disabled { background: #333; color: #888; cursor: not-allowed; box-shadow: none; transform: none; }
+
+        /* LECTEUR AUDIO CACHÉ PAR DÉFAUT */
+        #result-container { display: none; margin-top: 2rem; padding: 1.5rem; background: rgba(212, 255, 0, 0.1); border: 1px solid var(--neon-lime); border-radius: 12px; text-align: center; }
+        audio { width: 100%; margin-top: 1rem; outline: none; }
 
         #page-loader { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s; }
         .spinner { width: 50px; height: 50px; border: 4px solid rgba(212, 255, 0, 0.3); border-top-color: var(--neon-lime); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
@@ -93,7 +94,7 @@
         <p class="subtitle">Laisse-toi guider. Réponds à quelques questions, NovaTempo crée la magie.</p>
 
         <div class="studio-card">
-            <form onsubmit="handleGenerate(event)">
+            <form id="studio-form" onsubmit="handleGenerate(event)">
                 
                 <div class="form-group">
                     <label class="main-label">1. Pour qui est cette chanson ?</label>
@@ -124,7 +125,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="main-label">4. Les détails de la chanson (Personnalisation)</label>
+                    <label class="main-label">4. Les détails de la chanson</label>
                     <div id="dynamic-form-container" style="padding: 1rem; border: 1px dashed rgba(212,255,0,0.3); border-radius: 12px; text-align: center; color: var(--text-muted);">
                         Veuillez sélectionner une occasion ci-dessus pour voir les questions s'afficher ici.
                     </div>
@@ -134,6 +135,14 @@
                     <i class="fas fa-magic"></i> Générer ma chanson (1 crédit)
                 </button>
             </form>
+
+            <!-- ZONE D'AFFICHAGE DE LA MUSIQUE -->
+            <div id="result-container">
+                <h3 style="color: var(--neon-lime); margin-top: 0;">🎉 Ta chanson est prête !</h3>
+                <p>Écoute le résultat généré par l'IA :</p>
+                <audio id="audio-player" controls></audio>
+            </div>
+
         </div>
     </div>
 
@@ -157,84 +166,35 @@
             window.location.href = '/login.html';
         }
 
-        // --- 2. LOGIQUE DES FORMULAIRES PERSONNALISÉS ---
-        
+        // --- 2. LOGIQUE DES FORMULAIRES ---
         const questionsPersonnalisees = {
             'anniversaire': `
-                <div class="dynamic-field">
-                    <label>Âge fêté :</label>
-                    <input type="text" class="custom-data" data-label="Âge" required placeholder="Ex: 30 ans">
-                </div>
-                <div class="dynamic-field">
-                    <label>Quelles sont ses passions ou hobbies ?</label>
-                    <input type="text" class="custom-data" data-label="Passions" required placeholder="Ex: Il adore le football et les jeux vidéos">
-                </div>
-                <div class="dynamic-field">
-                    <label>Une anecdote amusante à placer ?</label>
-                    <input type="text" class="custom-data" data-label="Anecdote" placeholder="Ex: Il perd toujours ses clés">
-                </div>
+                <div class="dynamic-field"><label>Âge fêté :</label><input type="text" class="custom-data" data-label="Âge" required placeholder="Ex: 30 ans"></div>
+                <div class="dynamic-field"><label>Quelles sont ses passions ou hobbies ?</label><input type="text" class="custom-data" data-label="Passions" required placeholder="Ex: Il adore le football et les jeux vidéos"></div>
+                <div class="dynamic-field"><label>Une anecdote amusante à placer ?</label><input type="text" class="custom-data" data-label="Anecdote" placeholder="Ex: Il perd toujours ses clés"></div>
             `,
             'amour': `
-                <div class="dynamic-field">
-                    <label>Quel est son petit surnom ou mot doux ?</label>
-                    <input type="text" class="custom-data" data-label="Surnom" placeholder="Ex: Mon amour, Mon ange, Bébé...">
-                </div>
-                <div class="dynamic-field">
-                    <label>Qu'aimez-vous le plus chez cette personne ?</label>
-                    <input type="text" class="custom-data" data-label="Ce que j'aime chez elle/lui" required placeholder="Ex: Son sourire radieux, sa douceur, sa force...">
-                </div>
-                <div class="dynamic-field">
-                    <label>Un souvenir marquant ou une promesse pour l'avenir ?</label>
-                    <input type="text" class="custom-data" data-label="Souvenir ou Promesse" required placeholder="Ex: Notre premier baiser sous la pluie, je t'aimerai toujours...">
-                </div>
+                <div class="dynamic-field"><label>Quel est son petit surnom ou mot doux ?</label><input type="text" class="custom-data" data-label="Surnom" placeholder="Ex: Mon amour, Mon ange, Bébé..."></div>
+                <div class="dynamic-field"><label>Qu'aimez-vous le plus chez cette personne ?</label><input type="text" class="custom-data" data-label="Ce que j'aime" required placeholder="Ex: Son sourire radieux, sa douceur, sa force..."></div>
+                <div class="dynamic-field"><label>Un souvenir marquant ou une promesse pour l'avenir ?</label><input type="text" class="custom-data" data-label="Souvenir ou Promesse" required placeholder="Ex: Notre premier baiser sous la pluie..."></div>
             `,
             'mariage': `
-                <div class="dynamic-field">
-                    <label>Comment ou où se sont-ils rencontrés ?</label>
-                    <input type="text" class="custom-data" data-label="Lieu de rencontre" required placeholder="Ex: À la fac de médecine en 2018">
-                </div>
-                <div class="dynamic-field">
-                    <label>Que souhaitez-vous mettre en avant dans leur couple ?</label>
-                    <input type="text" class="custom-data" data-label="Force du couple" required placeholder="Ex: Leur complicité et leurs voyages">
-                </div>
-                <div class="dynamic-field">
-                    <label>Un message pour leur futur ?</label>
-                    <input type="text" class="custom-data" data-label="Vœux" required placeholder="Ex: Beaucoup d'enfants et de rires">
-                </div>
+                <div class="dynamic-field"><label>Comment ou où se sont-ils rencontrés ?</label><input type="text" class="custom-data" data-label="Lieu de rencontre" required placeholder="Ex: À la fac de médecine en 2018"></div>
+                <div class="dynamic-field"><label>Que souhaitez-vous mettre en avant dans leur couple ?</label><input type="text" class="custom-data" data-label="Force du couple" required placeholder="Ex: Leur complicité et leurs voyages"></div>
+                <div class="dynamic-field"><label>Un message pour leur futur ?</label><input type="text" class="custom-data" data-label="Vœux" required placeholder="Ex: Beaucoup d'enfants et de rires"></div>
             `,
             'adoration': `
-                <div class="dynamic-field">
-                    <label>Quel attribut divin voulez-vous exalter ?</label>
-                    <input type="text" class="custom-data" data-label="Attribut" required placeholder="Ex: Sa miséricorde, Sa toute puissance">
-                </div>
-                <div class="dynamic-field">
-                    <label>Quel est le thème spirituel de la chanson ?</label>
-                    <input type="text" class="custom-data" data-label="Thème" required placeholder="Ex: Le pardon, la victoire, la paix intérieure">
-                </div>
-                <div class="dynamic-field">
-                    <label>Avez-vous un verset ou une prière spécifique à intégrer ?</label>
-                    <input type="text" class="custom-data" data-label="Verset/Prière" placeholder="Ex: Psaume 23, ou 'Me voici devant Toi'">
-                </div>
+                <div class="dynamic-field"><label>Quel attribut divin voulez-vous exalter ?</label><input type="text" class="custom-data" data-label="Attribut" required placeholder="Ex: Sa miséricorde, Sa toute puissance"></div>
+                <div class="dynamic-field"><label>Quel est le thème spirituel de la chanson ?</label><input type="text" class="custom-data" data-label="Thème" required placeholder="Ex: Le pardon, la victoire, la paix intérieure"></div>
+                <div class="dynamic-field"><label>Avez-vous un verset ou une prière spécifique à intégrer ?</label><input type="text" class="custom-data" data-label="Verset/Prière" placeholder="Ex: Psaume 23, ou 'Me voici devant Toi'"></div>
             `,
             'hommage': `
-                <div class="dynamic-field">
-                    <label>Quel est le plus beau souvenir de cette personne ?</label>
-                    <input type="text" class="custom-data" data-label="Souvenir" required placeholder="Ex: Ses grands repas de famille le dimanche">
-                </div>
-                <div class="dynamic-field">
-                    <label>Quelle était sa plus grande qualité ?</label>
-                    <input type="text" class="custom-data" data-label="Qualité" required placeholder="Ex: Sa générosité infinie">
-                </div>
+                <div class="dynamic-field"><label>Quel est le plus beau souvenir de cette personne ?</label><input type="text" class="custom-data" data-label="Souvenir" required placeholder="Ex: Ses grands repas de famille le dimanche"></div>
+                <div class="dynamic-field"><label>Quelle était sa plus grande qualité ?</label><input type="text" class="custom-data" data-label="Qualité" required placeholder="Ex: Sa générosité infinie"></div>
             `,
             'evenement': `
-                <div class="dynamic-field">
-                    <label>Quel est le nom et le but de l'événement ?</label>
-                    <input type="text" class="custom-data" data-label="Nom de l'événement" required placeholder="Ex: Lancement de notre nouvelle marque">
-                </div>
-                <div class="dynamic-field">
-                    <label>Quelle est l'ambiance ou le message à faire passer ?</label>
-                    <input type="text" class="custom-data" data-label="Ambiance" required placeholder="Ex: Festif, inspirant et motivant pour l'avenir">
-                </div>
+                <div class="dynamic-field"><label>Quel est le nom et le but de l'événement ?</label><input type="text" class="custom-data" data-label="Nom de l'événement" required placeholder="Ex: Lancement de notre nouvelle marque"></div>
+                <div class="dynamic-field"><label>Quelle est l'ambiance ou le message à faire passer ?</label><input type="text" class="custom-data" data-label="Ambiance" required placeholder="Ex: Festif, inspirant et motivant pour l'avenir"></div>
             `
         };
 
@@ -247,8 +207,8 @@
             }
         }
 
-        // --- 3. ASSEMBLAGE ET GÉNÉRATION ---
-        function handleGenerate(event) {
+        // --- 3. ASSEMBLAGE ET ENVOI A L'API VERCEL ---
+        async function handleGenerate(event) {
             event.preventDefault(); 
             const btn = document.getElementById('generate-btn');
             
@@ -268,16 +228,43 @@
 
             const promptFinalPourAPI = `Chanson pour : ${cible}. \nOccasion : ${occasion}. \nStyle : ${style}. \nVoici les détails précis de la chanson : \n${histoireAssemblee}`;
 
-            console.log("Ordre complet envoyé à l'API : \n" + promptFinalPourAPI);
-
+            // Changement du bouton pendant le chargement
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Création de la chanson...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> L\'IA génère votre chanson (patientez)...';
             
-            setTimeout(() => {
-                alert("TEST VALIDÉ ! Ouvre la 'Console' de ton navigateur pour voir comment le code a parfaitement assemblé toutes les petites réponses pour l'API !");
+            try {
+                // CONNEXION RÉELLE À L'API SUR VERCEL
+                // NOTE: J'ai mis '/api/generate'. Si ton fichier s'appelle '/api/suno', change juste le mot ci-dessous !
+                const reponse = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: promptFinalPourAPI,
+                        style: style
+                    })
+                });
+
+                if (!reponse.ok) {
+                    throw new Error("Erreur avec l'API Suno.");
+                }
+
+                const data = await reponse.json();
+                
+                // On cache le bouton Générer et on affiche le lecteur audio
+                document.getElementById('studio-form').style.display = 'none';
+                document.getElementById('result-container').style.display = 'block';
+                
+                // On insère l'URL de la musique dans le lecteur audio (dépend du format renvoyé par ton API)
+                const audioPlayer = document.getElementById('audio-player');
+                audioPlayer.src = data.audio_url || data.url || data.file_url; // Ajuste selon la réponse de ton API
+                audioPlayer.play();
+
+            } catch (erreur) {
+                console.error(erreur);
+                alert("Oups ! Une erreur s'est produite lors de la connexion à l'API. Assure-toi que ton fichier /api/generate existe sur GitHub.");
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-magic"></i> Générer ma chanson (1 crédit)';
-            }, 2000);
+                btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
+            }
         }
     </script>
 </body>
