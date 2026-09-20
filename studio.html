@@ -32,6 +32,15 @@
         h1 span { color: var(--neon-lime); }
         .subtitle { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 3rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
+        /* LE STYLE MAGIQUE POUR REMPLACER "IA" */
+        .nova-brand {
+            color: var(--neon-lime);
+            font-weight: 900;
+            font-style: italic;
+            text-shadow: 0 0 12px rgba(212, 255, 0, 0.7);
+            letter-spacing: 0.5px;
+        }
+
         .studio-card { background: rgba(17, 17, 24, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 3rem; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         
         .form-group { margin-bottom: 2.5rem; }
@@ -87,7 +96,8 @@
 
     <div class="container">
         <h1>Le <span>Studio</span></h1>
-        <p class="subtitle">Réponds à quelques questions, NovaTempo crée la magie.</p>
+        <!-- Remplacement de IA par NovaTempo stylisé -->
+        <p class="subtitle">Réponds à quelques questions, <span class="nova-brand">NovaTempo</span> crée la magie.</p>
 
         <div class="studio-card">
             <form id="studio-form" onsubmit="handleGenerate(event)">
@@ -118,7 +128,6 @@
                         <label class="radio-card"><input type="radio" name="style" value="Zouk"><span class="card-content">💃 Zouk</span></label>
                         <label class="radio-card"><input type="radio" name="style" value="Amapiano"><span class="card-content">🔥 Amapiano</span></label>
                         <label class="radio-card"><input type="radio" name="style" value="Ndombolo"><span class="card-content">🎸 Ndombolo</span></label>
-                        <!-- LE BOUTON GOSPEL EST ICI ! -->
                         <label class="radio-card"><input type="radio" name="style" value="Gospel"><span class="card-content">🙏 Gospel</span></label>
                     </div>
                 </div>
@@ -140,13 +149,14 @@
                 </div>
 
                 <button type="submit" class="btn-generate" id="generate-btn">
-                    <i class="fas fa-magic"></i> Générer ma chanson (1 crédit)
+                    <i class="fas fa-magic"></i> Générer ma chanson
                 </button>
             </form>
 
             <div id="result-container">
                 <h3 style="color: var(--neon-lime); margin-top: 0;">🎉 Ta chanson est prête !</h3>
-                <p>Écoute ta création exclusive NovaTempo :</p>
+                <!-- Remplacement de IA par NovaTempo stylisé -->
+                <p>Écoute ta création exclusive <span class="nova-brand">NovaTempo</span> :</p>
                 <audio id="audio-player" controls></audio>
             </div>
 
@@ -231,13 +241,14 @@
             const promptFinal = `Fais une chanson pour : ${cible}.\nC'est pour l'occasion : ${occasion}.\nDétails importants :\n${histoireAssemblee}`;
 
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Préparation du studio NovaTempo...';
+            // Remplacement de IA par NovaTempo stylisé
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Préparation du studio <span class="nova-brand" style="font-size: 1rem; text-shadow: none;">NovaTempo</span>...';
             
             const phrasesAttente = [
                 "🎸 Les musiciens accordent leurs guitares...",
                 "🎤 Le chanteur s'échauffe la voix...",
                 "🎹 Mixage de la piste audio en cours...",
-                "🎧 NovaTempo finalise les derniers réglages...",
+                "🎧 <span class='nova-brand' style='font-size: 1rem; text-shadow: none;'>NovaTempo</span> finalise les derniers réglages...",
                 "✨ La magie opère, encore quelques secondes..."
             ];
             let phraseIndex = 0;
