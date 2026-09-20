@@ -69,7 +69,7 @@
             width: 100%; 
             max-width: 1400px; 
             margin: 0 auto; 
-            margin-bottom: 8rem; 
+            margin-bottom: 12rem; /* Plus d'espace en bas pour les disques */
             position: relative;
             z-index: 2;
         }
@@ -77,47 +77,50 @@
         .hero-text { max-width: 700px; }
         .hero-text h1 { font-size: 5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5.5rem; }
-        .hero-text p { font-size: 1.25rem; color: rgba(255,255,255,0.9); margin-bottom: 3rem; max-width: 550px; line-height: 1.6; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
+        .hero-text p { font-size: 1.25rem; color: rgba(255,255,255,0.9); margin-bottom: 0; max-width: 550px; line-height: 1.6; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
 
         /* VINYLS SHOWCASE (EN BAS AU CENTRE) */
         .vinyl-showcase {
             position: absolute;
-            bottom: 3rem;
+            bottom: 1rem; /* Descendu plus bas */
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
 
-        .vinyl-text { 
-            color: var(--text-light); 
-            font-weight: 700; 
-            font-size: 1.1rem; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8); 
+        /* NOUVEAU TITRE ORIGINAL */
+        .vinyl-text-new {
+            color: var(--text-light);
+            font-size: 2.5rem;
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
             text-align: center;
             margin-bottom: 1.5rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
         }
-        .vinyl-text span { 
-            display: block; 
-            font-size: 0.85rem; 
-            color: rgba(255,255,255,0.8); 
-            font-weight: 400; 
-            text-transform: none; 
-            margin-top: 5px;
+        .vinyl-text-new span {
+            color: var(--neon-lime);
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 900;
+            font-style: normal;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-left: 8px;
         }
 
         .vinyl-container { 
             display: flex; 
-            gap: 3rem; /* Espacement augmenté car les disques sont plus grands */
+            gap: 3rem; 
             align-items: center; 
         }
 
         .vinyl {
-            width: 160px; /* TOUS LA MÊME GRANDE TAILLE */
+            width: 160px; 
             height: 160px; 
             border-radius: 50%; 
             background-color: #1a1a1a;
@@ -142,7 +145,6 @@
             transition: background 0.3s;
         }
         .vinyl:hover::after { background: rgba(0,0,0,0.2); }
-
         .vinyl:hover { border-color: var(--neon-lime); transform: scale(1.05); }
         .vinyl.playing { border-color: var(--neon-lime); box-shadow: 0 0 35px rgba(212, 255, 0, 0.5); animation: spin 2.5s linear infinite; }
         
@@ -175,12 +177,14 @@
         @media (max-width: 1000px) {
             .hero { padding: 0 2rem; }
             .hero-overlay { background: linear-gradient(180deg, rgba(6,6,10,0.6) 0%, #06060A 100%); }
-            .hero-content { margin-bottom: 12rem; text-align: center; } 
+            .hero-content { margin-bottom: 16rem; text-align: center; } 
             .hero-text h1 { font-size: 3.5rem; }
             .hero-text h1 span { font-size: 4rem; }
+            .vinyl-text-new { font-size: 2rem; }
+            .vinyl-text-new span { font-size: 1.4rem; display: block; margin-left: 0; margin-top: 5px; }
             nav { padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: rgba(6,6,10,0.95); }
             .occasions-section { padding: 4rem 2rem; }
-            .vinyl { width: 100px; height: 100px; } /* Ajusté pour mobile */
+            .vinyl { width: 100px; height: 100px; }
         }
     </style>
 </head>
@@ -195,7 +199,7 @@
         </div>
         <div class="auth-buttons">
             <a href="/login.html" class="btn-login">Connexion</a>
-            <!-- Bouton Créer une chanson laissé dans le menu pour s'inscrire -->
+            <!-- Le bouton inscription reste dans le menu ! -->
             <a href="/signup.html" class="btn-signup">Créer une chanson</a>
         </div>
     </nav>
@@ -208,15 +212,14 @@
             <div class="hero-text">
                 <h1>Générez des émotions <span>uniques</span></h1>
                 <p>Oubliez les cadeaux génériques. Avec Nova Tempo, transformez vos sentiments en une musique personnalisée, qualité studio, en quelques secondes.</p>
-                <!-- Bouton "Essayer gratuitement" SUPPRIMÉ ! -->
+                <!-- Bouton supprimé ici pour forcer l'écoute ! -->
             </div>
         </div>
 
-        <!-- LE LECTEUR MUSICAL AU CENTRE EN BAS -->
+        <!-- LE LECTEUR MUSICAL -->
         <div class="vinyl-showcase">
-            <div class="vinyl-text">
-                Écoutez
-                <span>Cliquez sur un disque pour lancer la démo</span>
+            <div class="vinyl-text-new">
+                Écoute, kiffe, et <span>crée la tienne</span>
             </div>
             
             <div class="vinyl-container">
