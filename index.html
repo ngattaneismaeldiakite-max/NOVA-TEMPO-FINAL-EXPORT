@@ -77,10 +77,7 @@
         /* MODALS */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1000; }
         .modal:target { opacity: 1; visibility: visible; }
-        
-        /* Pour que la FAQ puisse défiler si elle est longue */
         .modal-content { background: var(--card-bg); padding: 3rem; border-radius: 24px; width: 90%; max-width: 650px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 85vh; overflow-y: auto; }
-        
         .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--text-muted); text-decoration: none; font-size: 1.5rem; }
         .modal-close:hover { color: var(--neon-lime); }
         .modal h2 { margin-top: 0; color: var(--neon-lime); text-transform: uppercase; font-size: 2rem; margin-bottom: 1.5rem; }
@@ -109,4 +106,211 @@
             .occasions-section { padding: 4rem 2rem; }
             .vinyl-container { gap: 1.5rem; }
             .vinyl { width: 110px; height: 110px; }
-            .vinyl.middle { width: 140px; height: 140px;
+            .vinyl.middle { width: 140px; height: 140px; }
+            .vinyl::before { width: 25px; height: 25px; }
+        }
+        @media (max-width: 600px) {
+            .vinyl-container { gap: 1rem; }
+            .vinyl { width: 90px; height: 90px; }
+            .vinyl.middle { width: 120px; height: 120px; }
+            .vinyl-text-new { font-size: 1.8rem; }
+            .vinyl-text-new span { font-size: 1.3rem; display: block; margin-left: 0; margin-top: 5px; }
+            .hero-content { margin-bottom: 12rem; }
+            .occ-card { max-width: 100%; } 
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
+        <div class="nav-links">
+            <a href="#modal-tarifs">Tarifs</a>
+            <a href="#modal-faq">FAQ</a>
+            <a href="#modal-temoignages">Témoignages</a>
+        </div>
+        <div class="auth-buttons">
+            <a href="/login.html" class="btn-login">Connexion</a>
+            <a href="/signup.html" class="btn-signup">Créer une chanson</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Générez des émotions <span>uniques</span></h1>
+                <p>Oubliez les cadeaux génériques. Avec Nova Tempo, transformez vos sentiments en une musique personnalisée, qualité studio, en quelques secondes.</p>
+            </div>
+        </div>
+
+        <div class="vinyl-showcase">
+            <div class="vinyl-text-new">
+                Écoute, kiffe, et <span>crée la tienne</span>
+            </div>
+            
+            <div class="vinyl-container">
+                <div class="vinyl" onclick="toggleAudio('audio1', this)" style="background-image: url('pour-toi.jpg?v=1');">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div class="vinyl middle" onclick="toggleAudio('audio3', this)" style="animation-delay: -1s; background-image: url('nova-tempo.jpg?v=1');">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div class="vinyl" onclick="toggleAudio('audio2', this)" style="animation-delay: -2s; background-image: url('maman.jpg?v=1');">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+        </div>
+
+        <audio id="audio1" src="demo1.mp3"></audio>
+        <audio id="audio2" src="demo2.mp3"></audio>
+        <audio id="audio3" src="demo3.mp3"></audio>
+
+    </section>
+
+    <section class="occasions-section">
+        <h2 class="section-title">Des musiques pour chaque instant</h2>
+        <p class="section-subtitle">Mariage, anniversaire, réussite, hommage... chaque émotion a sa mélodie.</p>
+
+        <div class="occ-grid">
+            <a href="/signup.html" class="occ-card"><img src="anniversaire.jpg" alt="Anniversaire"><div class="occ-overlay"><h3>Anniversaire</h3></div></a>
+            <a href="/signup.html" class="occ-card"><img src="mariage.jpg" alt="Mariage"><div class="occ-overlay"><h3>Mariage</h3></div></a>
+            <a href="/signup.html" class="occ-card"><img src="hommage.jpg" alt="Hommage"><div class="occ-overlay"><h3>Hommage</h3></div></a>
+            <a href="/signup.html" class="occ-card"><img src="evenement.jpg" alt="Événement"><div class="occ-overlay"><h3>Événement</h3></div></a>
+            <a href="/signup.html" class="occ-card"><img src="adoration.jpg" alt="Adoration"><div class="occ-overlay"><h3>Adoration</h3></div></a>
+        </div>
+    </section>
+
+    <!-- MODAL TARIFS -->
+    <div id="modal-tarifs" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
+            <h2>Nos Tarifs</h2>
+            <p>Un modèle simple. Haute qualité, téléchargement inclus.</p>
+            <ul style="list-style:none; padding:0; margin-top: 2rem;">
+                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Unitaire :</strong> 1 000 FCFA (1 création)</li>
+                <li style="margin-bottom:1rem; padding:1rem; background:rgba(212, 255, 0, 0.05); border:1px solid var(--neon-lime); border-radius:12px;"><strong>Pack 3 (Populaire) :</strong> 2 500 FCFA (3 créations)</li>
+                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Pack 5 :</strong> 4 000 FCFA (5 créations)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- MODAL FAQ ACCORDEON -->
+    <div id="modal-faq" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
+            <h2>Questions Fréquentes</h2>
+            
+            <div class="faq-category"><i class="fas fa-music"></i> Comment ça marche</div>
+            <details>
+                <summary>Comment je crée ma chanson ?</summary>
+                <div class="faq-answer">Rien de compliqué. Tu choisis l'occasion (anniversaire, amour, hommage...), tu sélectionnes un style musical, tu nous racontes en quelques mots qui est la personne et ce que tu veux lui dire — et NovaTempo s'occupe du reste : paroles et musique générées en quelques minutes.</div>
+            </details>
+            <details>
+                <summary>Combien de temps ça prend ?</summary>
+                <div class="faq-answer">En général entre 1 et 3 minutes pour avoir ta chanson complète, prête à écouter et à télécharger. Le temps peut varier légèrement selon l'affluence.</div>
+            </details>
+            <details>
+                <summary>Je ne sais pas quoi écrire, c'est grave ?</summary>
+                <div class="faq-answer">Pas du tout. Il te suffit de donner un nom, une relation et une anecdote ou un détail. NovaTempo transforme ça en vraies paroles, dans un français simple et vivant.</div>
+            </details>
+            <details>
+                <summary>Puis-je modifier les paroles ?</summary>
+                <div class="faq-answer">Oui, une fois les paroles proposées, tu peux les ajuster à ta guise avant de lancer la génération musicale finale.</div>
+            </details>
+
+            <div class="faq-category"><i class="fas fa-compact-disc"></i> Styles musicaux</div>
+            <details>
+                <summary>Quels styles sont disponibles ?</summary>
+                <div class="faq-answer">Afrobeat, Amapiano, Coupé Décalé, Rap, Zouk, Gospel, et d'autres à venir. Chaque style a son ambiance propre.</div>
+            </details>
+            <details>
+                <summary>Puis-je changer de style après génération ?</summary>
+                <div class="faq-answer">Oui, tu peux relancer une nouvelle génération avec un style différent, avec le même texte ou en le modifiant.</div>
+            </details>
+
+            <div class="faq-category"><i class="fas fa-credit-card"></i> Tarifs et paiement</div>
+            <details>
+                <summary>Combien ça coûte ? y a-t-il des frais cachés ?</summary>
+                <div class="faq-answer">1 chanson = 1 000 FCFA. Il existe aussi des packs dégressifs (ex: 3 chansons = 2 500 FCFA). Aucun frais caché, pas d'abonnement. Le prix affiché est le prix final, avec téléchargement haute qualité inclus.</div>
+            </details>
+            <details>
+                <summary>Comment je paie et est-ce sécurisé ?</summary>
+                <div class="faq-answer">Par Wave, Orange Money, MTN Mobile Money ou Moov Money. Chaque transaction passe par une plateforme de paiement certifiée (FedaPay). Nous n'avons jamais accès à tes identifiants.</div>
+            </details>
+
+            <div class="faq-category"><i class="fas fa-download"></i> Après la génération</div>
+            <details>
+                <summary>Où retrouver et télécharger mes chansons ?</summary>
+                <div class="faq-answer">Toutes tes créations sont sauvegardées dans ta rubrique "Ma Bibliothèque". Tu peux télécharger chaque chanson en fichier audio pour la partager sur WhatsApp ou les réseaux.</div>
+            </details>
+            <details>
+                <summary>Je peux partager ma chanson publiquement ?</summary>
+                <div class="faq-answer">Oui, la chanson t'appartient dès qu'elle est générée et payée — tu peux la partager librement partout.</div>
+            </details>
+
+            <div class="faq-category"><i class="fas fa-shield-alt"></i> Compte et confidentialité</div>
+            <details>
+                <summary>Mes informations sont-elles privées ?</summary>
+                <div class="faq-answer">Oui. Seul toi as accès à tes créations. Personne d'autre ne peut voir tes chansons ou les informations que tu as renseignées.</div>
+            </details>
+
+            <div class="faq-category"><i class="fas fa-headset"></i> Support</div>
+            <details>
+                <summary>J'ai un problème, comment vous contacter ?</summary>
+                <div class="faq-answer">Le petit chat en bas à droite de l'écran est là pour ça — écris-nous directement, on te répond au plus vite ! NovaTempo fonctionne partout où tu as internet.</div>
+            </details>
+        </div>
+    </div>
+
+    <!-- MODAL TEMOIGNAGES -->
+    <div id="modal-temoignages" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
+            <h2>Témoignages</h2>
+            <div style="margin-top:2rem;">
+                <div style="padding:1.5rem; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:1rem;">
+                    <p style="font-style:italic; margin-top:0;">"J'ai créé une chanson pour le mariage de ma sœur. Tout le monde pleurait de joie !"</p>
+                    <strong style="color:var(--neon-lime);">— Aminata</strong>
+                </div>
+                <div style="padding:1.5rem; background:rgba(255,255,255,0.05); border-radius:12px;">
+                    <p style="font-style:italic; margin-top:0;">"L'Afrobeat généré pour la promo de ma boutique est incroyable. Rapide et pro."</p>
+                    <strong style="color:var(--neon-lime);">— Cédric</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DU LECTEUR -->
+    <script>
+        function toggleAudio(audioId, vinylElement) {
+            const audio = document.getElementById(audioId);
+            const allAudios = document.querySelectorAll('audio');
+            const allVinyls = document.querySelectorAll('.vinyl');
+
+            if (audio.paused) {
+                allAudios.forEach(a => { a.pause(); a.currentTime = 0; });
+                allVinyls.forEach(v => {
+                    v.classList.remove('playing');
+                    v.querySelector('i').classList.replace('fa-pause', 'fa-play');
+                });
+                
+                audio.play();
+                vinylElement.classList.add('playing');
+                vinylElement.querySelector('i').classList.replace('fa-play', 'fa-pause');
+            } else {
+                audio.pause();
+                vinylElement.classList.remove('playing');
+                vinylElement.querySelector('i').classList.replace('fa-pause', 'fa-play');
+            }
+
+            audio.onended = function() {
+                vinylElement.classList.remove('playing');
+                vinylElement.querySelector('i').classList.replace('fa-pause', 'fa-play');
+            };
+        }
+    </script>
+</body>
+</html>
