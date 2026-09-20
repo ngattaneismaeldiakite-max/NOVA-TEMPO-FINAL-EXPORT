@@ -36,125 +36,29 @@
         .btn-signup { background-color: var(--neon-lime); color: var(--bg-dark); box-shadow: 0 0 15px rgba(212, 255, 0, 0.2); }
         .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(212, 255, 0, 0.4); }
 
-        /* HERO SECTION AVEC ARRIÈRE-PLAN */
-        .hero { 
-            min-height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            padding: 0 4rem; 
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('fille-casque.jpg');
-            background-size: cover;
-            background-position: center;
-            filter: blur(3px) brightness(0.9);
-            transform: scale(1.02); 
-            z-index: 0;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(90deg, #06060A 0%, rgba(6,6,10,0.85) 45%, rgba(6,6,10,0.2) 100%);
-            z-index: 1;
-        }
-
-        .hero-content { 
-            display: block;
-            width: 100%; 
-            max-width: 1400px; 
-            margin: 0 auto; 
-            margin-bottom: 15rem; 
-            position: relative;
-            z-index: 2;
-        }
-        
+        /* HERO SECTION */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 0 4rem; position: relative; overflow: hidden; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; filter: blur(3px) brightness(0.9); transform: scale(1.02); z-index: 0; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, #06060A 0%, rgba(6,6,10,0.85) 45%, rgba(6,6,10,0.2) 100%); z-index: 1; }
+        .hero-content { display: block; width: 100%; max-width: 1400px; margin: 0 auto; margin-bottom: 15rem; position: relative; z-index: 2; }
         .hero-text { max-width: 700px; }
         .hero-text h1 { font-size: 5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5.5rem; }
         .hero-text p { font-size: 1.25rem; color: rgba(255,255,255,0.9); margin-bottom: 0; max-width: 550px; line-height: 1.6; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
 
         /* VINYLS SHOWCASE */
-        .vinyl-showcase {
-            position: absolute;
-            bottom: 2rem; 
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        .vinyl-text-new {
-            color: var(--text-light);
-            font-size: 2.5rem;
-            font-family: 'Instrument Serif', serif;
-            font-style: italic;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
-        }
-        .vinyl-text-new span {
-            color: var(--neon-lime);
-            font-family: 'Satoshi', sans-serif;
-            font-weight: 900;
-            font-style: normal;
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            display: inline-block;
-            margin-left: 8px;
-        }
-
-        .vinyl-container { 
-            display: flex; 
-            gap: 2.5rem; 
-            align-items: center; 
-        }
-
-        .vinyl {
-            width: 200px; 
-            height: 200px; 
-            border-radius: 50%; 
-            background-color: #1a1a1a;
-            background-size: cover; 
-            background-position: center;
-            border: 2px solid rgba(255,255,255,0.2); 
-            display: flex; justify-content: center; align-items: center;
-            position: relative; 
-            animation: spin 5s linear infinite; 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
-            cursor: pointer; 
-            transition: all 0.3s;
-            overflow: hidden;
-        }
-
-        .vinyl.middle { 
-            width: 250px; 
-            height: 250px; 
-        }
-
-        .vinyl::after {
-            content: '';
-            position: absolute; inset: 0;
-            background: rgba(0,0,0,0.4);
-            border-radius: 50%;
-            z-index: 0;
-            transition: background 0.3s;
-        }
+        .vinyl-showcase { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .vinyl-text-new { color: var(--text-light); font-size: 2.5rem; font-family: 'Instrument Serif', serif; font-style: italic; text-align: center; margin-bottom: 1.5rem; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
+        .vinyl-text-new span { color: var(--neon-lime); font-family: 'Satoshi', sans-serif; font-weight: 900; font-style: normal; font-size: 1.8rem; text-transform: uppercase; display: inline-block; margin-left: 8px; }
+        .vinyl-container { display: flex; gap: 2.5rem; align-items: center; }
+        .vinyl { width: 200px; height: 200px; border-radius: 50%; background-color: #1a1a1a; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; position: relative; animation: spin 5s linear infinite; box-shadow: 0 15px 40px rgba(0,0,0,0.9); cursor: pointer; transition: all 0.3s; overflow: hidden; }
+        .vinyl.middle { width: 250px; height: 250px; }
+        .vinyl::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); border-radius: 50%; z-index: 0; transition: background 0.3s; }
         .vinyl:hover::after { background: rgba(0,0,0,0.2); }
         .vinyl:hover { border-color: var(--neon-lime); transform: scale(1.05); }
         .vinyl.playing { border-color: var(--neon-lime); box-shadow: 0 0 45px rgba(212, 255, 0, 0.6); animation: spin 2.5s linear infinite; }
-        
         .vinyl::before { content: ''; position: absolute; width: 45px; height: 45px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .vinyl.playing::before { background: var(--neon-pink); }
-        
         .vinyl i { color: #000; z-index: 2; font-size: 1.5rem; margin-left: 3px; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -162,25 +66,8 @@
         .occasions-section { padding: 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
         .section-title { font-size: 3rem; font-weight: 900; text-align: center; margin-bottom: 1rem; text-transform: uppercase; }
         .section-subtitle { text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-bottom: 4rem; }
-        
-        .occ-grid { 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            gap: 2rem; 
-        }
-        
-        .occ-card { 
-            width: 100%;
-            max-width: 320px; 
-            height: 280px; 
-            position: relative; 
-            border-radius: 20px; 
-            overflow: hidden; 
-            text-decoration: none; 
-            border: 1px solid rgba(255,255,255,0.05); 
-            transition: all 0.4s ease; 
-        }
+        .occ-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+        .occ-card { width: 100%; max-width: 320px; height: 280px; position: relative; border-radius: 20px; overflow: hidden; text-decoration: none; border: 1px solid rgba(255,255,255,0.05); transition: all 0.4s ease; }
         .occ-card:hover { transform: translateY(-10px); border-color: var(--neon-lime); box-shadow: 0 15px 30px rgba(212, 255, 0, 0.15); }
         .occ-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .occ-card:hover img { transform: scale(1.05); }
@@ -190,10 +77,26 @@
         /* MODALS */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1000; }
         .modal:target { opacity: 1; visibility: visible; }
-        .modal-content { background: var(--card-bg); padding: 3rem; border-radius: 24px; width: 90%; max-width: 600px; position: relative; border: 1px solid rgba(255,255,255,0.1); }
+        
+        /* Pour que la FAQ puisse défiler si elle est longue */
+        .modal-content { background: var(--card-bg); padding: 3rem; border-radius: 24px; width: 90%; max-width: 650px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 85vh; overflow-y: auto; }
+        
         .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--text-muted); text-decoration: none; font-size: 1.5rem; }
         .modal-close:hover { color: var(--neon-lime); }
-        .modal h2 { margin-top: 0; color: var(--neon-lime); text-transform: uppercase; font-size: 2rem; }
+        .modal h2 { margin-top: 0; color: var(--neon-lime); text-transform: uppercase; font-size: 2rem; margin-bottom: 1.5rem; }
+
+        /* STYLE ACCORDEON FAQ */
+        .faq-category { color: var(--neon-lime); font-size: 1.1rem; margin-top: 2rem; margin-bottom: 1rem; text-transform: uppercase; font-weight: 900; }
+        .faq-category:first-of-type { margin-top: 0; }
+        .faq-category i { margin-right: 8px; }
+        
+        details { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-bottom: 0.8rem; overflow: hidden; transition: all 0.3s; }
+        details:hover { border-color: rgba(212, 255, 0, 0.3); background: rgba(255,255,255,0.05); }
+        summary { padding: 1.2rem; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--text-light); }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--neon-lime); transition: transform 0.3s; }
+        details[open] summary::after { transform: rotate(180deg); }
+        .faq-answer { padding: 0 1.2rem 1.2rem 1.2rem; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; }
 
         /* RESPONSIVE DESIGN */
         @media (max-width: 1100px) {
@@ -204,162 +107,6 @@
             .hero-text h1 span { font-size: 4rem; }
             nav { padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: rgba(6,6,10,0.95); }
             .occasions-section { padding: 4rem 2rem; }
-            
             .vinyl-container { gap: 1.5rem; }
             .vinyl { width: 110px; height: 110px; }
-            .vinyl.middle { width: 140px; height: 140px; }
-            .vinyl::before { width: 25px; height: 25px; }
-        }
-        
-        @media (max-width: 600px) {
-            .vinyl-container { gap: 1rem; }
-            .vinyl { width: 90px; height: 90px; }
-            .vinyl.middle { width: 120px; height: 120px; }
-            .vinyl-text-new { font-size: 1.8rem; }
-            .vinyl-text-new span { font-size: 1.3rem; display: block; margin-left: 0; margin-top: 5px; }
-            .hero-content { margin-bottom: 12rem; }
-            .occ-card { max-width: 100%; } 
-        }
-    </style>
-</head>
-<body>
-
-    <nav>
-        <a href="/" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
-        <div class="nav-links">
-            <a href="#modal-tarifs">Tarifs</a>
-            <a href="#modal-faq">FAQ</a>
-            <a href="#modal-temoignages">Témoignages</a>
-        </div>
-        <div class="auth-buttons">
-            <a href="/login.html" class="btn-login">Connexion</a>
-            <a href="/signup.html" class="btn-signup">Créer une chanson</a>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-overlay"></div>
-
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Générez des émotions <span>uniques</span></h1>
-                <p>Oubliez les cadeaux génériques. Avec Nova Tempo, transformez vos sentiments en une musique personnalisée, qualité studio, en quelques secondes.</p>
-            </div>
-        </div>
-
-        <!-- LE LECTEUR MUSICAL GEANT -->
-        <div class="vinyl-showcase">
-            <div class="vinyl-text-new">
-                Écoute, kiffe, et <span>crée la tienne</span>
-            </div>
-            
-            <div class="vinyl-container">
-                <!-- LE CODE SECRET "?v=1" EST AJOUTÉ ICI POUR FORCER L'AFFICHAGE -->
-                <div class="vinyl" onclick="toggleAudio('audio1', this)" style="background-image: url('pour-toi.jpg?v=1');">
-                    <i class="fas fa-play"></i>
-                </div>
-
-                <div class="vinyl middle" onclick="toggleAudio('audio3', this)" style="animation-delay: -1s; background-image: url('nova-tempo.jpg?v=1');">
-                    <i class="fas fa-play"></i>
-                </div>
-
-                <div class="vinyl" onclick="toggleAudio('audio2', this)" style="animation-delay: -2s; background-image: url('maman.jpg?v=1');">
-                    <i class="fas fa-play"></i>
-                </div>
-            </div>
-        </div>
-
-        <audio id="audio1" src="demo1.mp3"></audio>
-        <audio id="audio2" src="demo2.mp3"></audio>
-        <audio id="audio3" src="demo3.mp3"></audio>
-
-    </section>
-
-    <!-- SECTION OCCASIONS -->
-    <section class="occasions-section">
-        <h2 class="section-title">Des musiques pour chaque instant</h2>
-        <p class="section-subtitle">Mariage, anniversaire, réussite, hommage... chaque émotion a sa mélodie.</p>
-
-        <div class="occ-grid">
-            <a href="/signup.html" class="occ-card"><img src="anniversaire.jpg" alt="Anniversaire"><div class="occ-overlay"><h3>Anniversaire</h3></div></a>
-            <a href="/signup.html" class="occ-card"><img src="mariage.jpg" alt="Mariage"><div class="occ-overlay"><h3>Mariage</h3></div></a>
-            <a href="/signup.html" class="occ-card"><img src="hommage.jpg" alt="Hommage"><div class="occ-overlay"><h3>Hommage</h3></div></a>
-            <a href="/signup.html" class="occ-card"><img src="evenement.jpg" alt="Événement"><div class="occ-overlay"><h3>Événement</h3></div></a>
-            <a href="/signup.html" class="occ-card"><img src="adoration.jpg" alt="Adoration"><div class="occ-overlay"><h3>Adoration</h3></div></a>
-        </div>
-    </section>
-
-    <div id="modal-tarifs" class="modal">
-        <div class="modal-content">
-            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
-            <h2>Nos Tarifs</h2>
-            <p>Un modèle simple. Haute qualité, téléchargement inclus.</p>
-            <ul style="list-style:none; padding:0; margin-top: 2rem;">
-                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Unitaire :</strong> 1 000 FCFA (1 création)</li>
-                <li style="margin-bottom:1rem; padding:1rem; background:rgba(212, 255, 0, 0.05); border:1px solid var(--neon-lime); border-radius:12px;"><strong>Pack 3 (Populaire) :</strong> 2 500 FCFA (3 créations)</li>
-                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Pack 5 :</strong> 4 000 FCFA (5 créations)</li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="modal-faq" class="modal">
-        <div class="modal-content">
-            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
-            <h2>Questions Fréquentes</h2>
-            <div style="margin-top:2rem;">
-                <h4 style="color:var(--text-light); margin-bottom:0.5rem;">Comment puis-je récupérer ma musique ?</h4>
-                <p style="color:var(--text-muted); margin-top:0; margin-bottom:1.5rem;">Dès la création terminée, un bouton de téléchargement apparaît dans votre espace Studio.</p>
-                <h4 style="color:var(--text-light); margin-bottom:0.5rem;">Quels sont les moyens de paiement ?</h4>
-                <p style="color:var(--text-muted); margin-top:0;">Nous acceptons Wave et Mobile Money de manière 100% sécurisée.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-temoignages" class="modal">
-        <div class="modal-content">
-            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
-            <h2>Témoignages</h2>
-            <div style="margin-top:2rem;">
-                <div style="padding:1.5rem; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:1rem;">
-                    <p style="font-style:italic; margin-top:0;">"J'ai créé une chanson pour le mariage de ma sœur. Tout le monde pleurait de joie !"</p>
-                    <strong style="color:var(--neon-lime);">— Aminata</strong>
-                </div>
-                <div style="padding:1.5rem; background:rgba(255,255,255,0.05); border-radius:12px;">
-                    <p style="font-style:italic; margin-top:0;">"L'Afrobeat généré pour la promo de ma boutique est incroyable. Rapide et pro."</p>
-                    <strong style="color:var(--neon-lime);">— Cédric</strong>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function toggleAudio(audioId, vinylElement) {
-            const audio = document.getElementById(audioId);
-            const allAudios = document.querySelectorAll('audio');
-            const allVinyls = document.querySelectorAll('.vinyl');
-
-            if (audio.paused) {
-                allAudios.forEach(a => { a.pause(); a.currentTime = 0; });
-                allVinyls.forEach(v => {
-                    v.classList.remove('playing');
-                    v.querySelector('i').classList.replace('fa-pause', 'fa-play');
-                });
-                
-                audio.play();
-                vinylElement.classList.add('playing');
-                vinylElement.querySelector('i').classList.replace('fa-play', 'fa-pause');
-            } else {
-                audio.pause();
-                vinylElement.classList.remove('playing');
-                vinylElement.querySelector('i').classList.replace('fa-pause', 'fa-play');
-            }
-
-            audio.onended = function() {
-                vinylElement.classList.remove('playing');
-                vinylElement.querySelector('i').classList.replace('fa-pause', 'fa-play');
-            };
-        }
-    </script>
-</body>
-</html>
+            .vinyl.middle { width: 140px; height: 140px;
