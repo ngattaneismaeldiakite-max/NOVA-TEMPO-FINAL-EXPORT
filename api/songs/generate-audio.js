@@ -5,6 +5,8 @@ module.exports = async function handler(req, res) {
         console.log("=== DÉBUT GENERATION AUDIO ===");
         const { lyrics, voice, genre } = req.body || {};
         let styleParams = genre;
+        
+        // C'est ici qu'on traduit le style pour l'IA Suno (J'ai ajouté le Gospel !)
         switch (genre) {
             case 'Coupé Décalé': styleParams = "ivorian coupe decale, atalaku, fast tempo, festive animation, sebene guitar, log drum"; break;
             case 'Amapiano': styleParams = "amapiano, deep log drum, south african vibe, groovy shaker, party"; break;
@@ -12,6 +14,7 @@ module.exports = async function handler(req, res) {
             case 'Ndombolo': styleParams = "ndombolo, congolese rumba, sebene guitar, fast dance"; break;
             case 'Rap Français': styleParams = "french rap, trap beat, heavy 808, punchy drill"; break;
             case 'Zouk': styleParams = "zouk, kizomba, romantic, slow dance, smooth"; break;
+            case 'Gospel': styleParams = "gospel choir, uplifting, emotional, spiritual, powerful vocals, organ"; break;
             default: styleParams = "afrobeat, log drum"; break;
         }
         
@@ -25,7 +28,7 @@ module.exports = async function handler(req, res) {
             prompt: lyrics,
             style: `${styleParams}, ${voiceTag}`,
             title: "Hit NovaTempo",
-            model: "V6", // CORRECTION ICI : passage au modèle V6 autorisé
+            model: "V6",
             callBackUrl: "https://example.com/callback"
         };
         
@@ -56,7 +59,7 @@ module.exports = async function handler(req, res) {
 
         if (!jobId) {
              console.error("ID introuvable dans la réponse.");
-             return res.status(500).json({ error: "ID introuvable. Reponse: " + JSON.stringify(data).substring(0, 80) });
+             return res.status(500).json({ error: "ID introuvable." });
         }
 
         console.log("Génération lancée avec succès, Job ID:", jobId);
