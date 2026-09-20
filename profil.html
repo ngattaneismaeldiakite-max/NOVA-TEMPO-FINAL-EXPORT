@@ -3,218 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Profil & Rechargement - Nova Tempo</title>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>Mon Profil - Nova Tempo</title>
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <!-- Script Supabase (Version Navigateur) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         :root {
-            --bg-dark: #06060A;
-            --card-bg: #111118;
-            --text-light: #FFFFFF;
-            --text-muted: rgba(255, 255, 255, 0.6);
-            --neon-lime: #D4FF00;
-            --radius-md: 16px;
-            --radius-lg: 24px;
+            --bg-dark: #06060A; --card-bg: #111118;
+            --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6);
+            --neon-lime: #D4FF00; --neon-pink: #FF0066;
         }
-
-        body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; }
-        .dashboard-container { display: flex; min-height: 100vh; }
-
-        /* Sidebar */
-        .sidebar { width: 260px; background-color: var(--bg-dark); padding: 2.5rem 2rem; border-right: 1px solid rgba(255, 255, 255, 0.05); }
-        .logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 3rem; color: var(--text-light); letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; }
-        .logo i { color: var(--neon-lime); }
-        .nav-links { list-style: none; padding: 0; }
-        .nav-links li { margin-bottom: 0.5rem; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; border-radius: 12px; transition: all 0.2s ease; }
-        .nav-links a:hover { color: var(--text-light); background: rgba(255, 255, 255, 0.03); }
-        .nav-links a.active { color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); border: 1px solid rgba(212, 255, 0, 0.1); }
-
-        /* Main Content */
-        .main-content { flex: 1; padding: 3rem 4rem; max-width: 1200px; margin: 0 auto; }
-        .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
-        h1 { margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; text-transform: uppercase; }
-        .header-subtitle { margin-top: 0.5rem; color: var(--text-muted); font-size: 1.1rem; font-weight: 500; }
+        body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); }
         
-        .user-info { display: flex; align-items: center; gap: 1.5rem; }
-        .user-email { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
-        .credits-badge { background: rgba(255,255,255,0.05); padding: 0.6rem 1.2rem; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-light); font-weight: 700; font-size: 0.9rem; }
-        .credits-badge i { color: var(--neon-lime); }
-
-        /* Top Grid */
-        .top-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
-        .panel { background: var(--card-bg); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        h2 { margin-top: 0; margin-bottom: 1.5rem; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: var(--neon-lime); text-transform: uppercase; }
-
-        .profile-info { font-size: 1rem; color: var(--text-muted); font-weight: 500; }
-        .profile-info strong { color: var(--text-light); display: block; margin-top: 0.3rem; font-size: 1.2rem; font-weight: 700; }
-
-        /* Affichage Solde */
-        .balance-container { display: flex; align-items: center; gap: 2rem; }
-        .credit-number { font-size: 4.5rem; font-weight: 900; color: var(--neon-lime); line-height: 1; text-shadow: 0 0 30px rgba(212, 255, 0, 0.3); }
-        .balance-text p { margin: 0; color: var(--text-muted); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        .balance-text strong { display: block; color: var(--text-light); font-size: 1.1rem; margin-top: 0.3rem; }
-
-        /* SECTION PRIX */
-        .pricing-section { background: var(--card-bg); padding: 3rem; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .pricing-section h2 { text-align: center; font-size: 2rem; margin-bottom: 3rem; color: #FFF; }
-        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-
-        .pack-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-md); padding: 2.5rem 2rem; text-align: center; position: relative; transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; }
-        .pack-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.3); }
-
-        /* Pack 3 (Meilleur Choix) */
-        .pack-card.popular { background: rgba(212, 255, 0, 0.02); border: 2px solid var(--neon-lime); box-shadow: 0 10px 40px rgba(212, 255, 0, 0.15); transform: translateY(-10px); }
-        .pack-card.popular:hover { transform: translateY(-15px); }
-
-        .pack-badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 800; font-size: 0.85rem; white-space: nowrap; }
-        .badge-popular { background: var(--neon-lime); color: var(--bg-dark); box-shadow: 0 0 20px rgba(212, 255, 0, 0.4); }
-        .badge-eco { background: rgba(255,255,255,0.1); color: var(--text-light); border: 1px solid rgba(255,255,255,0.2); }
-
-        .pack-name { font-size: 0.95rem; font-weight: 800; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 1rem; text-transform: uppercase; }
-        .pack-price { font-size: 2.5rem; font-weight: 900; color: var(--text-light); margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.3rem; }
-        .pack-price span { font-size: 1.2rem; font-weight: 700; color: var(--text-muted); }
-        .pack-desc { font-size: 1rem; color: var(--text-muted); margin-bottom: 2rem; font-weight: 500; }
-
-        .btn-pack { width: 100%; padding: 1rem; border-radius: 12px; font-weight: 800; font-size: 1.05rem; font-family: 'Satoshi', sans-serif; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; }
-        .btn-outline { background: transparent; color: var(--text-light); border: 1px solid rgba(255,255,255,0.3); }
-        .btn-outline:hover { border-color: var(--text-light); background: rgba(255,255,255,0.1); }
-        .btn-lime { background: var(--neon-lime); border: none; color: var(--bg-dark); box-shadow: 0 0 15px rgba(212, 255, 0, 0.3); }
-        .btn-lime:hover { box-shadow: 0 0 25px rgba(212, 255, 0, 0.5); transform: scale(1.02); }
-
-        @media (max-width: 1000px) { .pricing-grid { grid-template-columns: 1fr; gap: 3rem; margin-top: 2rem; } .pack-card.popular { transform: none; } .pack-card.popular:hover { transform: translateY(-5px); } }
-        @media (max-width: 900px) { .dashboard-container { flex-direction: column; } .sidebar { width: auto; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; } .main-content { padding: 2rem 1.5rem; } .top-grid { grid-template-columns: 1fr; gap: 1.5rem; } }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; }
+        .logo i { color: var(--neon-lime); }
+        
+        .container { max-width: 1200px; margin: 4rem auto; padding: 0 2rem; }
+        .header-profil { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+        .header-profil h1 { font-size: 3rem; margin: 0; font-weight: 900; text-transform: uppercase; }
+        .header-profil p { color: var(--text-muted); margin: 0.5rem 0 0 0; font-size: 1.1rem; }
+        
+        .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); padding: 0.8rem 1.5rem; border-radius: 50px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .btn-logout:hover { border-color: var(--neon-pink); color: var(--neon-pink); }
+        
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
+        
+        .card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 2rem; }
+        .card h3 { margin-top: 0; color: var(--neon-lime); text-transform: uppercase; font-weight: 800; font-size: 1.2rem; }
+        
+        .btn-primary { display: inline-block; width: 100%; text-align: center; background: var(--neon-lime); color: var(--bg-dark); padding: 1rem; border-radius: 12px; font-weight: 800; text-decoration: none; margin-top: 1.5rem; transition: transform 0.3s; text-transform: uppercase; box-sizing: border-box; }
+        .btn-primary:hover { transform: translateY(-2px); }
+        
+        .library-empty { text-align: center; color: var(--text-muted); padding: 3rem 0; }
+        .library-empty i { font-size: 3rem; margin-bottom: 1rem; color: rgba(255,255,255,0.1); }
+        
+        @media (max-width: 768px) {
+            nav { padding: 1.5rem 2rem; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .header-profil { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</div>
-            <ul class="nav-links">
-                <li><a href="/studio.html"><i class="fas fa-music"></i> Studio</a></li>
-                <li><a href="/creations.html"><i class="fas fa-list"></i> Mes Créations</a></li>
-                <li><a href="/profil.html" class="active"><i class="fas fa-user"></i> Mon Profil</a></li>
-                <li style="margin-top: 2rem;"><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
-            </ul>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="header">
-                <div>
-                    <h1>Mon profil</h1>
-                    <div class="header-subtitle">Gérez vos informations et rechargez vos crédits.</div>
-                </div>
-                <div class="user-info">
-                    <span id="userEmail" class="user-email">...</span>
-                    <div class="credits-badge">
-                        <i class="fas fa-bolt"></i> <span id="creditCount">--</span> crédits
-                    </div>
-                </div>
-            </header>
+    <nav>
+        <a href="/" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
+        <button id="btn-logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+    </nav>
 
-            <div class="top-grid">
-                <div class="panel">
-                    <h2>Informations du compte</h2>
-                    <div class="profile-info" style="margin-bottom: 1.5rem;">
-                        Adresse E-mail
-                        <strong id="displayEmail">Chargement...</strong>
-                    </div>
-                    <div class="profile-info">
-                        Date d'inscription
-                        <strong id="displayDate">Chargement...</strong>
-                    </div>
-                </div>
+    <div class="container" id="app-content" style="display: none;">
+        <div class="header-profil">
+            <div>
+                <h1>Mon Espace</h1>
+                <p id="user-email">Chargement...</p>
+            </div>
+            <a href="/studio.html" class="btn-primary" style="width: auto; margin: 0; padding: 1rem 2rem;">+ Créer une chanson</a>
+        </div>
 
-                <div class="panel">
-                    <h2>Portefeuille actuel</h2>
-                    <div class="balance-container">
-                        <div class="credit-number" id="displayCredits">0</div>
-                        <div class="balance-text">
-                            <p>Crédits disponibles</p>
-                            <strong>Librement utilisables</strong>
-                        </div>
-                    </div>
-                </div>
+        <div class="dashboard-grid">
+            <!-- Colonne Crédits / Solde -->
+            <div class="card">
+                <h3><i class="fas fa-wallet"></i> Mon Solde</h3>
+                <h2 style="font-size: 2.5rem; margin: 1rem 0;">0 FCFA</h2>
+                <p style="color: var(--text-muted); margin: 0; font-size: 0.9rem;">1 création = 1000 FCFA</p>
+                <a href="#" class="btn-primary" style="background: transparent; border: 1px solid var(--neon-lime); color: var(--neon-lime);">Recharger mon compte</a>
             </div>
 
-            <div class="pricing-section">
-                <h2>Recharger vos crédits</h2>
-                
-                <div class="pricing-grid">
-                    
-                    <div class="pack-card">
-                        <div>
-                            <div class="pack-name">UNITAIRE</div>
-                            <div class="pack-price">1 000 <span>FCFA</span></div>
-                            <div class="pack-desc">1 création musicale personnalisée (haute qualité & téléchargeable).</div>
-                        </div>
-                        <button class="btn-pack btn-outline" onclick="initiatePayment(1000, 1)">Choisir ce pack</button>
-                    </div>
-
-                    <div class="pack-card popular">
-                        <div class="pack-badge badge-popular">Meilleur choix</div>
-                        <div>
-                            <div class="pack-name">PACK 3</div>
-                            <div class="pack-price">2 500 <span>FCFA</span></div>
-                            <div class="pack-desc">3 créations musicales personnalisées (haute qualité & téléchargeables).</div>
-                        </div>
-                        <button class="btn-pack btn-lime" onclick="initiatePayment(2500, 3)">Choisir ce pack</button>
-                    </div>
-
-                    <div class="pack-card">
-                        <div class="pack-badge badge-eco">Économique</div>
-                        <div>
-                            <div class="pack-name">PACK 5</div>
-                            <div class="pack-price">4 000 <span>FCFA</span></div>
-                            <div class="pack-desc">5 créations musicales personnalisées (haute qualité & téléchargeables).</div>
-                        </div>
-                        <button class="btn-pack btn-outline" onclick="initiatePayment(4000, 5)">Choisir ce pack</button>
-                    </div>
-
+            <!-- Colonne Bibliothèque -->
+            <div class="card">
+                <h3><i class="fas fa-music"></i> Ma Bibliothèque</h3>
+                <div id="library-content" class="library-empty">
+                    <i class="fas fa-compact-disc"></i>
+                    <p>Vous n'avez pas encore créé de musique.</p>
+                    <p style="font-size: 0.9rem;">Vos futures créations apparaîtront ici.</p>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 
     <script>
+        // INITIALISATION SÉCURISÉE SUPABASE
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
-        window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            let currentUserId = null;
-            const { data: { session }, error } = await window.supabaseClient.auth.getSession();
-            if (error || !session) { window.location.href = '/login.html'; return; }
-            currentUserId = session.user.id;
-            
-            document.getElementById('userEmail').textContent = session.user.email;
-            document.getElementById('displayEmail').textContent = session.user.email;
-
-            const dateObj = new Date(session.user.created_at);
-            document.getElementById('displayDate').textContent = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
-
-            const fetchCredits = async () => {
-                const { data: profile } = await window.supabaseClient.from('profiles').select('credits').eq('id', currentUserId).single();
-                if (profile) {
-                    document.getElementById('creditCount').textContent = profile.credits;
-                    document.getElementById('displayCredits').textContent = profile.credits;
+        // VÉRIFICATION DE LA CONNEXION
+        async function checkSession() {
+            try {
+                const { data, error } = await supabase.auth.getSession();
+                
+                // Si aucune session, on redirige vers la connexion
+                if (error || !data.session) {
+                    window.location.replace('/login.html');
+                    return;
                 }
-            };
-            await fetchCredits();
+                
+                // Si connecté, on affiche l'email et on dévoile l'interface
+                document.getElementById('user-email').textContent = data.session.user.email;
+                document.getElementById('app-content').style.display = 'block';
+                
+            } catch (err) {
+                console.error("Erreur de vérification de session :", err);
+            }
+        }
 
-            document.getElementById('logoutBtn').addEventListener('click', async (e) => {
-                e.preventDefault(); await window.supabaseClient.auth.signOut(); window.location.href = '/login.html';
-            });
+        // DÉCONNEXION
+        document.getElementById('btn-logout').addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            window.location.href = '/';
         });
 
-        function initiatePayment(price, credits) {
-            alert(`Paiement de ${price} FCFA pour ${credits} chansons.\n\nL'intégration de FedaPay/Wave arrive bientôt !`);
-        }
+        // Lancement au chargement de la page
+        checkSession();
     </script>
 </body>
 </html>
