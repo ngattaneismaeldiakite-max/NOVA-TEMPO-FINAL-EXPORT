@@ -103,12 +103,10 @@
                 <div class="form-group">
                     <label class="main-label">2. Quelle est l'occasion ?</label>
                     <div class="radio-grid">
-                        <!-- L'évènement onchange déclenche l'apparition des formulaires personnalisés -->
                         <label class="radio-card"><input type="radio" name="occasion" value="anniversaire" required onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🎂 Anniversaire</span></label>
                         <label class="radio-card"><input type="radio" name="occasion" value="mariage" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">💍 Mariage</span></label>
                         <label class="radio-card"><input type="radio" name="occasion" value="hommage" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🕊️ Hommage</span></label>
                         <label class="radio-card"><input type="radio" name="occasion" value="adoration" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🙌 Adoration</span></label>
-                        <label class="radio-card"><input type="radio" name="occasion" value="promotion" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🚀 Promotion</span></label>
                         <label class="radio-card"><input type="radio" name="occasion" value="evenement" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🎉 Événement</span></label>
                     </div>
                 </div>
@@ -124,7 +122,6 @@
                     </div>
                 </div>
 
-                <!-- ZONE MAGIQUE : Les questions changeront ici selon l'occasion choisie -->
                 <div class="form-group">
                     <label class="main-label">4. Les détails de la chanson (Personnalisation)</label>
                     <div id="dynamic-form-container" style="padding: 1rem; border: 1px dashed rgba(212,255,0,0.3); border-radius: 12px; text-align: center; color: var(--text-muted);">
@@ -161,7 +158,6 @@
 
         // --- 2. LOGIQUE DES FORMULAIRES PERSONNALISÉS ---
         
-        // Base de données des questions selon l'occasion
         const questionsPersonnalisees = {
             'anniversaire': `
                 <div class="dynamic-field">
@@ -215,16 +211,6 @@
                     <input type="text" class="custom-data" data-label="Qualité" required placeholder="Ex: Sa générosité infinie">
                 </div>
             `,
-            'promotion': `
-                <div class="dynamic-field">
-                    <label>Quel est son nouveau poste ou son succès ?</label>
-                    <input type="text" class="custom-data" data-label="Succès" required placeholder="Ex: Nommé Directeur Général">
-                </div>
-                <div class="dynamic-field">
-                    <label>Quels ont été ses efforts pour y arriver ?</label>
-                    <input type="text" class="custom-data" data-label="Efforts" required placeholder="Ex: Beaucoup de nuits blanches et de travail dur">
-                </div>
-            `,
             'evenement': `
                 <div class="dynamic-field">
                     <label>Quel est le nom et le but de l'événement ?</label>
@@ -237,11 +223,8 @@
             `
         };
 
-        // Fonction qui change le formulaire quand on clique sur une occasion
         function genererFormulaireOccasion(occasion) {
             const container = document.getElementById('dynamic-form-container');
-            
-            // On vérifie si on a des questions pour cette occasion, sinon on met un champ classique
             if (questionsPersonnalisees[occasion]) {
                 container.innerHTML = questionsPersonnalisees[occasion];
             } else {
@@ -249,35 +232,29 @@
             }
         }
 
-
         // --- 3. ASSEMBLAGE ET GÉNÉRATION ---
         function handleGenerate(event) {
             event.preventDefault(); 
             const btn = document.getElementById('generate-btn');
             
-            // 1. Récupération des choix de base
             const cible = document.getElementById('target-name').value;
             const occasion = document.querySelector('input[name="occasion"]:checked').value;
             const style = document.querySelector('input[name="style"]:checked').value;
             
-            // 2. Assemblage du puzzle des réponses personnalisées
             let histoireAssemblee = "";
             const champsDynamiques = document.querySelectorAll('.custom-data');
             
             champsDynamiques.forEach(champ => {
                 if(champ.value.trim() !== "") {
-                    // On récupère le "nom" de la question (ex: "Âge") et la réponse du client
                     const titreQuestion = champ.getAttribute('data-label');
                     histoireAssemblee += `- ${titreQuestion} : ${champ.value.trim()}\n`;
                 }
             });
 
-            // Le mega-texte secret qui sera envoyé à l'API Musique
             const promptFinalPourAPI = `Chanson pour : ${cible}. \nOccasion : ${occasion}. \nStyle : ${style}. \nVoici les détails précis de la chanson : \n${histoireAssemblee}`;
 
             console.log("Ordre complet envoyé à l'API : \n" + promptFinalPourAPI);
 
-            // Simulation d'envoi
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Création de la chanson...';
             
