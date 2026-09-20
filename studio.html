@@ -13,9 +13,13 @@
     
     <style>
         :root { --bg-dark: #06060A; --card-bg: #111118; --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6); --neon-lime: #D4FF00; --neon-pink: #FF0066; }
-        body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); }
+        body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; position: relative; }
         
-        nav { padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); background: var(--bg-dark); }
+        /* IMAGE DE FOND FIXE AVEC FLOU */
+        .bg-image { position: fixed; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; opacity: 0.2; filter: blur(5px); z-index: -1; }
+        
+        /* NAVIGATION TRANSLUCIDE */
+        nav { padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(6, 6, 10, 0.6); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
         .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; }
         .logo i { color: var(--neon-lime); }
         
@@ -26,21 +30,34 @@
         .btn-logout { background: transparent; border: 1px solid var(--neon-pink); color: var(--neon-pink); padding: 0.5rem 1.5rem; border-radius: 50px; cursor: pointer; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
         .btn-logout:hover { background: var(--neon-pink); color: white; }
 
-        .container { max-width: 800px; margin: 4rem auto; padding: 0 2rem; }
-        h1 { font-size: 3rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .container { max-width: 800px; margin: 3rem auto; padding: 0 2rem; position: relative; z-index: 1; }
+        h1 { font-size: 3rem; text-transform: uppercase; margin-bottom: 0.5rem; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         h1 span { color: var(--neon-lime); }
-        .subtitle { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 3rem; }
+        .subtitle { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 3rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
-        .studio-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 3rem; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        /* CARTE DU STUDIO AVEC EFFET VERRE (Glassmorphism) */
+        .studio-card { background: rgba(17, 17, 24, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 3rem; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-weight: 600; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-family: inherit; font-size: 1rem; box-sizing: border-box; transition: all 0.3s; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); }
+        .form-group { margin-bottom: 2rem; }
+        .form-group label.main-label { display: block; margin-bottom: 1rem; color: var(--text-light); font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* CHAMPS TEXTE */
+        .form-group input[type="text"], .form-group textarea { width: 100%; padding: 1.2rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-family: inherit; font-size: 1rem; box-sizing: border-box; transition: all 0.3s; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); box-shadow: 0 0 15px rgba(212, 255, 0, 0.1); }
         .form-group textarea { resize: vertical; min-height: 120px; }
 
-        .btn-generate { width: 100%; padding: 1.2rem; background: var(--neon-lime); color: var(--bg-dark); border: none; border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; margin-top: 1rem; transition: transform 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(212, 255, 0, 0.2); }
+        /* NOUVEAU DESIGN : GRILLE DE BOUTONS RADIOS (Cartes) */
+        .radio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
+        .radio-card input { display: none; }
+        .radio-card { cursor: pointer; display: block; }
+        .card-content { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 1rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; transition: all 0.3s; font-weight: 600; text-align: center; color: var(--text-muted); }
+        
+        .radio-card:hover .card-content { border-color: rgba(212, 255, 0, 0.5); color: white; }
+        .radio-card input:checked + .card-content { background: rgba(212, 255, 0, 0.1); border-color: var(--neon-lime); color: var(--neon-lime); box-shadow: 0 0 15px rgba(212, 255, 0, 0.2); transform: translateY(-2px); }
+
+        /* BOUTON GÉNÉRER */
+        .btn-generate { width: 100%; padding: 1.2rem; background: var(--neon-lime); color: var(--bg-dark); border: none; border-radius: 12px; font-weight: 900; font-size: 1.2rem; cursor: pointer; text-transform: uppercase; margin-top: 1rem; transition: transform 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(212, 255, 0, 0.2); }
+        .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212, 255, 0, 0.4); }
         .btn-generate:disabled { background: #333; color: #888; cursor: not-allowed; box-shadow: none; transform: none; }
 
         /* L'écran noir de chargement sécurisé */
@@ -53,12 +70,16 @@
             .container { margin: 2rem auto; }
             .studio-card { padding: 1.5rem; }
             h1 { font-size: 2.2rem; }
+            .radio-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Cet écran noir masque la page pendant qu'on vérifie l'identité -->
+    <!-- L'image de fond -->
+    <div class="bg-image"></div>
+
+    <!-- Écran de chargement sécurisé -->
     <div id="page-loader">
         <div class="spinner"></div>
         <div style="color: var(--neon-lime); font-weight: bold; text-transform: uppercase;">Vérification de l'accès...</div>
@@ -76,41 +97,67 @@
     <!-- Le Studio -->
     <div class="container">
         <h1>Le <span>Studio</span></h1>
-        <p class="subtitle">Décris ton idée, l'IA compose la magie.</p>
+        <p class="subtitle">Décris ton idée, l'IA compose la magie en qualité studio.</p>
 
         <div class="studio-card">
             <form onsubmit="handleGenerate(event)">
+                
                 <div class="form-group">
-                    <label>Pour qui est cette chanson ?</label>
-                    <input type="text" required placeholder="Ex: Ma mère, Mon meilleur ami Marc...">
+                    <label class="main-label">1. Pour qui est cette chanson ?</label>
+                    <input type="text" required placeholder="Ex: Ma mère, Mon meilleur ami Marc, Ma femme...">
                 </div>
                 
                 <div class="form-group">
-                    <label>Occasion</label>
-                    <select required>
-                        <option value="">-- Choisir une occasion --</option>
-                        <option value="anniversaire">Anniversaire</option>
-                        <option value="mariage">Mariage</option>
-                        <option value="amour">Déclaration d'amour</option>
-                        <option value="hommage">Hommage</option>
-                        <option value="autre">Autre</option>
-                    </select>
+                    <label class="main-label">2. Quelle est l'occasion ?</label>
+                    <div class="radio-grid">
+                        <label class="radio-card">
+                            <input type="radio" name="occasion" value="anniversaire" required>
+                            <span class="card-content">🎂 Anniversaire</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="occasion" value="mariage">
+                            <span class="card-content">💍 Mariage</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="occasion" value="amour">
+                            <span class="card-content">❤️ Amour</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="occasion" value="hommage">
+                            <span class="card-content">🕊️ Hommage</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="occasion" value="autre">
+                            <span class="card-content">✨ Autre</span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Style musical</label>
-                    <select required>
-                        <option value="">-- Choisir un style --</option>
-                        <option value="afrobeat">Afrobeat</option>
-                        <option value="zouk">Zouk</option>
-                        <option value="rap">Rap</option>
-                        <option value="gospel">Gospel</option>
-                    </select>
+                    <label class="main-label">3. Quel style musical ?</label>
+                    <div class="radio-grid">
+                        <label class="radio-card">
+                            <input type="radio" name="style" value="afrobeat" required>
+                            <span class="card-content">🌍 Afrobeat</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="style" value="zouk">
+                            <span class="card-content">💃 Zouk</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="style" value="rap">
+                            <span class="card-content">🎤 Rap / R&B</span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="style" value="gospel">
+                            <span class="card-content">🙏 Gospel</span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Histoire / Anecdotes (Soyez précis !)</label>
-                    <textarea required placeholder="Racontez-nous une anecdote amusante, ce que vous aimez chez cette personne, un souvenir marquant..."></textarea>
+                    <label class="main-label">4. L'histoire (Soyez précis !)</label>
+                    <textarea required placeholder="Racontez une anecdote amusante, ce que vous aimez chez cette personne, un souvenir marquant... Plus vous donnez de détails, meilleure sera la chanson !"></textarea>
                 </div>
 
                 <button type="submit" class="btn-generate" id="generate-btn">
@@ -120,26 +167,25 @@
         </div>
     </div>
 
-    <!-- SCRIPT CORRIGÉ -->
+    <!-- SCRIPT CORRIGÉ ET BLINDÉ -->
     <script>
-        // 1. Initialisation avec le bon nom
+        // 1. Initialisation
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // 2. Vérification de la connexion dès le chargement de la page
+        // 2. Vérification de la connexion
         window.addEventListener('DOMContentLoaded', async () => {
-            // Demande à Supabase si l'utilisateur est bien connecté
             const { data: { session } } = await supabaseClient.auth.getSession();
             
             if (!session) {
-                // Si pas connecté = retour immédiat au login
+                // Pas connecté = retour au login
                 window.location.href = '/login.html';
             } else {
-                // Si connecté = on fait disparaître l'écran noir !
+                // Connecté = disparition de l'écran de chargement
                 const loader = document.getElementById('page-loader');
                 loader.style.opacity = '0';
-                setTimeout(() => { loader.style.display = 'none'; }, 500); // attend 0.5s pour l'effet fondu
+                setTimeout(() => { loader.style.display = 'none'; }, 500);
             }
         });
 
@@ -149,20 +195,19 @@
             window.location.href = '/login.html';
         }
 
-        // 4. Bouton Générer
+        // 4. Bouton Générer (Simulation)
         function handleGenerate(event) {
-            event.preventDefault();
+            event.preventDefault(); // Bloque le rechargement de la page
             const btn = document.getElementById('generate-btn');
             
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Création en cours...';
-            
-            alert("Cette interface est prête ! Lors de la prochaine étape, on connectera ce bouton à l'intelligence artificielle pour générer l'audio.");
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Création de la magie en cours...';
             
             setTimeout(() => {
+                alert("Interface validée ! Prochaine étape : connecter ce bouton à FedaPay et à l'intelligence artificielle.");
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-magic"></i> Générer ma chanson (1 crédit)';
-            }, 2000);
+            }, 1500);
         }
     </script>
 </body>
