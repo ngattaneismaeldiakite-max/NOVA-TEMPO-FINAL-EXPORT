@@ -118,6 +118,8 @@
                         <label class="radio-card"><input type="radio" name="style" value="Zouk"><span class="card-content">💃 Zouk</span></label>
                         <label class="radio-card"><input type="radio" name="style" value="Amapiano"><span class="card-content">🔥 Amapiano</span></label>
                         <label class="radio-card"><input type="radio" name="style" value="Ndombolo"><span class="card-content">🎸 Ndombolo</span></label>
+                        <!-- LE BOUTON GOSPEL EST ICI ! -->
+                        <label class="radio-card"><input type="radio" name="style" value="Gospel"><span class="card-content">🙏 Gospel</span></label>
                     </div>
                 </div>
 
@@ -231,7 +233,6 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Préparation du studio NovaTempo...';
             
-            // Phrases amusantes pour l'attente
             const phrasesAttente = [
                 "🎸 Les musiciens accordent leurs guitares...",
                 "🎤 Le chanteur s'échauffe la voix...",
@@ -281,7 +282,6 @@
                             btn.disabled = false;
                             btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
                         } else {
-                            // Affichage des phrases sympas au lieu de la réponse de l'API
                             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + phrasesAttente[phraseIndex];
                             phraseIndex = (phraseIndex + 1) % phrasesAttente.length;
                         }
