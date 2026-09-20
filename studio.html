@@ -144,7 +144,7 @@
 
             <div id="result-container">
                 <h3 style="color: var(--neon-lime); margin-top: 0;">🎉 Ta chanson est prête !</h3>
-                <p>Écoute le résultat généré par l'IA :</p>
+                <p>Écoute ta création exclusive NovaTempo :</p>
                 <audio id="audio-player" controls></audio>
             </div>
 
@@ -170,83 +170,34 @@
             window.location.href = '/login.html';
         }
         
-        // QUESTIONNAIRES TRÈS PRÉCIS ET BIEN DISPOSÉS
         const questionsPersonnalisees = {
             'anniversaire': `
-                <div class="dynamic-field">
-                    <label>Âge fêté :</label>
-                    <input type="text" class="custom-data" data-label="Âge" required placeholder="Ex: 30 ans">
-                </div>
-                <div class="dynamic-field">
-                    <label>Quelles sont ses passions ou hobbies ?</label>
-                    <input type="text" class="custom-data" data-label="Passions" required placeholder="Ex: Il adore le football et les jeux vidéos">
-                </div>
-                <div class="dynamic-field">
-                    <label>Une anecdote amusante à placer ?</label>
-                    <input type="text" class="custom-data" data-label="Anecdote" placeholder="Ex: Il perd toujours ses clés">
-                </div>
+                <div class="dynamic-field"><label>Âge fêté :</label><input type="text" class="custom-data" data-label="Âge" required placeholder="Ex: 30 ans"></div>
+                <div class="dynamic-field"><label>Quelles sont ses passions ou hobbies ?</label><input type="text" class="custom-data" data-label="Passions" required placeholder="Ex: Il adore le football et les jeux vidéos"></div>
+                <div class="dynamic-field"><label>Une anecdote amusante à placer ?</label><input type="text" class="custom-data" data-label="Anecdote" placeholder="Ex: Il perd toujours ses clés"></div>
             `,
             'amour': `
-                <div class="dynamic-field">
-                    <label>Quel est son petit surnom ou mot doux ?</label>
-                    <input type="text" class="custom-data" data-label="Surnom" placeholder="Ex: Mon amour, Mon ange, Chaton...">
-                </div>
-                <div class="dynamic-field">
-                    <label>Qu'aimez-vous le plus chez cette personne ?</label>
-                    <input type="text" class="custom-data" data-label="Ce que j'aime" required placeholder="Ex: Son sourire radieux, sa douceur, sa force...">
-                </div>
-                <div class="dynamic-field">
-                    <label>Un souvenir marquant ou une promesse pour l'avenir ?</label>
-                    <input type="text" class="custom-data" data-label="Souvenir ou Promesse" required placeholder="Ex: Notre premier baiser sous la pluie, je t'aimerai toujours...">
-                </div>
+                <div class="dynamic-field"><label>Quel est son petit surnom ou mot doux ?</label><input type="text" class="custom-data" data-label="Surnom" placeholder="Ex: Mon amour, Mon ange, Chaton..."></div>
+                <div class="dynamic-field"><label>Qu'aimez-vous le plus chez cette personne ?</label><input type="text" class="custom-data" data-label="Ce que j'aime" required placeholder="Ex: Son sourire radieux, sa douceur..."></div>
+                <div class="dynamic-field"><label>Un souvenir marquant ou une promesse ?</label><input type="text" class="custom-data" data-label="Souvenir ou Promesse" required placeholder="Ex: Je t'aimerai toujours..."></div>
             `,
             'mariage': `
-                <div class="dynamic-field">
-                    <label>Comment ou où se sont-ils rencontrés ?</label>
-                    <input type="text" class="custom-data" data-label="Lieu de rencontre" required placeholder="Ex: À la fac de médecine en 2018">
-                </div>
-                <div class="dynamic-field">
-                    <label>Que souhaitez-vous mettre en avant dans leur couple ?</label>
-                    <input type="text" class="custom-data" data-label="Force du couple" required placeholder="Ex: Leur complicité et leurs voyages">
-                </div>
-                <div class="dynamic-field">
-                    <label>Un message pour leur futur ?</label>
-                    <input type="text" class="custom-data" data-label="Vœux" required placeholder="Ex: Beaucoup d'enfants et de rires">
-                </div>
+                <div class="dynamic-field"><label>Comment ou où se sont-ils rencontrés ?</label><input type="text" class="custom-data" data-label="Lieu de rencontre" required placeholder="Ex: À la fac de médecine en 2018"></div>
+                <div class="dynamic-field"><label>Que souhaitez-vous mettre en avant dans leur couple ?</label><input type="text" class="custom-data" data-label="Force du couple" required placeholder="Ex: Leur complicité et leurs voyages"></div>
+                <div class="dynamic-field"><label>Un message pour leur futur ?</label><input type="text" class="custom-data" data-label="Vœux" required placeholder="Ex: Beaucoup d'enfants et de rires"></div>
             `,
             'adoration': `
-                <div class="dynamic-field">
-                    <label>Quel attribut divin voulez-vous exalter ?</label>
-                    <input type="text" class="custom-data" data-label="Attribut" required placeholder="Ex: Sa miséricorde, Sa toute puissance">
-                </div>
-                <div class="dynamic-field">
-                    <label>Quel est le thème spirituel de la chanson ?</label>
-                    <input type="text" class="custom-data" data-label="Thème" required placeholder="Ex: Le pardon, la victoire, la paix intérieure">
-                </div>
-                <div class="dynamic-field">
-                    <label>Avez-vous un verset ou une prière spécifique à intégrer ?</label>
-                    <input type="text" class="custom-data" data-label="Verset/Prière" placeholder="Ex: Psaume 23, ou 'Me voici devant Toi'">
-                </div>
+                <div class="dynamic-field"><label>Quel attribut divin voulez-vous exalter ?</label><input type="text" class="custom-data" data-label="Attribut" required placeholder="Ex: Sa miséricorde, Sa toute puissance"></div>
+                <div class="dynamic-field"><label>Quel est le thème spirituel de la chanson ?</label><input type="text" class="custom-data" data-label="Thème" required placeholder="Ex: Le pardon, la victoire, la paix intérieure"></div>
+                <div class="dynamic-field"><label>Avez-vous un verset ou une prière spécifique ?</label><input type="text" class="custom-data" data-label="Verset/Prière" placeholder="Ex: Psaume 23, ou 'Me voici devant Toi'"></div>
             `,
             'hommage': `
-                <div class="dynamic-field">
-                    <label>Quel est le plus beau souvenir de cette personne ?</label>
-                    <input type="text" class="custom-data" data-label="Souvenir" required placeholder="Ex: Ses grands repas de famille le dimanche">
-                </div>
-                <div class="dynamic-field">
-                    <label>Quelle était sa plus grande qualité ?</label>
-                    <input type="text" class="custom-data" data-label="Qualité" required placeholder="Ex: Sa générosité infinie">
-                </div>
+                <div class="dynamic-field"><label>Quel est le plus beau souvenir de cette personne ?</label><input type="text" class="custom-data" data-label="Souvenir" required placeholder="Ex: Ses grands repas de famille le dimanche"></div>
+                <div class="dynamic-field"><label>Quelle était sa plus grande qualité ?</label><input type="text" class="custom-data" data-label="Qualité" required placeholder="Ex: Sa générosité infinie"></div>
             `,
             'evenement': `
-                <div class="dynamic-field">
-                    <label>Quel est le nom et le but de l'événement ?</label>
-                    <input type="text" class="custom-data" data-label="Nom de l'événement" required placeholder="Ex: Lancement de notre nouvelle marque">
-                </div>
-                <div class="dynamic-field">
-                    <label>Quelle est l'ambiance ou le message à faire passer ?</label>
-                    <input type="text" class="custom-data" data-label="Ambiance" required placeholder="Ex: Festif, inspirant et motivant pour l'avenir">
-                </div>
+                <div class="dynamic-field"><label>Quel est le nom et le but de l'événement ?</label><input type="text" class="custom-data" data-label="Nom de l'événement" required placeholder="Ex: Lancement de notre nouvelle marque"></div>
+                <div class="dynamic-field"><label>Quelle est l'ambiance ou le message à faire passer ?</label><input type="text" class="custom-data" data-label="Ambiance" required placeholder="Ex: Festif, inspirant et motivant pour l'avenir"></div>
             `
         };
 
@@ -275,14 +226,22 @@
                 }
             });
 
-            // On construit la consigne pour Suno
             const promptFinal = `Fais une chanson pour : ${cible}.\nC'est pour l'occasion : ${occasion}.\nDétails importants :\n${histoireAssemblee}`;
 
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi à Suno AI...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Préparation du studio NovaTempo...';
             
+            // Phrases amusantes pour l'attente
+            const phrasesAttente = [
+                "🎸 Les musiciens accordent leurs guitares...",
+                "🎤 Le chanteur s'échauffe la voix...",
+                "🎹 Mixage de la piste audio en cours...",
+                "🎧 NovaTempo finalise les derniers réglages...",
+                "✨ La magie opère, encore quelques secondes..."
+            ];
+            let phraseIndex = 0;
+
             try {
-                // 1. Envoyer la demande de création audio
                 const resCreation = await fetch('/api/songs/generate-audio', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -300,9 +259,7 @@
                 }
 
                 const jobId = dataCreation.job_id;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Composition en cours (environ 60s)...';
 
-                // 2. Boucle pour vérifier le statut de la musique
                 const verificationIntervalle = setInterval(async () => {
                     try {
                         const resStatut = await fetch(`/api/songs/check-status?id=${jobId}`);
@@ -320,11 +277,13 @@
                             document.getElementById('audio-player').play();
                         } else if (dataStatut.status === 'failed') {
                             clearInterval(verificationIntervalle);
-                            alert("Suno a échoué la création. Essaie de modifier un peu le texte.");
+                            alert("Oups ! Nos musiciens ont rencontré un petit problème. Essaie de modifier un peu le texte et réessaie.");
                             btn.disabled = false;
                             btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
                         } else {
-                            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + (dataStatut.status || 'Patientez, création en cours...');
+                            // Affichage des phrases sympas au lieu de la réponse de l'API
+                            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + phrasesAttente[phraseIndex];
+                            phraseIndex = (phraseIndex + 1) % phrasesAttente.length;
                         }
                     } catch (errCheck) {
                         console.error(errCheck);
@@ -333,7 +292,7 @@
 
             } catch (erreur) {
                 console.error(erreur);
-                alert("Erreur de connexion. " + erreur.message);
+                alert("Oups ! Problème de connexion avec le studio. " + erreur.message);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
             }
