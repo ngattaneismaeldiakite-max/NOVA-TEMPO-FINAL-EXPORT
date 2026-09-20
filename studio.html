@@ -40,8 +40,8 @@
         input[type="text"], textarea { width: 100%; padding: 1.2rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-family: inherit; font-size: 1rem; box-sizing: border-box; transition: all 0.3s; }
         input:focus, textarea:focus { outline: none; border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); box-shadow: 0 0 15px rgba(212, 255, 0, 0.1); }
         
-        .dynamic-field { margin-bottom: 1.2rem; animation: fadeIn 0.5s ease; }
-        .dynamic-field label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.95rem; font-weight: 600; }
+        .dynamic-field { margin-bottom: 1.5rem; animation: fadeIn 0.5s ease; text-align: left; }
+        .dynamic-field label { display: block; margin-bottom: 0.6rem; color: var(--text-muted); font-size: 0.95rem; font-weight: 600; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         .radio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
@@ -56,7 +56,6 @@
         .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212, 255, 0, 0.4); }
         .btn-generate:disabled { background: #333; color: #888; cursor: not-allowed; box-shadow: none; transform: none; }
 
-        /* LECTEUR AUDIO */
         #result-container { display: none; margin-top: 2rem; padding: 1.5rem; background: rgba(212, 255, 0, 0.1); border: 1px solid var(--neon-lime); border-radius: 12px; text-align: center; }
         audio { width: 100%; margin-top: 1rem; outline: none; }
 
@@ -113,7 +112,6 @@
                 <div class="form-group">
                     <label class="main-label">3. Quel style musical ?</label>
                     <div class="radio-grid">
-                        <!-- Styles exacts attendus par ton fichier generate-audio.js -->
                         <label class="radio-card"><input type="radio" name="style" value="Afrobeat" required><span class="card-content">🌍 Afrobeat</span></label>
                         <label class="radio-card"><input type="radio" name="style" value="Rap Français"><span class="card-content">🎤 Rap Français</span></label>
                         <label class="radio-card"><input type="radio" name="style" value="Coupé Décalé"><span class="card-content">🕺 Coupé Décalé</span></label>
@@ -126,7 +124,6 @@
                 <div class="form-group">
                     <label class="main-label">4. Quelle voix ?</label>
                     <div class="radio-grid">
-                        <!-- Voix exactes attendues par ton fichier generate-audio.js -->
                         <label class="radio-card"><input type="radio" name="voice" value="male" required><span class="card-content">👨 Homme</span></label>
                         <label class="radio-card"><input type="radio" name="voice" value="female"><span class="card-content">👩 Femme</span></label>
                         <label class="radio-card"><input type="radio" name="voice" value="duo"><span class="card-content">👫 Duo</span></label>
@@ -135,8 +132,8 @@
 
                 <div class="form-group">
                     <label class="main-label">5. Les détails (Personnalisation)</label>
-                    <div id="dynamic-form-container" style="padding: 1rem; border: 1px dashed rgba(212,255,0,0.3); border-radius: 12px; text-align: center; color: var(--text-muted);">
-                        Veuillez sélectionner une occasion ci-dessus.
+                    <div id="dynamic-form-container" style="padding: 1rem; border: 1px dashed rgba(212,255,0,0.3); border-radius: 12px; color: var(--text-muted);">
+                        <div style="text-align: center;">Veuillez sélectionner une occasion ci-dessus.</div>
                     </div>
                 </div>
 
@@ -173,41 +170,93 @@
             window.location.href = '/login.html';
         }
         
+        // QUESTIONNAIRES TRÈS PRÉCIS ET BIEN DISPOSÉS
         const questionsPersonnalisees = {
             'anniversaire': `
-                <div class="dynamic-field"><label>Âge fêté :</label><input type="text" class="custom-data" data-label="Âge" required></div>
-                <div class="dynamic-field"><label>Quelles sont ses passions ?</label><input type="text" class="custom-data" data-label="Passions" required></div>
-                <div class="dynamic-field"><label>Une anecdote ?</label><input type="text" class="custom-data" data-label="Anecdote"></div>
+                <div class="dynamic-field">
+                    <label>Âge fêté :</label>
+                    <input type="text" class="custom-data" data-label="Âge" required placeholder="Ex: 30 ans">
+                </div>
+                <div class="dynamic-field">
+                    <label>Quelles sont ses passions ou hobbies ?</label>
+                    <input type="text" class="custom-data" data-label="Passions" required placeholder="Ex: Il adore le football et les jeux vidéos">
+                </div>
+                <div class="dynamic-field">
+                    <label>Une anecdote amusante à placer ?</label>
+                    <input type="text" class="custom-data" data-label="Anecdote" placeholder="Ex: Il perd toujours ses clés">
+                </div>
             `,
             'amour': `
-                <div class="dynamic-field"><label>Son surnom ?</label><input type="text" class="custom-data" data-label="Surnom"></div>
-                <div class="dynamic-field"><label>Ce que vous aimez ?</label><input type="text" class="custom-data" data-label="Ce que j'aime" required></div>
-                <div class="dynamic-field"><label>Souvenir / Promesse ?</label><input type="text" class="custom-data" data-label="Souvenir" required></div>
+                <div class="dynamic-field">
+                    <label>Quel est son petit surnom ou mot doux ?</label>
+                    <input type="text" class="custom-data" data-label="Surnom" placeholder="Ex: Mon amour, Mon ange, Chaton...">
+                </div>
+                <div class="dynamic-field">
+                    <label>Qu'aimez-vous le plus chez cette personne ?</label>
+                    <input type="text" class="custom-data" data-label="Ce que j'aime" required placeholder="Ex: Son sourire radieux, sa douceur, sa force...">
+                </div>
+                <div class="dynamic-field">
+                    <label>Un souvenir marquant ou une promesse pour l'avenir ?</label>
+                    <input type="text" class="custom-data" data-label="Souvenir ou Promesse" required placeholder="Ex: Notre premier baiser sous la pluie, je t'aimerai toujours...">
+                </div>
             `,
             'mariage': `
-                <div class="dynamic-field"><label>Lieu de rencontre ?</label><input type="text" class="custom-data" data-label="Lieu" required></div>
-                <div class="dynamic-field"><label>Force du couple ?</label><input type="text" class="custom-data" data-label="Force" required></div>
-                <div class="dynamic-field"><label>Vœux futurs ?</label><input type="text" class="custom-data" data-label="Vœux" required></div>
+                <div class="dynamic-field">
+                    <label>Comment ou où se sont-ils rencontrés ?</label>
+                    <input type="text" class="custom-data" data-label="Lieu de rencontre" required placeholder="Ex: À la fac de médecine en 2018">
+                </div>
+                <div class="dynamic-field">
+                    <label>Que souhaitez-vous mettre en avant dans leur couple ?</label>
+                    <input type="text" class="custom-data" data-label="Force du couple" required placeholder="Ex: Leur complicité et leurs voyages">
+                </div>
+                <div class="dynamic-field">
+                    <label>Un message pour leur futur ?</label>
+                    <input type="text" class="custom-data" data-label="Vœux" required placeholder="Ex: Beaucoup d'enfants et de rires">
+                </div>
             `,
             'adoration': `
-                <div class="dynamic-field"><label>Attribut divin ?</label><input type="text" class="custom-data" data-label="Attribut" required></div>
-                <div class="dynamic-field"><label>Thème spirituel ?</label><input type="text" class="custom-data" data-label="Thème" required></div>
-                <div class="dynamic-field"><label>Verset/Prière ?</label><input type="text" class="custom-data" data-label="Verset"></div>
+                <div class="dynamic-field">
+                    <label>Quel attribut divin voulez-vous exalter ?</label>
+                    <input type="text" class="custom-data" data-label="Attribut" required placeholder="Ex: Sa miséricorde, Sa toute puissance">
+                </div>
+                <div class="dynamic-field">
+                    <label>Quel est le thème spirituel de la chanson ?</label>
+                    <input type="text" class="custom-data" data-label="Thème" required placeholder="Ex: Le pardon, la victoire, la paix intérieure">
+                </div>
+                <div class="dynamic-field">
+                    <label>Avez-vous un verset ou une prière spécifique à intégrer ?</label>
+                    <input type="text" class="custom-data" data-label="Verset/Prière" placeholder="Ex: Psaume 23, ou 'Me voici devant Toi'">
+                </div>
             `,
             'hommage': `
-                <div class="dynamic-field"><label>Plus beau souvenir ?</label><input type="text" class="custom-data" data-label="Souvenir" required></div>
-                <div class="dynamic-field"><label>Sa plus grande qualité ?</label><input type="text" class="custom-data" data-label="Qualité" required></div>
+                <div class="dynamic-field">
+                    <label>Quel est le plus beau souvenir de cette personne ?</label>
+                    <input type="text" class="custom-data" data-label="Souvenir" required placeholder="Ex: Ses grands repas de famille le dimanche">
+                </div>
+                <div class="dynamic-field">
+                    <label>Quelle était sa plus grande qualité ?</label>
+                    <input type="text" class="custom-data" data-label="Qualité" required placeholder="Ex: Sa générosité infinie">
+                </div>
             `,
             'evenement': `
-                <div class="dynamic-field"><label>Nom de l'événement ?</label><input type="text" class="custom-data" data-label="Événement" required></div>
-                <div class="dynamic-field"><label>Ambiance souhaitée ?</label><input type="text" class="custom-data" data-label="Ambiance" required></div>
+                <div class="dynamic-field">
+                    <label>Quel est le nom et le but de l'événement ?</label>
+                    <input type="text" class="custom-data" data-label="Nom de l'événement" required placeholder="Ex: Lancement de notre nouvelle marque">
+                </div>
+                <div class="dynamic-field">
+                    <label>Quelle est l'ambiance ou le message à faire passer ?</label>
+                    <input type="text" class="custom-data" data-label="Ambiance" required placeholder="Ex: Festif, inspirant et motivant pour l'avenir">
+                </div>
             `
         };
 
         function genererFormulaireOccasion(occasion) {
             const container = document.getElementById('dynamic-form-container');
-            if (questionsPersonnalisees[occasion]) container.innerHTML = questionsPersonnalisees[occasion];
-            else container.innerHTML = `<textarea class="custom-data" data-label="Histoire" required placeholder="Votre histoire..."></textarea>`;
+            if (questionsPersonnalisees[occasion]) {
+                container.innerHTML = questionsPersonnalisees[occasion];
+            } else {
+                container.innerHTML = `<textarea class="custom-data" data-label="Histoire" required placeholder="Racontez votre histoire ici..."></textarea>`;
+            }
         }
 
         async function handleGenerate(event) {
@@ -260,7 +309,6 @@
                         const dataStatut = await resStatut.json();
 
                         if (dataStatut.status === 'completed' && dataStatut.outputs && dataStatut.outputs.length > 0) {
-                            // C'est prêt !
                             clearInterval(verificationIntervalle);
                             document.getElementById('studio-form').style.display = 'none';
                             document.getElementById('result-container').style.display = 'block';
@@ -271,19 +319,17 @@
                             document.getElementById('audio-player').src = urlAudio;
                             document.getElementById('audio-player').play();
                         } else if (dataStatut.status === 'failed') {
-                            // Echec
                             clearInterval(verificationIntervalle);
                             alert("Suno a échoué la création. Essaie de modifier un peu le texte.");
                             btn.disabled = false;
                             btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
                         } else {
-                            // Toujours en cours
                             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + (dataStatut.status || 'Patientez, création en cours...');
                         }
                     } catch (errCheck) {
                         console.error(errCheck);
                     }
-                }, 5000); // Vérifie toutes les 5 secondes
+                }, 5000); 
 
             } catch (erreur) {
                 console.error(erreur);
