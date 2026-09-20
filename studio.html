@@ -44,10 +44,10 @@
         .dynamic-field label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.95rem; font-weight: 600; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .radio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+        .radio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
         .radio-card input { display: none; }
         .radio-card { cursor: pointer; display: block; }
-        .card-content { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 1rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; transition: all 0.3s; font-weight: 600; text-align: center; color: var(--text-muted); }
+        .card-content { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 1rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; transition: all 0.3s; font-weight: 600; text-align: center; color: var(--text-muted); font-size: 0.95rem; }
         
         .radio-card:hover .card-content { border-color: rgba(212, 255, 0, 0.5); color: white; }
         .radio-card input:checked + .card-content { background: rgba(212, 255, 0, 0.1); border-color: var(--neon-lime); color: var(--neon-lime); box-shadow: 0 0 15px rgba(212, 255, 0, 0.2); transform: translateY(-2px); }
@@ -56,7 +56,7 @@
         .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212, 255, 0, 0.4); }
         .btn-generate:disabled { background: #333; color: #888; cursor: not-allowed; box-shadow: none; transform: none; }
 
-        /* LECTEUR AUDIO CACHÉ PAR DÉFAUT */
+        /* LECTEUR AUDIO */
         #result-container { display: none; margin-top: 2rem; padding: 1.5rem; background: rgba(212, 255, 0, 0.1); border: 1px solid var(--neon-lime); border-radius: 12px; text-align: center; }
         audio { width: 100%; margin-top: 1rem; outline: none; }
 
@@ -66,9 +66,6 @@
         
         @media (max-width: 768px) {
             nav { padding: 1rem; flex-direction: column; gap: 1rem; }
-            .container { margin: 2rem auto; }
-            .studio-card { padding: 1.5rem; }
-            h1 { font-size: 2.2rem; }
             .radio-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
@@ -78,7 +75,7 @@
     <div class="bg-image"></div>
     <div id="page-loader">
         <div class="spinner"></div>
-        <div style="color: var(--neon-lime); font-weight: bold; text-transform: uppercase;">Vérification de l'accès...</div>
+        <div style="color: var(--neon-lime); font-weight: bold; text-transform: uppercase;">Vérification...</div>
     </div>
 
     <nav>
@@ -91,7 +88,7 @@
 
     <div class="container">
         <h1>Le <span>Studio</span></h1>
-        <p class="subtitle">Laisse-toi guider. Réponds à quelques questions, NovaTempo crée la magie.</p>
+        <p class="subtitle">Réponds à quelques questions, NovaTempo crée la magie.</p>
 
         <div class="studio-card">
             <form id="studio-form" onsubmit="handleGenerate(event)">
@@ -116,18 +113,30 @@
                 <div class="form-group">
                     <label class="main-label">3. Quel style musical ?</label>
                     <div class="radio-grid">
-                        <label class="radio-card"><input type="radio" name="style" value="afrobeat" required><span class="card-content">🌍 Afrobeat</span></label>
-                        <label class="radio-card"><input type="radio" name="style" value="rap"><span class="card-content">🎤 Rap</span></label>
-                        <label class="radio-card"><input type="radio" name="style" value="gospel"><span class="card-content">🙏 Gospel</span></label>
-                        <label class="radio-card"><input type="radio" name="style" value="zouk"><span class="card-content">💃 Zouk</span></label>
-                        <label class="radio-card"><input type="radio" name="style" value="coupe-decale"><span class="card-content">🕺 Coupé Décalé</span></label>
+                        <!-- Styles exacts attendus par ton fichier generate-audio.js -->
+                        <label class="radio-card"><input type="radio" name="style" value="Afrobeat" required><span class="card-content">🌍 Afrobeat</span></label>
+                        <label class="radio-card"><input type="radio" name="style" value="Rap Français"><span class="card-content">🎤 Rap Français</span></label>
+                        <label class="radio-card"><input type="radio" name="style" value="Coupé Décalé"><span class="card-content">🕺 Coupé Décalé</span></label>
+                        <label class="radio-card"><input type="radio" name="style" value="Zouk"><span class="card-content">💃 Zouk</span></label>
+                        <label class="radio-card"><input type="radio" name="style" value="Amapiano"><span class="card-content">🔥 Amapiano</span></label>
+                        <label class="radio-card"><input type="radio" name="style" value="Ndombolo"><span class="card-content">🎸 Ndombolo</span></label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="main-label">4. Les détails de la chanson</label>
+                    <label class="main-label">4. Quelle voix ?</label>
+                    <div class="radio-grid">
+                        <!-- Voix exactes attendues par ton fichier generate-audio.js -->
+                        <label class="radio-card"><input type="radio" name="voice" value="male" required><span class="card-content">👨 Homme</span></label>
+                        <label class="radio-card"><input type="radio" name="voice" value="female"><span class="card-content">👩 Femme</span></label>
+                        <label class="radio-card"><input type="radio" name="voice" value="duo"><span class="card-content">👫 Duo</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="main-label">5. Les détails (Personnalisation)</label>
                     <div id="dynamic-form-container" style="padding: 1rem; border: 1px dashed rgba(212,255,0,0.3); border-radius: 12px; text-align: center; color: var(--text-muted);">
-                        Veuillez sélectionner une occasion ci-dessus pour voir les questions s'afficher ici.
+                        Veuillez sélectionner une occasion ci-dessus.
                     </div>
                 </div>
 
@@ -136,7 +145,6 @@
                 </button>
             </form>
 
-            <!-- ZONE D'AFFICHAGE DE LA MUSIQUE -->
             <div id="result-container">
                 <h3 style="color: var(--neon-lime); margin-top: 0;">🎉 Ta chanson est prête !</h3>
                 <p>Écoute le résultat généré par l'IA :</p>
@@ -147,14 +155,13 @@
     </div>
 
     <script>
-        // --- 1. Supabase & Auth ---
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         window.addEventListener('DOMContentLoaded', async () => {
             const { data: { session } } = await supabaseClient.auth.getSession();
-            if (!session) { window.location.href = '/login.html'; } 
+            if (!session) window.location.href = '/login.html'; 
             else {
                 document.getElementById('page-loader').style.opacity = '0';
                 setTimeout(() => { document.getElementById('page-loader').style.display = 'none'; }, 500);
@@ -165,49 +172,44 @@
             await supabaseClient.auth.signOut();
             window.location.href = '/login.html';
         }
-
-        // --- 2. LOGIQUE DES FORMULAIRES ---
+        
         const questionsPersonnalisees = {
             'anniversaire': `
-                <div class="dynamic-field"><label>Âge fêté :</label><input type="text" class="custom-data" data-label="Âge" required placeholder="Ex: 30 ans"></div>
-                <div class="dynamic-field"><label>Quelles sont ses passions ou hobbies ?</label><input type="text" class="custom-data" data-label="Passions" required placeholder="Ex: Il adore le football et les jeux vidéos"></div>
-                <div class="dynamic-field"><label>Une anecdote amusante à placer ?</label><input type="text" class="custom-data" data-label="Anecdote" placeholder="Ex: Il perd toujours ses clés"></div>
+                <div class="dynamic-field"><label>Âge fêté :</label><input type="text" class="custom-data" data-label="Âge" required></div>
+                <div class="dynamic-field"><label>Quelles sont ses passions ?</label><input type="text" class="custom-data" data-label="Passions" required></div>
+                <div class="dynamic-field"><label>Une anecdote ?</label><input type="text" class="custom-data" data-label="Anecdote"></div>
             `,
             'amour': `
-                <div class="dynamic-field"><label>Quel est son petit surnom ou mot doux ?</label><input type="text" class="custom-data" data-label="Surnom" placeholder="Ex: Mon amour, Mon ange, Bébé..."></div>
-                <div class="dynamic-field"><label>Qu'aimez-vous le plus chez cette personne ?</label><input type="text" class="custom-data" data-label="Ce que j'aime" required placeholder="Ex: Son sourire radieux, sa douceur, sa force..."></div>
-                <div class="dynamic-field"><label>Un souvenir marquant ou une promesse pour l'avenir ?</label><input type="text" class="custom-data" data-label="Souvenir ou Promesse" required placeholder="Ex: Notre premier baiser sous la pluie..."></div>
+                <div class="dynamic-field"><label>Son surnom ?</label><input type="text" class="custom-data" data-label="Surnom"></div>
+                <div class="dynamic-field"><label>Ce que vous aimez ?</label><input type="text" class="custom-data" data-label="Ce que j'aime" required></div>
+                <div class="dynamic-field"><label>Souvenir / Promesse ?</label><input type="text" class="custom-data" data-label="Souvenir" required></div>
             `,
             'mariage': `
-                <div class="dynamic-field"><label>Comment ou où se sont-ils rencontrés ?</label><input type="text" class="custom-data" data-label="Lieu de rencontre" required placeholder="Ex: À la fac de médecine en 2018"></div>
-                <div class="dynamic-field"><label>Que souhaitez-vous mettre en avant dans leur couple ?</label><input type="text" class="custom-data" data-label="Force du couple" required placeholder="Ex: Leur complicité et leurs voyages"></div>
-                <div class="dynamic-field"><label>Un message pour leur futur ?</label><input type="text" class="custom-data" data-label="Vœux" required placeholder="Ex: Beaucoup d'enfants et de rires"></div>
+                <div class="dynamic-field"><label>Lieu de rencontre ?</label><input type="text" class="custom-data" data-label="Lieu" required></div>
+                <div class="dynamic-field"><label>Force du couple ?</label><input type="text" class="custom-data" data-label="Force" required></div>
+                <div class="dynamic-field"><label>Vœux futurs ?</label><input type="text" class="custom-data" data-label="Vœux" required></div>
             `,
             'adoration': `
-                <div class="dynamic-field"><label>Quel attribut divin voulez-vous exalter ?</label><input type="text" class="custom-data" data-label="Attribut" required placeholder="Ex: Sa miséricorde, Sa toute puissance"></div>
-                <div class="dynamic-field"><label>Quel est le thème spirituel de la chanson ?</label><input type="text" class="custom-data" data-label="Thème" required placeholder="Ex: Le pardon, la victoire, la paix intérieure"></div>
-                <div class="dynamic-field"><label>Avez-vous un verset ou une prière spécifique à intégrer ?</label><input type="text" class="custom-data" data-label="Verset/Prière" placeholder="Ex: Psaume 23, ou 'Me voici devant Toi'"></div>
+                <div class="dynamic-field"><label>Attribut divin ?</label><input type="text" class="custom-data" data-label="Attribut" required></div>
+                <div class="dynamic-field"><label>Thème spirituel ?</label><input type="text" class="custom-data" data-label="Thème" required></div>
+                <div class="dynamic-field"><label>Verset/Prière ?</label><input type="text" class="custom-data" data-label="Verset"></div>
             `,
             'hommage': `
-                <div class="dynamic-field"><label>Quel est le plus beau souvenir de cette personne ?</label><input type="text" class="custom-data" data-label="Souvenir" required placeholder="Ex: Ses grands repas de famille le dimanche"></div>
-                <div class="dynamic-field"><label>Quelle était sa plus grande qualité ?</label><input type="text" class="custom-data" data-label="Qualité" required placeholder="Ex: Sa générosité infinie"></div>
+                <div class="dynamic-field"><label>Plus beau souvenir ?</label><input type="text" class="custom-data" data-label="Souvenir" required></div>
+                <div class="dynamic-field"><label>Sa plus grande qualité ?</label><input type="text" class="custom-data" data-label="Qualité" required></div>
             `,
             'evenement': `
-                <div class="dynamic-field"><label>Quel est le nom et le but de l'événement ?</label><input type="text" class="custom-data" data-label="Nom de l'événement" required placeholder="Ex: Lancement de notre nouvelle marque"></div>
-                <div class="dynamic-field"><label>Quelle est l'ambiance ou le message à faire passer ?</label><input type="text" class="custom-data" data-label="Ambiance" required placeholder="Ex: Festif, inspirant et motivant pour l'avenir"></div>
+                <div class="dynamic-field"><label>Nom de l'événement ?</label><input type="text" class="custom-data" data-label="Événement" required></div>
+                <div class="dynamic-field"><label>Ambiance souhaitée ?</label><input type="text" class="custom-data" data-label="Ambiance" required></div>
             `
         };
 
         function genererFormulaireOccasion(occasion) {
             const container = document.getElementById('dynamic-form-container');
-            if (questionsPersonnalisees[occasion]) {
-                container.innerHTML = questionsPersonnalisees[occasion];
-            } else {
-                container.innerHTML = `<textarea class="custom-data" data-label="Histoire générale" required placeholder="Racontez votre histoire ici..."></textarea>`;
-            }
+            if (questionsPersonnalisees[occasion]) container.innerHTML = questionsPersonnalisees[occasion];
+            else container.innerHTML = `<textarea class="custom-data" data-label="Histoire" required placeholder="Votre histoire..."></textarea>`;
         }
 
-        // --- 3. ASSEMBLAGE ET ENVOI A L'API VERCEL ---
         async function handleGenerate(event) {
             event.preventDefault(); 
             const btn = document.getElementById('generate-btn');
@@ -215,53 +217,77 @@
             const cible = document.getElementById('target-name').value;
             const occasion = document.querySelector('input[name="occasion"]:checked').value;
             const style = document.querySelector('input[name="style"]:checked').value;
+            const voice = document.querySelector('input[name="voice"]:checked').value;
             
             let histoireAssemblee = "";
-            const champsDynamiques = document.querySelectorAll('.custom-data');
-            
-            champsDynamiques.forEach(champ => {
+            document.querySelectorAll('.custom-data').forEach(champ => {
                 if(champ.value.trim() !== "") {
-                    const titreQuestion = champ.getAttribute('data-label');
-                    histoireAssemblee += `- ${titreQuestion} : ${champ.value.trim()}\n`;
+                    histoireAssemblee += `- ${champ.getAttribute('data-label')} : ${champ.value.trim()}\n`;
                 }
             });
 
-            const promptFinalPourAPI = `Chanson pour : ${cible}. \nOccasion : ${occasion}. \nStyle : ${style}. \nVoici les détails précis de la chanson : \n${histoireAssemblee}`;
+            // On construit la consigne pour Suno
+            const promptFinal = `Fais une chanson pour : ${cible}.\nC'est pour l'occasion : ${occasion}.\nDétails importants :\n${histoireAssemblee}`;
 
-            // Changement du bouton pendant le chargement
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> L\'IA génère votre chanson (patientez)...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi à Suno AI...';
             
             try {
-                // CONNEXION RÉELLE À L'API SUR VERCEL
-                // NOTE: J'ai mis '/api/generate'. Si ton fichier s'appelle '/api/suno', change juste le mot ci-dessous !
-                const reponse = await fetch('/api/generate', {
+                // 1. Envoyer la demande de création audio
+                const resCreation = await fetch('/api/songs/generate-audio', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        prompt: promptFinalPourAPI,
-                        style: style
+                        lyrics: promptFinal,
+                        genre: style,
+                        voice: voice
                     })
                 });
 
-                if (!reponse.ok) {
-                    throw new Error("Erreur avec l'API Suno.");
+                const dataCreation = await resCreation.json();
+                
+                if (dataCreation.error || !dataCreation.job_id) {
+                    throw new Error(dataCreation.error || "Pas de Job ID reçu.");
                 }
 
-                const data = await reponse.json();
-                
-                // On cache le bouton Générer et on affiche le lecteur audio
-                document.getElementById('studio-form').style.display = 'none';
-                document.getElementById('result-container').style.display = 'block';
-                
-                // On insère l'URL de la musique dans le lecteur audio (dépend du format renvoyé par ton API)
-                const audioPlayer = document.getElementById('audio-player');
-                audioPlayer.src = data.audio_url || data.url || data.file_url; // Ajuste selon la réponse de ton API
-                audioPlayer.play();
+                const jobId = dataCreation.job_id;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Composition en cours (environ 60s)...';
+
+                // 2. Boucle pour vérifier le statut de la musique
+                const verificationIntervalle = setInterval(async () => {
+                    try {
+                        const resStatut = await fetch(`/api/songs/check-status?id=${jobId}`);
+                        const dataStatut = await resStatut.json();
+
+                        if (dataStatut.status === 'completed' && dataStatut.outputs && dataStatut.outputs.length > 0) {
+                            // C'est prêt !
+                            clearInterval(verificationIntervalle);
+                            document.getElementById('studio-form').style.display = 'none';
+                            document.getElementById('result-container').style.display = 'block';
+                            
+                            const laChanson = dataStatut.outputs[0];
+                            const urlAudio = laChanson.audio_url || laChanson.url || laChanson.song_path;
+                            
+                            document.getElementById('audio-player').src = urlAudio;
+                            document.getElementById('audio-player').play();
+                        } else if (dataStatut.status === 'failed') {
+                            // Echec
+                            clearInterval(verificationIntervalle);
+                            alert("Suno a échoué la création. Essaie de modifier un peu le texte.");
+                            btn.disabled = false;
+                            btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
+                        } else {
+                            // Toujours en cours
+                            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + (dataStatut.status || 'Patientez, création en cours...');
+                        }
+                    } catch (errCheck) {
+                        console.error(errCheck);
+                    }
+                }, 5000); // Vérifie toutes les 5 secondes
 
             } catch (erreur) {
                 console.error(erreur);
-                alert("Oups ! Une erreur s'est produite lors de la connexion à l'API. Assure-toi que ton fichier /api/generate existe sur GitHub.");
+                alert("Erreur de connexion. " + erreur.message);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
             }
