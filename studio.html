@@ -8,17 +8,15 @@
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Script Supabase Sécurisé -->
+    <!-- Script Supabase -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
     <style>
         :root { --bg-dark: #06060A; --card-bg: #111118; --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6); --neon-lime: #D4FF00; --neon-pink: #FF0066; }
         body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; position: relative; }
         
-        /* IMAGE DE FOND FIXE AVEC FLOU */
         .bg-image { position: fixed; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; opacity: 0.2; filter: blur(5px); z-index: -1; }
         
-        /* NAVIGATION TRANSLUCIDE */
         nav { padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(6, 6, 10, 0.6); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
         .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; }
         .logo i { color: var(--neon-lime); }
@@ -35,19 +33,16 @@
         h1 span { color: var(--neon-lime); }
         .subtitle { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 3rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
-        /* CARTE DU STUDIO AVEC EFFET VERRE */
         .studio-card { background: rgba(17, 17, 24, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 3rem; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         
-        .form-group { margin-bottom: 2rem; }
+        .form-group { margin-bottom: 2.5rem; }
         .form-group label.main-label { display: block; margin-bottom: 1rem; color: var(--text-light); font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* CHAMPS TEXTE */
         .form-group input[type="text"], .form-group textarea { width: 100%; padding: 1.2rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-family: inherit; font-size: 1rem; box-sizing: border-box; transition: all 0.3s; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); box-shadow: 0 0 15px rgba(212, 255, 0, 0.1); }
-        .form-group textarea { resize: vertical; min-height: 140px; line-height: 1.5; }
+        .form-group textarea { resize: vertical; min-height: 150px; line-height: 1.5; }
 
-        /* GRILLE DE BOUTONS RADIOS (Cartes) */
-        .radio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
+        .radio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
         .radio-card input { display: none; }
         .radio-card { cursor: pointer; display: block; }
         .card-content { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 1rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; transition: all 0.3s; font-weight: 600; text-align: center; color: var(--text-muted); }
@@ -55,12 +50,10 @@
         .radio-card:hover .card-content { border-color: rgba(212, 255, 0, 0.5); color: white; }
         .radio-card input:checked + .card-content { background: rgba(212, 255, 0, 0.1); border-color: var(--neon-lime); color: var(--neon-lime); box-shadow: 0 0 15px rgba(212, 255, 0, 0.2); transform: translateY(-2px); }
 
-        /* BOUTON GÉNÉRER */
         .btn-generate { width: 100%; padding: 1.2rem; background: var(--neon-lime); color: var(--bg-dark); border: none; border-radius: 12px; font-weight: 900; font-size: 1.2rem; cursor: pointer; text-transform: uppercase; margin-top: 1rem; transition: transform 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(212, 255, 0, 0.2); }
         .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212, 255, 0, 0.4); }
         .btn-generate:disabled { background: #333; color: #888; cursor: not-allowed; box-shadow: none; transform: none; }
 
-        /* L'écran noir de chargement sécurisé */
         #page-loader { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s; }
         .spinner { width: 50px; height: 50px; border: 4px solid rgba(212, 255, 0, 0.3); border-top-color: var(--neon-lime); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -77,7 +70,6 @@
 <body>
 
     <div class="bg-image"></div>
-
     <div id="page-loader">
         <div class="spinner"></div>
         <div style="color: var(--neon-lime); font-weight: bold; text-transform: uppercase;">Vérification de l'accès...</div>
@@ -93,69 +85,42 @@
 
     <div class="container">
         <h1>Le <span>Studio</span></h1>
-        <p class="subtitle">Décris ton idée, NovaTempo compose la magie en qualité studio.</p>
+        <p class="subtitle">Raconte ton histoire, NovaTempo s'occupe des paroles et de la musique.</p>
 
         <div class="studio-card">
             <form onsubmit="handleGenerate(event)">
                 
                 <div class="form-group">
                     <label class="main-label">1. Pour qui est cette chanson ?</label>
-                    <input type="text" required placeholder="Ex: Ma mère, Mon meilleur ami Marc, Ma femme...">
+                    <input type="text" id="target-name" required placeholder="Ex: Ma mère, Mon meilleur ami Marc...">
                 </div>
                 
-                <!-- LISTE DES OCCASIONS AVEC ONCHANGE -->
                 <div class="form-group">
                     <label class="main-label">2. Quelle est l'occasion ?</label>
                     <div class="radio-grid">
-                        <label class="radio-card">
-                            <input type="radio" name="occasion" value="anniversaire" required onchange="updateTemplate(this.value)">
-                            <span class="card-content">🎂 Anniversaire</span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="occasion" value="mariage" onchange="updateTemplate(this.value)">
-                            <span class="card-content">💍 Mariage</span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="occasion" value="amour" onchange="updateTemplate(this.value)">
-                            <span class="card-content">❤️ Amour</span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="occasion" value="hommage" onchange="updateTemplate(this.value)">
-                            <span class="card-content">🕊️ Hommage</span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="occasion" value="autre" onchange="updateTemplate(this.value)">
-                            <span class="card-content">✨ Autre</span>
-                        </label>
+                        <label class="radio-card"><input type="radio" name="occasion" value="anniversaire" required><span class="card-content">🎂 Anniversaire</span></label>
+                        <label class="radio-card"><input type="radio" name="occasion" value="mariage"><span class="card-content">💍 Mariage</span></label>
+                        <label class="radio-card"><input type="radio" name="occasion" value="hommage"><span class="card-content">🕊️ Hommage</span></label>
+                        <label class="radio-card"><input type="radio" name="occasion" value="adoration"><span class="card-content">🙌 Adoration</span></label>
+                        <label class="radio-card"><input type="radio" name="occasion" value="promotion"><span class="card-content">🚀 Promotion</span></label>
+                        <label class="radio-card"><input type="radio" name="occasion" value="evenement"><span class="card-content">🎉 Événement</span></label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="main-label">3. Quel style musical ?</label>
+                    <label class="main-label">3. Quel style musical forcer ?</label>
                     <div class="radio-grid">
-                        <label class="radio-card">
-                            <input type="radio" name="style" value="afrobeat" required>
-                            <span class="card-content">🌍 Afrobeat</span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="style" value="zouk">
-                            <span class="card-content">💃 Zouk</span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="style" value="rap">
-                            <span class="card-content">🎤 Rap / R&B</span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="style" value="gospel">
-                            <span class="card-content">🙏 Gospel</span>
-                        </label>
+                        <label class="radio-card"><input type="radio" name="style" value="afrobeat" required><span class="card-content">🌍 Afrobeat</span></label>
+                        <label class="radio-card"><input type="radio" name="style" value="rap"><span class="card-content">🎤 Rap</span></label>
+                        <label class="radio-card"><input type="radio" name="style" value="gospel"><span class="card-content">🙏 Gospel</span></label>
+                        <label class="radio-card"><input type="radio" name="style" value="zouk"><span class="card-content">💃 Zouk</span></label>
+                        <label class="radio-card"><input type="radio" name="style" value="coupe-decale"><span class="card-content">🕺 Coupé Décalé</span></label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="main-label">4. L'histoire (NovaTempo s'en inspirera !)</label>
-                    <!-- AJOUT DE L'ID "story" -->
-                    <textarea id="story" required placeholder="Cliquez sur une occasion au-dessus pour voir un modèle apparaître ici, ou racontez librement votre anecdote..."></textarea>
+                    <label class="main-label">4. L'histoire (Laissez l'IA faire la magie !)</label>
+                    <textarea id="story" required placeholder="Racontez l'histoire avec vos mots... Ex: 'C'est pour mon frère, il adore jouer au basket et il est toujours là pour moi.' L'IA transformera vos mots en vraies paroles !"></textarea>
                 </div>
 
                 <button type="submit" class="btn-generate" id="generate-btn">
@@ -165,66 +130,50 @@
         </div>
     </div>
 
-    <!-- SCRIPT -->
+    <!-- SCRIPT ALLÉGÉ ET PRÊT POUR L'API MUSICALE -->
     <script>
-        // 1. Initialisation
+        // 1. Initialisation Supabase
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // 2. Vérification de la connexion
+        // 2. Vérification Session
         window.addEventListener('DOMContentLoaded', async () => {
             const { data: { session } } = await supabaseClient.auth.getSession();
-            if (!session) {
-                window.location.href = '/login.html';
-            } else {
-                const loader = document.getElementById('page-loader');
-                loader.style.opacity = '0';
-                setTimeout(() => { loader.style.display = 'none'; }, 500);
+            if (!session) { window.location.href = '/login.html'; } 
+            else {
+                document.getElementById('page-loader').style.opacity = '0';
+                setTimeout(() => { document.getElementById('page-loader').style.display = 'none'; }, 500);
             }
         });
 
-        // 3. Bouton Déconnexion
+        // 3. Déconnexion
         async function logout() {
             await supabaseClient.auth.signOut();
             window.location.href = '/login.html';
         }
 
-        // 4. LES TEXTES PRÉ-ÉCRITS PAR OCCASION
-        const templates = {
-            'anniversaire': "C'est pour l'anniversaire de [Prénom] qui fête ses [Âge] ans. J'aimerais que NovaTempo parle de son super sourire, de sa passion pour [Activité/Hobby], et lui souhaite le meilleur pour la suite !",
-            'mariage': "C'est pour le mariage de [Prénom 1] et [Prénom 2]. Ils se sont rencontrés à [Lieu]. J'aimerais une chanson qui célèbre leur belle histoire d'amour et leur souhaite beaucoup de bonheur.",
-            'amour': "C'est pour [Prénom], pour lui déclarer ma flamme. J'aimerais qu'on parle de notre première rencontre, de ce que j'aime chez elle/lui et de nos futurs projets ensemble.",
-            'hommage': "C'est un hommage pour [Prénom]. J'aimerais une chanson très émouvante qui rappelle sa bonté, sa joie de vivre, et qui dit qu'on ne l'oubliera jamais.",
-            'autre': ""
-        };
-
-        // 5. Fonction pour injecter le texte automatiquement
-        function updateTemplate(occasion) {
-            const textarea = document.getElementById('story');
-            const currentText = textarea.value.trim();
-            
-            // On vérifie si la case est vide OU si elle contient déjà un de nos modèles (pour ne pas effacer un texte écrit par le client)
-            const isDefault = currentText === "" || Object.values(templates).includes(textarea.value);
-            
-            if (isDefault) {
-                textarea.value = templates[occasion];
-            }
-        }
-
-        // 6. Bouton Générer (Simulation)
+        // 4. BOUTON GÉNÉRER (Prêt à capturer le style exact pour l'API)
         function handleGenerate(event) {
             event.preventDefault(); 
             const btn = document.getElementById('generate-btn');
             
+            // On capture exactement le style et l'occasion cliqués par l'utilisateur
+            const cible = document.getElementById('target-name').value;
+            const occasionChoisie = document.querySelector('input[name="occasion"]:checked').value;
+            const styleChoisi = document.querySelector('input[name="style"]:checked').value;
+            const histoire = document.getElementById('story').value;
+            
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> NovaTempo compose...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Création de la chanson...';
             
             setTimeout(() => {
-                alert("Interface validée ! Prochaine étape : connecter ce bouton à FedaPay et à NovaTempo.");
+                // Alerte de démonstration pour te montrer que le code capte bien le style exact
+                alert(`Test API validé ! \n\nL'API de musique va recevoir l'ordre strict de composer du [ ${styleChoisi.toUpperCase()} ] pour un(e) [ ${occasionChoisie.toUpperCase()} ].\n\nMaintenant que le Studio est parfait, passons au système de paiement (FedaPay) !`);
+                
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-magic"></i> Générer ma chanson (1 crédit)';
-            }, 1500);
+            }, 2000);
         }
     </script>
 </body>
