@@ -69,7 +69,7 @@
             width: 100%; 
             max-width: 1400px; 
             margin: 0 auto; 
-            margin-bottom: 12rem; /* Plus d'espace en bas pour les disques */
+            margin-bottom: 15rem; /* Ajusté pour laisser de la place aux disques géants */
             position: relative;
             z-index: 2;
         }
@@ -82,7 +82,7 @@
         /* VINYLS SHOWCASE (EN BAS AU CENTRE) */
         .vinyl-showcase {
             position: absolute;
-            bottom: 1rem; /* Descendu plus bas */
+            bottom: 2rem; 
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
@@ -92,7 +92,6 @@
             width: 100%;
         }
 
-        /* NOUVEAU TITRE ORIGINAL */
         .vinyl-text-new {
             color: var(--text-light);
             font-size: 2.5rem;
@@ -115,13 +114,13 @@
 
         .vinyl-container { 
             display: flex; 
-            gap: 3rem; 
+            gap: 2.5rem; 
             align-items: center; 
         }
 
         .vinyl {
-            width: 160px; 
-            height: 160px; 
+            width: 200px; /* DISQUES GÉANTS */
+            height: 200px; 
             border-radius: 50%; 
             background-color: #1a1a1a;
             background-size: cover; 
@@ -130,10 +129,15 @@
             display: flex; justify-content: center; align-items: center;
             position: relative; 
             animation: spin 5s linear infinite; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
             cursor: pointer; 
             transition: all 0.3s;
             overflow: hidden;
+        }
+
+        .vinyl.middle { 
+            width: 250px; /* CENTRE ENCORE PLUS GÉANT */
+            height: 250px; 
         }
 
         .vinyl::after {
@@ -146,24 +150,41 @@
         }
         .vinyl:hover::after { background: rgba(0,0,0,0.2); }
         .vinyl:hover { border-color: var(--neon-lime); transform: scale(1.05); }
-        .vinyl.playing { border-color: var(--neon-lime); box-shadow: 0 0 35px rgba(212, 255, 0, 0.5); animation: spin 2.5s linear infinite; }
+        .vinyl.playing { border-color: var(--neon-lime); box-shadow: 0 0 45px rgba(212, 255, 0, 0.6); animation: spin 2.5s linear infinite; }
         
-        .vinyl::before { content: ''; position: absolute; width: 35px; height: 35px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .vinyl::before { content: ''; position: absolute; width: 45px; height: 45px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .vinyl.playing::before { background: var(--neon-pink); }
         
-        .vinyl i { color: #000; z-index: 2; font-size: 1.2rem; margin-left: 3px; }
+        .vinyl i { color: #000; z-index: 2; font-size: 1.5rem; margin-left: 3px; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* SECTION OCCASIONS */
+        /* SECTION OCCASIONS (REDISPOSÉE EN FLEXBOX CENTRÉE) */
         .occasions-section { padding: 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
         .section-title { font-size: 3rem; font-weight: 900; text-align: center; margin-bottom: 1rem; text-transform: uppercase; }
         .section-subtitle { text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-bottom: 4rem; }
-        .occ-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; justify-content: center; }
-        .occ-card { position: relative; height: 250px; border-radius: 20px; overflow: hidden; text-decoration: none; border: 1px solid rgba(255,255,255,0.05); transition: all 0.4s ease; }
+        
+        .occ-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; /* Centre parfaitement les cartes */
+            gap: 2rem; 
+        }
+        
+        .occ-card { 
+            width: 100%;
+            max-width: 320px; /* Taille optimale */
+            height: 280px; 
+            position: relative; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            text-decoration: none; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            transition: all 0.4s ease; 
+        }
         .occ-card:hover { transform: translateY(-10px); border-color: var(--neon-lime); box-shadow: 0 15px 30px rgba(212, 255, 0, 0.15); }
         .occ-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .occ-card:hover img { transform: scale(1.05); }
-        .occ-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,6,10,0.9) 0%, rgba(6,6,10,0.2) 100%); display: flex; align-items: flex-end; padding: 2rem; }
+        .occ-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,6,10,0.9) 0%, rgba(6,6,10,0.1) 100%); display: flex; align-items: flex-end; padding: 2rem; }
         .occ-overlay h3 { margin: 0; color: var(--text-light); font-size: 1.5rem; font-weight: 800; text-transform: uppercase; }
 
         /* MODALS */
@@ -174,17 +195,31 @@
         .modal-close:hover { color: var(--neon-lime); }
         .modal h2 { margin-top: 0; color: var(--neon-lime); text-transform: uppercase; font-size: 2rem; }
 
-        @media (max-width: 1000px) {
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1100px) {
             .hero { padding: 0 2rem; }
             .hero-overlay { background: linear-gradient(180deg, rgba(6,6,10,0.6) 0%, #06060A 100%); }
             .hero-content { margin-bottom: 16rem; text-align: center; } 
             .hero-text h1 { font-size: 3.5rem; }
             .hero-text h1 span { font-size: 4rem; }
-            .vinyl-text-new { font-size: 2rem; }
-            .vinyl-text-new span { font-size: 1.4rem; display: block; margin-left: 0; margin-top: 5px; }
             nav { padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: rgba(6,6,10,0.95); }
             .occasions-section { padding: 4rem 2rem; }
-            .vinyl { width: 100px; height: 100px; }
+            
+            /* Ajustement des disques pour tablette/mobile */
+            .vinyl-container { gap: 1.5rem; }
+            .vinyl { width: 110px; height: 110px; }
+            .vinyl.middle { width: 140px; height: 140px; }
+            .vinyl::before { width: 25px; height: 25px; }
+        }
+        
+        @media (max-width: 600px) {
+            .vinyl-container { gap: 1rem; }
+            .vinyl { width: 90px; height: 90px; }
+            .vinyl.middle { width: 120px; height: 120px; }
+            .vinyl-text-new { font-size: 1.8rem; }
+            .vinyl-text-new span { font-size: 1.3rem; display: block; margin-left: 0; margin-top: 5px; }
+            .hero-content { margin-bottom: 12rem; }
+            .occ-card { max-width: 100%; } /* Prend toute la largeur sur petit écran */
         }
     </style>
 </head>
@@ -199,7 +234,6 @@
         </div>
         <div class="auth-buttons">
             <a href="/login.html" class="btn-login">Connexion</a>
-            <!-- Le bouton inscription reste dans le menu ! -->
             <a href="/signup.html" class="btn-signup">Créer une chanson</a>
         </div>
     </nav>
@@ -212,42 +246,37 @@
             <div class="hero-text">
                 <h1>Générez des émotions <span>uniques</span></h1>
                 <p>Oubliez les cadeaux génériques. Avec Nova Tempo, transformez vos sentiments en une musique personnalisée, qualité studio, en quelques secondes.</p>
-                <!-- Bouton supprimé ici pour forcer l'écoute ! -->
             </div>
         </div>
 
-        <!-- LE LECTEUR MUSICAL -->
+        <!-- LE LECTEUR MUSICAL GEANT -->
         <div class="vinyl-showcase">
             <div class="vinyl-text-new">
                 Écoute, kiffe, et <span>crée la tienne</span>
             </div>
             
             <div class="vinyl-container">
-                <!-- AUDIO 1 -> pour-toi.jpg -->
                 <div class="vinyl" onclick="toggleAudio('audio1', this)" style="background-image: url('pour-toi.jpg');">
                     <i class="fas fa-play"></i>
                 </div>
 
-                <!-- AUDIO 3 -> nova-tempo.jpg -->
-                <div class="vinyl" onclick="toggleAudio('audio3', this)" style="animation-delay: -1s; background-image: url('nova-tempo.jpg');">
+                <div class="vinyl middle" onclick="toggleAudio('audio3', this)" style="animation-delay: -1s; background-image: url('nova-tempo.jpg');">
                     <i class="fas fa-play"></i>
                 </div>
 
-                <!-- AUDIO 2 -> maman.jpg -->
                 <div class="vinyl" onclick="toggleAudio('audio2', this)" style="animation-delay: -2s; background-image: url('maman.jpg');">
                     <i class="fas fa-play"></i>
                 </div>
             </div>
         </div>
 
-        <!-- Lecteurs audio invisibles -->
         <audio id="audio1" src="demo1.mp3"></audio>
         <audio id="audio2" src="demo2.mp3"></audio>
         <audio id="audio3" src="demo3.mp3"></audio>
 
     </section>
 
-    <!-- SECTION OCCASIONS -->
+    <!-- SECTION OCCASIONS (MAINTENANT CENTRÉE PARFAITEMENT) -->
     <section class="occasions-section">
         <h2 class="section-title">Des musiques pour chaque instant</h2>
         <p class="section-subtitle">Mariage, anniversaire, réussite, hommage... chaque émotion a sa mélodie.</p>
@@ -261,7 +290,6 @@
         </div>
     </section>
 
-    <!-- MODAL TARIFS -->
     <div id="modal-tarifs" class="modal">
         <div class="modal-content">
             <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
@@ -275,7 +303,6 @@
         </div>
     </div>
 
-    <!-- MODAL FAQ -->
     <div id="modal-faq" class="modal">
         <div class="modal-content">
             <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
@@ -289,7 +316,6 @@
         </div>
     </div>
 
-    <!-- MODAL TEMOIGNAGES -->
     <div id="modal-temoignages" class="modal">
         <div class="modal-content">
             <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
