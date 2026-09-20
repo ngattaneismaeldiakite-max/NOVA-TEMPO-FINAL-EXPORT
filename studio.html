@@ -3,324 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studio - Nova Tempo</title>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>Studio de Création - Nova Tempo</title>
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <!-- Script Supabase (Version Navigateur) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         :root {
-            --bg-dark: #06060A;
-            --card-bg: #111118;
-            --text-light: #FFFFFF;
-            --text-muted: rgba(255, 255, 255, 0.6);
-            --neon-lime: #D4FF00;
-            --neon-pink: #FF0066;
-            --neon-blue: #0044FF;
-            --radius-sm: 12px;
-            --radius-md: 16px;
-            --radius-lg: 24px;
+            --bg-dark: #06060A; --card-bg: #111118;
+            --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6);
+            --neon-lime: #D4FF00; --neon-pink: #FF0066;
         }
-
-        body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; }
-        .dashboard-container { display: flex; min-height: 100vh; }
-        .sidebar { width: 260px; background-color: var(--bg-dark); padding: 2.5rem 2rem; border-right: 1px solid rgba(255, 255, 255, 0.05); }
-        .logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 3rem; color: var(--text-light); letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; }
+        body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); }
+        
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; }
         .logo i { color: var(--neon-lime); }
-        .nav-links { list-style: none; padding: 0; }
-        .nav-links li { margin-bottom: 0.5rem; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; border-radius: var(--radius-sm); transition: all 0.2s ease; }
-        .nav-links a:hover { color: var(--text-light); background: rgba(255, 255, 255, 0.03); }
-        .nav-links a.active { color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); border: 1px solid rgba(212, 255, 0, 0.1); }
-        .main-content { flex: 1; padding: 3rem 4rem; max-width: 1200px; margin: 0 auto; }
-        .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
-        h1 { margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; text-transform: uppercase; }
-        .header-subtitle { margin-top: 0.5rem; color: var(--text-muted); font-size: 1.1rem; font-weight: 500; }
-        .user-info { display: flex; align-items: center; gap: 1.5rem; }
-        .user-email { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
-        .credits-badge { background: rgba(255,255,255,0.05); padding: 0.6rem 1.2rem; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-light); font-weight: 700; font-size: 0.9rem; }
-        .credits-badge i { color: var(--neon-lime); }
-        .studio-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; }
-        .creation-panel, .preview-panel { background: var(--card-bg); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        h2 { margin-top: 0; margin-bottom: 2rem; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
-        .occasion-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
-        .occasion-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-md); padding: 1.5rem 0.5rem; text-align: center; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
-        .occasion-card i { font-size: 1.8rem; color: var(--text-muted); transition: all 0.2s ease; }
-        .occasion-card span { font-weight: 600; font-size: 0.9rem; color: var(--text-muted); transition: all 0.2s ease; }
-        .occasion-card:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
-        .occasion-card.active { background: rgba(212, 255, 0, 0.05); border-color: var(--neon-lime); box-shadow: 0 4px 15px rgba(212, 255, 0, 0.1); }
-        .occasion-card.active i, .occasion-card.active span { color: var(--neon-lime); }
-        .style-grid { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2.5rem; }
-        .style-pill { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); padding: 0.6rem 1.2rem; border-radius: 50px; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); cursor: pointer; transition: all 0.2s ease; }
-        .style-pill:hover { border-color: rgba(255,255,255,0.3); color: var(--text-light); }
-        .style-pill.active { background: rgba(212, 255, 0, 0.05); border-color: var(--neon-lime); color: var(--neon-lime); }
+        .back-link { color: var(--text-muted); text-decoration: none; font-weight: 600; transition: color 0.3s; }
+        .back-link:hover { color: var(--neon-lime); }
+        
+        .container { max-width: 800px; margin: 4rem auto; padding: 0 2rem; }
+        h1 { font-size: 3rem; margin-top: 0; font-weight: 900; text-transform: uppercase; text-align: center; }
+        
+        .studio-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 3rem; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        
         .form-group { margin-bottom: 1.5rem; }
-        label { display: block; margin-bottom: 0.6rem; font-weight: 600; font-size: 0.95rem; color: var(--text-light); }
-        .label-hint { color: var(--text-muted); font-weight: 400; font-size: 0.85rem; margin-left: 0.5rem; }
-        input[type="text"] { width: 100%; padding: 1rem 1.2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-sm); color: var(--text-light); font-family: 'Satoshi', sans-serif; font-size: 1rem; box-sizing: border-box; transition: all 0.2s ease; }
-        input[type="text"]:focus { outline: none; border-color: var(--neon-lime); background: rgba(255,255,255,0.05); box-shadow: 0 0 0 4px rgba(212, 255, 0, 0.1); }
-        input::placeholder { color: rgba(255,255,255,0.2); }
-        .occasion-fields { animation: fadeIn 0.4s ease; margin-bottom: 2rem; }
-        .occasion-title { color: var(--neon-lime); font-size: 1.2rem; font-weight: 800; margin-bottom: 1.5rem; display: block; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; text-transform: uppercase; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
-        .hidden { display: none; }
-        .btn-generate { width: 100%; padding: 1.2rem; background: var(--neon-lime); border: none; border-radius: var(--radius-md); color: var(--bg-dark); font-family: 'Satoshi', sans-serif; font-weight: 900; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 0.8rem; box-shadow: 0 4px 15px rgba(212, 255, 0, 0.2); text-transform: uppercase; }
-        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 255, 0, 0.4); }
-        .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .lyrics-display { background: rgba(255,255,255,0.02); padding: 2rem; border-radius: var(--radius-sm); min-height: 250px; white-space: pre-wrap; font-family: 'Satoshi', sans-serif; font-size: 1rem; line-height: 1.7; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.05); color: var(--text-light); }
-        .error-message { color: #FF0066; background: rgba(255, 0, 102, 0.1); padding: 1rem 1.5rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-weight: 600; display: none; border: 1px solid rgba(255, 0, 102, 0.2); }
-        .loader { display: none; margin: 4rem auto; text-align: center; }
-        .loader.active { display: block; }
-        .waveform { display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 1.5rem; height: 50px; }
-        .bar { width: 6px; border-radius: 50px; animation: wave 1s ease-in-out infinite; }
-        .bar1 { background: var(--neon-lime); height: 20px; animation-delay: 0.0s; }
-        .bar2 { background: var(--neon-pink); height: 40px; animation-delay: 0.1s; }
-        .bar3 { background: var(--neon-blue); height: 50px; animation-delay: 0.2s; }
-        .bar4 { background: var(--neon-pink); height: 35px; animation-delay: 0.3s; }
-        .bar5 { background: var(--neon-lime); height: 25px; animation-delay: 0.4s; }
-        @keyframes wave { 0%, 100% { transform: scaleY(0.4); opacity: 0.6; box-shadow: none; } 50% { transform: scaleY(1.1); opacity: 1; box-shadow: 0 0 10px currentColor; } }
-        .loader-text { font-size: 1.2rem; font-weight: 700; color: var(--text-light); margin: 0; opacity: 0.9; }
-        @media (max-width: 900px) { .dashboard-container { flex-direction: column; } .sidebar { width: auto; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; } .main-content { padding: 2rem 1.5rem; } .studio-grid { grid-template-columns: 1fr; } }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--neon-lime); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 1rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; color: var(--text-light); font-family: inherit; font-size: 1rem;
+            box-sizing: border-box; transition: all 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05);
+        }
+        
+        .btn-submit { width: 100%; padding: 1.2rem; background: var(--neon-lime); color: var(--bg-dark); border: none; border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; margin-top: 1rem; transition: transform 0.3s; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(212, 255, 0, 0.2); }
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        
+        #error-msg { color: var(--neon-pink); background: rgba(255,0,102,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem; display: none; border: 1px solid rgba(255,0,102,0.3); font-weight: 500; }
+        
+        @media (max-width: 768px) {
+            nav { padding: 1.5rem 2rem; }
+            .studio-card { padding: 2rem; }
+            h1 { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</div>
-            <ul class="nav-links">
-                <li><a href="/studio.html" class="active"><i class="fas fa-music"></i> Studio</a></li>
-                <li><a href="/creations.html"><i class="fas fa-list"></i> Mes Créations</a></li>
-                <li><a href="/profil.html"><i class="fas fa-user"></i> Mon Profil</a></li>
-                <li style="margin-top: 2rem;"><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
-            </ul>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="header">
-                <div>
-                    <h1>Créer une chanson</h1>
-                    <div class="header-subtitle">NovaTempo au service de vos émotions.</div>
+    <nav>
+        <a href="/" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
+        <a href="/profil.html" class="back-link"><i class="fas fa-arrow-left"></i> Retour au profil</a>
+    </nav>
+
+    <div class="container" id="app-content" style="display: none;">
+        <h1>Créer une chanson</h1>
+        
+        <div class="studio-card">
+            <form id="creation-form">
+                <div class="form-group">
+                    <label>Occasion</label>
+                    <select id="occasion" required>
+                        <option value="">Choisir une occasion...</option>
+                        <option value="anniversaire">Anniversaire</option>
+                        <option value="mariage">Mariage</option>
+                        <option value="hommage">Hommage</option>
+                        <option value="evenement">Événement / Promotion</option>
+                        <option value="adoration">Adoration / Gospel</option>
+                    </select>
                 </div>
-                <div class="user-info">
-                    <span id="userEmail" class="user-email">...</span>
-                    <div class="credits-badge"><i class="fas fa-bolt"></i> <span id="creditCount">--</span> crédits</div>
+                
+                <div class="form-group">
+                    <label>Prénom de la personne / Sujet</label>
+                    <input type="text" id="nom" placeholder="Ex: Sophie, Papa, Mon Entreprise..." required>
                 </div>
-            </header>
-
-            <div class="studio-grid">
-                <!-- Panneau de création -->
-                <div class="creation-panel">
-                    <h2>VOTRE HISTOIRE.</h2>
-                    <div id="errorBox" class="error-message"></div>
-
-                    <form id="generateForm">
-                        <!-- Étape 1 : Occasion (SANS AMOUR) -->
-                        <div class="form-group">
-                            <label style="margin-bottom: 1rem; color:var(--neon-lime);">1. Choisissez l'occasion *</label>
-                            <div class="occasion-grid" id="occasionCards">
-                                <div class="occasion-card" data-value="anniversaire"><i class="fas fa-gift"></i><span>Anniversaire</span></div>
-                                <div class="occasion-card" data-value="hommage"><i class="fas fa-dove"></i><span>Hommage</span></div>
-                                <div class="occasion-card" data-value="promotion"><i class="fas fa-star"></i><span>Événement</span></div>
-                                <div class="occasion-card" data-value="adoration"><i class="fas fa-hands-praying"></i><span>Adoration</span></div>
-                            </div>
-                            <input type="hidden" id="occasion" required>
-                        </div>
-
-                        <!-- Étape 2 : Style -->
-                        <div class="form-group">
-                            <label style="margin-bottom: 1rem; color:var(--neon-lime);">2. Style musical *</label>
-                            <div class="style-grid" id="styleCards">
-                                <div class="style-pill" data-value="afrobeat">Afrobeat</div>
-                                <div class="style-pill" data-value="coupé décalé">Coupé Décalé</div>
-                                <div class="style-pill" data-value="gospel">Gospel</div>
-                                <div class="style-pill" data-value="zouk">Zouk</div>
-                                <div class="style-pill" data-value="rap">Rap</div>
-                            </div>
-                            <input type="hidden" id="musicStyle" required>
-                        </div>
-
-                        <!-- Étape 3 : Champs dynamiques -->
-                        <div id="fields-anniversaire" class="occasion-fields hidden">
-                            <span class="occasion-title">3. Paramètres (Anniversaire)</span>
-                            <div class="form-group"><label>Prénom *</label><input type="text" id="anniv-prenom" placeholder="Ex: Thomas"></div>
-                            <div class="form-group"><label>Âge <span class="label-hint">Optionnel</span></label><input type="text" id="anniv-age" placeholder="Ex: 30"></div>
-                            <div class="form-group"><label>Qualité principale *</label><input type="text" id="anniv-qualite1" placeholder="Ex: Ta bonne humeur"></div>
-                            <div class="form-group"><label>Deuxième qualité *</label><input type="text" id="anniv-qualite2" placeholder="Ex: Ta fidélité"></div>
-                            <div class="form-group"><label>Souvenir à rappeler <span class="label-hint">Optionnel</span></label><input type="text" id="anniv-souvenir" placeholder="Ex: La soirée du nouvel an"></div>
-                            <div class="form-group"><label>Message spécial *</label><input type="text" id="anniv-message" placeholder="Ex: Ne change jamais"></div>
-                        </div>
-
-                        <div id="fields-hommage" class="occasion-fields hidden">
-                            <span class="occasion-title">3. Paramètres (Hommage)</span>
-                            <div class="form-group"><label>Prénom de la personne *</label><input type="text" id="hommage-nom" placeholder="Ex: Papa, Marie..."></div>
-                            <div class="form-group"><label>Votre lien <span class="label-hint">Optionnel</span></label><input type="text" id="hommage-lien" placeholder="Ex: Mon père, mon ami d'enfance..."></div>
-                            <div class="form-group"><label>Qualité 1 *</label><input type="text" id="hommage-qualite1" placeholder="Ex: Son grand cœur"></div>
-                            <div class="form-group"><label>Qualité 2 *</label><input type="text" id="hommage-qualite2" placeholder="Ex: Sa sagesse"></div>
-                            <div class="form-group"><label>Qualité 3 *</label><input type="text" id="hommage-qualite3" placeholder="Ex: Sa joie de vivre"></div>
-                            <div class="form-group"><label>Un beau souvenir <span class="label-hint">Optionnel</span></label><input type="text" id="hommage-souvenir" placeholder="Ex: Ses récits au coin du feu"></div>
-                            <div class="form-group"><label>Une valeur qu'il/elle a transmise *</label><input type="text" id="hommage-valeur" placeholder="Ex: Le courage, la persévérance..."></div>
-                            <div class="form-group"><label>Qui rend cet hommage ? <span class="label-hint">Optionnel</span></label><input type="text" id="hommage-proches" placeholder="Ex: Tes enfants, toute la famille..."></div>
-                        </div>
-
-                        <div id="fields-promotion" class="occasion-fields hidden">
-                            <span class="occasion-title">3. Paramètres (Événement)</span>
-                            <div class="form-group"><label>Nom du produit / événement / entreprise *</label><input type="text" id="pro-nom" placeholder="Ex: Le festival d'été, Ma super app..."></div>
-                            <div class="form-group"><label>Type de produit/événement <span class="label-hint">Optionnel</span></label><input type="text" id="pro-type" placeholder="Ex: Un festival de musique..."></div>
-                            <div class="form-group"><label>Point fort 1 *</label><input type="text" id="pro-point1" placeholder="Ex: Innovant"></div>
-                            <div class="form-group"><label>Point fort 2 *</label><input type="text" id="pro-point2" placeholder="Ex: Pas cher"></div>
-                            <div class="form-group"><label>Point fort 3 *</label><input type="text" id="pro-point3" placeholder="Ex: Écologique"></div>
-                            <div class="form-group"><label>Lieu <span class="label-hint">Optionnel</span></label><input type="text" id="pro-lieu" placeholder="Ex: À Paris, Sur notre site web..."></div>
-                            <div class="form-group"><label>Date / Période <span class="label-hint">Optionnel</span></label><input type="text" id="pro-date" placeholder="Ex: Ce week-end, Disponible maintenant..."></div>
-                            <div class="form-group"><label>Public cible <span class="label-hint">Optionnel</span></label><input type="text" id="pro-public" placeholder="Ex: Les jeunes, Les entrepreneurs..."></div>
-                            <div class="form-group"><label>Action attendue <span class="label-hint">Optionnel</span></label><input type="text" id="pro-action" placeholder="Ex: Téléchargez l'app, Venez nombreux..."></div>
-                        </div>
-
-                        <div id="fields-adoration" class="occasion-fields hidden">
-                            <span class="occasion-title">3. Paramètres (Adoration)</span>
-                            <div class="form-group"><label>Nom de Dieu / Titre *</label><input type="text" id="ado-nom" placeholder="Ex: Jésus, Yahweh"></div>
-                            <div class="form-group"><label>Attribut 1 *</label><input type="text" id="ado-attribut1" placeholder="Ex: Puissant"></div>
-                            <div class="form-group"><label>Attribut 2 *</label><input type="text" id="ado-attribut2" placeholder="Ex: Saint"></div>
-                            <div class="form-group"><label>Attribut 3 *</label><input type="text" id="ado-attribut3" placeholder="Ex: Merveilleux"></div>
-                            <div class="form-group"><label>Votre Prénom <span class="label-hint">Optionnel</span></label><input type="text" id="ado-prenom" placeholder="Ex: Marie"></div>
-                            <div class="form-group"><label>Votre situation / Témoignage <span class="label-hint">Optionnel</span></label><input type="text" id="ado-situation" placeholder="Ex: Il m'a guéri"></div>
-                            <div class="form-group"><label>Verset biblique préféré <span class="label-hint">Optionnel</span></label><input type="text" id="ado-verset" placeholder="Ex: Psaume 23"></div>
-                        </div>
-
-                        <button type="submit" class="btn-generate" id="submitBtn">
-                            Générer la musique <i class="fas fa-bolt"></i>
-                        </button>
-                    </form>
+                
+                <div class="form-group">
+                    <label>Style Musical</label>
+                    <select id="genre" required>
+                        <option value="">Choisir un style...</option>
+                        <option value="afrobeat">Afrobeat</option>
+                        <option value="amapiano">Amapiano</option>
+                        <option value="rnb">R&B / Soul</option>
+                        <option value="zouk">Zouk</option>
+                        <option value="gospel">Gospel</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Une anecdote ou un détail important ?</label>
+                    <textarea id="anecdote" rows="3" placeholder="Ex: On s'est rencontrés à l'université, elle adore le chocolat..."></textarea>
                 </div>
 
-                <!-- Panneau de résultat -->
-                <div class="preview-panel">
-                    <h2>NOTRE MUSIQUE.</h2>
-                    <div id="loader" class="loader">
-                        <div class="waveform">
-                            <div class="bar bar1"></div>
-                            <div class="bar bar2"></div>
-                            <div class="bar bar3"></div>
-                            <div class="bar bar4"></div>
-                            <div class="bar bar5"></div>
-                        </div>
-                        <p class="loader-text">NovaTempo génère l'émotion <i class="fas fa-asterisk" style="color:var(--neon-lime);"></i></p>
-                    </div>
-                    <div id="resultDisplay" class="lyrics-display" style="display: none;"></div>
-                </div>
-            </div>
-        </main>
+                <div id="error-msg"></div>
+
+                <button type="submit" class="btn-submit" id="btn-generate">Générer les paroles</button>
+            </form>
+        </div>
     </div>
 
-    <!-- Script intact avec Amour supprimé -->
     <script>
+        // INITIALISATION SÉCURISÉE SUPABASE
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
-        window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            let currentUserId = null;
-            let currentCredits = 0;
-
-            const { data: { session }, error } = await window.supabaseClient.auth.getSession();
-            if (error || !session) { window.location.href = '/login.html'; return; }
-
-            currentUserId = session.user.id;
-            document.getElementById('userEmail').textContent = session.user.email;
-
-            const fetchCredits = async () => {
-                const { data: profile } = await window.supabaseClient.from('profiles').select('credits').eq('id', currentUserId).single();
-                if (profile) {
-                    currentCredits = profile.credits;
-                    document.getElementById('creditCount').textContent = currentCredits;
-                } else {
-                    document.getElementById('creditCount').textContent = '0';
+        // VÉRIFICATION DE LA CONNEXION
+        async function checkSession() {
+            try {
+                const { data, error } = await supabase.auth.getSession();
+                if (error || !data.session) {
+                    window.location.replace('/login.html'); // Retour forcé si non connecté
+                    return;
                 }
+                // Affiche l'interface si l'utilisateur est bien connecté
+                document.getElementById('app-content').style.display = 'block';
+            } catch (err) {
+                console.error("Erreur session:", err);
+            }
+        }
+        checkSession();
+
+        // GESTION DU FORMULAIRE SÉCURISÉE (Avec bloc try/catch)
+        document.getElementById('creation-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btn-generate');
+            const errorMsg = document.getElementById('error-msg');
+            
+            // On bloque le bouton pendant le chargement
+            btn.disabled = true;
+            btn.textContent = "Génération en cours...";
+            errorMsg.style.display = 'none';
+
+            // Récupération des données
+            const payload = {
+                occasion: document.getElementById('occasion').value,
+                nom: document.getElementById('nom').value,
+                genre: document.getElementById('genre').value,
+                anecdote: document.getElementById('anecdote').value
             };
-            await fetchCredits();
 
-            const occasionCards = document.querySelectorAll('.occasion-card');
-            const hiddenOccasionInput = document.getElementById('occasion');
-            const fieldsMap = { anniversaire: 'fields-anniversaire', hommage: 'fields-hommage', promotion: 'fields-promotion', adoration: 'fields-adoration' };
-
-            occasionCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    occasionCards.forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
-                    const selected = card.getAttribute('data-value');
-                    hiddenOccasionInput.value = selected;
-                    Object.values(fieldsMap).forEach(id => {
-                        document.getElementById(id).classList.add('hidden');
-                        const inputs = document.getElementById(id).querySelectorAll('input');
-                        inputs.forEach(input => { if (input.previousElementSibling.textContent.includes('*')) input.removeAttribute('required'); });
-                    });
-                    if (fieldsMap[selected]) {
-                        const block = document.getElementById(fieldsMap[selected]);
-                        block.classList.remove('hidden');
-                        const inputs = block.querySelectorAll('input');
-                        inputs.forEach(input => { if (input.previousElementSibling.textContent.includes('*')) input.setAttribute('required', 'true'); });
-                    }
+            try {
+                // Appel sécurisé vers ton API Vercel
+                const response = await fetch('/api/generate-lyrics', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
-            });
 
-            const styleCards = document.querySelectorAll('.style-pill');
-            const hiddenStyleInput = document.getElementById('musicStyle');
-            styleCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    styleCards.forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
-                    hiddenStyleInput.value = card.getAttribute('data-value');
-                });
-            });
+                const data = await response.json();
 
-            const form = document.getElementById('generateForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const errorBox = document.getElementById('errorBox');
-            const loader = document.getElementById('loader');
-            const resultDisplay = document.getElementById('resultDisplay');
-
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if (currentCredits <= 0) { showError("Vous n'avez plus de crédits ! Rechargez votre compte."); return; }
-                const occasion = hiddenOccasionInput.value;
-                const style = hiddenStyleInput.value;
-                if (!occasion) { showError('Veuillez choisir l\'occasion.'); return; }
-                if (!style) { showError('Veuillez choisir le style.'); return; }
-
-                const payload = { occasion: occasion, style: style };
-                if (occasion === 'anniversaire') { payload['anniv-prenom'] = document.getElementById('anniv-prenom').value; payload['anniv-age'] = document.getElementById('anniv-age').value; payload['anniv-qualite1'] = document.getElementById('anniv-qualite1').value; payload['anniv-qualite2'] = document.getElementById('anniv-qualite2').value; payload['anniv-souvenir'] = document.getElementById('anniv-souvenir').value; payload['anniv-message'] = document.getElementById('anniv-message').value; }
-                else if (occasion === 'hommage') { payload['hommage-nom'] = document.getElementById('hommage-nom').value; payload['hommage-lien'] = document.getElementById('hommage-lien').value; payload['hommage-qualite1'] = document.getElementById('hommage-qualite1').value; payload['hommage-qualite2'] = document.getElementById('hommage-qualite2').value; payload['hommage-qualite3'] = document.getElementById('hommage-qualite3').value; payload['hommage-souvenir'] = document.getElementById('hommage-souvenir').value; payload['hommage-valeur'] = document.getElementById('hommage-valeur').value; payload['hommage-proches'] = document.getElementById('hommage-proches').value; }
-                else if (occasion === 'promotion') { payload['pro-nom'] = document.getElementById('pro-nom').value; payload['pro-type'] = document.getElementById('pro-type').value; payload['pro-point1'] = document.getElementById('pro-point1').value; payload['pro-point2'] = document.getElementById('pro-point2').value; payload['pro-point3'] = document.getElementById('pro-point3').value; payload['pro-lieu'] = document.getElementById('pro-lieu').value; payload['pro-date'] = document.getElementById('pro-date').value; payload['pro-public'] = document.getElementById('pro-public').value; payload['pro-action'] = document.getElementById('pro-action').value; }
-                else if (occasion === 'adoration') { payload['ado-nom'] = document.getElementById('ado-nom').value; payload['ado-attribut1'] = document.getElementById('ado-attribut1').value; payload['ado-attribut2'] = document.getElementById('ado-attribut2').value; payload['ado-attribut3'] = document.getElementById('ado-attribut3').value; payload['ado-prenom'] = document.getElementById('ado-prenom').value; payload['ado-situation'] = document.getElementById('ado-situation').value; payload['ado-verset'] = document.getElementById('ado-verset').value; }
-
-                try {
-                    submitBtn.disabled = true; errorBox.style.display = 'none'; resultDisplay.style.display = 'none'; loader.classList.add('active');
-                    const response = await fetch('/api/songs/generate-lyrics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                    if (!response.ok) throw new Error('Erreur réseau');
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error);
-
-                    const formattedStyleName = style.charAt(0).toUpperCase() + style.slice(1);
-                    const finalLyrics = "[Style musical : " + formattedStyleName + "]\n\n" + data.lyrics;
-
-                    await window.supabaseClient.from('creations').insert({ user_id: currentUserId, occasion: occasion, lyrics: finalLyrics });
-                    currentCredits -= 1;
-                    await window.supabaseClient.from('profiles').update({ credits: currentCredits }).eq('id', currentUserId);
-                    document.getElementById('creditCount').textContent = currentCredits;
-                    resultDisplay.textContent = finalLyrics; resultDisplay.style.display = 'block';
-                } catch (error) {
-                    showError('Une erreur est survenue lors de la composition.');
-                } finally {
-                    submitBtn.disabled = false; loader.classList.remove('active');
+                if (!response.ok) {
+                    throw new Error(data.error || "Une erreur est survenue lors de la génération.");
                 }
-            });
 
-            document.getElementById('logoutBtn').addEventListener('click', async (e) => {
-                e.preventDefault(); await window.supabaseClient.auth.signOut(); window.location.href = '/login.html';
-            });
-            function showError(message) { errorBox.textContent = message; errorBox.style.display = 'block'; }
+                // Succès : Affiche une alerte propre (ou redirige vers une autre étape)
+                alert("Paroles générées avec succès ! (Code à relier au lecteur audio)");
+                console.log("Paroles :", data.lyrics);
+                
+                btn.textContent = "Générer les paroles";
+                btn.disabled = false;
+
+            } catch (err) {
+                // Gestion des erreurs propre (Le site ne crash pas, il affiche un texte rouge)
+                console.error(err);
+                errorMsg.textContent = "Impossible de joindre le serveur. Vérifiez votre connexion ou l'API Vercel.";
+                errorMsg.style.display = 'block';
+                
+                btn.textContent = "Réessayer";
+                btn.disabled = false;
+            }
         });
     </script>
 </body>
