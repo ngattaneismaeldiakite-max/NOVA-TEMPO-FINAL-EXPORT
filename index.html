@@ -37,33 +37,37 @@
         .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(212, 255, 0, 0.4); }
 
         /* HERO SECTION */
-        .hero { min-height: 100vh; display: flex; align-items: center; padding: 0 4rem; position: relative; overflow: hidden; }
-        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; filter: blur(3px) brightness(0.9); transform: scale(1.02); z-index: 0; }
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 0 4rem; position: relative; }
+        .hero-bg { position: absolute; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; filter: blur(3px) brightness(0.9); transform: scale(1.02); z-index: 0; clip-path: inset(0); }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, #06060A 0%, rgba(6,6,10,0.85) 45%, rgba(6,6,10,0.2) 100%); z-index: 1; }
-        .hero-content { display: block; width: 100%; max-width: 1400px; margin: 0 auto; margin-bottom: 15rem; position: relative; z-index: 2; }
+        
+        .hero-content { display: block; width: 100%; max-width: 1400px; margin: 0 auto; margin-bottom: 20rem; position: relative; z-index: 2; }
         .hero-text { max-width: 700px; }
         .hero-text h1 { font-size: 5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5.5rem; }
         .hero-text p { font-size: 1.25rem; color: rgba(255,255,255,0.9); margin-bottom: 0; max-width: 550px; line-height: 1.6; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
 
-        /* VINYLS SHOWCASE */
-        .vinyl-showcase { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .vinyl-text-new { color: var(--text-light); font-size: 2.5rem; font-family: 'Instrument Serif', serif; font-style: italic; text-align: center; margin-bottom: 1.5rem; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
-        .vinyl-text-new span { color: var(--neon-lime); font-family: 'Satoshi', sans-serif; font-weight: 900; font-style: normal; font-size: 1.8rem; text-transform: uppercase; display: inline-block; margin-left: 8px; }
-        .vinyl-container { display: flex; gap: 2.5rem; align-items: center; }
-        .vinyl { width: 200px; height: 200px; border-radius: 50%; background-color: #1a1a1a; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; position: relative; animation: spin 5s linear infinite; box-shadow: 0 15px 40px rgba(0,0,0,0.9); cursor: pointer; transition: all 0.3s; overflow: hidden; }
-        .vinyl.middle { width: 250px; height: 250px; }
+        /* VINYLS SHOWCASE AGRANDI ET DESCENDU */
+        .vinyl-showcase { position: absolute; bottom: 0.5rem; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .vinyl-text-new { color: var(--text-light); font-size: 3.5rem; font-family: 'Instrument Serif', serif; font-style: italic; text-align: center; margin-bottom: 2rem; text-shadow: 0 4px 20px rgba(0,0,0,0.9); }
+        .vinyl-text-new span { color: var(--neon-lime); font-family: 'Satoshi', sans-serif; font-weight: 900; font-style: normal; font-size: 2.2rem; text-transform: uppercase; display: inline-block; margin-left: 10px; }
+        .vinyl-container { display: flex; gap: 3rem; align-items: center; }
+        
+        .vinyl { width: 240px; height: 240px; border-radius: 50%; background-color: #1a1a1a; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; position: relative; animation: spin 5s linear infinite; box-shadow: 0 15px 50px rgba(0,0,0,0.9); cursor: pointer; transition: all 0.3s; overflow: hidden; }
+        .vinyl.middle { width: 320px; height: 320px; border-width: 3px; }
+        
         .vinyl::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); border-radius: 50%; z-index: 0; transition: background 0.3s; }
         .vinyl:hover::after { background: rgba(0,0,0,0.2); }
         .vinyl:hover { border-color: var(--neon-lime); transform: scale(1.05); }
-        .vinyl.playing { border-color: var(--neon-lime); box-shadow: 0 0 45px rgba(212, 255, 0, 0.6); animation: spin 2.5s linear infinite; }
-        .vinyl::before { content: ''; position: absolute; width: 45px; height: 45px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .vinyl.playing { border-color: var(--neon-lime); box-shadow: 0 0 50px rgba(212, 255, 0, 0.6); animation: spin 2.5s linear infinite; }
+        
+        .vinyl::before { content: ''; position: absolute; width: 55px; height: 55px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 15px rgba(0,0,0,0.6); }
         .vinyl.playing::before { background: var(--neon-pink); }
-        .vinyl i { color: #000; z-index: 2; font-size: 1.5rem; margin-left: 3px; }
+        .vinyl i { color: #000; z-index: 2; font-size: 1.8rem; margin-left: 5px; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* SECTION OCCASIONS */
-        .occasions-section { padding: 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
+        .occasions-section { padding: 8rem 4rem 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
         .section-title { font-size: 3rem; font-weight: 900; text-align: center; margin-bottom: 1rem; text-transform: uppercase; }
         .section-subtitle { text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-bottom: 4rem; }
         .occ-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
@@ -99,23 +103,27 @@
         @media (max-width: 1100px) {
             .hero { padding: 0 2rem; }
             .hero-overlay { background: linear-gradient(180deg, rgba(6,6,10,0.6) 0%, #06060A 100%); }
-            .hero-content { margin-bottom: 16rem; text-align: center; } 
+            .hero-content { margin-bottom: 22rem; text-align: center; } 
             .hero-text h1 { font-size: 3.5rem; }
             .hero-text h1 span { font-size: 4rem; }
             nav { padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: rgba(6,6,10,0.95); }
-            .occasions-section { padding: 4rem 2rem; }
-            .vinyl-container { gap: 1.5rem; }
-            .vinyl { width: 110px; height: 110px; }
-            .vinyl.middle { width: 140px; height: 140px; }
-            .vinyl::before { width: 25px; height: 25px; }
+            .occasions-section { padding: 6rem 2rem 4rem 2rem; }
+            
+            /* Ajustement tablettes */
+            .vinyl-container { gap: 2rem; }
+            .vinyl { width: 160px; height: 160px; }
+            .vinyl.middle { width: 220px; height: 220px; }
+            .vinyl::before { width: 40px; height: 40px; }
+            .vinyl-text-new { font-size: 2.8rem; }
+            .vinyl-text-new span { font-size: 1.8rem; }
         }
         @media (max-width: 600px) {
+            .hero-content { margin-bottom: 18rem; }
             .vinyl-container { gap: 1rem; }
-            .vinyl { width: 90px; height: 90px; }
-            .vinyl.middle { width: 120px; height: 120px; }
-            .vinyl-text-new { font-size: 1.8rem; }
-            .vinyl-text-new span { font-size: 1.3rem; display: block; margin-left: 0; margin-top: 5px; }
-            .hero-content { margin-bottom: 12rem; }
+            .vinyl { width: 110px; height: 110px; }
+            .vinyl.middle { width: 150px; height: 150px; }
+            .vinyl-text-new { font-size: 2.2rem; margin-bottom: 1.5rem; }
+            .vinyl-text-new span { font-size: 1.5rem; display: block; margin-left: 0; margin-top: 8px; }
             .occ-card { max-width: 100%; } 
         }
     </style>
