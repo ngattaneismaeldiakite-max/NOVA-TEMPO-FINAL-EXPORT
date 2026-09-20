@@ -35,7 +35,7 @@
         h1 span { color: var(--neon-lime); }
         .subtitle { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 3rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
-        /* CARTE DU STUDIO AVEC EFFET VERRE (Glassmorphism) */
+        /* CARTE DU STUDIO AVEC EFFET VERRE */
         .studio-card { background: rgba(17, 17, 24, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 3rem; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         
         .form-group { margin-bottom: 2rem; }
@@ -44,9 +44,9 @@
         /* CHAMPS TEXTE */
         .form-group input[type="text"], .form-group textarea { width: 100%; padding: 1.2rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-family: inherit; font-size: 1rem; box-sizing: border-box; transition: all 0.3s; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); box-shadow: 0 0 15px rgba(212, 255, 0, 0.1); }
-        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-group textarea { resize: vertical; min-height: 140px; line-height: 1.5; }
 
-        /* NOUVEAU DESIGN : GRILLE DE BOUTONS RADIOS (Cartes) */
+        /* GRILLE DE BOUTONS RADIOS (Cartes) */
         .radio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
         .radio-card input { display: none; }
         .radio-card { cursor: pointer; display: block; }
@@ -76,16 +76,13 @@
 </head>
 <body>
 
-    <!-- L'image de fond -->
     <div class="bg-image"></div>
 
-    <!-- Écran de chargement sécurisé -->
     <div id="page-loader">
         <div class="spinner"></div>
         <div style="color: var(--neon-lime); font-weight: bold; text-transform: uppercase;">Vérification de l'accès...</div>
     </div>
 
-    <!-- Barre de navigation -->
     <nav>
         <a href="/" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
         <div class="nav-links">
@@ -94,10 +91,9 @@
         </div>
     </nav>
 
-    <!-- Le Studio -->
     <div class="container">
         <h1>Le <span>Studio</span></h1>
-        <p class="subtitle">Décris ton idée, l'IA compose la magie en qualité studio.</p>
+        <p class="subtitle">Décris ton idée, NovaTempo compose la magie en qualité studio.</p>
 
         <div class="studio-card">
             <form onsubmit="handleGenerate(event)">
@@ -107,27 +103,28 @@
                     <input type="text" required placeholder="Ex: Ma mère, Mon meilleur ami Marc, Ma femme...">
                 </div>
                 
+                <!-- LISTE DES OCCASIONS AVEC ONCHANGE -->
                 <div class="form-group">
                     <label class="main-label">2. Quelle est l'occasion ?</label>
                     <div class="radio-grid">
                         <label class="radio-card">
-                            <input type="radio" name="occasion" value="anniversaire" required>
+                            <input type="radio" name="occasion" value="anniversaire" required onchange="updateTemplate(this.value)">
                             <span class="card-content">🎂 Anniversaire</span>
                         </label>
                         <label class="radio-card">
-                            <input type="radio" name="occasion" value="mariage">
+                            <input type="radio" name="occasion" value="mariage" onchange="updateTemplate(this.value)">
                             <span class="card-content">💍 Mariage</span>
                         </label>
                         <label class="radio-card">
-                            <input type="radio" name="occasion" value="amour">
+                            <input type="radio" name="occasion" value="amour" onchange="updateTemplate(this.value)">
                             <span class="card-content">❤️ Amour</span>
                         </label>
                         <label class="radio-card">
-                            <input type="radio" name="occasion" value="hommage">
+                            <input type="radio" name="occasion" value="hommage" onchange="updateTemplate(this.value)">
                             <span class="card-content">🕊️ Hommage</span>
                         </label>
                         <label class="radio-card">
-                            <input type="radio" name="occasion" value="autre">
+                            <input type="radio" name="occasion" value="autre" onchange="updateTemplate(this.value)">
                             <span class="card-content">✨ Autre</span>
                         </label>
                     </div>
@@ -156,8 +153,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="main-label">4. L'histoire (Soyez précis !)</label>
-                    <textarea required placeholder="Racontez une anecdote amusante, ce que vous aimez chez cette personne, un souvenir marquant... Plus vous donnez de détails, meilleure sera la chanson !"></textarea>
+                    <label class="main-label">4. L'histoire (NovaTempo s'en inspirera !)</label>
+                    <!-- AJOUT DE L'ID "story" -->
+                    <textarea id="story" required placeholder="Cliquez sur une occasion au-dessus pour voir un modèle apparaître ici, ou racontez librement votre anecdote..."></textarea>
                 </div>
 
                 <button type="submit" class="btn-generate" id="generate-btn">
@@ -167,7 +165,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT CORRIGÉ ET BLINDÉ -->
+    <!-- SCRIPT -->
     <script>
         // 1. Initialisation
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
@@ -177,12 +175,9 @@
         // 2. Vérification de la connexion
         window.addEventListener('DOMContentLoaded', async () => {
             const { data: { session } } = await supabaseClient.auth.getSession();
-            
             if (!session) {
-                // Pas connecté = retour au login
                 window.location.href = '/login.html';
             } else {
-                // Connecté = disparition de l'écran de chargement
                 const loader = document.getElementById('page-loader');
                 loader.style.opacity = '0';
                 setTimeout(() => { loader.style.display = 'none'; }, 500);
@@ -195,16 +190,38 @@
             window.location.href = '/login.html';
         }
 
-        // 4. Bouton Générer (Simulation)
+        // 4. LES TEXTES PRÉ-ÉCRITS PAR OCCASION
+        const templates = {
+            'anniversaire': "C'est pour l'anniversaire de [Prénom] qui fête ses [Âge] ans. J'aimerais que NovaTempo parle de son super sourire, de sa passion pour [Activité/Hobby], et lui souhaite le meilleur pour la suite !",
+            'mariage': "C'est pour le mariage de [Prénom 1] et [Prénom 2]. Ils se sont rencontrés à [Lieu]. J'aimerais une chanson qui célèbre leur belle histoire d'amour et leur souhaite beaucoup de bonheur.",
+            'amour': "C'est pour [Prénom], pour lui déclarer ma flamme. J'aimerais qu'on parle de notre première rencontre, de ce que j'aime chez elle/lui et de nos futurs projets ensemble.",
+            'hommage': "C'est un hommage pour [Prénom]. J'aimerais une chanson très émouvante qui rappelle sa bonté, sa joie de vivre, et qui dit qu'on ne l'oubliera jamais.",
+            'autre': ""
+        };
+
+        // 5. Fonction pour injecter le texte automatiquement
+        function updateTemplate(occasion) {
+            const textarea = document.getElementById('story');
+            const currentText = textarea.value.trim();
+            
+            // On vérifie si la case est vide OU si elle contient déjà un de nos modèles (pour ne pas effacer un texte écrit par le client)
+            const isDefault = currentText === "" || Object.values(templates).includes(textarea.value);
+            
+            if (isDefault) {
+                textarea.value = templates[occasion];
+            }
+        }
+
+        // 6. Bouton Générer (Simulation)
         function handleGenerate(event) {
-            event.preventDefault(); // Bloque le rechargement de la page
+            event.preventDefault(); 
             const btn = document.getElementById('generate-btn');
             
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Création de la magie en cours...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> NovaTempo compose...';
             
             setTimeout(() => {
-                alert("Interface validée ! Prochaine étape : connecter ce bouton à FedaPay et à l'intelligence artificielle.");
+                alert("Interface validée ! Prochaine étape : connecter ce bouton à FedaPay et à NovaTempo.");
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-magic"></i> Générer ma chanson (1 crédit)';
             }, 1500);
