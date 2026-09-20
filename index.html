@@ -28,50 +28,81 @@
         .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; }
         .logo i { color: var(--neon-lime); }
         .nav-links { display: flex; gap: 2rem; align-items: center; }
-        .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.3s; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.3s; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .nav-links a:hover { color: var(--neon-lime); }
         .auth-buttons a { padding: 0.7rem 1.5rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.3s; }
-        .btn-login { color: var(--text-light); margin-right: 1rem; }
+        .btn-login { color: var(--text-light); margin-right: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .btn-login:hover { color: var(--neon-lime); }
         .btn-signup { background-color: var(--neon-lime); color: var(--bg-dark); box-shadow: 0 0 15px rgba(212, 255, 0, 0.2); }
         .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(212, 255, 0, 0.4); }
 
-        /* HERO SECTION */
-        .hero { min-height: 100vh; display: flex; align-items: center; padding: 0 4rem; position: relative; background: radial-gradient(circle at 80% 30%, rgba(212,255,0,0.08) 0%, rgba(6,6,10,0) 50%); }
-        .hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; width: 100%; max-width: 1400px; margin: 0 auto; align-items: center; margin-top: 4rem; }
+        /* HERO SECTION AVEC ARRIÈRE-PLAN */
+        .hero { 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 4rem; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* L'image de fond floutée */
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('fille-casque.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px) brightness(0.8);
+            transform: scale(1.05); /* Empêche les bords blancs liés au flou */
+            z-index: 0;
+        }
+
+        /* Voile noir dégradé pour la lisibilité du texte */
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, #06060A 0%, rgba(6,6,10,0.85) 50%, rgba(6,6,10,0.3) 100%);
+            z-index: 1;
+        }
+
+        .hero-content { 
+            display: block;
+            width: 100%; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            margin-top: 4rem;
+            position: relative;
+            z-index: 2; /* Le texte est au dessus du fond */
+        }
         
-        .hero-text h1 { font-size: 4.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em; text-transform: uppercase; }
-        .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5rem; }
-        .hero-text p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 3rem; max-width: 500px; line-height: 1.6; }
+        .hero-text { max-width: 700px; }
+        .hero-text h1 { font-size: 5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5.5rem; }
+        .hero-text p { font-size: 1.25rem; color: rgba(255,255,255,0.85); margin-bottom: 3rem; max-width: 550px; line-height: 1.6; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
 
         /* VINYLS ANIMATION & AUDIO */
         .vinyl-container { display: flex; gap: 1.5rem; margin-bottom: 3rem; align-items: center; }
         .vinyl {
             width: 80px; height: 80px; border-radius: 50%;
             background: radial-gradient(circle, #1a1a1a 30%, #000 70%);
-            border: 2px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center;
-            position: relative; animation: spin 4s linear infinite; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center;
+            position: relative; animation: spin 4s linear infinite; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             cursor: pointer; transition: all 0.3s;
         }
         .vinyl:hover { border-color: var(--neon-lime); transform: scale(1.05); }
         
-        /* État "En cours de lecture" */
         .vinyl.playing { border-color: var(--neon-lime); box-shadow: 0 0 25px rgba(212, 255, 0, 0.4); animation: spin 2s linear infinite; }
-        
         .vinyl::before { content: ''; position: absolute; width: 25px; height: 25px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; }
         .vinyl.playing::before { background: var(--neon-pink); }
-        
         .vinyl i { color: #000; z-index: 2; font-size: 0.8rem; margin-left: 2px; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        .vinyl-text { color: var(--text-light); font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .vinyl-text span { display: block; font-size: 0.85rem; color: var(--text-muted); font-weight: 400; text-transform: none; }
-
-        .hero-image { position: relative; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); height: 600px; }
-        .hero-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
+        .vinyl-text { color: var(--text-light); font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .vinyl-text span { display: block; font-size: 0.85rem; color: rgba(255,255,255,0.7); font-weight: 400; text-transform: none; }
 
         /* SECTION OCCASIONS */
-        .occasions-section { padding: 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; }
+        .occasions-section { padding: 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
         .section-title { font-size: 3rem; font-weight: 900; text-align: center; margin-bottom: 1rem; text-transform: uppercase; }
         .section-subtitle { text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-bottom: 4rem; }
         .occ-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; justify-content: center; }
@@ -91,10 +122,12 @@
         .modal h2 { margin-top: 0; color: var(--neon-lime); text-transform: uppercase; font-size: 2rem; }
 
         @media (max-width: 1000px) {
-            .hero-content { grid-template-columns: 1fr; text-align: center; margin-top: 6rem; }
-            nav { padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: var(--bg-dark); }
-            .hero, .occasions-section { padding: 2rem; }
-            .vinyl-container { justify-content: center; }
+            .hero { padding: 0 2rem; }
+            .hero-overlay { background: linear-gradient(180deg, rgba(6,6,10,0.6) 0%, #06060A 100%); }
+            .hero-text h1 { font-size: 3.5rem; }
+            .hero-text h1 span { font-size: 4rem; }
+            nav { padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: rgba(6,6,10,0.95); }
+            .occasions-section { padding: 4rem 2rem; }
         }
     </style>
 </head>
@@ -114,6 +147,11 @@
     </nav>
 
     <section class="hero">
+        <!-- FOND FLOUTÉ AVEC L'IMAGE -->
+        <div class="hero-bg"></div>
+        <!-- VOILE SOMBRE POUR LIRE LE TEXTE -->
+        <div class="hero-overlay"></div>
+
         <div class="hero-content">
             <div class="hero-text">
                 <h1>Générez des émotions <span>uniques</span></h1>
@@ -135,11 +173,7 @@
                 <audio id="audio2" src="demo2.mp3"></audio>
                 <audio id="audio3" src="demo3.mp3"></audio>
 
-                <a href="/signup.html" class="btn-signup" style="display:inline-block; padding: 1.2rem 2.5rem; font-size: 1.1rem;">Essayer gratuitement</a>
-            </div>
-            
-            <div class="hero-image">
-                <img src="fille-casque.jpg" alt="Jeune femme écoutant Nova Tempo">
+                <a href="/signup.html" class="btn-signup" style="display:inline-block; padding: 1.2rem 2.5rem; font-size: 1.1rem; position: relative; z-index: 10;">Essayer gratuitement</a>
             </div>
         </div>
     </section>
