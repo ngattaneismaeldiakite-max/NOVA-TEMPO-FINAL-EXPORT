@@ -8,7 +8,8 @@
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Script Supabase (Lien sécurisé) -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
     <style>
         :root {
@@ -70,14 +71,13 @@
             <div id="error-message" class="error-msg"></div>
             <div id="success-message" class="success-msg"></div>
 
-            <!-- Bouton Google -->
-            <button type="button" class="btn-google" id="google-btn">
+            <button type="button" class="btn-google" onclick="loginGoogle()">
                 <i class="fab fa-google"></i> S'inscrire avec Google
             </button>
             
             <div class="divider"><span>ou avec votre email</span></div>
 
-            <form id="signup-form">
+            <form id="signup-form" onsubmit="signupEmail(event)">
                 <div class="form-group">
                     <label>Adresse Email</label>
                     <input type="email" id="email" required placeholder="nom@exemple.com">
@@ -86,7 +86,7 @@
                 <div class="form-group">
                     <label>Mot de passe</label>
                     <input type="password" id="password" required minlength="6" placeholder="6 caractères minimum">
-                    <i class="fas fa-eye toggle-password" id="eye-icon"></i>
+                    <i class="fas fa-eye toggle-password" id="eye-icon" onclick="togglePassword()"></i>
                 </div>
                 
                 <button type="submit" class="btn-submit" id="submit-btn">M'inscrire</button>
@@ -98,47 +98,45 @@
         </div>
     </div>
 
+    <!-- SCRIPT CORRIGÉ SANS ERREUR -->
     <script>
-        // 1. GESTION DE L'OEIL
-        const eyeIcon = document.getElementById('eye-icon');
-        const passwordInput = document.getElementById('password');
-
-        eyeIcon.addEventListener('click', () => {
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
-            }
-        });
-
-        // 2. CONFIGURATION SUPABASE
+        // 1. Initialisation
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // 3. INSCRIPTION GOOGLE
-        document.getElementById('google-btn').addEventListener('click', async () => {
-            try {
-                const { data, error } = await supabase.auth.signInWithOAuth({
-                    provider: 'google',
-                    options: {
-                        redirectTo: window.location.origin + '/studio.html'
-                    }
-                });
-                if (error) throw error;
-            } catch (err) {
-                alert('Erreur Google : ' + err.message);
+        // 2. Gestion de l'oeil
+        function togglePassword() {
+            const pwd = document.getElementById('password');
+            const icon = document.getElementById('eye-icon');
+            
+            if (pwd.type === 'password') {
+                pwd.type = 'text';
+                icon.className = 'fas fa-eye-slash toggle-password';
+            } else {
+                pwd.type = 'password';
+                icon.className = 'fas fa-eye toggle-password';
             }
-        });
+        }
 
-        // 4. INSCRIPTION CLASSIQUE EMAIL/MDP
-        document.getElementById('signup-form').addEventListener('submit', async (e) => {
-            e.preventDefault(); 
+        // 3. Inscription Google
+        async function loginGoogle() {
+            const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin + '/studio.html'
+                }
+            });
+            
+            if (error) {
+                alert("Erreur Google : " + error.message + "\nAssurez-vous d'avoir activé Google dans Supabase.");
+            }
+        }
 
+        // 4. Inscription Email
+        async function signupEmail(event) {
+            event.preventDefault();
+            
             const btn = document.getElementById('submit-btn');
             const errorDiv = document.getElementById('error-message');
             const successDiv = document.getElementById('success-message');
@@ -151,30 +149,25 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            try {
-                const { data, error } = await supabase.auth.signUp({
-                    email: email,
-                    password: password
-                });
+            const { data, error } = await supabaseClient.auth.signUp({
+                email: email,
+                password: password
+            });
 
-                if (error) throw error;
-
-                // SUCCÈS
-                successDiv.textContent = 'Compte créé avec succès ! Redirection...';
+            if (error) {
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = 'Erreur : ' + error.message;
+                btn.textContent = 'M\'inscrire';
+                btn.disabled = false;
+            } else {
+                successDiv.textContent = 'Compte créé avec succès ! Redirection en cours...';
                 successDiv.style.display = 'block';
                 
                 setTimeout(() => {
                     window.location.href = '/studio.html';
                 }, 1500);
-                
-            } catch (err) {
-                // ERREUR
-                errorDiv.style.display = 'block';
-                errorDiv.textContent = 'Erreur : ' + err.message;
-                btn.textContent = 'M\'inscrire';
-                btn.disabled = false;
             }
-        });
+        }
     </script>
 </body>
 </html>
