@@ -8,7 +8,7 @@
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Script Supabase (Lien sécurisé Unpkg) -->
+    <!-- Script Supabase (Lien sécurisé) -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
     <style>
@@ -69,14 +69,12 @@
             
             <div id="error-message" class="error-msg"></div>
 
-            <!-- BOUTON GOOGLE AVEC NOUVELLE FONCTION -->
             <button type="button" class="btn-google" onclick="loginGoogle()">
                 <i class="fab fa-google"></i> Continuer avec Google
             </button>
             
             <div class="divider"><span>ou avec votre email</span></div>
 
-            <!-- FORMULAIRE AVEC NOUVELLE FONCTION ONSUBMIT -->
             <form id="login-form" onsubmit="loginEmail(event)">
                 <div class="form-group">
                     <label>Adresse Email</label>
@@ -86,7 +84,6 @@
                 <div class="form-group">
                     <label>Mot de passe</label>
                     <input type="password" id="password" required placeholder="Votre mot de passe">
-                    <!-- OEIL AVEC NOUVELLE FONCTION ONCLICK -->
                     <i class="fas fa-eye toggle-password" id="eye-icon" onclick="togglePassword()"></i>
                 </div>
                 
@@ -99,14 +96,14 @@
         </div>
     </div>
 
-    <!-- SCRIPTS BLINDÉS -->
+    <!-- SCRIPT CORRIGÉ SANS ERREUR -->
     <script>
-        // Initialisation Supabase
+        // 1. Initialisation (avec un nom de variable sécurisé)
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Fonction pour l'oeil
+        // 2. Gestion de l'oeil
         function togglePassword() {
             const pwd = document.getElementById('password');
             const icon = document.getElementById('eye-icon');
@@ -120,11 +117,9 @@
             }
         }
 
-        // Fonction Google
+        // 3. Connexion Google
         async function loginGoogle() {
-            alert("Vérification de la connexion Google avec Supabase..."); 
-            
-            const { data, error } = await supabase.auth.signInWithOAuth({
+            const { data, error } = await supabaseClient.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
                     redirectTo: window.location.origin + '/studio.html'
@@ -132,13 +127,13 @@
             });
             
             if (error) {
-                alert("Erreur Google : " + error.message + "\n\nAs-tu bien activé Google dans Supabase ?");
+                alert("Erreur Google : " + error.message + "\nAssurez-vous d'avoir activé Google dans Supabase.");
             }
         }
 
-        // Fonction Email
+        // 4. Connexion Email
         async function loginEmail(event) {
-            event.preventDefault(); // Bloque le rechargement infini de la page
+            event.preventDefault(); 
             
             const btn = document.getElementById('submit-btn');
             const errorDiv = document.getElementById('error-message');
@@ -150,7 +145,7 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
                 email: email,
                 password: password
             });
@@ -161,7 +156,7 @@
                 btn.textContent = 'Se connecter';
                 btn.disabled = false;
             } else {
-                window.location.href = '/studio.html'; // Redirection
+                window.location.href = '/studio.html'; 
             }
         }
     </script>
