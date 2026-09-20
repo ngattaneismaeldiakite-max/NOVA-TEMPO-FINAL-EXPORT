@@ -3,182 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studio de Création - Nova Tempo</title>
+    <title>Le Studio - Nova Tempo</title>
+    
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Script Supabase (Version Navigateur) -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Script Supabase Sécurisé -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
     <style>
-        :root {
-            --bg-dark: #06060A; --card-bg: #111118;
-            --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6);
-            --neon-lime: #D4FF00; --neon-pink: #FF0066;
-        }
+        :root { --bg-dark: #06060A; --card-bg: #111118; --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6); --neon-lime: #D4FF00; --neon-pink: #FF0066; }
         body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); }
         
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        nav { padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); background: var(--bg-dark); }
         .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; }
         .logo i { color: var(--neon-lime); }
-        .back-link { color: var(--text-muted); text-decoration: none; font-weight: 600; transition: color 0.3s; }
-        .back-link:hover { color: var(--neon-lime); }
         
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 600; transition: color 0.3s; display: flex; align-items: center; gap: 8px; }
+        .nav-links a:hover { color: var(--neon-lime); }
+        
+        .btn-logout { background: transparent; border: 1px solid var(--neon-pink); color: var(--neon-pink); padding: 0.5rem 1.5rem; border-radius: 50px; cursor: pointer; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+        .btn-logout:hover { background: var(--neon-pink); color: white; }
+
         .container { max-width: 800px; margin: 4rem auto; padding: 0 2rem; }
-        h1 { font-size: 3rem; margin-top: 0; font-weight: 900; text-transform: uppercase; text-align: center; }
-        
-        .studio-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 3rem; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        h1 { font-size: 3rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+        h1 span { color: var(--neon-lime); }
+        .subtitle { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 3rem; }
+
+        .studio-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 3rem; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         
         .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--neon-lime); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 1rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px; color: var(--text-light); font-family: inherit; font-size: 1rem;
-            box-sizing: border-box; transition: all 0.3s;
-        }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none; border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05);
-        }
-        
-        .btn-submit { width: 100%; padding: 1.2rem; background: var(--neon-lime); color: var(--bg-dark); border: none; border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; margin-top: 1rem; transition: transform 0.3s; }
-        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(212, 255, 0, 0.2); }
-        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        
-        #error-msg { color: var(--neon-pink); background: rgba(255,0,102,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem; display: none; border: 1px solid rgba(255,0,102,0.3); font-weight: 500; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-weight: 600; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-family: inherit; font-size: 1rem; box-sizing: border-box; transition: all 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+
+        .btn-generate { width: 100%; padding: 1.2rem; background: var(--neon-lime); color: var(--bg-dark); border: none; border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; margin-top: 1rem; transition: transform 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(212, 255, 0, 0.2); }
+        .btn-generate:disabled { background: #333; color: #888; cursor: not-allowed; box-shadow: none; transform: none; }
+
+        /* L'écran noir de chargement sécurisé */
+        #page-loader { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s; }
+        .spinner { width: 50px; height: 50px; border: 4px solid rgba(212, 255, 0, 0.3); border-top-color: var(--neon-lime); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
         @media (max-width: 768px) {
-            nav { padding: 1.5rem 2rem; }
-            .studio-card { padding: 2rem; }
-            h1 { font-size: 2rem; }
+            nav { padding: 1rem; flex-direction: column; gap: 1rem; }
+            .container { margin: 2rem auto; }
+            .studio-card { padding: 1.5rem; }
+            h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Cet écran noir masque la page pendant qu'on vérifie l'identité -->
+    <div id="page-loader">
+        <div class="spinner"></div>
+        <div style="color: var(--neon-lime); font-weight: bold; text-transform: uppercase;">Vérification de l'accès...</div>
+    </div>
+
+    <!-- Barre de navigation -->
     <nav>
         <a href="/" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
-        <a href="/profil.html" class="back-link"><i class="fas fa-arrow-left"></i> Retour au profil</a>
+        <div class="nav-links">
+            <a href="/profil.html"><i class="fas fa-user"></i> Mon Profil (Crédits)</a>
+            <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+        </div>
     </nav>
 
-    <div class="container" id="app-content" style="display: none;">
-        <h1>Créer une chanson</h1>
-        
+    <!-- Le Studio -->
+    <div class="container">
+        <h1>Le <span>Studio</span></h1>
+        <p class="subtitle">Décris ton idée, l'IA compose la magie.</p>
+
         <div class="studio-card">
-            <form id="creation-form">
+            <form onsubmit="handleGenerate(event)">
+                <div class="form-group">
+                    <label>Pour qui est cette chanson ?</label>
+                    <input type="text" required placeholder="Ex: Ma mère, Mon meilleur ami Marc...">
+                </div>
+                
                 <div class="form-group">
                     <label>Occasion</label>
-                    <select id="occasion" required>
-                        <option value="">Choisir une occasion...</option>
+                    <select required>
+                        <option value="">-- Choisir une occasion --</option>
                         <option value="anniversaire">Anniversaire</option>
                         <option value="mariage">Mariage</option>
+                        <option value="amour">Déclaration d'amour</option>
                         <option value="hommage">Hommage</option>
-                        <option value="evenement">Événement / Promotion</option>
-                        <option value="adoration">Adoration / Gospel</option>
+                        <option value="autre">Autre</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
-                    <label>Prénom de la personne / Sujet</label>
-                    <input type="text" id="nom" placeholder="Ex: Sophie, Papa, Mon Entreprise..." required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Style Musical</label>
-                    <select id="genre" required>
-                        <option value="">Choisir un style...</option>
+                    <label>Style musical</label>
+                    <select required>
+                        <option value="">-- Choisir un style --</option>
                         <option value="afrobeat">Afrobeat</option>
-                        <option value="amapiano">Amapiano</option>
-                        <option value="rnb">R&B / Soul</option>
                         <option value="zouk">Zouk</option>
+                        <option value="rap">Rap</option>
                         <option value="gospel">Gospel</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
-                    <label>Une anecdote ou un détail important ?</label>
-                    <textarea id="anecdote" rows="3" placeholder="Ex: On s'est rencontrés à l'université, elle adore le chocolat..."></textarea>
+                    <label>Histoire / Anecdotes (Soyez précis !)</label>
+                    <textarea required placeholder="Racontez-nous une anecdote amusante, ce que vous aimez chez cette personne, un souvenir marquant..."></textarea>
                 </div>
 
-                <div id="error-msg"></div>
-
-                <button type="submit" class="btn-submit" id="btn-generate">Générer les paroles</button>
+                <button type="submit" class="btn-generate" id="generate-btn">
+                    <i class="fas fa-magic"></i> Générer ma chanson (1 crédit)
+                </button>
             </form>
         </div>
     </div>
 
+    <!-- SCRIPT CORRIGÉ -->
     <script>
-        // INITIALISATION SÉCURISÉE SUPABASE
+        // 1. Initialisation avec le bon nom
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // VÉRIFICATION DE LA CONNEXION
-        async function checkSession() {
-            try {
-                const { data, error } = await supabase.auth.getSession();
-                if (error || !data.session) {
-                    window.location.replace('/login.html'); // Retour forcé si non connecté
-                    return;
-                }
-                // Affiche l'interface si l'utilisateur est bien connecté
-                document.getElementById('app-content').style.display = 'block';
-            } catch (err) {
-                console.error("Erreur session:", err);
-            }
-        }
-        checkSession();
-
-        // GESTION DU FORMULAIRE SÉCURISÉE (Avec bloc try/catch)
-        document.getElementById('creation-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // 2. Vérification de la connexion dès le chargement de la page
+        window.addEventListener('DOMContentLoaded', async () => {
+            // Demande à Supabase si l'utilisateur est bien connecté
+            const { data: { session } } = await supabaseClient.auth.getSession();
             
-            const btn = document.getElementById('btn-generate');
-            const errorMsg = document.getElementById('error-msg');
-            
-            // On bloque le bouton pendant le chargement
-            btn.disabled = true;
-            btn.textContent = "Génération en cours...";
-            errorMsg.style.display = 'none';
-
-            // Récupération des données
-            const payload = {
-                occasion: document.getElementById('occasion').value,
-                nom: document.getElementById('nom').value,
-                genre: document.getElementById('genre').value,
-                anecdote: document.getElementById('anecdote').value
-            };
-
-            try {
-                // Appel sécurisé vers ton API Vercel
-                const response = await fetch('/api/generate-lyrics', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || "Une erreur est survenue lors de la génération.");
-                }
-
-                // Succès : Affiche une alerte propre (ou redirige vers une autre étape)
-                alert("Paroles générées avec succès ! (Code à relier au lecteur audio)");
-                console.log("Paroles :", data.lyrics);
-                
-                btn.textContent = "Générer les paroles";
-                btn.disabled = false;
-
-            } catch (err) {
-                // Gestion des erreurs propre (Le site ne crash pas, il affiche un texte rouge)
-                console.error(err);
-                errorMsg.textContent = "Impossible de joindre le serveur. Vérifiez votre connexion ou l'API Vercel.";
-                errorMsg.style.display = 'block';
-                
-                btn.textContent = "Réessayer";
-                btn.disabled = false;
+            if (!session) {
+                // Si pas connecté = retour immédiat au login
+                window.location.href = '/login.html';
+            } else {
+                // Si connecté = on fait disparaître l'écran noir !
+                const loader = document.getElementById('page-loader');
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 500); // attend 0.5s pour l'effet fondu
             }
         });
+
+        // 3. Bouton Déconnexion
+        async function logout() {
+            await supabaseClient.auth.signOut();
+            window.location.href = '/login.html';
+        }
+
+        // 4. Bouton Générer
+        function handleGenerate(event) {
+            event.preventDefault();
+            const btn = document.getElementById('generate-btn');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Création en cours...';
+            
+            alert("Cette interface est prête ! Lors de la prochaine étape, on connectera ce bouton à l'intelligence artificielle pour générer l'audio.");
+            
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-magic"></i> Générer ma chanson (1 crédit)';
+            }, 2000);
+        }
     </script>
 </body>
 </html>
