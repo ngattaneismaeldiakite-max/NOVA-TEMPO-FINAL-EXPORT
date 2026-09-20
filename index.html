@@ -69,7 +69,7 @@
             width: 100%; 
             max-width: 1400px; 
             margin: 0 auto; 
-            margin-bottom: 8rem; /* Remonté un peu pour laisser de la place aux disques en bas */
+            margin-bottom: 8rem; 
             position: relative;
             z-index: 2;
         }
@@ -113,15 +113,15 @@
         .vinyl-container { 
             display: flex; 
             gap: 2rem; 
-            align-items: center; /* Aligne le grand disque et les petits par leur centre */
+            align-items: center; 
         }
 
         .vinyl {
-            width: 100px; /* Taille agrandie */
+            width: 100px;
             height: 100px; 
-            border-radius: 50%; /* Parfaitement rond */
-            background: radial-gradient(circle, #1a1a1a 30%, #000 70%);
-            background-size: cover; /* Préparé pour les pochettes ! */
+            border-radius: 50%; 
+            background-color: #1a1a1a;
+            background-size: cover; 
             background-position: center;
             border: 2px solid rgba(255,255,255,0.2); 
             display: flex; justify-content: center; align-items: center;
@@ -130,22 +130,27 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             cursor: pointer; 
             transition: all 0.3s;
-            overflow: hidden; /* Empêche l'image de déborder du cercle */
+            overflow: hidden;
         }
 
-        .vinyl.middle {
-            width: 140px; /* Le disque du centre est encore plus grand */
-            height: 140px;
+        .vinyl::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,0.4);
+            border-radius: 50%;
+            z-index: 0;
+            transition: background 0.3s;
         }
+        .vinyl:hover::after { background: rgba(0,0,0,0.2); }
 
+        .vinyl.middle { width: 140px; height: 140px; }
         .vinyl:hover { border-color: var(--neon-lime); transform: scale(1.05); }
         .vinyl.playing { border-color: var(--neon-lime); box-shadow: 0 0 35px rgba(212, 255, 0, 0.5); animation: spin 2.5s linear infinite; }
         
-        /* Point central du disque */
         .vinyl::before { content: ''; position: absolute; width: 25px; height: 25px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .vinyl.playing::before { background: var(--neon-pink); }
         
-        .vinyl i { color: #000; z-index: 2; font-size: 0.8rem; margin-left: 2px; }
+        .vinyl i { color: #FFFFFF; z-index: 2; font-size: 1rem; margin-left: 3px; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* SECTION OCCASIONS */
@@ -160,7 +165,7 @@
         .occ-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,6,10,0.9) 0%, rgba(6,6,10,0.2) 100%); display: flex; align-items: flex-end; padding: 2rem; }
         .occ-overlay h3 { margin: 0; color: var(--text-light); font-size: 1.5rem; font-weight: 800; text-transform: uppercase; }
 
-        /* MODALS (Pure CSS) */
+        /* MODALS */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1000; }
         .modal:target { opacity: 1; visibility: visible; }
         .modal-content { background: var(--card-bg); padding: 3rem; border-radius: 24px; width: 90%; max-width: 600px; position: relative; border: 1px solid rgba(255,255,255,0.1); }
@@ -171,7 +176,7 @@
         @media (max-width: 1000px) {
             .hero { padding: 0 2rem; }
             .hero-overlay { background: linear-gradient(180deg, rgba(6,6,10,0.6) 0%, #06060A 100%); }
-            .hero-content { margin-bottom: 12rem; text-align: center; } /* Plus d'espace pour les disques sur mobile */
+            .hero-content { margin-bottom: 12rem; text-align: center; } 
             .hero-text h1 { font-size: 3.5rem; }
             .hero-text h1 span { font-size: 4rem; }
             nav { padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: rgba(6,6,10,0.95); }
@@ -216,18 +221,18 @@
             </div>
             
             <div class="vinyl-container">
-                <!-- AUDIO 1 (Petit à gauche) -->
-                <div class="vinyl" onclick="toggleAudio('audio1', this)">
+                <!-- AUDIO 1 (Gauche) -> pour-toi.jpg -->
+                <div class="vinyl" onclick="toggleAudio('audio1', this)" style="background-image: url('pour-toi.jpg');">
                     <i class="fas fa-play"></i>
                 </div>
 
-                <!-- AUDIO 3 (Grand au centre) -->
-                <div class="vinyl middle" onclick="toggleAudio('audio3', this)" style="animation-delay: -1s;">
+                <!-- AUDIO 3 (Centre - Grand) -> nova-tempo.jpg -->
+                <div class="vinyl middle" onclick="toggleAudio('audio3', this)" style="animation-delay: -1s; background-image: url('nova-tempo.jpg');">
                     <i class="fas fa-play"></i>
                 </div>
 
-                <!-- AUDIO 2 (Petit à droite) -->
-                <div class="vinyl" onclick="toggleAudio('audio2', this)" style="animation-delay: -2s;">
+                <!-- AUDIO 2 (Droite) -> maman.jpg -->
+                <div class="vinyl" onclick="toggleAudio('audio2', this)" style="animation-delay: -2s; background-image: url('maman.jpg');">
                     <i class="fas fa-play"></i>
                 </div>
             </div>
@@ -240,6 +245,7 @@
 
     </section>
 
+    <!-- Reste de la page inchangé -->
     <section class="occasions-section">
         <h2 class="section-title">Des musiques pour chaque instant</h2>
         <p class="section-subtitle">Mariage, anniversaire, réussite, hommage... chaque émotion a sa mélodie.</p>
@@ -267,7 +273,6 @@
         </div>
     </div>
 
-    <!-- MODAL FAQ -->
     <div id="modal-faq" class="modal">
         <div class="modal-content">
             <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
@@ -281,7 +286,6 @@
         </div>
     </div>
 
-    <!-- MODAL TEMOIGNAGES -->
     <div id="modal-temoignages" class="modal">
         <div class="modal-content">
             <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
@@ -299,7 +303,6 @@
         </div>
     </div>
 
-    <!-- SCRIPT GESTION AUDIO -->
     <script>
         function toggleAudio(audioId, vinylElement) {
             const audio = document.getElementById(audioId);
