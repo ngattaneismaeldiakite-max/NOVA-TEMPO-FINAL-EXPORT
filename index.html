@@ -53,7 +53,7 @@
         .vinyl-text-new span { color: var(--neon-lime); font-family: 'Satoshi', sans-serif; font-weight: 900; font-style: normal; font-size: 2.2rem; text-transform: uppercase; display: inline-block; margin-left: 10px; }
         .vinyl-container { display: flex; gap: 3rem; align-items: center; }
         
-        /* DESIGN DES DISQUES (Fixes, sans rotation) */
+        /* DESIGN DES DISQUES */
         .vinyl { width: 240px; height: 240px; border-radius: 50%; background-color: #1a1a1a; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; position: relative; box-shadow: 0 15px 50px rgba(0,0,0,0.9); cursor: pointer; transition: transform 0.3s, border-color 0.3s; overflow: hidden; }
         .vinyl.middle { width: 320px; height: 320px; border-width: 3px; }
         
@@ -61,17 +61,26 @@
         .vinyl:hover::after { background: rgba(0,0,0,0.2); }
         .vinyl:hover { border-color: var(--neon-lime); transform: scale(1.05); }
         
-        /* ANIMATION PULSATION LORS DE LA LECTURE */
+        /* CORRECTION SPECIALE: ROTATION DE L'IMAGE COUCHEE */
+        .vinyl.rotated-left { transform: rotate(-90deg); }
+        .vinyl.rotated-left i { transform: rotate(90deg); } /* On garde le bouton play droit */
+        .vinyl.rotated-left:hover { border-color: var(--neon-lime); transform: rotate(-90deg) scale(1.05); }
+        .vinyl.rotated-left.playing { border-color: var(--neon-lime); animation: pulseNeonRotated 1.5s infinite alternate; }
+
+        /* ANIMATION PULSATION */
         .vinyl.playing { border-color: var(--neon-lime); animation: pulseNeon 1.5s infinite alternate; }
         
         .vinyl::before { content: ''; position: absolute; width: 55px; height: 55px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 15px rgba(0,0,0,0.6); }
         .vinyl.playing::before { background: var(--neon-pink); }
         .vinyl i { color: #000; z-index: 2; font-size: 1.8rem; margin-left: 5px; }
         
-        /* Keyframes de la pulsation néon */
         @keyframes pulseNeon { 
             0% { box-shadow: 0 0 20px rgba(212, 255, 0, 0.4); transform: scale(1.05); }
             100% { box-shadow: 0 0 60px rgba(212, 255, 0, 0.9), 0 0 30px rgba(255, 0, 102, 0.4); transform: scale(1.08); } 
+        }
+        @keyframes pulseNeonRotated { 
+            0% { box-shadow: 0 0 20px rgba(212, 255, 0, 0.4); transform: rotate(-90deg) scale(1.05); }
+            100% { box-shadow: 0 0 60px rgba(212, 255, 0, 0.9), 0 0 30px rgba(255, 0, 102, 0.4); transform: rotate(-90deg) scale(1.08); } 
         }
 
         /* SECTION OCCASIONS */
@@ -177,7 +186,8 @@
                 <div class="vinyl" onclick="toggleAudio('audio1', this)" style="background-image: url('pour-toi.jpg.png?v=1'); animation-delay: 0s;">
                     <i class="fas fa-play"></i>
                 </div>
-                <div class="vinyl middle" onclick="toggleAudio('audio3', this)" style="background-image: url('nova-tempo.jpg.png?v=1'); animation-delay: 0.3s;">
+                <!-- ON A AJOUTE LA CLASSE rotated-left ICI -->
+                <div class="vinyl middle rotated-left" onclick="toggleAudio('audio3', this)" style="background-image: url('nova-tempo.jpg.png?v=1'); animation-delay: 0.3s;">
                     <i class="fas fa-play"></i>
                 </div>
                 <div class="vinyl" onclick="toggleAudio('audio2', this)" style="background-image: url('maman.jpg.png?v=1'); animation-delay: 0.6s;">
