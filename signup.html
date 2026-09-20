@@ -101,17 +101,23 @@
     </div>
     
     <script>
-        // TES VRAIES CLÉS SUPABASE
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         const togglePassword = document.getElementById('toggle-password');
         const password = document.getElementById('password');
+        
         togglePassword.addEventListener('click', function () {
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            this.classList.toggle('fa-eye-slash');
+            if (password.type === 'password') {
+                password.type = 'text';
+                this.classList.remove('fa-eye');
+                this.classList.add('fa-eye-slash');
+            } else {
+                password.type = 'password';
+                this.classList.remove('fa-eye-slash');
+                this.classList.add('fa-eye');
+            }
         });
 
         document.getElementById('signup-form').addEventListener('submit', async (e) => {
