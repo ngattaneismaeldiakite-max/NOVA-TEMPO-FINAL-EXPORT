@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Tempo - Composez vos émotions</title>
+    <title>Nova Tempo - Composez vos Émotions</title>
     
     <!-- Polices et Icones -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
@@ -41,15 +41,15 @@
         .hero-bg { position: absolute; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; filter: blur(3px) brightness(0.9); transform: scale(1.02); z-index: 0; clip-path: inset(0); }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, #06060A 0%, rgba(6,6,10,0.85) 45%, rgba(6,6,10,0.2) 100%); z-index: 1; }
         
-        /* CORRECTION : On repousse ce texte bien vers le haut (margin-bottom: 25rem) pour éviter le carambolage */
-        .hero-content { display: block; width: 100%; max-width: 1400px; margin: 0 auto; margin-bottom: 25rem; position: relative; z-index: 2; }
+        /* CORRECTION : Espace parfait entre le menu et le titre ! */
+        .hero-content { display: block; width: 100%; max-width: 1400px; margin: 0 auto; margin-top: 10rem; margin-bottom: 18rem; position: relative; z-index: 2; }
         .hero-text { max-width: 700px; }
         .hero-text h1 { font-size: 5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5.5rem; }
         .hero-text p { font-size: 1.25rem; color: rgba(255,255,255,0.9); margin-bottom: 0; max-width: 550px; line-height: 1.6; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
 
-        /* POSITIONNEMENT DES DISQUES SUR ORDI (Bien en bas) */
-        .vinyl-showcase { position: absolute; bottom: -6rem; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; }
+        /* POSITIONNEMENT DES DISQUES SUR ORDI (Descendus beaucoup plus bas !) */
+        .vinyl-showcase { position: absolute; bottom: -16rem; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; }
         .vinyl-text-new { color: var(--text-light); font-size: 3.5rem; font-family: 'Instrument Serif', serif; font-style: italic; text-align: center; margin-bottom: 2rem; text-shadow: 0 4px 20px rgba(0,0,0,0.9); }
         .vinyl-text-new span { color: var(--neon-lime); font-family: 'Satoshi', sans-serif; font-weight: 900; font-style: normal; font-size: 2.2rem; text-transform: uppercase; display: inline-block; margin-left: 10px; }
         .vinyl-container { display: flex; gap: 3rem; align-items: center; }
@@ -85,7 +85,8 @@
         }
 
         /* SECTION OCCASIONS */
-        .occasions-section { padding: 14rem 4rem 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
+        /* Augmentation du padding-top pour compenser la descente des disques */
+        .occasions-section { padding: 22rem 4rem 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
         .section-title { font-size: 3rem; font-weight: 900; text-align: center; margin-bottom: 1rem; text-transform: uppercase; }
         .section-subtitle { text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-bottom: 4rem; }
         .occ-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
@@ -122,11 +123,11 @@
             nav { position: relative; padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: var(--bg-dark); }
             .hero { padding: 0 2rem; min-height: calc(100vh - 150px); }
             .hero-overlay { background: linear-gradient(180deg, rgba(6,6,10,0.6) 0%, #06060A 100%); }
-            .hero-content { margin-bottom: 18rem; margin-top: 1rem; text-align: center; } 
-            .vinyl-showcase { bottom: -4rem; }
+            .hero-content { margin-bottom: 18rem; margin-top: 3rem; text-align: center; } 
+            .vinyl-showcase { bottom: -8rem; }
             .hero-text h1 { font-size: 3.5rem; }
             .hero-text h1 span { font-size: 4rem; }
-            .occasions-section { padding: 10rem 2rem 4rem 2rem; }
+            .occasions-section { padding: 14rem 2rem 4rem 2rem; }
             
             .vinyl-container { gap: 2rem; }
             .vinyl { width: 160px; height: 160px; }
@@ -140,7 +141,7 @@
             nav { padding: 1rem; gap: 1.2rem; }
             .nav-links { gap: 1.5rem; }
             .hero-content { margin-bottom: 14rem; margin-top: 2rem; }
-            .vinyl-showcase { bottom: -2rem; }
+            .vinyl-showcase { bottom: -5rem; }
             .hero-text h1 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 1rem; }
             .hero-text h1 span { font-size: 3.2rem; }
             .hero-text p { font-size: 1.1rem; }
@@ -241,7 +242,7 @@
             <div class="faq-category"><i class="fas fa-music"></i> Comment ça marche</div>
             <details>
                 <summary>Comment je crée ma chanson ?</summary>
-                <div class="faq-answer">Rien de compliqué. Tu choisis l'occasion (anniversaire, amour, hommage...), tu sélectionnes un style musical, tu nous racontes en quelques mots qui est la personne et ce que tu veux lui dire — et NovaTempo s'occupe du reste : paroles et musique générées en quelques minutes.</div>
+                <div class="faq-answer">Rien de compliqué. Tu choisis l'occasion (anniversaire, amour, hommage...), tu sélectionnes un style musical, tu nous racontes en quelques mots qui est la personne et ce que tu veux lui dire - et NovaTempo s'occupe du reste : paroles et musique générées en quelques minutes.</div>
             </details>
             <details>
                 <summary>Combien de temps ça prend ?</summary>
@@ -283,7 +284,7 @@
             </details>
             <details>
                 <summary>Je peux partager ma chanson publiquement ?</summary>
-                <div class="faq-answer">Oui, la chanson t'appartient dès qu'elle est générée et payée — tu peux la partager librement partout.</div>
+                <div class="faq-answer">Oui, la chanson t'appartient dès qu'elle est générée et payée - tu peux la partager librement partout.</div>
             </details>
 
             <div class="faq-category"><i class="fas fa-shield-alt"></i> Compte et confidentialité</div>
@@ -295,7 +296,7 @@
             <div class="faq-category"><i class="fas fa-headset"></i> Support</div>
             <details>
                 <summary>J'ai un problème, comment vous contacter ?</summary>
-                <div class="faq-answer">Le petit chat en bas à droite de l'écran est là pour ça — écris-nous directement, on te répond au plus vite ! NovaTempo fonctionne partout où tu as internet.</div>
+                <div class="faq-answer">Le petit chat en bas à droite de l'écran est là pour ça - écris-nous directement, on te répond au plus vite ! NovaTempo fonctionne partout où tu as internet.</div>
             </details>
         </div>
     </div>
@@ -308,11 +309,11 @@
             <div style="margin-top:2rem;">
                 <div style="padding:1.5rem; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:1rem;">
                     <p style="font-style:italic; margin-top:0;">"J'ai créé une chanson pour le mariage de ma sœur. Tout le monde pleurait de joie !"</p>
-                    <strong style="color:var(--neon-lime);">— Aminata</strong>
+                    <strong style="color:var(--neon-lime);">- Aminata</strong>
                 </div>
                 <div style="padding:1.5rem; background:rgba(255,255,255,0.05); border-radius:12px;">
                     <p style="font-style:italic; margin-top:0;">"L'Afrobeat généré pour la promo de ma boutique est incroyable. Rapide et pro."</p>
-                    <strong style="color:var(--neon-lime);">— Cédric</strong>
+                    <strong style="color:var(--neon-lime);">- Cédric</strong>
                 </div>
             </div>
         </div>
