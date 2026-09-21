@@ -8,6 +8,7 @@
     <!-- Polices et Icones -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=instrument-serif@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -25,8 +26,14 @@
 
         /* NAVIGATION */
         nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; position: absolute; top: 0; left: 0; right: 0; z-index: 100; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; }
-        .logo i { color: var(--neon-lime); }
+        
+        /* NOUVEAU LOGO NOVA TEMPO (Rubik Glitch + Egaliseur) */
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: transform 0.3s; }
+        .logo:hover { transform: scale(1.02); }
+        .logo-text { display: flex; flex-direction: column; justify-content: center; line-height: 1; }
+        .logo-nova { font-family: 'Rubik Glitch', cursive; font-size: 2.2rem; font-weight: 400; letter-spacing: 2px; color: var(--text-light); text-transform: uppercase; line-height: 0.9; }
+        .logo-tempo { font-family: 'Satoshi', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 6px; margin-top: 2px; padding-left: 2px; color: rgba(255,255,255,0.8); }
+
         .nav-links { display: flex; gap: 2rem; align-items: center; }
         .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.3s; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .nav-links a:hover { color: var(--neon-lime); }
@@ -41,14 +48,13 @@
         .hero-bg { position: absolute; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; filter: blur(3px) brightness(0.9); transform: scale(1.02); z-index: 0; clip-path: inset(0); }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, #06060A 0%, rgba(6,6,10,0.85) 45%, rgba(6,6,10,0.2) 100%); z-index: 1; }
         
-        /* CORRECTION : Espace parfait entre le menu et le titre ! */
         .hero-content { display: block; width: 100%; max-width: 1400px; margin: 0 auto; margin-top: 10rem; margin-bottom: 18rem; position: relative; z-index: 2; }
         .hero-text { max-width: 700px; }
         .hero-text h1 { font-size: 5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5.5rem; }
         .hero-text p { font-size: 1.25rem; color: rgba(255,255,255,0.9); margin-bottom: 0; max-width: 550px; line-height: 1.6; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
 
-        /* POSITIONNEMENT DES DISQUES SUR ORDI (Descendus beaucoup plus bas !) */
+        /* POSITIONNEMENT DES DISQUES */
         .vinyl-showcase { position: absolute; bottom: -16rem; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; }
         .vinyl-text-new { color: var(--text-light); font-size: 3.5rem; font-family: 'Instrument Serif', serif; font-style: italic; text-align: center; margin-bottom: 2rem; text-shadow: 0 4px 20px rgba(0,0,0,0.9); }
         .vinyl-text-new span { color: var(--neon-lime); font-family: 'Satoshi', sans-serif; font-weight: 900; font-style: normal; font-size: 2.2rem; text-transform: uppercase; display: inline-block; margin-left: 10px; }
@@ -57,20 +63,14 @@
         /* DESIGN DES DISQUES */
         .vinyl { width: 240px; height: 240px; border-radius: 50%; background-color: #1a1a1a; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; position: relative; box-shadow: 0 15px 50px rgba(0,0,0,0.9); cursor: pointer; transition: transform 0.3s, border-color 0.3s; overflow: hidden; }
         .vinyl.middle { width: 320px; height: 320px; border-width: 3px; }
-        
         .vinyl::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); border-radius: 50%; z-index: 0; transition: background 0.3s; }
         .vinyl:hover::after { background: rgba(0,0,0,0.2); }
         .vinyl:hover { border-color: var(--neon-lime); transform: scale(1.05); }
-        
-        /* CORRECTION SPECIALE: ROTATION DE L'IMAGE COUCHEE */
         .vinyl.rotated-left { transform: rotate(-90deg); }
         .vinyl.rotated-left i { transform: rotate(90deg); } 
         .vinyl.rotated-left:hover { border-color: var(--neon-lime); transform: rotate(-90deg) scale(1.05); }
         .vinyl.rotated-left.playing { border-color: var(--neon-lime); animation: pulseNeonRotated 1.5s infinite alternate; }
-
-        /* ANIMATION PULSATION */
         .vinyl.playing { border-color: var(--neon-lime); animation: pulseNeon 1.5s infinite alternate; }
-        
         .vinyl::before { content: ''; position: absolute; width: 55px; height: 55px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 15px rgba(0,0,0,0.6); }
         .vinyl.playing::before { background: var(--neon-pink); }
         .vinyl i { color: #000; z-index: 2; font-size: 1.8rem; margin-left: 5px; }
@@ -85,7 +85,6 @@
         }
 
         /* SECTION OCCASIONS */
-        /* Augmentation du padding-top pour compenser la descente des disques */
         .occasions-section { padding: 22rem 4rem 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
         .section-title { font-size: 3rem; font-weight: 900; text-align: center; margin-bottom: 1rem; text-transform: uppercase; }
         .section-subtitle { text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-bottom: 4rem; }
@@ -97,7 +96,7 @@
         .occ-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,6,10,0.9) 0%, rgba(6,6,10,0.1) 100%); display: flex; align-items: flex-end; padding: 2rem; }
         .occ-overlay h3 { margin: 0; color: var(--text-light); font-size: 1.5rem; font-weight: 800; text-transform: uppercase; }
 
-        /* MODALS */
+        /* MODALS & FAQ */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1000; }
         .modal:target { opacity: 1; visibility: visible; }
         .modal-content { background: var(--card-bg); padding: 3rem; border-radius: 24px; width: 90%; max-width: 650px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 85vh; overflow-y: auto; }
@@ -105,11 +104,9 @@
         .modal-close:hover { color: var(--neon-lime); }
         .modal h2 { margin-top: 0; color: var(--neon-lime); text-transform: uppercase; font-size: 2rem; margin-bottom: 1.5rem; }
 
-        /* STYLE ACCORDEON FAQ */
         .faq-category { color: var(--neon-lime); font-size: 1.1rem; margin-top: 2rem; margin-bottom: 1rem; text-transform: uppercase; font-weight: 900; }
         .faq-category:first-of-type { margin-top: 0; }
         .faq-category i { margin-right: 8px; }
-        
         details { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-bottom: 0.8rem; overflow: hidden; transition: all 0.3s; }
         details:hover { border-color: rgba(212, 255, 0, 0.3); background: rgba(255,255,255,0.05); }
         summary { padding: 1.2rem; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--text-light); }
@@ -118,7 +115,7 @@
         details[open] summary::after { transform: rotate(180deg); }
         .faq-answer { padding: 0 1.2rem 1.2rem 1.2rem; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; }
 
-        /* RESPONSIVE DESIGN (Espaces sécurisés) */
+        /* RESPONSIVE DESIGN (Adapté pour le nouveau logo sur mobile) */
         @media (max-width: 1100px) {
             nav { position: relative; padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: var(--bg-dark); }
             .hero { padding: 0 2rem; min-height: calc(100vh - 150px); }
@@ -128,7 +125,6 @@
             .hero-text h1 { font-size: 3.5rem; }
             .hero-text h1 span { font-size: 4rem; }
             .occasions-section { padding: 14rem 2rem 4rem 2rem; }
-            
             .vinyl-container { gap: 2rem; }
             .vinyl { width: 160px; height: 160px; }
             .vinyl.middle { width: 220px; height: 220px; }
@@ -145,7 +141,6 @@
             .hero-text h1 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 1rem; }
             .hero-text h1 span { font-size: 3.2rem; }
             .hero-text p { font-size: 1.1rem; }
-            
             .vinyl-container { gap: 1rem; }
             .vinyl { width: 110px; height: 110px; }
             .vinyl.middle { width: 150px; height: 150px; }
@@ -153,13 +148,39 @@
             .vinyl-text-new span { font-size: 1.4rem; display: block; margin-left: 0; margin-top: 5px; }
             .occasions-section { padding: 8rem 1.5rem 4rem 1.5rem; }
             .occ-card { max-width: 100%; } 
+            
+            /* Ajustement de taille du logo sur téléphone */
+            .logo-nova { font-size: 1.6rem; }
+            .logo-tempo { font-size: 0.75rem; letter-spacing: 4px; }
+            .logo svg { height: 35px; width: 35px; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="/" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
+        <!-- NOUVEAU LOGO COMPLET -->
+        <a href="/" class="logo">
+            <svg viewBox="0 0 100 100" height="45" width="45" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="limeGradLogo" x1="0%" y1="100%" x2="0%" y2="0%">
+                        <stop offset="0%" stop-color="#8BB800" />
+                        <stop offset="100%" stop-color="#D4FF00" />
+                    </linearGradient>
+                </defs>
+                <g fill="url(#limeGradLogo)">
+                    <rect x="10" y="40" width="14" height="40" rx="7"><animate attributeName="y" values="40;20;40" dur="1s" repeatCount="indefinite" /><animate attributeName="height" values="40;60;40" dur="1s" repeatCount="indefinite" /></rect>
+                    <rect x="32" y="20" width="14" height="60" rx="7"><animate attributeName="y" values="20;50;20" dur="1.2s" repeatCount="indefinite" /><animate attributeName="height" values="60;30;60" dur="1.2s" repeatCount="indefinite" /></rect>
+                    <rect x="54" y="10" width="14" height="70" rx="7"><animate attributeName="y" values="10;30;10" dur="0.8s" repeatCount="indefinite" /><animate attributeName="height" values="70;50;70" dur="0.8s" repeatCount="indefinite" /></rect>
+                    <rect x="76" y="30" width="14" height="50" rx="7"><animate attributeName="y" values="30;15;30" dur="1.1s" repeatCount="indefinite" /><animate attributeName="height" values="50;65;50" dur="1.1s" repeatCount="indefinite" /></rect>
+                </g>
+            </svg>
+            <div class="logo-text">
+                <span class="logo-nova">NOVA</span>
+                <span class="logo-tempo">TEMPO</span>
+            </div>
+        </a>
+
         <div class="nav-links">
             <a href="#modal-tarifs">Tarifs</a>
             <a href="#modal-faq">FAQ</a>
@@ -174,36 +195,26 @@
     <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
-
         <div class="hero-content">
             <div class="hero-text">
                 <h1>Générez des émotions <span>uniques</span></h1>
                 <p>Oubliez les cadeaux génériques. Avec Nova Tempo, transformez vos sentiments en une musique personnalisée, qualité studio, en quelques secondes.</p>
             </div>
         </div>
-
         <div class="vinyl-showcase">
             <div class="vinyl-text-new">
                 Écoute, kiffe, et <span>crée la tienne</span>
             </div>
-            
             <div class="vinyl-container">
-                <div class="vinyl" onclick="toggleAudio('audio1', this)" style="background-image: url('pour-toi.jpg.png?v=1'); animation-delay: 0s;">
-                    <i class="fas fa-play"></i>
-                </div>
-                <div class="vinyl middle rotated-left" onclick="toggleAudio('audio3', this)" style="background-image: url('nova-tempo.jpg.png?v=1'); animation-delay: 0.3s;">
-                    <i class="fas fa-play"></i>
-                </div>
-                <div class="vinyl" onclick="toggleAudio('audio2', this)" style="background-image: url('maman.jpg.png?v=1'); animation-delay: 0.6s;">
-                    <i class="fas fa-play"></i>
-                </div>
+                <div class="vinyl" onclick="toggleAudio('audio1', this)" style="background-image: url('pour-toi.jpg.png?v=1'); animation-delay: 0s;"><i class="fas fa-play"></i></div>
+                <div class="vinyl middle rotated-left" onclick="toggleAudio('audio3', this)" style="background-image: url('nova-tempo.jpg.png?v=1'); animation-delay: 0.3s;"><i class="fas fa-play"></i></div>
+                <div class="vinyl" onclick="toggleAudio('audio2', this)" style="background-image: url('maman.jpg.png?v=1'); animation-delay: 0.6s;"><i class="fas fa-play"></i></div>
             </div>
         </div>
 
         <audio id="audio1" src="demo1.mp3"></audio>
         <audio id="audio2" src="demo2.mp3"></audio>
         <audio id="audio3" src="demo3.mp3"></audio>
-
     </section>
 
     <section class="occasions-section">
@@ -240,64 +251,28 @@
             <h2>Questions Fréquentes</h2>
             
             <div class="faq-category"><i class="fas fa-music"></i> Comment ça marche</div>
-            <details>
-                <summary>Comment je crée ma chanson ?</summary>
-                <div class="faq-answer">Rien de compliqué. Tu choisis l'occasion (anniversaire, amour, hommage...), tu sélectionnes un style musical, tu nous racontes en quelques mots qui est la personne et ce que tu veux lui dire - et NovaTempo s'occupe du reste : paroles et musique générées en quelques minutes.</div>
-            </details>
-            <details>
-                <summary>Combien de temps ça prend ?</summary>
-                <div class="faq-answer">En général entre 1 et 3 minutes pour avoir ta chanson complète, prête à écouter et à télécharger. Le temps peut varier légèrement selon l'affluence.</div>
-            </details>
-            <details>
-                <summary>Je ne sais pas quoi écrire, c'est grave ?</summary>
-                <div class="faq-answer">Pas du tout. Il te suffit de donner un nom, une relation et une anecdote ou un détail. NovaTempo transforme ça en vraies paroles, dans un français simple et vivant.</div>
-            </details>
-            <details>
-                <summary>Puis-je modifier les paroles ?</summary>
-                <div class="faq-answer">Oui, une fois les paroles proposées, tu peux les ajuster à ta guise avant de lancer la génération musicale finale.</div>
-            </details>
+            <details><summary>Comment je crée ma chanson ?</summary><div class="faq-answer">Rien de compliqué. Tu choisis l'occasion (anniversaire, amour, hommage...), tu sélectionnes un style musical, tu nous racontes en quelques mots qui est la personne et ce que tu veux lui dire - et NovaTempo s'occupe du reste : paroles et musique générées en quelques minutes.</div></details>
+            <details><summary>Combien de temps ça prend ?</summary><div class="faq-answer">En général entre 1 et 3 minutes pour avoir ta chanson complète, prête à écouter et à télécharger. Le temps peut varier légèrement selon l'affluence.</div></details>
+            <details><summary>Je ne sais pas quoi écrire, c'est grave ?</summary><div class="faq-answer">Pas du tout. Il te suffit de donner un nom, une relation et une anecdote ou un détail. NovaTempo transforme ça en vraies paroles, dans un français simple et vivant.</div></details>
+            <details><summary>Puis-je modifier les paroles ?</summary><div class="faq-answer">Oui, une fois les paroles proposées, tu peux les ajuster à ta guise avant de lancer la génération musicale finale.</div></details>
 
             <div class="faq-category"><i class="fas fa-compact-disc"></i> Styles musicaux</div>
-            <details>
-                <summary>Quels styles sont disponibles ?</summary>
-                <div class="faq-answer">Afrobeat, Amapiano, Coupé Décalé, Rap, Zouk, Gospel, et d'autres à venir. Chaque style a son ambiance propre.</div>
-            </details>
-            <details>
-                <summary>Puis-je changer de style après génération ?</summary>
-                <div class="faq-answer">Oui, tu peux relancer une nouvelle génération avec un style différent, avec le même texte ou en le modifiant.</div>
-            </details>
+            <details><summary>Quels styles sont disponibles ?</summary><div class="faq-answer">Afrobeat, Amapiano, Coupé Décalé, Rap, Zouk, Gospel, et d'autres à venir. Chaque style a son ambiance propre.</div></details>
+            <details><summary>Puis-je changer de style après génération ?</summary><div class="faq-answer">Oui, tu peux relancer une nouvelle génération avec un style différent, avec le même texte ou en le modifiant.</div></details>
 
             <div class="faq-category"><i class="fas fa-credit-card"></i> Tarifs et paiement</div>
-            <details>
-                <summary>Combien ça coûte ? y a-t-il des frais cachés ?</summary>
-                <div class="faq-answer">1 chanson = 1 000 FCFA. Il existe aussi des packs dégressifs (ex: 3 chansons = 2 500 FCFA). Aucun frais caché, pas d'abonnement. Le prix affiché est le prix final, avec téléchargement haute qualité inclus.</div>
-            </details>
-            <details>
-                <summary>Comment je paie et est-ce sécurisé ?</summary>
-                <div class="faq-answer">Par Wave, Orange Money, MTN Mobile Money ou Moov Money. Chaque transaction passe par une plateforme de paiement certifiée (FedaPay). Nous n'avons jamais accès à tes identifiants.</div>
-            </details>
+            <details><summary>Combien ça coûte ? y a-t-il des frais cachés ?</summary><div class="faq-answer">1 chanson = 1 000 FCFA. Il existe aussi des packs dégressifs (ex: 3 chansons = 2 500 FCFA). Aucun frais caché, pas d'abonnement. Le prix affiché est le prix final, avec téléchargement haute qualité inclus.</div></details>
+            <details><summary>Comment je paie et est-ce sécurisé ?</summary><div class="faq-answer">Par Wave, Orange Money, MTN Mobile Money ou Moov Money. Chaque transaction passe par une plateforme de paiement certifiée (FedaPay). Nous n'avons jamais accès à tes identifiants.</div></details>
 
             <div class="faq-category"><i class="fas fa-download"></i> Après la génération</div>
-            <details>
-                <summary>Où retrouver et télécharger mes chansons ?</summary>
-                <div class="faq-answer">Toutes tes créations sont sauvegardées dans ta rubrique "Ma Bibliothèque". Tu peux télécharger chaque chanson en fichier audio pour la partager sur WhatsApp ou les réseaux.</div>
-            </details>
-            <details>
-                <summary>Je peux partager ma chanson publiquement ?</summary>
-                <div class="faq-answer">Oui, la chanson t'appartient dès qu'elle est générée et payée - tu peux la partager librement partout.</div>
-            </details>
+            <details><summary>Où retrouver et télécharger mes chansons ?</summary><div class="faq-answer">Toutes tes créations sont sauvegardées dans ta rubrique "Ma Bibliothèque". Tu peux télécharger chaque chanson en fichier audio pour la partager sur WhatsApp ou les réseaux.</div></details>
+            <details><summary>Je peux partager ma chanson publiquement ?</summary><div class="faq-answer">Oui, la chanson t'appartient dès qu'elle est générée et payée - tu peux la partager librement partout.</div></details>
 
             <div class="faq-category"><i class="fas fa-shield-alt"></i> Compte et confidentialité</div>
-            <details>
-                <summary>Mes informations sont-elles privées ?</summary>
-                <div class="faq-answer">Oui. Seul toi as accès à tes créations. Personne d'autre ne peut voir tes chansons ou les informations que tu as renseignées.</div>
-            </details>
+            <details><summary>Mes informations sont-elles privées ?</summary><div class="faq-answer">Oui. Seul toi as accès à tes créations. Personne d'autre ne peut voir tes chansons ou les informations que tu as renseignées.</div></details>
 
             <div class="faq-category"><i class="fas fa-headset"></i> Support</div>
-            <details>
-                <summary>J'ai un problème, comment vous contacter ?</summary>
-                <div class="faq-answer">Le petit chat en bas à droite de l'écran est là pour ça - écris-nous directement, on te répond au plus vite ! NovaTempo fonctionne partout où tu as internet.</div>
-            </details>
+            <details><summary>J'ai un problème, comment vous contacter ?</summary><div class="faq-answer">Le petit chat en bas à droite de l'écran est là pour ça - écris-nous directement, on te répond au plus vite ! NovaTempo fonctionne partout où tu as internet.</div></details>
         </div>
     </div>
 
@@ -319,7 +294,6 @@
         </div>
     </div>
 
-    <!-- SCRIPT DU LECTEUR -->
     <script>
         function toggleAudio(audioId, vinylElement) {
             const audio = document.getElementById(audioId);
@@ -328,11 +302,7 @@
 
             if (audio.paused) {
                 allAudios.forEach(a => { a.pause(); a.currentTime = 0; });
-                allVinyls.forEach(v => {
-                    v.classList.remove('playing');
-                    v.querySelector('i').classList.replace('fa-pause', 'fa-play');
-                });
-                
+                allVinyls.forEach(v => { v.classList.remove('playing'); v.querySelector('i').classList.replace('fa-pause', 'fa-play'); });
                 audio.play();
                 vinylElement.classList.add('playing');
                 vinylElement.querySelector('i').classList.replace('fa-play', 'fa-pause');
@@ -341,7 +311,6 @@
                 vinylElement.classList.remove('playing');
                 vinylElement.querySelector('i').classList.replace('fa-pause', 'fa-play');
             }
-
             audio.onended = function() {
                 vinylElement.classList.remove('playing');
                 vinylElement.querySelector('i').classList.replace('fa-pause', 'fa-play');
