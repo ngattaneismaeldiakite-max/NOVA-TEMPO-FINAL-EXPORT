@@ -1,64 +1,62 @@
-module.exports = async function handler(req, res) {
-    if (req.method !== 'POST') return res.status(405).json({ error: "Method not allowed" });
-    
-    try {
-        console.log("=== DÉBUT GENERATION AUDIO AVEC GESTION DES CRÉDITS ===");
+// api/songs/generate-audio.js
+const { createClient } = require('@supabase/supabase-js');
 
-        // --- 1. VÉRIFICATION DU BADGE UTILISATEUR ---
-        const authHeader = req.headers.authorization;
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            return res.status(401).json({ error: "Accès refusé : Vous devez être connecté." });
-        }
-        const token = authHeader.split(' ')[1];
+module.exports = async function handler(req, res) {
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS,POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    if (req.method === 'OPTIONS') return res.status(200).end();
+    if (req.method !== 'POST') return res.status(405).json({ error: "Méthode non autorisée" });
+
+    try {
+        console.log("=== DÉBUT GENERATION AUDIO ===");
         
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
-        const verifyRes = await fetch(`${supabaseUrl}/auth/v1/user`, {
-            headers: { 
-                'Authorization': `Bearer ${token}`, 
-                'apikey': 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr' 
+        const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+        // 1. Vérification de l'authentification (Token Supabase)
+        const authHeader = req.headers.authorization;
+        const token = authHeader && authHeader.split(' ')[1];
+
+        if (!token) {
+            return res.status(401).json({ error: "Accès refusé : Vous devez être connecté." });
+        }
+
+        let userId = null;
+        if (supabaseServiceRoleKey) {
+            const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
+            const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
+            if (authErr || !user) {
+                return res.status(401).json({ error: "Accès refusé : Votre session a expiré. Veuillez vous reconnecter." });
             }
-        });
-        
-        if (!verifyRes.ok) return res.status(401).json({ error: "Session invalide ou expirée." });
-        
-        const userData = await verifyRes.json();
-        const userId = userData.id;
+            userId = user.id;
 
-        // --- 2. VÉRIFICATION DES CRÉDITS VIA LA MASTER KEY ---
-        const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-        if (!serviceKey) return res.status(500).json({ error: "Erreur de configuration serveur." });
+            // 2. Vérification du solde de crédits
+            const { data: profile } = await supabase
+                .from('profiles')
+                .select('credits')
+                .eq('id', userId)
+                .single();
 
-        const profileRes = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}&select=credits`, {
-            method: 'GET',
-            headers: { 'apikey': serviceKey, 'Authorization': `Bearer ${serviceKey}` }
-        });
-        const profileData = await profileRes.json();
-        
-        if (!profileData || profileData.length === 0) {
-            return res.status(400).json({ error: "Profil introuvable dans la base." });
-        }
-        
-        const currentCredits = profileData[0].credits;
-        
-        // Blocage si pas de crédits !
-        if (currentCredits < 1) {
-            return res.status(402).json({ error: "Crédits insuffisants. Vous devez recharger votre compte." });
+            const userCredits = (profile && profile.credits !== undefined) ? profile.credits : 0;
+
+            if (userCredits < 1) {
+                return res.status(402).json({ error: "Solde insuffisant ! Vous avez 0 crédit. Veuillez recharger votre compte dans Mon Espace." });
+            }
+
+            // 3. Déduction de 1 crédit
+            await supabase
+                .from('profiles')
+                .update({ credits: userCredits - 1, updated_at: new Date().toISOString() })
+                .eq('id', userId);
         }
 
-        // --- 3. PAIEMENT : ON RETIRE 1 CRÉDIT ---
-        const updateRes = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}`, {
-            method: 'PATCH',
-            headers: { 'apikey': serviceKey, 'Authorization': `Bearer ${serviceKey}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({ credits: currentCredits - 1 })
-        });
-
-        if (!updateRes.ok) return res.status(500).json({ error: "Erreur lors de la facturation." });
-
-        // --- 4. PRÉPARATION DE LA MUSIQUE ---
+        // 4. Préparation de la génération Suno
         const { lyrics, voice, genre } = req.body || {};
-        if (lyrics && lyrics.length > 2000) return res.status(400).json({ error: "Texte trop long." });
-
         let styleParams = genre;
+        
         switch (genre) {
             case 'Coupé Décalé': styleParams = "ivorian coupe decale, atalaku, fast tempo, festive animation, sebene guitar, log drum"; break;
             case 'Amapiano': styleParams = "amapiano, deep log drum, south african vibe, groovy shaker, party"; break;
@@ -71,40 +69,45 @@ module.exports = async function handler(req, res) {
         }
 
         const voiceTag = voice === 'female' ? "female vocal" : (voice === 'duo' ? "male and female duet" : "male vocal");
-        const sunoKey = process.env.SUNO_API_KEY;
-        
+        const apiKey = process.env.SUNO_API_KEY;
+        if (!apiKey) {
+            return res.status(500).json({ error: "La clé API SUNO est manquante sur Vercel." });
+        }
+
         const payload = {
-            customMode: true, instrumental: false, prompt: lyrics,
-            style: `${styleParams}, ${voiceTag}`, title: "Hit NovaTempo", model: "V6"
+            customMode: true,
+            instrumental: false,
+            prompt: lyrics,
+            style: `${styleParams}, ${voiceTag}`,
+            title: "Hit NovaTempo",
+            model: "V6",
+            callBackUrl: "https://example.com/callback"
         };
-        
-        // --- 5. ENVOI À SUNO API ---
+
         const response = await fetch('https://api.sunoapi.org/api/v1/generate', {
             method: 'POST',
-            headers: { 'Authorization': `Bearer ${sunoKey}`, 'Content-Type': 'application/json' },
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(payload)
         });
 
         const data = await response.json();
         
-        // --- 6. GESTION DES ERREURS ET REMBOURSEMENT ---
-        let jobId = data.data?.taskId || data.data?.task_id || data.taskId || data.id;
-
-        if ((data.code && data.code !== 200) || !jobId) {
-             // L'IA a planté : on rembourse le crédit qu'on vient de prendre !
-             await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}`, {
-                method: 'PATCH',
-                headers: { 'apikey': serviceKey, 'Authorization': `Bearer ${serviceKey}`, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ credits: currentCredits }) // On remet l'ancien solde intact
-             });
-             return res.status(500).json({ error: "Suno a refusé la requête. Votre crédit a été remboursé." });
+        if (data.code && data.code !== 200) {
+            return res.status(500).json({ error: "SunoAPI a refusé: " + (data.msg || "Erreur de génération") });
         }
 
-        // Succès total !
+        let jobId = data.data?.taskId || data.data?.task_id || data.taskId || data.id;
+        if (!jobId) {
+            return res.status(500).json({ error: "ID de génération introuvable." });
+        }
+
         return res.status(200).json({ job_id: jobId });
 
     } catch (error) {
-        console.error("Erreur serveur backend:", error.message);
-        return res.status(500).json({ error: "Erreur inattendue sur les serveurs NovaTempo." });
+        console.error("Erreur Catch Generate Audio:", error);
+        return res.status(500).json({ error: "Erreur serveur : " + error.message });
     }
-}
+};
