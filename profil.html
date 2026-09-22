@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Profil - Nova Tempo</title>
+    <title>Mon Espace - Nova Tempo</title>
+    
+    <!-- Polices -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Script Supabase (Version Navigateur) -->
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
@@ -19,12 +22,17 @@
         body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); }
         
         nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; }
-        .logo i { color: var(--neon-lime); }
         
-        .container { max-width: 1200px; margin: 4rem auto; padding: 0 2rem; }
+        /* LOGO NOVA TEMPO */
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: transform 0.3s; }
+        .logo:hover { transform: scale(1.02); }
+        .logo-text { display: flex; flex-direction: column; justify-content: center; line-height: 1; }
+        .logo-nova { font-family: 'Rubik Glitch', cursive; font-size: 2rem; color: var(--text-light); text-transform: uppercase; line-height: 0.9; }
+        .logo-tempo { font-family: 'Satoshi', sans-serif; font-size: 0.8rem; font-weight: 500; letter-spacing: 5px; margin-top: 2px; color: rgba(255,255,255,0.8); }
+
+        .container { max-width: 1200px; margin: 3rem auto; padding: 0 2rem; }
         .header-profil { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
-        .header-profil h1 { font-size: 3rem; margin: 0; font-weight: 900; text-transform: uppercase; }
+        .header-profil h1 { font-size: 2.8rem; margin: 0; font-weight: 900; text-transform: uppercase; }
         .header-profil p { color: var(--text-muted); margin: 0.5rem 0 0 0; font-size: 1.1rem; }
         
         .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); padding: 0.8rem 1.5rem; border-radius: 50px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
@@ -32,17 +40,30 @@
         
         .dashboard-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
         
-        .card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 2rem; }
+        .card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 2rem; position: relative; }
         .card h3 { margin-top: 0; color: var(--neon-lime); text-transform: uppercase; font-weight: 800; font-size: 1.2rem; }
         
-        .btn-primary { display: inline-block; width: 100%; text-align: center; background: var(--neon-lime); color: var(--bg-dark); padding: 1rem; border-radius: 12px; font-weight: 800; text-decoration: none; margin-top: 1.5rem; transition: transform 0.3s; text-transform: uppercase; box-sizing: border-box; }
-        .btn-primary:hover { transform: translateY(-2px); }
+        .solde-display { font-size: 3rem; font-weight: 900; margin: 1rem 0; color: var(--text-light); }
+        .solde-display span { font-size: 1.2rem; color: var(--neon-lime); font-weight: 600; margin-left: 5px; }
+
+        .btn-primary { display: inline-block; width: 100%; text-align: center; background: var(--neon-lime); color: var(--bg-dark); padding: 1rem; border-radius: 12px; font-weight: 800; text-decoration: none; margin-top: 1rem; transition: all 0.3s; text-transform: uppercase; border: none; cursor: pointer; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212, 255, 0, 0.2); }
         
-        .library-empty { text-align: center; color: var(--text-muted); padding: 3rem 0; }
-        .library-empty i { font-size: 3rem; margin-bottom: 1rem; color: rgba(255,255,255,0.1); }
+        .btn-recharge { background: transparent; border: 1px solid var(--neon-lime); color: var(--neon-lime); margin-top: 1rem; }
+        .btn-recharge:hover { background: rgba(212, 255, 0, 0.1); }
+
+        /* PACKS DE PAEMENT */
+        .packs-container { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+        .pack-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.2rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.3s; }
+        .pack-item:hover { border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); transform: scale(1.02); }
+        .pack-item.popular { border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.08); }
+        .pack-title { font-weight: 800; font-size: 1.1rem; }
+        .pack-price { font-weight: 900; color: var(--neon-lime); font-size: 1.2rem; }
         
+        .alert-success { background: rgba(212, 255, 0, 0.1); border: 1px solid var(--neon-lime); color: var(--neon-lime); padding: 1rem; border-radius: 12px; margin-bottom: 2rem; display: none; }
+
         @media (max-width: 768px) {
-            nav { padding: 1.5rem 2rem; }
+            nav { padding: 1rem 1.5rem; }
             .dashboard-grid { grid-template-columns: 1fr; }
             .header-profil { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
         }
@@ -51,11 +72,30 @@
 <body>
 
     <nav>
-        <a href="/" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
+        <a href="/" class="logo">
+            <svg viewBox="0 0 100 100" height="38" width="38" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="limeGradLogo" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#8BB800" /><stop offset="100%" stop-color="#D4FF00" /></linearGradient></defs>
+                <g fill="url(#limeGradLogo)">
+                    <rect x="10" y="40" width="14" height="40" rx="7"><animate attributeName="y" values="40;20;40" dur="1s" repeatCount="indefinite" /><animate attributeName="height" values="40;60;40" dur="1s" repeatCount="indefinite" /></rect>
+                    <rect x="32" y="20" width="14" height="60" rx="7"><animate attributeName="y" values="20;50;20" dur="1.2s" repeatCount="indefinite" /><animate attributeName="height" values="60;30;60" dur="1.2s" repeatCount="indefinite" /></rect>
+                    <rect x="54" y="10" width="14" height="70" rx="7"><animate attributeName="y" values="10;30;10" dur="0.8s" repeatCount="indefinite" /><animate attributeName="height" values="70;50;70" dur="0.8s" repeatCount="indefinite" /></rect>
+                    <rect x="76" y="30" width="14" height="50" rx="7"><animate attributeName="y" values="30;15;30" dur="1.1s" repeatCount="indefinite" /><animate attributeName="height" values="50;65;50" dur="1.1s" repeatCount="indefinite" /></rect>
+                </g>
+            </svg>
+            <div class="logo-text">
+                <span class="logo-nova">NOVA</span>
+                <span class="logo-tempo">TEMPO</span>
+            </div>
+        </a>
         <button id="btn-logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
     </nav>
 
     <div class="container" id="app-content" style="display: none;">
+        
+        <div id="alert-payment" class="alert-success">
+            <i class="fas fa-check-circle"></i> Paiement réussi ! Tes crédits ont été crédités sur ton compte.
+        </div>
+
         <div class="header-profil">
             <div>
                 <h1>Mon Espace</h1>
@@ -68,46 +108,115 @@
             <!-- Colonne Crédits / Solde -->
             <div class="card">
                 <h3><i class="fas fa-wallet"></i> Mon Solde</h3>
-                <h2 style="font-size: 2.5rem; margin: 1rem 0;">0 FCFA</h2>
-                <p style="color: var(--text-muted); margin: 0; font-size: 0.9rem;">1 création = 1000 FCFA</p>
-                <a href="#" class="btn-primary" style="background: transparent; border: 1px solid var(--neon-lime); color: var(--neon-lime);">Recharger mon compte</a>
+                <div class="solde-display" id="user-credits">0 <span>crédits</span></div>
+                <p style="color: var(--text-muted); margin: 0; font-size: 0.9rem;">1 crédit = 1 chanson complète</p>
+                
+                <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 1.5rem 0;">
+                
+                <h4 style="margin: 0; text-transform: uppercase; font-size: 0.9rem; color: var(--text-muted);">Acheter des crédits (Mobile Money) :</h4>
+                <div class="packs-container">
+                    <div class="pack-item" onclick="buyPack('pack1')">
+                        <div>
+                            <div class="pack-title">1 Chanson</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">Idéal pour tester</div>
+                        </div>
+                        <div class="pack-price">1 000 FCFA</div>
+                    </div>
+                    <div class="pack-item popular" onclick="buyPack('pack3')">
+                        <div>
+                            <div class="pack-title">3 Chansons ⭐</div>
+                            <div style="font-size: 0.8rem; color: var(--neon-lime);">Le plus populaire</div>
+                        </div>
+                        <div class="pack-price">2 500 FCFA</div>
+                    </div>
+                    <div class="pack-item" onclick="buyPack('pack5')">
+                        <div>
+                            <div class="pack-title">5 Chansons</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">Meilleur prix / unité</div>
+                        </div>
+                        <div class="pack-price">4 000 FCFA</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Colonne Bibliothèque -->
+            <!-- Colonne Mes Créations -->
             <div class="card">
-                <h3><i class="fas fa-music"></i> Ma Bibliothèque</h3>
-                <div id="library-content" class="library-empty">
-                    <i class="fas fa-compact-disc"></i>
-                    <p>Vous n'avez pas encore créé de musique.</p>
-                    <p style="font-size: 0.9rem;">Vos futures créations apparaîtront ici.</p>
+                <h3><i class="fas fa-music"></i> Mes Créations</h3>
+                <div id="library-content" style="color: var(--text-muted); padding: 2rem 0; text-align: center;">
+                    <i class="fas fa-compact-disc" style="font-size: 3rem; margin-bottom: 1rem; color: rgba(255,255,255,0.1);"></i>
+                    <p>Vos futures créations apparaîtront ici.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // INITIALISATION SÉCURISÉE SUPABASE
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // VÉRIFICATION DE LA CONNEXION
+        let currentUser = null;
+
+        // VÉRIFICATION SESSION ET CRÉDITS
         async function checkSession() {
+            const { data, error } = await supabase.auth.getSession();
+            if (error || !data.session) {
+                window.location.replace('/login.html');
+                return;
+            }
+            
+            currentUser = data.session.user;
+            document.getElementById('user-email').textContent = currentUser.email;
+            document.getElementById('app-content').style.display = 'block';
+
+            // Vérification si retour de paiement réussi
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('payment') === 'success') {
+                document.getElementById('alert-payment').style.display = 'block';
+            }
+
+            // Charger les crédits actuels depuis Supabase
+            loadUserCredits();
+        }
+
+        async function loadUserCredits() {
+            if (!currentUser) return;
+            const { data, error } = await supabase.from('profiles').select('credits').eq('id', currentUser.id).single();
+            if (data) {
+                document.getElementById('user-credits').innerHTML = `${data.credits || 0} <span>crédits</span>`;
+            }
+        }
+
+        // ACHAT DE PACK DE CRÉDITS
+        async function buyPack(packName) {
+            if (!currentUser) return;
+            
             try {
-                const { data, error } = await supabase.auth.getSession();
+                const btnClicked = event.currentTarget;
+                const originalContent = btnClicked.innerHTML;
+                btnClicked.style.opacity = '0.5';
+
+                const response = await fetch('/api/pay/create-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        pack: packName,
+                        user_id: currentUser.id,
+                        user_email: currentUser.email
+                    })
+                });
+
+                const data = await response.json();
                 
-                // Si aucune session, on redirige vers la connexion
-                if (error || !data.session) {
-                    window.location.replace('/login.html');
-                    return;
+                if (data.checkout_url) {
+                    // Redirection vers GeniusPay (Wave, Orange, MTN, Moov)
+                    window.location.href = data.checkout_url;
+                } else {
+                    alert("Erreur lors de l'ouverture du paiement : " + (data.error || "Réessayez plus tard."));
+                    btnClicked.style.opacity = '1';
                 }
-                
-                // Si connecté, on affiche l'email et on dévoile l'interface
-                document.getElementById('user-email').textContent = data.session.user.email;
-                document.getElementById('app-content').style.display = 'block';
-                
             } catch (err) {
-                console.error("Erreur de vérification de session :", err);
+                alert("Erreur de connexion au serveur de paiement.");
             }
         }
 
@@ -117,7 +226,6 @@
             window.location.href = '/';
         });
 
-        // Lancement au chargement de la page
         checkSession();
     </script>
 </body>
