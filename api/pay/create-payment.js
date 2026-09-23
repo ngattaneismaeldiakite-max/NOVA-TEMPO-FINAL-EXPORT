@@ -31,82 +31,70 @@ module.exports = async (req, res) => {
 
         const geniusSecretKey = process.env.GENIUSPAY_SECRET_KEY ? process.env.GENIUSPAY_SECRET_KEY.trim() : '';
         if (!geniusSecretKey) {
-            return res.status(500).json({ error: 'Clé GENIUSPAY_SECRET_KEY manquante dans les variables Vercel.' });
+            return res.status(500).json({ error: 'Clé GENIUSPAY_SECRET_KEY manquante sur Vercel.' });
         }
 
         const host = req.headers.host || 'nova-tempo.vercel.app';
         const protocol = host.includes('localhost') ? 'http' : 'https';
         const baseUrl = `${protocol}://${host}`;
 
+        const geniusPayload = {
+            amount: selectedPack.amount,
+            currency: 'XOF',
+            description: selectedPack.title,
+            redirect_url: `${baseUrl}/profil.html?payment=success&credits=${selectedPack.credits}`,
+            cancel_url: `${baseUrl}/profil.html?payment=cancel`,
+            webhook_url: `${baseUrl}/api/webhook/geniuspay`,
+            customer_email: user_email || 'client@novatempo.com',
+            metadata: {
+                user_id: user_id,
+                credits: selectedPack.credits
+            }
+        };
+
+        // Adresses officielles de l'API GeniusPay
         const endpoints = [
             'https://api.geniuspay.ci/v1/payments',
-            'https://sandbox-api.geniuspay.ci/v1/payments',
-            'https://api.sandbox.geniuspay.ci/v1/payments',
-            'https://api.geniuspay.africa/v1/payments'
+            'https://api.geniuspay.africa/v1/payments',
+            'https://api.geniuspay.app/v1/payments',
+            'https://geniuspay.ci/api/v1/payments'
         ];
 
-        const headerVariants = [
-            { 'Authorization': `Bearer ${geniusSecretKey}` },
-            { 'X-API-KEY': geniusSecretKey },
-            { 'X-SECRET-KEY': geniusSecretKey },
-            { 'X-GENIUS-KEY': geniusSecretKey }
-        ];
-
-        let responseData = null;
-        let lastErrorMsg = '';
-
+        let logs = [];
         for (const endpoint of endpoints) {
-            for (const headerVar of headerVariants) {
-                try {
-                    const payload = {
-                        amount: selectedPack.amount,
-                        currency: 'XOF',
-                        description: selectedPack.title,
-                        redirect_url: `${baseUrl}/profil.html?payment=success&credits=${selectedPack.credits}`,
-                        cancel_url: `${baseUrl}/profil.html?payment=cancel`,
-                        webhook_url: `${baseUrl}/api/webhook/geniuspay`,
-                        customer_email: user_email || 'client@novatempo.com',
-                        api_key: geniusSecretKey,
-                        secret_key: geniusSecretKey,
-                        metadata: {
-                            user_id: user_id,
-                            credits: selectedPack.credits
-                        }
-                    };
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${geniusSecretKey}`,
+                        'X-API-KEY': geniusSecretKey,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(geniusPayload)
+                });
 
-                    const geniusResponse = await fetch(endpoint, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            ...headerVar
-                        },
-                        body: JSON.stringify(payload)
+                const text = await response.text();
+                let json = null;
+                try { json = JSON.parse(text); } catch(e) { json = { raw: text }; }
+
+                const checkoutUrl = json?.payment_url || json?.checkout_url || json?.url || json?.data?.payment_url || json?.data?.checkout_url || json?.data?.url;
+
+                if (response.ok && checkoutUrl) {
+                    return res.status(200).json({
+                        success: true,
+                        checkout_url: checkoutUrl
                     });
-
-                    const text = await geniusResponse.text();
-                    try { responseData = JSON.parse(text); } catch(e) { responseData = { raw: text }; }
-
-                    const checkoutUrl = responseData?.payment_url || responseData?.checkout_url || responseData?.url || responseData?.data?.payment_url || responseData?.data?.checkout_url || responseData?.data?.url;
-
-                    if (geniusResponse.ok && checkoutUrl) {
-                        return res.status(200).json({
-                            success: true,
-                            checkout_url: checkoutUrl,
-                            data: responseData
-                        });
-                    } else {
-                        lastErrorMsg = typeof responseData === 'object' ? JSON.stringify(responseData) : String(responseData);
-                    }
-                } catch (e) {
-                    lastErrorMsg = e.message;
+                } else {
+                    logs.push(`[${endpoint} -> HTTP ${response.status}]: ${text.substring(0, 120)}`);
                 }
+            } catch (err) {
+                logs.push(`[${endpoint} -> Erreur Réseau]: ${err.message}`);
             }
         }
 
-        const keyPrefix = geniusSecretKey ? geniusSecretKey.substring(0, 5) : 'vide';
         return res.status(500).json({
-            error: `GeniusPay (Clé Vercel commence par: ${keyPrefix}...): ${lastErrorMsg}`
+            error: `Résultats des adresses GeniusPay:\n` + logs.join('\n')
         });
 
     } catch (err) {
