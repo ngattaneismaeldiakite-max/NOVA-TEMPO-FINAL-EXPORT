@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
 
         const geniusSecretKey = process.env.GENIUSPAY_SECRET_KEY;
         if (!geniusSecretKey) {
-            return res.status(500).json({ error: 'Clé GENIUSPAY_SECRET_KEY manquante dans les variables Vercel. Assurez-vous d\'avoir refait un déploiement sur Vercel.' });
+            return res.status(500).json({ error: 'Clé GENIUSPAY_SECRET_KEY manquante dans les variables Vercel.' });
         }
 
         const host = req.headers.host || 'nova-tempo.vercel.app';
@@ -65,7 +65,6 @@ module.exports = async (req, res) => {
             }
         };
 
-        // Détection automatique Sandbox vs Production
         const isSandbox = geniusSecretKey.toLowerCase().includes('sandbox') || geniusSecretKey.toLowerCase().includes('test') || geniusSecretKey.startsWith('pk_test') || geniusSecretKey.startsWith('sk_test');
         
         const endpoints = isSandbox ? [
@@ -82,7 +81,6 @@ module.exports = async (req, res) => {
 
         for (const endpoint of endpoints) {
             try {
-                console.log(`Essai d'initialisation sur : ${endpoint}`);
                 const geniusResponse = await fetch(endpoint, {
                     method: 'POST',
                     headers: {
@@ -93,7 +91,12 @@ module.exports = async (req, res) => {
                     body: JSON.stringify(geniusPayload)
                 });
 
-                responseData = await geniusResponse.json();
+                const text = await geniusResponse.text();
+                try {
+                    responseData = JSON.parse(text);
+                } catch(e) {
+                    responseData = { raw: text };
+                }
                 
                 const checkoutUrl = responseData?.payment_url || responseData?.checkout_url || responseData?.url || responseData?.data?.payment_url || responseData?.data?.checkout_url;
                 if (geniusResponse.ok && checkoutUrl) {
@@ -103,20 +106,18 @@ module.exports = async (req, res) => {
                         data: responseData
                     });
                 } else {
-                    lastErrorMsg = responseData?.message || responseData?.error || JSON.stringify(responseData);
+                    lastErrorMsg = typeof responseData === 'object' ? JSON.stringify(responseData) : String(responseData);
                 }
             } catch (e) {
                 lastErrorMsg = e.message;
             }
         }
 
-        console.error('Erreur finale GeniusPay :', responseData || lastErrorMsg);
         return res.status(500).json({ 
-            error: `GeniusPay Error: ${lastErrorMsg || 'Vérifiez vos clés Sandbox sur Vercel.'}`
+            error: `GeniusPay : ${lastErrorMsg}`
         });
 
     } catch (err) {
-        console.error('Exception paiement GeniusPay :', err);
         return res.status(500).json({ error: 'Erreur serveur : ' + err.message });
     }
 };
