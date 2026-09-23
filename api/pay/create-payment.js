@@ -30,9 +30,11 @@ module.exports = async (req, res) => {
         const apiKey = process.env.GENIUSPAY_PUBLIC_KEY ? process.env.GENIUSPAY_PUBLIC_KEY.trim() : '';
         const apiSecret = process.env.GENIUSPAY_SECRET_KEY ? process.env.GENIUSPAY_SECRET_KEY.trim() : '';
 
+        const keyInfo = `PublicKey: ${apiKey ? apiKey.substring(0, 7) : 'MANQUANTE'}, SecretKey: ${apiSecret ? apiSecret.substring(0, 7) : 'MANQUANTE'}`;
+
         if (!apiKey || !apiSecret) {
             return res.status(500).json({ 
-                error: 'Configuration Vercel incomplète : Les clés GENIUSPAY_PUBLIC_KEY (X-API-Key) et GENIUSPAY_SECRET_KEY (X-API-Secret) doivent toutes les deux être définies sur Vercel.' 
+                error: `Configuration Vercel incomplète (${keyInfo}). Assurez-vous d'avoir ajouté GENIUSPAY_PUBLIC_KEY et GENIUSPAY_SECRET_KEY sur Vercel.` 
             });
         }
 
@@ -40,7 +42,6 @@ module.exports = async (req, res) => {
         const protocol = host.includes('localhost') ? 'http' : 'https';
         const baseUrl = `${protocol}://${host}`;
 
-        // Payload exact de la documentation GeniusPay
         const geniusPayload = {
             amount: selectedPack.amount,
             currency: 'XOF',
@@ -58,7 +59,6 @@ module.exports = async (req, res) => {
             }
         };
 
-        // Endpoint officiel de la documentation
         const geniusResponse = await fetch('https://geniuspay.ci/api/v1/merchant/payments', {
             method: 'POST',
             headers: {
@@ -70,19 +70,21 @@ module.exports = async (req, res) => {
             body: JSON.stringify(geniusPayload)
         });
 
-        const data = await geniusResponse.json();
+        const text = await geniusResponse.text();
+        let data = {};
+        try { data = JSON.parse(text); } catch(e) { data = { raw: text }; }
 
-        if (!geniusResponse.ok || !data.success) {
-            console.error('Erreur API GeniusPay :', data);
+        if (!geniusResponse.ok || (data.success === false)) {
+            const errStr = typeof data.error === 'object' ? JSON.stringify(data.error) : (data.message || data.error || text);
             return res.status(500).json({
-                error: `Erreur GeniusPay (${geniusResponse.status}): ${data.message || data.error || JSON.stringify(data)}`
+                error: `GeniusPay (${geniusResponse.status}) [${keyInfo}]: ${errStr}`
             });
         }
 
         const checkoutUrl = data.data?.checkout_url || data.data?.payment_url || data.checkout_url || data.payment_url;
 
         if (!checkoutUrl) {
-            return res.status(500).json({ error: 'GeniusPay n\'a pas renvoyé d\'URL de paiement.' });
+            return res.status(500).json({ error: 'GeniusPay n\'a pas renvoyé d\'URL de paiement: ' + JSON.stringify(data) });
         }
 
         return res.status(200).json({
@@ -91,7 +93,6 @@ module.exports = async (req, res) => {
         });
 
     } catch (err) {
-        console.error('Exception paiement GeniusPay :', err);
         return res.status(500).json({ error: 'Erreur serveur : ' + err.message });
     }
 };
