@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
 
         const geniusSecretKey = process.env.GENIUSPAY_SECRET_KEY;
         if (!geniusSecretKey) {
-            return res.status(500).json({ error: 'Clé GeniusPay manquante sur le serveur' });
+            return res.status(500).json({ error: 'Clé GENIUSPAY_SECRET_KEY manquante dans les variables Vercel. Assurez-vous d\'avoir refait un déploiement sur Vercel.' });
         }
 
         const host = req.headers.host || 'nova-tempo.vercel.app';
@@ -54,6 +54,7 @@ module.exports = async (req, res) => {
             webhook_url: `${baseUrl}/api/webhook/geniuspay`,
             notify_url: `${baseUrl}/api/webhook/geniuspay`,
             callback_url: `${baseUrl}/api/webhook/geniuspay`,
+            customer_email: user_email || 'client@novatempo.com',
             customer: {
                 email: user_email || 'client@novatempo.com'
             },
@@ -61,43 +62,61 @@ module.exports = async (req, res) => {
                 user_id: user_id,
                 credits: selectedPack.credits,
                 pack: pack
-            },
-            custom_data: {
-                user_id: user_id,
-                credits: selectedPack.credits
             }
         };
 
-        const geniusResponse = await fetch('https://api.geniuspay.ci/v1/payments', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${geniusSecretKey}`,
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(geniusPayload)
-        });
+        // Détection automatique Sandbox vs Production
+        const isSandbox = geniusSecretKey.toLowerCase().includes('sandbox') || geniusSecretKey.toLowerCase().includes('test') || geniusSecretKey.startsWith('pk_test') || geniusSecretKey.startsWith('sk_test');
+        
+        const endpoints = isSandbox ? [
+            'https://sandbox-api.geniuspay.ci/v1/payments',
+            'https://api.sandbox.geniuspay.ci/v1/payments',
+            'https://api.geniuspay.ci/v1/payments'
+        ] : [
+            'https://api.geniuspay.ci/v1/payments',
+            'https://api.geniuspay.africa/v1/payments'
+        ];
 
-        const data = await geniusResponse.json();
+        let responseData = null;
+        let lastErrorMsg = '';
 
-        if (!geniusResponse.ok) {
-            console.error('Erreur API GeniusPay :', data);
-            return res.status(500).json({ 
-                error: 'Impossible d\'initialiser le paiement avec GeniusPay',
-                details: data 
-            });
+        for (const endpoint of endpoints) {
+            try {
+                console.log(`Essai d'initialisation sur : ${endpoint}`);
+                const geniusResponse = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${geniusSecretKey}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(geniusPayload)
+                });
+
+                responseData = await geniusResponse.json();
+                
+                const checkoutUrl = responseData?.payment_url || responseData?.checkout_url || responseData?.url || responseData?.data?.payment_url || responseData?.data?.checkout_url;
+                if (geniusResponse.ok && checkoutUrl) {
+                    return res.status(200).json({
+                        success: true,
+                        checkout_url: checkoutUrl,
+                        data: responseData
+                    });
+                } else {
+                    lastErrorMsg = responseData?.message || responseData?.error || JSON.stringify(responseData);
+                }
+            } catch (e) {
+                lastErrorMsg = e.message;
+            }
         }
 
-        const checkoutUrl = data.payment_url || data.checkout_url || data.url || (data.data && data.data.payment_url);
-
-        return res.status(200).json({
-            success: true,
-            checkout_url: checkoutUrl,
-            data: data
+        console.error('Erreur finale GeniusPay :', responseData || lastErrorMsg);
+        return res.status(500).json({ 
+            error: `GeniusPay Error: ${lastErrorMsg || 'Vérifiez vos clés Sandbox sur Vercel.'}`
         });
 
     } catch (err) {
         console.error('Exception paiement GeniusPay :', err);
-        return res.status(500).json({ error: 'Erreur interne du serveur', details: err.message });
+        return res.status(500).json({ error: 'Erreur serveur : ' + err.message });
     }
 };
