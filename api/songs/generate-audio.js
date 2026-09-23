@@ -1,6 +1,4 @@
 // api/songs/generate-audio.js
-const { createClient } = require('@supabase/supabase-js');
-
 module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,6 +13,7 @@ module.exports = async function handler(req, res) {
         
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+        const supabaseAnonKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
 
         // 1. Vérification de l'authentification (Token Supabase)
         const authHeader = req.headers.authorization;
@@ -24,36 +23,54 @@ module.exports = async function handler(req, res) {
             return res.status(401).json({ error: "Accès refusé : Vous devez être connecté." });
         }
 
-        let userId = null;
-        if (supabaseServiceRoleKey) {
-            const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
-            const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
-            if (authErr || !user) {
-                return res.status(401).json({ error: "Accès refusé : Votre session a expiré. Veuillez vous reconnecter." });
+        // Validation du Token utilisateur via l'API Auth de Supabase (0 dépendance, ultra-rapide)
+        const userRes = await fetch(`${supabaseUrl}/auth/v1/user`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'apikey': supabaseAnonKey
             }
-            userId = user.id;
+        });
 
-            // 2. Vérification du solde de crédits
-            const { data: profile } = await supabase
-                .from('profiles')
-                .select('credits')
-                .eq('id', userId)
-                .single();
+        const userData = await userRes.json();
+        if (!userRes.ok || !userData || !userData.id) {
+            return res.status(401).json({ error: "Accès refusé : Votre session a expiré. Veuillez vous reconnecter." });
+        }
 
-            const userCredits = (profile && profile.credits !== undefined) ? profile.credits : 0;
+        const userId = userData.id;
+
+        // 2. Vérification et gestion des crédits
+        if (supabaseServiceRoleKey) {
+            const profileRes = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}&select=credits`, {
+                headers: {
+                    'apikey': supabaseServiceRoleKey,
+                    'Authorization': `Bearer ${supabaseServiceRoleKey}`
+                }
+            });
+
+            const profiles = await profileRes.json();
+            const userCredits = (profiles && profiles.length > 0 && profiles[0].credits !== undefined) ? profiles[0].credits : 0;
 
             if (userCredits < 1) {
                 return res.status(402).json({ error: "Solde insuffisant ! Vous avez 0 crédit. Veuillez recharger votre compte dans Mon Espace." });
             }
 
-            // 3. Déduction de 1 crédit
-            await supabase
-                .from('profiles')
-                .update({ credits: userCredits - 1, updated_at: new Date().toISOString() })
-                .eq('id', userId);
+            // Déduction de 1 crédit
+            await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}`, {
+                method: 'PATCH',
+                headers: {
+                    'apikey': supabaseServiceRoleKey,
+                    'Authorization': `Bearer ${supabaseServiceRoleKey}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({
+                    credits: userCredits - 1,
+                    updated_at: new Date().toISOString()
+                })
+            });
         }
 
-        // 4. Préparation de la génération Suno
+        // 3. Préparation et envoi à l'IA Suno
         const { lyrics, voice, genre } = req.body || {};
         let styleParams = genre;
         
