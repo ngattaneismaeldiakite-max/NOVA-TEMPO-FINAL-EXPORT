@@ -19,7 +19,7 @@
             --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6);
             --neon-lime: #D4FF00; --neon-pink: #FF0066;
         }
-        body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); }
+        body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; }
         
         nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
         
@@ -48,11 +48,8 @@
 
         .btn-primary { display: inline-block; width: 100%; text-align: center; background: var(--neon-lime); color: var(--bg-dark); padding: 1rem; border-radius: 12px; font-weight: 800; text-decoration: none; margin-top: 1rem; transition: all 0.3s; text-transform: uppercase; border: none; cursor: pointer; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212, 255, 0, 0.2); }
-        
-        .btn-recharge { background: transparent; border: 1px solid var(--neon-lime); color: var(--neon-lime); margin-top: 1rem; }
-        .btn-recharge:hover { background: rgba(212, 255, 0, 0.1); }
 
-        /* PACKS DE PAEMENT */
+        /* PACKS DE PAIEMENT */
         .packs-container { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
         .pack-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.2rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.3s; }
         .pack-item:hover { border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); transform: scale(1.02); }
@@ -115,21 +112,21 @@
                 
                 <h4 style="margin: 0; text-transform: uppercase; font-size: 0.9rem; color: var(--text-muted);">Acheter des crédits (Mobile Money) :</h4>
                 <div class="packs-container">
-                    <div class="pack-item" onclick="buyPack('pack1')">
+                    <div class="pack-item" onclick="buyPack('pack1', event)">
                         <div>
                             <div class="pack-title">1 Chanson</div>
                             <div style="font-size: 0.8rem; color: var(--text-muted);">Idéal pour tester</div>
                         </div>
                         <div class="pack-price">1 000 FCFA</div>
                     </div>
-                    <div class="pack-item popular" onclick="buyPack('pack3')">
+                    <div class="pack-item popular" onclick="buyPack('pack3', event)">
                         <div>
                             <div class="pack-title">3 Chansons ⭐</div>
                             <div style="font-size: 0.8rem; color: var(--neon-lime);">Le plus populaire</div>
                         </div>
                         <div class="pack-price">2 500 FCFA</div>
                     </div>
-                    <div class="pack-item" onclick="buyPack('pack5')">
+                    <div class="pack-item" onclick="buyPack('pack5', event)">
                         <div>
                             <div class="pack-title">5 Chansons</div>
                             <div style="font-size: 0.8rem; color: var(--text-muted);">Meilleur prix / unité</div>
@@ -153,13 +150,13 @@
     <script>
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         let currentUser = null;
 
         // VÉRIFICATION SESSION ET CRÉDITS
         async function checkSession() {
-            const { data, error } = await supabase.auth.getSession();
+            const { data, error } = await supabaseClient.auth.getSession();
             if (error || !data.session) {
                 window.location.replace('/login.html');
                 return;
@@ -181,19 +178,18 @@
 
         async function loadUserCredits() {
             if (!currentUser) return;
-            const { data, error } = await supabase.from('profiles').select('credits').eq('id', currentUser.id).single();
+            const { data, error } = await supabaseClient.from('profiles').select('credits').eq('id', currentUser.id).single();
             if (data) {
                 document.getElementById('user-credits').innerHTML = `${data.credits || 0} <span>crédits</span>`;
             }
         }
 
         // ACHAT DE PACK DE CRÉDITS
-        async function buyPack(packName) {
+        async function buyPack(packName, evt) {
             if (!currentUser) return;
             
             try {
-                const btnClicked = event.currentTarget;
-                const originalContent = btnClicked.innerHTML;
+                const btnClicked = evt.currentTarget;
                 btnClicked.style.opacity = '0.5';
 
                 const response = await fetch('/api/pay/create-payment', {
@@ -209,7 +205,6 @@
                 const data = await response.json();
                 
                 if (data.checkout_url) {
-                    // Redirection vers GeniusPay (Wave, Orange, MTN, Moov)
                     window.location.href = data.checkout_url;
                 } else {
                     alert("Erreur lors de l'ouverture du paiement : " + (data.error || "Réessayez plus tard."));
@@ -222,7 +217,7 @@
 
         // DÉCONNEXION
         document.getElementById('btn-logout').addEventListener('click', async () => {
-            await supabase.auth.signOut();
+            await supabaseClient.auth.signOut();
             window.location.href = '/';
         });
 
