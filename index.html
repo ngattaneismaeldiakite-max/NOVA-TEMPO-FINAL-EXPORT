@@ -42,15 +42,16 @@
         .btn-signup { background-color: var(--neon-lime); color: var(--bg-dark); box-shadow: 0 0 15px rgba(212, 255, 0, 0.2); }
         .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(212, 255, 0, 0.4); }
 
-        /* HERO SECTION */
-        .hero { min-height: 100vh; display: flex; align-items: center; padding: 0 4rem; position: relative; }
+        /* HERO SECTION - RECADRAGE PROPRE */
+        .hero { min-height: 100vh; display: flex; align-items: flex-start; padding: 0 4rem; position: relative; }
         .hero-bg { position: absolute; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; filter: blur(3px) brightness(0.9); transform: scale(1.02); z-index: 0; clip-path: inset(0); }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, #06060A 0%, rgba(6,6,10,0.85) 45%, rgba(6,6,10,0.2) 100%); z-index: 1; }
         
-        .hero-content { display: block; width: 100%; max-width: 1400px; margin: 0 auto; margin-bottom: 25rem; position: relative; z-index: 2; }
+        /* CORRECTION RECADRAGE DU TITRE (Espace propre sous la barre) */
+        .hero-content { display: block; width: 100%; max-width: 1400px; margin: 0 auto; padding-top: 8.5rem; margin-bottom: 20rem; position: relative; z-index: 2; }
         .hero-text { max-width: 700px; }
-        .hero-text h1 { font-size: 5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5.5rem; }
+        .hero-text h1 { font-size: 4.8rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5.2rem; }
         .hero-text p { font-size: 1.25rem; color: rgba(255,255,255,0.9); margin-bottom: 0; max-width: 550px; line-height: 1.6; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
 
         /* DISQUES VINYLES */
@@ -132,7 +133,7 @@
             nav { position: relative; padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: var(--bg-dark); }
             .hero { padding: 0 2rem; min-height: calc(100vh - 150px); }
             .hero-overlay { background: linear-gradient(180deg, rgba(6,6,10,0.6) 0%, #06060A 100%); }
-            .hero-content { margin-bottom: 18rem; margin-top: 1rem; text-align: center; } 
+            .hero-content { margin-bottom: 18rem; padding-top: 2rem; text-align: center; } 
             .vinyl-showcase { bottom: -4rem; }
             .hero-text h1 { font-size: 3.5rem; }
             .hero-text h1 span { font-size: 4rem; }
@@ -150,7 +151,7 @@
         @media (max-width: 600px) {
             nav { padding: 1rem; gap: 1.2rem; }
             .nav-links { gap: 1.5rem; }
-            .hero-content { margin-bottom: 14rem; margin-top: 2rem; }
+            .hero-content { margin-bottom: 14rem; padding-top: 1rem; }
             .vinyl-showcase { bottom: -2rem; }
             .hero-text h1 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 1rem; }
             .hero-text h1 span { font-size: 3.2rem; }
@@ -378,7 +379,7 @@
             <p><strong>Diakité N'gattane Ismael</strong></p>
 
             <h3>Propriété intellectuelle</h3>
-            <p>L'ensemble des éléments de ce site (textes, logos, visuels, algorithmes, design) est protégé par le droit d'auteur. Toute reproduction totale ou partielle est strictement interdite sans autorisation préalable.</p>
+            <p>L'ensemble des éléments de ce site (textes, logos, visuels, algorithmes, design) est protégé par le droit d'auteur. Toute reproduction totale ou partielle est strictly interdite sans autorisation préalable.</p>
         </div>
     </div>
 
