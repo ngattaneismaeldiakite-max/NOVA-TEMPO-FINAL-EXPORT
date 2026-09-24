@@ -108,7 +108,7 @@
             </div>
         </a>
         <div class="nav-links">
-            <a href="/profil.html"><i class="fas fa-wallet"></i> Mon Espace (Crédits & Recharge)</a>
+            <a href="/profil.html"><i class="fas fa-wallet"></i> Mon Espace & Crédits</a>
             <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
         </div>
     </nav>
@@ -121,8 +121,8 @@
             <form id="studio-form" onsubmit="handleGenerate(event)">
                 
                 <div class="form-group">
-                    <label class="main-label">1. Pour qui est cette chanson ?</label>
-                    <input type="text" id="target-name" required placeholder="Ex: Ma mère Fatou, Mon copain Marc, Ma femme...">
+                    <label class="main-label">1. Pour qui ou quelle marque est cette chanson ?</label>
+                    <input type="text" id="target-name" required placeholder="Ex: Ma mère Fatou, Mon entreprise Nova, Mon produit...">
                 </div>
                 
                 <div class="form-group">
@@ -133,7 +133,7 @@
                         <label class="radio-card"><input type="radio" name="occasion" value="mariage" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">💍 Mariage</span></label>
                         <label class="radio-card"><input type="radio" name="occasion" value="hommage" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🕊️ Hommage</span></label>
                         <label class="radio-card"><input type="radio" name="occasion" value="adoration" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🙌 Adoration</span></label>
-                        <label class="radio-card"><input type="radio" name="occasion" value="evenement" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🎉 Événement</span></label>
+                        <label class="radio-card"><input type="radio" name="occasion" value="evenement" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🚀 Produit / Événement</span></label>
                     </div>
                 </div>
 
@@ -230,8 +230,18 @@
                 <div class="dynamic-field"><label>Quelle était sa plus grande qualité ?</label><input type="text" class="custom-data" data-label="Qualité" required placeholder="Ex: Sa générosité infinie"></div>
             `,
             'evenement': `
-                <div class="dynamic-field"><label>Quel est le nom et le but de l'événement ?</label><input type="text" class="custom-data" data-label="Nom de l'événement" required placeholder="Ex: Lancement de notre nouvelle marque"></div>
-                <div class="dynamic-field"><label>Quelle est l'ambiance ou le message à faire passer ?</label><input type="text" class="custom-data" data-label="Ambiance" required placeholder="Ex: Festif, inspirant et motivant pour l'avenir"></div>
+                <div class="dynamic-field">
+                    <label>Nom du produit ou de l'événement :</label>
+                    <input type="text" class="custom-data" data-label="Nom du produit/événement" required placeholder="Ex: Crème Éclat d'Or / Gala Annuel 2026">
+                </div>
+                <div class="dynamic-field">
+                    <label>Parle-moi de ton produit ou ton événement :</label>
+                    <textarea class="custom-data" data-label="Description du produit/événement" required placeholder="Ex: C'est un savon 100% naturel fait au beurre de karité qui rend la peau douce..." style="height: 90px;"></textarea>
+                </div>
+                <div class="dynamic-field">
+                    <label>L'ambiance ou le message à faire passer :</label>
+                    <input type="text" class="custom-data" data-label="Ambiance/Message" required placeholder="Ex: Luxueux, énergique, festif et motivant">
+                </div>
             `
         };
 
@@ -301,7 +311,6 @@
 
                 const dataCreation = await resCreation.json();
                 
-                // Si le solde est insuffisant (402), redirection automatique intelligente vers Mon Espace & Crédits
                 if (resCreation.status === 402 || (dataCreation.error && dataCreation.error.includes("Solde insuffisant"))) {
                     alert("Solde insuffisant ! Vous avez 0 crédit. Redirection automatique vers la recharge Mobile Money...");
                     window.location.href = '/profil.html';
