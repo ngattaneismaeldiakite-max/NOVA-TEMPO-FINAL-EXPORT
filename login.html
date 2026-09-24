@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - Nova Tempo</title>
     
-    <!-- Polices -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Script Supabase (Lien sécurisé) -->
@@ -22,14 +20,9 @@
         body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; display: flex; flex-direction: column; }
         
         nav { padding: 1.5rem 4rem; position: absolute; width: 100%; box-sizing: border-box; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; }
+        .logo i { color: var(--neon-lime); }
         
-        /* NOUVEAU LOGO NOVA TEMPO */
-        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: transform 0.3s; }
-        .logo:hover { transform: scale(1.02); }
-        .logo-text { display: flex; flex-direction: column; justify-content: center; line-height: 1; }
-        .logo-nova { font-family: 'Rubik Glitch', cursive; font-size: 2.2rem; font-weight: 400; letter-spacing: 2px; color: var(--text-light); text-transform: uppercase; line-height: 0.9; }
-        .logo-tempo { font-family: 'Satoshi', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 6px; margin-top: 2px; padding-left: 2px; color: rgba(255,255,255,0.8); }
-
         .auth-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 2rem; position: relative; }
         
         .bg-image { position: absolute; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; opacity: 0.3; filter: blur(5px); z-index: 0; }
@@ -61,39 +54,12 @@
         .error-msg { color: var(--neon-pink); background: rgba(255,0,102,0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; display: none; font-size: 0.9rem; border: 1px solid rgba(255,0,102,0.3); }
         .footer-link { text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.95rem; }
         .footer-link a { color: var(--neon-lime); text-decoration: none; font-weight: 700; }
-        
-        @media (max-width: 600px) {
-            nav { padding: 1rem; text-align: center; display: flex; justify-content: center;}
-            .logo-nova { font-size: 1.8rem; }
-            .logo-tempo { font-size: 0.75rem; letter-spacing: 4px; }
-            .logo svg { height: 35px; width: 35px; }
-        }
     </style>
 </head>
 <body>
 
     <nav>
-        <!-- NOUVEAU LOGO COMPLET -->
-        <a href="/" class="logo">
-            <svg viewBox="0 0 100 100" height="45" width="45" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="limeGradLogo" x1="0%" y1="100%" x2="0%" y2="0%">
-                        <stop offset="0%" stop-color="#8BB800" />
-                        <stop offset="100%" stop-color="#D4FF00" />
-                    </linearGradient>
-                </defs>
-                <g fill="url(#limeGradLogo)">
-                    <rect x="10" y="40" width="14" height="40" rx="7"><animate attributeName="y" values="40;20;40" dur="1s" repeatCount="indefinite" /><animate attributeName="height" values="40;60;40" dur="1s" repeatCount="indefinite" /></rect>
-                    <rect x="32" y="20" width="14" height="60" rx="7"><animate attributeName="y" values="20;50;20" dur="1.2s" repeatCount="indefinite" /><animate attributeName="height" values="60;30;60" dur="1.2s" repeatCount="indefinite" /></rect>
-                    <rect x="54" y="10" width="14" height="70" rx="7"><animate attributeName="y" values="10;30;10" dur="0.8s" repeatCount="indefinite" /><animate attributeName="height" values="70;50;70" dur="0.8s" repeatCount="indefinite" /></rect>
-                    <rect x="76" y="30" width="14" height="50" rx="7"><animate attributeName="y" values="30;15;30" dur="1.1s" repeatCount="indefinite" /><animate attributeName="height" values="50;65;50" dur="1.1s" repeatCount="indefinite" /></rect>
-                </g>
-            </svg>
-            <div class="logo-text">
-                <span class="logo-nova">NOVA</span>
-                <span class="logo-tempo">TEMPO</span>
-            </div>
-        </a>
+        <a href="index.html" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
     </nav>
 
     <div class="auth-container">
@@ -125,19 +91,27 @@
             </form>
             
             <div class="footer-link">
-                Pas encore de compte ? <a href="/signup.html">Créer un compte</a>
+                Pas encore de compte ? <a href="signup.html">Créer un compte</a>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT CORRIGÉ SANS ERREUR -->
+    <!-- SCRIPT CORRIGÉ SANS ERREUR DE REDIRECTION -->
     <script>
-        // 1. Initialisation (avec un nom de variable sécurisé)
+        // 1. Initialisation Supabase
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // 2. Gestion de l'oeil
+        // 2. Redirection automatique si déjà connecté
+        window.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                window.location.href = 'studio.html';
+            }
+        });
+
+        // 3. Masquer / afficher le mot de passe
         function togglePassword() {
             const pwd = document.getElementById('password');
             const icon = document.getElementById('eye-icon');
@@ -151,7 +125,7 @@
             }
         }
 
-        // 3. Connexion Google
+        // 4. Connexion avec Google
         async function loginGoogle() {
             const { data, error } = await supabaseClient.auth.signInWithOAuth({
                 provider: 'google',
@@ -165,7 +139,7 @@
             }
         }
 
-        // 4. Connexion Email
+        // 5. Connexion par Email & Mot de Passe
         async function loginEmail(event) {
             event.preventDefault(); 
             
@@ -190,43 +164,9 @@
                 btn.textContent = 'Se connecter';
                 btn.disabled = false;
             } else {
-                window.location.href = '/studio.html'; 
+                window.location.href = 'studio.html'; 
             }
         }
     </script>
 </body>
 </html>
-<!-- WIDGET WHATSAPP FLOTTANT NOVA TEMPO -->
-<a href="https://wa.me/2250777420415?text=Bonjour%20Nova%20Tempo%2C%20j'ai%20une%20question%20au%20sujet%20de%20mon%20achat." target="_blank" id="whatsapp-btn" title="Besoin d'aide ? Écrivez-nous sur WhatsApp !">
-    <i class="fab fa-whatsapp"></i>
-</a>
-<style>
-    #whatsapp-btn {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        background-color: #25D366;
-        color: white;
-        width: 60px;
-        height: 60px;
-        border-radius: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 32px;
-        box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-        z-index: 99999;
-        text-decoration: none;
-        transition: transform 0.3s, box-shadow 0.3s;
-        animation: pulseWa 2s infinite;
-    }
-    #whatsapp-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 15px 30px rgba(37, 211, 102, 0.6);
-    }
-    @keyframes pulseWa {
-        0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-        70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-    }
-</style>
