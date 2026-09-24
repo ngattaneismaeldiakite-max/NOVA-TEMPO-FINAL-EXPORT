@@ -9,7 +9,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- OneSignal Web Push SDK -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "18cf07f1-c11c-41d5-a954-41be781ace9b",
+          safari_web_id: "web.onesignal.auto.18cf07f1-c11c-41d5-a954-41be781ace9b",
+          notifyButton: {
+            enable: true,
+          },
+        });
+      });
+    </script>
     
     <style>
         :root { --bg-dark: #06060A; --card-bg: #111118; --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6); --neon-lime: #D4FF00; --neon-pink: #FF0066; }
@@ -182,6 +198,23 @@
         </div>
     </div>
 
+    <!-- WIDGET WHATSAPP FLOTTANT OPTIMISÉ NOVA TEMPO -->
+    <a href="https://wa.me/2250777420415?text=Bonjour%20Nova%20Tempo%2C%20j'ai%20une%20question%20au%20sujet%20de%20mon%20achat." target="_blank" id="whatsapp-btn" title="Besoin d'aide ? Écrivez-nous sur WhatsApp !">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <style>
+        #whatsapp-btn {
+            position: fixed; bottom: 20px; right: 20px; background: #25D366; color: #FFFFFF;
+            width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-size: 26px; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
+            z-index: 99999; text-decoration: none; transition: transform 0.25s ease, box-shadow 0.25s ease;
+            animation: pulseWa 2.5s infinite;
+        }
+        #whatsapp-btn:hover { transform: scale(1.08); box-shadow: 0 12px 28px rgba(37, 211, 102, 0.55); }
+        @keyframes pulseWa { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); } 70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+        @media (max-width: 768px) { #whatsapp-btn { bottom: 16px; right: 16px; width: 46px; height: 46px; font-size: 23px; } }
+    </style>
+
     <script>
         const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
@@ -339,6 +372,7 @@
                             const laChanson = dataStatut.outputs[0];
                             const urlAudio = laChanson.audio_url || laChanson.url || laChanson.song_path;
                             
+                            // Sauvegarde automatique dans Supabase (Mes Créations)
                             try {
                                 await supabaseClient.from('songs').insert([{
                                     user_id: currentSession.user.id,
@@ -377,37 +411,3 @@
     </script>
 </body>
 </html>
-<!-- WIDGET WHATSAPP FLOTTANT NOVA TEMPO -->
-<a href="https://wa.me/2250777420415?text=Bonjour%20Nova%20Tempo%2C%20j'ai%20une%20question%20au%20sujet%20de%20mon%20achat." target="_blank" id="whatsapp-btn" title="Besoin d'aide ? Écrivez-nous sur WhatsApp !">
-    <i class="fab fa-whatsapp"></i>
-</a>
-<style>
-    #whatsapp-btn {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        background-color: #25D366;
-        color: white;
-        width: 60px;
-        height: 60px;
-        border-radius: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 32px;
-        box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-        z-index: 99999;
-        text-decoration: none;
-        transition: transform 0.3s, box-shadow 0.3s;
-        animation: pulseWa 2s infinite;
-    }
-    #whatsapp-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 15px 30px rgba(37, 211, 102, 0.6);
-    }
-    @keyframes pulseWa {
-        0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-        70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-    }
-</style>
