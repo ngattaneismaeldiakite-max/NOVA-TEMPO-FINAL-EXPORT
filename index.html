@@ -9,7 +9,6 @@
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=instrument-serif@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
     <style>
         /* THEME DARK NEON */
@@ -163,7 +162,7 @@
         </div>
         <div class="auth-buttons">
             <a href="login.html" class="btn-login">Connexion</a>
-            <a href="signup.html" class="btn-signup">Créer une chanson</a>
+            <a href="studio.html" class="btn-signup">Créer une chanson</a>
         </div>
     </nav>
 
@@ -315,32 +314,8 @@
         </div>
     </div>
 
-    <!-- SCRIPT DU LECTEUR ET DE NAVIGATION DE SESSION -->
+    <!-- SCRIPT DU LECTEUR -->
     <script>
-        const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
-        const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
-        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-        window.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const { data: { session } } = await supabaseClient.auth.getSession();
-                if (session) {
-                    const loginBtn = document.querySelector('.btn-login');
-                    const signupBtn = document.querySelector('.btn-signup');
-                    if (loginBtn) {
-                        loginBtn.textContent = 'Mon Studio';
-                        loginBtn.href = 'studio.html';
-                    }
-                    if (signupBtn) {
-                        signupBtn.textContent = 'Mon Profil';
-                        signupBtn.href = 'profil.html';
-                    }
-                }
-            } catch(e) {
-                console.log(e);
-            }
-        });
-
         function toggleAudio(audioId, vinylElement) {
             const audio = document.getElementById(audioId);
             const allAudios = document.querySelectorAll('audio');
