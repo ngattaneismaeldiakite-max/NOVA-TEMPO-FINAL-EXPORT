@@ -23,7 +23,6 @@
         
         nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
         
-        /* LOGO NOVA TEMPO */
         .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: transform 0.3s; }
         .logo:hover { transform: scale(1.02); }
         .logo-text { display: flex; flex-direction: column; justify-content: center; line-height: 1; }
@@ -49,7 +48,6 @@
         .btn-primary { display: inline-block; width: 100%; text-align: center; background: var(--neon-lime); color: var(--bg-dark); padding: 1rem; border-radius: 12px; font-weight: 800; text-decoration: none; margin-top: 1rem; transition: all 0.3s; text-transform: uppercase; border: none; cursor: pointer; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212, 255, 0, 0.2); }
 
-        /* PACKS DE PAIEMENT */
         .packs-container { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
         .pack-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.2rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.3s; }
         .pack-item:hover { border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); transform: scale(1.02); }
@@ -59,10 +57,23 @@
         
         .alert-success { background: rgba(212, 255, 0, 0.1); border: 1px solid var(--neon-lime); color: var(--neon-lime); padding: 1rem; border-radius: 12px; margin-bottom: 2rem; display: none; }
 
+        /* CARTE DE CHANSON */
+        .song-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; transition: border-color 0.3s; }
+        .song-item:hover { border-color: rgba(212,255,0,0.4); }
+        .song-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .song-title { font-size: 1.2rem; font-weight: 800; color: var(--text-light); }
+        .song-badge { background: rgba(212,255,0,0.1); color: var(--neon-lime); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
+        .song-actions { display: flex; gap: 1rem; margin-top: 1rem; }
+        .btn-action { display: inline-flex; align-items: center; gap: 8px; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.85rem; transition: transform 0.2s; }
+        .btn-action:hover { transform: translateY(-2px); }
+        .btn-download { background: var(--neon-lime); color: var(--bg-dark); }
+        .btn-whatsapp { background: #25D366; color: white; }
+
         @media (max-width: 768px) {
             nav { padding: 1rem 1.5rem; }
             .dashboard-grid { grid-template-columns: 1fr; }
             .header-profil { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+            .song-actions { flex-direction: column; }
         }
     </style>
 </head>
@@ -90,7 +101,7 @@
     <div class="container" id="app-content" style="display: none;">
         
         <div id="alert-payment" class="alert-success">
-            <i class="fas fa-check-circle"></i> Paiement réussi ! Tes crédits ont été crédités sur ton compte.
+            <i class="fas fa-check-circle"></i> Paiement réussi ! Tes crédits ont été ajoutés à ton compte.
         </div>
 
         <div class="header-profil">
@@ -139,9 +150,11 @@
             <!-- Colonne Mes Créations -->
             <div class="card">
                 <h3><i class="fas fa-music"></i> Mes Créations</h3>
-                <div id="library-content" style="color: var(--text-muted); padding: 2rem 0; text-align: center;">
-                    <i class="fas fa-compact-disc" style="font-size: 3rem; margin-bottom: 1rem; color: rgba(255,255,255,0.1);"></i>
-                    <p>Vos futures créations apparaîtront ici.</p>
+                <div id="library-content">
+                    <div style="color: var(--text-muted); padding: 2rem 0; text-align: center;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--neon-lime);"></i>
+                        <p style="margin-top: 1rem;">Chargement de vos musiques...</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -166,25 +179,79 @@
             document.getElementById('user-email').textContent = currentUser.email;
             document.getElementById('app-content').style.display = 'block';
 
-            // Vérification si retour de paiement réussi
+            // Alerte paiement
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('payment') === 'success') {
                 document.getElementById('alert-payment').style.display = 'block';
             }
 
-            // Charger les crédits actuels depuis Supabase
+            // Charger crédits et musiques
             loadUserCredits();
+            loadUserSongs();
         }
 
         async function loadUserCredits() {
             if (!currentUser) return;
-            const { data, error } = await supabaseClient.from('profiles').select('credits').eq('id', currentUser.id).single();
+            const { data } = await supabaseClient.from('profiles').select('credits').eq('id', currentUser.id).single();
             if (data) {
                 document.getElementById('user-credits').innerHTML = `${data.credits || 0} <span>crédits</span>`;
             }
         }
 
-        // ACHAT DE PACK DE CRÉDITS
+        // CHARGEMENT DE TOUTES LES CHANSONS CRÉÉES PAR L'UTILISATEUR
+        async function loadUserSongs() {
+            if (!currentUser) return;
+            const libraryContainer = document.getElementById('library-content');
+
+            const { data: songs, error } = await supabaseClient
+                .from('songs')
+                .select('*')
+                .eq('user_id', currentUser.id)
+                .order('created_at', { ascending: false });
+
+            if (error || !songs || songs.length === 0) {
+                libraryContainer.innerHTML = `
+                    <div style="color: var(--text-muted); padding: 3rem 0; text-align: center;">
+                        <i class="fas fa-compact-disc" style="font-size: 3rem; margin-bottom: 1rem; color: rgba(255,255,255,0.1);"></i>
+                        <p>Vous n'avez pas encore créé de musique.</p>
+                        <p style="font-size: 0.9rem;">Vos futures créations apparaîtront ici.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Génération de la liste des chansons avec lecteur audio, téléchargement et WhatsApp
+            let htmlContent = '';
+            songs.forEach(song => {
+                const dateFormatee = new Date(song.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+                const messageWhatsapp = encodeURIComponent(`Écoute la chanson personnalisée que j'ai créée sur Nova Tempo : ${song.audio_url}`);
+                
+                htmlContent += `
+                    <div class="song-item">
+                        <div class="song-header">
+                            <div>
+                                <div class="song-title">${song.title}</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Créée le ${dateFormatee}</div>
+                            </div>
+                            <span class="song-badge">${song.genre || 'Afrobeat'}</span>
+                        </div>
+                        <audio controls style="width: 100%; margin: 0.5rem 0;" src="${song.audio_url}"></audio>
+                        <div class="song-actions">
+                            <a href="${song.audio_url}" download target="_blank" class="btn-action btn-download">
+                                <i class="fas fa-download"></i> Télécharger MP3
+                            </a>
+                            <a href="https://api.whatsapp.com/send?text=${messageWhatsapp}" target="_blank" class="btn-action btn-whatsapp">
+                                <i class="fab fa-whatsapp"></i> Partager sur WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+
+            libraryContainer.innerHTML = htmlContent;
+        }
+
+        // ACHAT DE PACK
         async function buyPack(packName, evt) {
             if (!currentUser) return;
             
@@ -215,7 +282,6 @@
             }
         }
 
-        // DÉCONNEXION
         document.getElementById('btn-logout').addEventListener('click', async () => {
             await supabaseClient.auth.signOut();
             window.location.href = '/';
