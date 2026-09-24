@@ -108,7 +108,7 @@
             </div>
         </a>
         <div class="nav-links">
-            <a href="/profil.html"><i class="fas fa-user"></i> Mon Profil</a>
+            <a href="/profil.html"><i class="fas fa-wallet"></i> Mon Espace (Crédits & Recharge)</a>
             <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
         </div>
     </nav>
@@ -301,6 +301,13 @@
 
                 const dataCreation = await resCreation.json();
                 
+                // Si le solde est insuffisant (402), redirection automatique intelligente vers Mon Espace & Crédits
+                if (resCreation.status === 402 || (dataCreation.error && dataCreation.error.includes("Solde insuffisant"))) {
+                    alert("Solde insuffisant ! Vous avez 0 crédit. Redirection automatique vers la recharge Mobile Money...");
+                    window.location.href = '/profil.html';
+                    return;
+                }
+
                 if (!resCreation.ok || dataCreation.error) {
                     alert(dataCreation.error || "Erreur lors du lancement de la musique.");
                     btn.disabled = false;
@@ -323,7 +330,6 @@
                             const laChanson = dataStatut.outputs[0];
                             const urlAudio = laChanson.audio_url || laChanson.url || laChanson.song_path;
                             
-                            // SAUVEGARDE AUTOMATIQUE DANS SUPABASE (MES CRÉATIONS)
                             try {
                                 await supabaseClient.from('songs').insert([{
                                     user_id: currentSession.user.id,
