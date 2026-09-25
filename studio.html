@@ -40,7 +40,7 @@
             letter-spacing: 0.5px;
         }
 
-        .studio-card { background: rgba(17, 17, 24, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 3rem; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        .studio-card { background: rgba(17, 17, 24, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 3rem; box-shadow: 0 25px 50px rgba(0,0,0,0.5); overflow: hidden; }
         
         .form-group { margin-bottom: 2.5rem; }
         .form-group label.main-label { display: block; margin-bottom: 1rem; color: var(--text-light); font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
@@ -50,6 +50,7 @@
         
         .dynamic-field { margin-bottom: 1.5rem; animation: fadeIn 0.5s ease; text-align: left; }
         .dynamic-field label { display: block; margin-bottom: 0.6rem; color: var(--text-muted); font-size: 0.95rem; font-weight: 600; }
+        .optional-tag { font-size: 0.8rem; color: rgba(255,255,255,0.4); font-weight: normal; margin-left: 5px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         .radio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
@@ -64,8 +65,18 @@
         .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212, 255, 0, 0.4); }
         .btn-generate:disabled { background: #333; color: #888; cursor: not-allowed; box-shadow: none; transform: none; }
 
-        #result-container { display: none; margin-top: 2rem; padding: 1.5rem; background: rgba(212, 255, 0, 0.1); border: 1px solid var(--neon-lime); border-radius: 12px; text-align: center; }
-        audio { width: 100%; margin-top: 1rem; outline: none; }
+        /* Styles des étapes et des transitions douces */
+        .fade-step { transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+        .fade-out-active { opacity: 0 !important; transform: translateY(-15px) !important; pointer-events: none !important; }
+        .fade-in-active { opacity: 1 !important; transform: translateY(0) !important; }
+
+        #loading-container { display: none; text-align: center; padding: 2.5rem 1rem; opacity: 0; }
+        #result-container { display: none; text-align: center; padding: 2rem 1rem; opacity: 0; }
+
+        audio { width: 100%; margin-top: 1.5rem; outline: none; border-radius: 12px; }
+
+        .btn-new-song { background: transparent; border: 2px solid var(--neon-lime); color: var(--neon-lime); padding: 1rem 2rem; border-radius: 12px; font-size: 1.1rem; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: 2rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; }
+        .btn-new-song:hover { background: var(--neon-lime); color: var(--bg-dark); transform: translateY(-2px); }
 
         #page-loader { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s; }
         .spinner { width: 50px; height: 50px; border: 4px solid rgba(212, 255, 0, 0.3); border-top-color: var(--neon-lime); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
@@ -98,11 +109,13 @@
         <p class="subtitle">Réponds à quelques questions, <span class="nova-brand">NovaTempo</span> crée la magie.</p>
 
         <div class="studio-card">
+            
+            <!-- BLOC 1 : FORMULAIRE DE CRÉATION -->
             <form id="studio-form" onsubmit="handleGenerate(event)">
                 
                 <div class="form-group">
                     <label class="main-label" id="label-target-name">1. Pour qui est cette chanson ? (Prénom)</label>
-                    <input type="text" id="target-name" required placeholder="Ex: Marc, Awa, Sarah...">
+                    <input type="text" id="target-name" placeholder="Ex: Marc, Awa, Sarah...">
                 </div>
                 
                 <div class="form-group">
@@ -141,7 +154,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="main-label">5. Les détails (Personnalisation)</label>
+                    <label class="main-label">5. Les détails (Personnalisation optionnelle)</label>
                     <div id="dynamic-form-container" style="padding: 1rem; border: 1px dashed rgba(212,255,0,0.3); border-radius: 12px; color: var(--text-muted);">
                         <div style="text-align: center;">Veuillez sélectionner une occasion ci-dessus.</div>
                     </div>
@@ -152,10 +165,35 @@
                 </button>
             </form>
 
+            <!-- BLOC 2 : CHARGEMENT EN COURS (Entièrement isolé) -->
+            <div id="loading-container">
+                <div style="margin-bottom: 1.5rem;">
+                    <i class="fas fa-compact-disc fa-spin" style="font-size: 4rem; color: var(--neon-lime);"></i>
+                </div>
+                <h2 style="font-size: 1.8rem; text-transform: uppercase; margin-bottom: 1rem;">
+                    Création <span class="nova-brand">NovaTempo</span> en cours...
+                </h2>
+                <div id="loading-status-text" style="font-size: 1.2rem; color: var(--text-muted); min-height: 2.5rem; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Composition des paroles en cours...
+                </div>
+                <div style="margin-top: 2rem; width: 100%; background: rgba(255,255,255,0.08); height: 8px; border-radius: 10px; overflow: hidden;">
+                    <div id="loading-bar" style="width: 15%; height: 100%; background: linear-gradient(90deg, var(--neon-lime), var(--neon-pink)); transition: width 0.5s ease;"></div>
+                </div>
+            </div>
+
+            <!-- BLOC 3 : RÉSULTAT FINAL (Affiche uniquement le lecteur audio) -->
             <div id="result-container">
-                <h3 style="color: var(--neon-lime); margin-top: 0;">🎉 Ta chanson est prête !</h3>
-                <p>Écoute ta création exclusive <span class="nova-brand">NovaTempo</span> :</p>
-                <audio id="audio-player" controls></audio>
+                <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🎉</div>
+                <h2 style="color: var(--neon-lime); margin-top: 0; font-size: 2rem; text-transform: uppercase;">Ta chanson est prête !</h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">Écoute ta création exclusive <span class="nova-brand">NovaTempo</span> :</p>
+                
+                <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(212,255,0,0.3); border-radius: 16px;">
+                    <audio id="audio-player" controls></audio>
+                </div>
+
+                <button type="button" class="btn-new-song" onclick="resetStudio()">
+                    <i class="fas fa-plus-circle"></i> Créer une autre chanson
+                </button>
             </div>
 
         </div>
@@ -180,44 +218,64 @@
             await supabaseClient.auth.signOut();
             window.location.href = 'login.html';
         }
+
+        // Fonction générique pour effectuer des transitions douces entre 2 blocs
+        async function switchView(fromEl, toEl) {
+            if (fromEl && fromEl.style.display !== 'none') {
+                fromEl.classList.add('fade-step', 'fade-out-active');
+                await new Promise(r => setTimeout(r, 400));
+                fromEl.style.display = 'none';
+                fromEl.classList.remove('fade-step', 'fade-out-active');
+            }
+            if (toEl) {
+                toEl.style.display = 'block';
+                toEl.classList.add('fade-step', 'fade-out-active');
+                void toEl.offsetWidth; // Forcer le reflow CSS
+                toEl.classList.remove('fade-out-active');
+                toEl.classList.add('fade-in-active');
+                setTimeout(() => {
+                    toEl.classList.remove('fade-step', 'fade-in-active');
+                }, 500);
+            }
+        }
         
         const questionsPersonnalisees = {
             'amour': `
-                <div class="dynamic-field"><label>Relation / Surnom affectif :</label><input type="text" class="custom-data" data-key="relation" required placeholder="Ex: mon chéri, ma femme, mon amour, mon trésor"></div>
-                <div class="dynamic-field"><label>Depuis combien de temps êtes-vous ensemble ?</label><input type="text" class="custom-data" data-key="duree" required placeholder="Ex: 3 ans, 6 mois, 10 ans"></div>
-                <div class="dynamic-field"><label>Un souvenir marquant ou une anecdote :</label><input type="text" class="custom-data" data-key="anecdote" required placeholder="Ex: Notre voyage à Assinie, notre premier baiser sous la pluie"></div>
+                <div class="dynamic-field"><label>Relation / Surnom affectif <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: mon chéri, ma femme, mon amour, mon trésor"></div>
+                <div class="dynamic-field"><label>Depuis combien de temps êtes-vous ensemble ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" placeholder="Ex: 3 ans, 6 mois, 10 ans"></div>
+                <div class="dynamic-field"><label>Un souvenir marquant ou une anecdote <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Notre voyage à Assinie, notre premier baiser sous la pluie"></div>
             `,
             'anniversaire': `
-                <div class="dynamic-field"><label>Âge fêté ou durée de la relation :</label><input type="text" class="custom-data" data-key="duree" required placeholder="Ex: 30 ans, 10 ans d'amitié"></div>
-                <div class="dynamic-field"><label>Relation avec la personne :</label><input type="text" class="custom-data" data-key="relation" required placeholder="Ex: mon frère, ma fille, mon meilleur ami, maman"></div>
-                <div class="dynamic-field"><label>Un souvenir / anecdote ou qualité :</label><input type="text" class="custom-data" data-key="anecdote" required placeholder="Ex: Il perd toujours ses clés, nos rires d'enfance"></div>
+                <div class="dynamic-field"><label>Âge fêté ou durée de la relation <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" placeholder="Ex: 30 ans, 10 ans d'amitié"></div>
+                <div class="dynamic-field"><label>Relation avec la personne <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: mon frère, ma fille, mon meilleur ami, maman"></div>
+                <div class="dynamic-field"><label>Un souvenir / anecdote ou qualité <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Il perd toujours ses clés, nos rires d'enfance"></div>
             `,
             'mariage': `
-                <div class="dynamic-field"><label>Lien / Qui sont les mariés ? :</label><input type="text" class="custom-data" data-key="relation" required placeholder="Ex: mon épouse, les mariés, mon mari"></div>
-                <div class="dynamic-field"><label>Durée de la relation / Années ensemble :</label><input type="text" class="custom-data" data-key="duree" required placeholder="Ex: 5 ans d'amour, 10 ans d'union"></div>
-                <div class="dynamic-field"><label>Lieu de rencontre ou souvenir de mariage :</label><input type="text" class="custom-data" data-key="anecdote" required placeholder="Ex: Rencontre à la fac en 2018, la demande sur la plage"></div>
+                <div class="dynamic-field"><label>Lien / Qui sont les mariés ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: mon épouse, les mariés, mon mari"></div>
+                <div class="dynamic-field"><label>Durée de la relation / Années ensemble <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" placeholder="Ex: 5 ans d'amour, 10 ans d'union"></div>
+                <div class="dynamic-field"><label>Lieu de rencontre ou souvenir de mariage <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Rencontre à la fac en 2018, la demande sur la plage"></div>
             `,
             'hommage': `
-                <div class="dynamic-field"><label>Relation avec cette personne :</label><input type="text" class="custom-data" data-key="relation" required placeholder="Ex: mon grand-père, mon ami fidèle, ma maman"></div>
-                <div class="dynamic-field"><label>Nombre d'années ou message de mémoire :</label><input type="text" class="custom-data" data-key="duree" required placeholder="Ex: 40 ans de présence, Pour toujours dans nos cœurs"></div>
-                <div class="dynamic-field"><label>Un souvenir précieux ou enseignement laissé :</label><input type="text" class="custom-data" data-key="anecdote" required placeholder="Ex: Ses repas du dimanche, sa sagesse au village"></div>
+                <div class="dynamic-field"><label>Relation avec cette personne <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: mon grand-père, mon ami fidèle, ma maman"></div>
+                <div class="dynamic-field"><label>Nombre d'années ou message de mémoire <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" placeholder="Ex: 40 ans de présence, Pour toujours dans nos cœurs"></div>
+                <div class="dynamic-field"><label>Un souvenir précieux ou enseignement laissé <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Ses repas du dimanche, sa sagesse au village"></div>
             `,
             'adoration': `
-                <div class="dynamic-field"><label>Qualité / Titre divin célébré :</label><input type="text" class="custom-data" data-key="relation" required placeholder="Ex: mon rocher, mon berger, le Roi des rois"></div>
-                <div class="dynamic-field"><label>Témoignage ou souvenir personnel :</label><input type="text" class="custom-data" data-key="anecdote" required placeholder="Ex: Quand Tu m'as sauvé de la maladie, Ton amour dans ma vie"></div>
-                <div class="dynamic-field"><label>L'épreuve ou moment difficile surmonté :</label><input type="text" class="custom-data" data-key="moment_difficile" required placeholder="Ex: La traversée du désert, la maladie surmontée"></div>
-                <div class="dynamic-field"><label>La grâce, délivrance ou bénédiction reçue :</label><input type="text" class="custom-data" data-key="benediction" required placeholder="Ex: La guérison miraculeuse, la paix retrouvée"></div>
+                <div class="dynamic-field"><label>Qualité / Titre divin célébré <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: mon rocher, mon berger, le Roi des rois"></div>
+                <div class="dynamic-field"><label>Témoignage ou souvenir personnel <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Quand Tu m'as sauvé de la maladie, Ton amour dans ma vie"></div>
+                <div class="dynamic-field"><label>L'épreuve ou moment difficile surmonté <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="moment_difficile" placeholder="Ex: La traversée du désert, la maladie surmontée"></div>
+                <div class="dynamic-field"><label>La grâce, délivrance ou bénédiction reçue <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="benediction" placeholder="Ex: La guérison miraculeuse, la paix retrouvée"></div>
             `,
             'promotion': `
-                <div class="dynamic-field"><label>Nom du produit, service ou événement :</label><input type="text" class="custom-data" data-key="produit" required placeholder="Ex: NovaTempo, notre restaurant, l'Appartement VIP"></div>
-                <div class="dynamic-field"><label>Le bénéfice fort / Argument principal :</label><input type="text" class="custom-data" data-key="argument" required placeholder="Ex: 100% bio et fait maison, résultats garantis en 7 jours"></div>
-                <div class="dynamic-field"><label>L'appel à l'action (Call to action) :</label><input type="text" class="custom-data" data-key="cta" required placeholder="Ex: Cliquez sur le lien, appelez au 0707..., venez nous rendre visite"></div>
-                <div class="dynamic-field"><label>Accroche / Anecdote ou contexte :</label><input type="text" class="custom-data" data-key="anecdote" required placeholder="Ex: Déjà 5000 clients satisfaits, une offre limitée"></div>
+                <div class="dynamic-field"><label>Nom du produit, service ou événement <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="produit" placeholder="Ex: NovaTempo, notre restaurant, l'Appartement VIP"></div>
+                <div class="dynamic-field"><label>Le bénéfice fort / Argument principal <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="argument" placeholder="Ex: 100% bio et fait maison, résultats garantis en 7 jours"></div>
+                <div class="dynamic-field"><label>L'appel à l'action (Call to action) <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="cta" placeholder="Ex: Cliquez sur le lien, appelez au 0707..., venez nous rendre visite"></div>
+                <div class="dynamic-field"><label>Accroche / Anecdote ou contexte <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Déjà 5000 clients satisfaits, une offre limitée"></div>
             `,
             'evenement': `
-                <div class="dynamic-field"><label>Nom / Type d'événement :</label><input type="text" class="custom-data" data-key="anecdote" required placeholder="Ex: Le concert de fin d'année, le grand barbecue du quartier"></div>
-                <div class="dynamic-field"><label>Rôle ou public cible :</label><input type="text" class="custom-data" data-key="relation" required placeholder="Ex: les invités, nos amis, les passionnés"></div>
-                <div class="dynamic-field"><label>Date / Ambiance :</label><input type="text" class="custom-data" data-key="duree" required placeholder="Ex: Ce samedi à 20h, ambiance festive et conviviale"></div>
+                <div class="dynamic-field"><label>Nom / Type d'événement <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Le concert de fin d'année, le grand barbecue du quartier"></div>
+                <div class="dynamic-field"><label>Rôle ou public cible <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: les invités, nos amis, les passionnés"></div>
+                <div class="dynamic-field"><label>Date / Ambiance <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" placeholder="Ex: Ce samedi à 20h, ambiance festive et conviviale"></div>
             `
         };
 
@@ -240,8 +298,26 @@
             if (questionsPersonnalisees[occasion]) {
                 container.innerHTML = questionsPersonnalisees[occasion];
             } else {
-                container.innerHTML = `<div class="dynamic-field"><label>Racontez votre histoire / Détails :</label><textarea class="custom-data" data-key="anecdote" required placeholder="Racontez votre histoire ici..."></textarea></div>`;
+                container.innerHTML = `<div class="dynamic-field"><label>Racontez votre histoire / Détails <span class="optional-tag">(optionnel)</span> :</label><textarea class="custom-data" data-key="anecdote" placeholder="Racontez votre histoire ici..."></textarea></div>`;
             }
+        }
+
+        async function resetStudio() {
+            const form = document.getElementById('studio-form');
+            const result = document.getElementById('result-container');
+            const audio = document.getElementById('audio-player');
+            
+            audio.pause();
+            audio.src = '';
+            form.reset();
+            
+            const btn = document.getElementById('generate-btn');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-magic"></i> Générer ma chanson';
+
+            document.getElementById('dynamic-form-container').innerHTML = '<div style="text-align: center;">Veuillez sélectionner une occasion ci-dessus.</div>';
+
+            await switchView(result, form);
         }
 
         async function handleGenerate(event) {
@@ -271,7 +347,13 @@
                 console.log("Attention solde:", e);
             }
 
-            const cible = document.getElementById('target-name').value;
+            const formEl = document.getElementById('studio-form');
+            const loadingEl = document.getElementById('loading-container');
+            const resultEl = document.getElementById('result-container');
+            const loadingText = document.getElementById('loading-status-text');
+            const loadingBar = document.getElementById('loading-bar');
+
+            const cible = document.getElementById('target-name').value || 'mon cher / ma chère';
             const occasion = document.querySelector('input[name="occasion"]:checked').value;
             const style = document.querySelector('input[name="style"]:checked').value;
             const voice = document.querySelector('input[name="voice"]:checked').value;
@@ -289,17 +371,20 @@
                 }
             });
 
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Composition des paroles <span class="nova-brand" style="font-size: 1rem; text-shadow: none;">NovaTempo</span>...';
+            // Transition douce du Formulaire vers l'Écran de Chargement
+            loadingBar.style.width = '15%';
+            loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Composition des paroles en cours...';
+            await switchView(formEl, loadingEl);
 
             const phrasesAttente = [
                 "🎸 Les musiciens accordent leurs guitares...",
                 "🎤 Le chanteur s'échauffe la voix...",
                 "🎹 Mixage de la piste audio en cours...",
-                "🎧 <span class='nova-brand' style='font-size: 1rem; text-shadow: none;'>NovaTempo</span> finalise les derniers réglages...",
+                "🎧 NovaTempo finalise les derniers réglages...",
                 "✨ La magie opère, encore quelques secondes..."
             ];
             let phraseIndex = 0;
+            let progressPercent = 30;
 
             try {
                 // 1. GÉNÉRATION OU SÉLECTION DU TEMPLATE DE PAROLES (generate-lyrics)
@@ -312,7 +397,8 @@
                 const dataLyrics = await resLyrics.json();
                 const parolesFinales = dataLyrics.lyrics || `[Couplet 1]\nPour toi ${cible}, une chanson unique.\n[Refrain]\nNovaTempo chante pour toi.\n[Outro]\nPour toujours.`;
 
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enregistrement studio en cours...';
+                loadingBar.style.width = '35%';
+                loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Enregistrement studio en cours...';
 
                 // 2. GÉNÉRATION AUDIO SUNO AVEC PAROLES STRUCTURÉES (generate-audio)
                 const resCreation = await fetch('/api/songs/generate-audio', {
@@ -340,21 +426,33 @@
 
                         if (dataStatut.status === 'completed' && dataStatut.outputs && dataStatut.outputs.length > 0) {
                             clearInterval(verificationIntervalle);
-                            document.getElementById('studio-form').style.display = 'none';
-                            document.getElementById('result-container').style.display = 'block';
+                            
+                            // 100% complété
+                            loadingBar.style.width = '100%';
+                            loadingText.innerHTML = '<i class="fas fa-check-circle" style="color: var(--neon-lime);"></i> Chanson terminée !';
                             
                             const laChanson = dataStatut.outputs[0];
                             const urlAudio = laChanson.audio_url || laChanson.url || laChanson.song_path;
                             
-                            document.getElementById('audio-player').src = urlAudio;
-                            document.getElementById('audio-player').play();
+                            const audioPlayer = document.getElementById('audio-player');
+                            audioPlayer.src = urlAudio;
+
+                            // Attendre un bref instant pour laisser la barre atteindre 100%, puis transition douce vers le Résultat Final
+                            setTimeout(async () => {
+                                await switchView(loadingEl, resultEl);
+                                audioPlayer.play();
+                            }, 500);
+
                         } else if (dataStatut.status === 'failed') {
                             clearInterval(verificationIntervalle);
                             alert("Oups ! Nos musiciens ont rencontré un petit problème. Essaie de modifier un peu le texte et réessaie.");
                             btn.disabled = false;
                             btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
+                            await switchView(loadingEl, formEl);
                         } else {
-                            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + phrasesAttente[phraseIndex];
+                            progressPercent = Math.min(progressPercent + 10, 92);
+                            loadingBar.style.width = progressPercent + '%';
+                            loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> ' + phrasesAttente[phraseIndex];
                             phraseIndex = (phraseIndex + 1) % phrasesAttente.length;
                         }
                     } catch (errCheck) {
@@ -367,6 +465,7 @@
                 alert("Oups ! Problème de connexion avec le studio. " + erreur.message);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
+                await switchView(loadingEl, formEl);
             }
         }
     </script>
