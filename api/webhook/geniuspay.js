@@ -17,6 +17,7 @@ module.exports = async (req, res) => {
         const payload = req.body;
         console.log('Webhook GeniusPay reçu :', JSON.stringify(payload));
 
+        // Extraction du statut de transaction
         const status = payload.status || payload.event || (payload.data && payload.data.status);
         const isSuccess = ['SUCCESS', 'SUCCESSFUL', 'PAID', 'COMPLETED', 'payment.success'].includes(status);
 
@@ -25,16 +26,18 @@ module.exports = async (req, res) => {
             return res.status(200).json({ received: true, status: 'ignored' });
         }
 
+        // Récupération des données utilisateur et crédits
         const metadata = payload.metadata || payload.custom_data || (payload.data && payload.data.metadata) || {};
         const userId = metadata.user_id;
-        const creditsToAdd = parseInt(metadata.credits || 1, 10);
+        const creditsToAdd = parseInt(metadata.credits || 50, 10);
 
         if (!userId) {
             console.error('Erreur Webhook: Aucun user_id trouvé dans le payload.');
             return res.status(400).json({ error: 'user_id manquant' });
         }
 
-        const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
+        // Configuration Supabase pour mise à jour sécurisée
+        const supabaseUrl = process.env.SUPABASE_URL || 'https://wxkeuyyppzuqplnutwzk.supabase.co';
         const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
         if (!supabaseServiceRoleKey) {
@@ -76,7 +79,7 @@ module.exports = async (req, res) => {
         }
 
         console.log(`Succès Webhook : +${creditsToAdd} crédits ajoutés à l'utilisateur ${userId}. Nouveau solde : ${newCredits}`);
-        return res.status(200).json({ success: true, message: 'Crédits mis à jour avec succès' });
+        return res.status(200).json({ success: true, message: 'Crédits mis à jour avec succès', credits: newCredits });
 
     } catch (err) {
         console.error('Exception Webhook GeniusPay :', err);
