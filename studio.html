@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Studio - Nova Tempo</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#06060A">
     
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -78,6 +81,13 @@
         .btn-new-song { background: transparent; border: 2px solid var(--neon-lime); color: var(--neon-lime); padding: 1rem 2rem; border-radius: 12px; font-size: 1.1rem; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: 2rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; }
         .btn-new-song:hover { background: var(--neon-lime); color: var(--bg-dark); transform: translateY(-2px); }
 
+        /* Banner de notification In-App & iOS Push */
+        .notif-prompt-box { background: rgba(212, 255, 0, 0.08); border: 1px solid var(--neon-lime); border-radius: 16px; padding: 1.2rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+        .btn-enable-notif { background: var(--neon-lime); color: var(--bg-dark); border: none; padding: 0.7rem 1.2rem; border-radius: 50px; font-weight: 800; cursor: pointer; white-space: nowrap; font-size: 0.9rem; }
+
+        #notification-banner { display: none; position: fixed; bottom: 20px; right: 20px; background: rgba(17, 17, 24, 0.95); border: 1px solid var(--neon-lime); color: white; padding: 1rem 1.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 10000; animation: slideUp 0.5s ease; max-width: 350px; }
+        @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
         #page-loader { position: fixed; inset: 0; background: var(--bg-dark); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s; }
         .spinner { width: 50px; height: 50px; border: 4px solid rgba(212, 255, 0, 0.3); border-top-color: var(--neon-lime); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -85,6 +95,8 @@
         @media (max-width: 768px) {
             nav { padding: 1rem; flex-direction: column; gap: 1rem; }
             .radio-grid { grid-template-columns: repeat(2, 1fr); }
+            #notification-banner { left: 10px; right: 10px; max-width: none; }
+            .notif-prompt-box { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -94,6 +106,17 @@
     <div id="page-loader">
         <div class="spinner"></div>
         <div style="color: var(--neon-lime); font-weight: bold; text-transform: uppercase;">Vérification...</div>
+    </div>
+
+    <!-- Notification Banner Floating -->
+    <div id="notification-banner">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="font-size: 1.8rem; color: var(--neon-lime);"><i class="fas fa-bell"></i></div>
+            <div>
+                <strong style="display: block; font-size: 1rem; color: var(--neon-lime);" id="notif-title">🎉 Chanson prête !</strong>
+                <span style="font-size: 0.9rem; color: var(--text-muted);" id="notif-body">Cliquez pour écouter votre morceau.</span>
+            </div>
+        </div>
     </div>
 
     <nav>
@@ -107,6 +130,28 @@
     <div class="container">
         <h1>Le <span>Studio</span></h1>
         <p class="subtitle">Réponds à quelques questions, <span class="nova-brand">NovaTempo</span> crée la magie.</p>
+
+        <!-- Banner Activation Push -->
+        <div class="notif-prompt-box" id="notif-permission-box" style="display: none;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <i class="fas fa-bell" style="color: var(--neon-lime); font-size: 1.5rem;"></i>
+                <div style="font-size: 0.95rem;">
+                    <strong>Recevoir les alertes écran verrouillé</strong>
+                    <div style="color: var(--text-muted); font-size: 0.85rem;">Soyez averti dès que votre chanson est prête même si votre téléphone est éteint.</div>
+                </div>
+            </div>
+            <button type="button" class="btn-enable-notif" onclick="demanderPermissionPush()">Activer les alertes</button>
+        </div>
+
+        <!-- Astuce iOS / iPhone -->
+        <div class="notif-prompt-box" id="ios-pwa-tip" style="display: none; background: rgba(255,0,102,0.08); border-color: var(--neon-pink);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <i class="fab fa-apple" style="color: var(--neon-pink); font-size: 1.5rem;"></i>
+                <div style="font-size: 0.9rem;">
+                    <strong>iPhone / iPad :</strong> Pour recevoir les notifications sur écran verrouillé, appuyez sur <i class="fas fa-share-square"></i> <strong>Partager</strong> puis <strong>"Sur l'écran d'accueil"</strong>.
+                </div>
+            </div>
+        </div>
 
         <div class="studio-card">
             
@@ -204,6 +249,8 @@
         const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+        let swRegistration = null;
+
         window.addEventListener('DOMContentLoaded', async () => {
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (!session) {
@@ -211,12 +258,78 @@
             } else {
                 document.getElementById('page-loader').style.opacity = '0';
                 setTimeout(() => { document.getElementById('page-loader').style.display = 'none'; }, 500);
+
+                // 1. Enregistrement du Service Worker sw.js
+                if ('serviceWorker' in navigator) {
+                    try {
+                        swRegistration = await navigator.serviceWorker.register('/sw.js');
+                        console.log("Service Worker NovaTempo enregistré avec succès !");
+                    } catch(e) {
+                        console.log("Erreur d'enregistrement SW:", e);
+                    }
+                }
+
+                // 2. Vérification des permissions notifications & affichage des banners
+                verifierBannersNotifications();
             }
         });
+
+        function verifierBannersNotifications() {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+
+            if (isIOS && !isStandalone) {
+                document.getElementById('ios-pwa-tip').style.display = 'flex';
+            }
+
+            if ("Notification" in window && Notification.permission === "default") {
+                document.getElementById('notif-permission-box').style.display = 'flex';
+            }
+        }
+
+        async function demanderPermissionPush() {
+            if ("Notification" in window) {
+                const result = await Notification.requestPermission();
+                if (result === "granted") {
+                    document.getElementById('notif-permission-box').style.display = 'none';
+                    alert("✅ Notifications activées ! Vous serez alerté même si votre téléphone est éteint.");
+                }
+            }
+        }
 
         async function logout() {
             await supabaseClient.auth.signOut();
             window.location.href = 'login.html';
+        }
+
+        // Déclenchement de la notification via Service Worker (fonctionne écran verrouillé)
+        async function notifierMorceauPret(nomCible) {
+            const titre = "🎉 Ta chanson NovaTempo est prête !";
+            const corps = `La chanson exclusive pour ${nomCible} est terminée. Cliquez pour l'écouter !`;
+
+            // 1. Notification via Service Worker (Requis pour écran verrouillé / arrière-plan)
+            if (swRegistration && "showNotification" in swRegistration) {
+                try {
+                    await swRegistration.showNotification(titre, {
+                        body: corps,
+                        icon: 'logo.png',
+                        badge: 'logo.png',
+                        vibrate: [200, 100, 200],
+                        tag: 'song-ready'
+                    });
+                } catch(e) {
+                    console.log("Erreur Notification ServiceWorker:", e);
+                }
+            } else if ("Notification" in window && Notification.permission === "granted") {
+                new Notification(titre, { body: corps, icon: 'logo.png' });
+            }
+
+            // 2. Bannière In-App
+            const banner = document.getElementById('notification-banner');
+            document.getElementById('notif-title').textContent = titre;
+            document.getElementById('notif-body').textContent = corps;
+            banner.style.display = 'block';
+            setTimeout(() => { banner.style.display = 'none'; }, 8000);
         }
 
         // Fonction générique pour effectuer des transitions douces entre 2 blocs
@@ -436,6 +549,9 @@
                             
                             const audioPlayer = document.getElementById('audio-player');
                             audioPlayer.src = urlAudio;
+
+                            // Déclencher la notification Push via le Service Worker (Écran verrouillé & Arrière-plan)
+                            await notifierMorceauPret(cible);
 
                             // Attendre un bref instant pour laisser la barre atteindre 100%, puis transition douce vers le Résultat Final
                             setTimeout(async () => {
