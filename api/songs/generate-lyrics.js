@@ -1,60 +1,41 @@
-// Plus aucune trace de Groq/IA ici. Tout passe par nos templates.
+const fs = require('fs');
+const path = require('path');
 
-const ALLOWED_OCCASIONS = ['amour', 'anniversaire', 'hommage', 'promotion', 'adoration'];
+const ALLOWED_OCCASIONS = ['amour', 'anniversaire', 'hommage', 'evenement', 'mariage', 'adoration', 'promotion'];
 
-function fillTemplate(template, data, occasion) {
+function fillTemplate(template, data) {
     if (!template) return '';
 
     try {
-        // Remplacement des variables selon l'occasion
-        
-        // Amour
-        template = template.replace(/\[prenom_destinataire\]/g, data['amour-prenom'] || 'mon amour');
-        template = template.replace(/\[qualite1\]/g, data['amour-qualite1'] || 'merveilleux(se)');
-        template = template.replace(/\[qualite2\]/g, data['amour-qualite2'] || 'doux(ce)');
-        template = template.replace(/\[qualite3\]/g, data['amour-qualite3'] || 'unique');
-        template = template.replace(/\[souvenir\]/g, data['amour-souvenir'] || 'notre rencontre');
-        template = template.replace(/\[surnom\]/g, data['amour-surnom'] || 'mon cœur');
+        const nom = data.nom || data.cible || data.target || data['amour-prenom'] || data['anniv-prenom'] || data['hommage-nom'] || data['adoration-prenom'] || data['adoration-nom'] || data['mariage-prenom'] || 'Seigneur';
+        const relation = data.relation || data['amour-surnom'] || data['hommage-lien'] || data['mariage-surnom'] || 'mon appui';
+        const anecdote = data.anecdote || data.souvenir || data.histoire || data['amour-souvenir'] || data['anniv-souvenir'] || data['adoration-temoignage'] || data['adoration-anecdote'] || 'ton amour dans ma vie';
+        const duree = data.duree || data.duree_relation || data.age || data['anniv-age'] || 'des années';
+        const momentDifficile = data.moment_difficile || data.momentDifficile || data['adoration-epreuve'] || data['adoration-moment'] || 'la tempête';
+        const benediction = data.benediction || data['adoration-benediction'] || data['adoration-grace'] || 'tes bienfaits';
 
-        // Anniversaire
-        template = template.replace(/\[prenom\]/g, data['anniv-prenom'] || 'l\'ami(e)');
-        template = template.replace(/\[age\]/g, data['anniv-age'] ? `${data['anniv-age']} ans` : 'un an de plus');
-        template = template.replace(/\[qualite1\]/g, data['anniv-qualite1'] || 'génial(e)');
-        template = template.replace(/\[qualite2\]/g, data['anniv-qualite2'] || 'incroyable');
-        template = template.replace(/\[souvenir\]/g, data['anniv-souvenir'] || 'nos beaux moments');
-        template = template.replace(/\[message_special\]/g, data['anniv-message'] || 'profite de ta journée');
+        // Remplacement des balises entre accolades {}
+        template = template.replace(/\{NOM\}/g, nom);
+        template = template.replace(/\{RELATION\}/g, relation);
+        template = template.replace(/\{ANECDOTE\}/g, anecdote);
+        template = template.replace(/\{DUREE_RELATION\}/g, duree);
+        template = template.replace(/\{MOMENT_DIFFICILE\}/g, momentDifficile);
+        template = template.replace(/\{BENEDICTION\}/g, benediction);
 
-        // Hommage
-        template = template.replace(/\[nom\]/g, data['hommage-nom'] || 'notre étoile');
-        template = template.replace(/\[lien\]/g, data['hommage-lien'] || 'un être cher');
-        template = template.replace(/\[qualite1\]/g, data['hommage-qualite1'] || 'fort(e)');
-        template = template.replace(/\[qualite2\]/g, data['hommage-qualite2'] || 'aimant(e)');
-        template = template.replace(/\[qualite3\]/g, data['hommage-qualite3'] || 'inoubliable');
-        template = template.replace(/\[souvenir\]/g, data['hommage-souvenir'] || 'ton sourire');
-        template = template.replace(/\[valeur\]/g, data['hommage-valeur'] || 'ton courage');
-        template = template.replace(/\[proches\]/g, data['hommage-proches'] || 'nous tous');
+        // Remplacement des balises secondaires entre crochets []
+        template = template.replace(/\[prenom_destinataire\]/g, nom);
+        template = template.replace(/\[prenom\]/g, nom);
+        template = template.replace(/\[nom\]/g, nom);
+        template = template.replace(/\[surnom\]/g, relation);
+        template = template.replace(/\[lien\]/g, relation);
+        template = template.replace(/\[souvenir\]/g, anecdote);
+        template = template.replace(/\[anecdote\]/g, anecdote);
+        template = template.replace(/\[age\]/g, duree);
+        template = template.replace(/\[duree\]/g, duree);
+        template = template.replace(/\[moment_difficile\]/g, momentDifficile);
+        template = template.replace(/\[benediction\]/g, benediction);
 
-        // Promotion / Événement
-        template = template.replace(/\[nom_produit\]/g, data['pro-nom'] || 'l\'événement');
-        template = template.replace(/\[type\]/g, data['pro-type'] || 'le projet');
-        template = template.replace(/\[point1\]/g, data['pro-point1'] || 'innovant');
-        template = template.replace(/\[point2\]/g, data['pro-point2'] || 'unique');
-        template = template.replace(/\[point3\]/g, data['pro-point3'] || 'incroyable');
-        template = template.replace(/\[lieu\]/g, data['pro-lieu'] || 'ici');
-        template = template.replace(/\[date\]/g, data['pro-date'] || 'bientôt');
-        template = template.replace(/\[public\]/g, data['pro-public'] || 'tout le monde');
-        template = template.replace(/\[action\]/g, data['pro-action'] || 'rejoignez-nous');
-
-        // Louange et Adoration
-        template = template.replace(/\[nom_de_dieu\]/g, data['ado-nom'] || 'Seigneur');
-        template = template.replace(/\[attribut1\]/g, data['ado-attribut1'] || 'Bon');
-        template = template.replace(/\[attribut2\]/g, data['ado-attribut2'] || 'Fidèle');
-        template = template.replace(/\[attribut3\]/g, data['ado-attribut3'] || 'Puissant');
-        template = template.replace(/\[prenom\]/g, data['ado-prenom'] || '');
-        template = template.replace(/\[situation\]/g, data['ado-situation'] || '');
-        template = template.replace(/\[verset\]/g, data['ado-verset'] ? `(${data['ado-verset']})` : '');
-
-        // Nettoyage des lignes vides ou des virgules orphelines
+        // Nettoyage des ponctuations et espaces orphelins
         template = template.replace(/, ,/g, ',');
         template = template.replace(/ \./g, '.');
         
@@ -65,8 +46,37 @@ function fillTemplate(template, data, occasion) {
     }
 }
 
+function buildFallbackLyrics(data, occasion) {
+    const nom = data.nom || data.cible || 'mon ami(e)';
+    const relation = data.relation || 'proche';
+    const anecdote = data.anecdote || data.souvenir || 'nos beaux moments';
+    const detail = data.detail || data.histoire || 'un souvenir unique';
+
+    return `[Couplet 1]
+Les jours passent et je repense à toi
+${nom}, mon ${relation}, t'es toujours là
+${anecdote}, un souvenir gravé en moi
+Rien ne pourra effacer tes pas
+
+[Refrain]
+C'est pour toi que résonne cette mélodie
+Pour célébrer notre histoire et la vie
+Que la musique apporte sa douceur
+${nom}, tu fais mon bonheur
+
+[Couplet 2]
+On avance ensemble sur le chemin
+${detail}, la main dans la main
+Les moments partagés restent au présent
+Tu es là dans mes pensées à chaque instant
+
+[Outro]
+Merci d'être là, tout simplement
+${nom}, cette chanson est pour toi maintenant`;
+}
+
 module.exports = async (req, res) => {
-    // Activer CORS
+    // CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -77,50 +87,38 @@ module.exports = async (req, res) => {
     }
 
     try {
-        const data = req.body;
-        const occasion = data.occasion;
+        const data = req.body || {};
+        const occasion = (data.occasion || 'amour').toLowerCase();
 
-        // VÉRIFICATION : Si l'occasion fait bien partie de nos 5 catégories
-        if (ALLOWED_OCCASIONS.includes(occasion)) {
-            let templates;
-            
-            // On charge le bon fichier qui contient tes 50 textes
-            switch (occasion) {
-                case 'amour':
-                    templates = require('./templates/amour');
-                    break;
-                case 'anniversaire':
-                    templates = require('./templates/anniversaire');
-                    break;
-                case 'hommage':
-                    templates = require('./templates/hommage');
-                    break;
-                case 'promotion':
-                    templates = require('./templates/promotion');
-                    break;
-                case 'adoration':
-                    templates = require('./templates/adoration');
-                    break;
+        let templates = null;
+        
+        // Charger le fichier de templates de l'occasion si existant
+        try {
+            const templatePath = path.join(__dirname, 'templates', `${occasion}.js`);
+            if (fs.existsSync(templatePath)) {
+                templates = require(templatePath);
             }
-
-            // La mécanique magique : on choisit un nombre au hasard entre 0 et 49
-            const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
-            
-            // On injecte les mots de l'utilisateur dans le texte
-            const finalLyrics = fillTemplate(randomTemplate, data, occasion);
-
-            // On renvoie le résultat propre
-            return res.status(200).json({ lyrics: finalLyrics });
-            
-        } else {
-            // Si l'occasion n'existe pas, on bloque (sécurité)
-            return res.status(400).json({ error: 'Occasion non valide.' });
+        } catch(e) {
+            console.log(`Pas de fichier de template pour ${occasion}, utilisation du fallback.`);
         }
 
+        let finalLyrics = "";
+
+        if (templates && Array.isArray(templates) && templates.length > 0) {
+            // Tirage aléatoire parmi les templates rédigés
+            const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
+            finalLyrics = fillTemplate(randomTemplate, data);
+        } else {
+            // Fallback propre structuré avec couplets/refrain
+            finalLyrics = buildFallbackLyrics(data, occasion);
+        }
+
+        return res.status(200).json({ lyrics: finalLyrics });
+        
     } catch (error) {
-        console.error('Erreur interne:', error);
+        console.error('Erreur interne generate-lyrics:', error);
         return res.status(500).json({ 
-            error: 'Erreur lors de la génération du texte',
+            error: 'Erreur lors de la génération des paroles',
             details: error.message 
         });
     }
