@@ -7,12 +7,20 @@ function fillTemplate(template, data) {
     if (!template) return '';
 
     try {
-        const nom = data.nom || data.cible || data.target || data['amour-prenom'] || data['anniv-prenom'] || data['hommage-nom'] || data['adoration-prenom'] || data['adoration-nom'] || data['mariage-prenom'] || 'Seigneur';
-        const relation = data.relation || data['amour-surnom'] || data['hommage-lien'] || data['mariage-surnom'] || 'mon appui';
-        const anecdote = data.anecdote || data.souvenir || data.histoire || data['amour-souvenir'] || data['anniv-souvenir'] || data['adoration-temoignage'] || data['adoration-anecdote'] || 'ton amour dans ma vie';
+        const nom = data.nom || data.cible || data.target || data['amour-prenom'] || data['anniv-prenom'] || data['hommage-nom'] || data['adoration-prenom'] || data['adoration-nom'] || data['mariage-prenom'] || data['promo-nom'] || 'cher client';
+        const relation = data.relation || data['amour-surnom'] || data['hommage-lien'] || data['mariage-surnom'] || data['anniv-relation'] || 'partenaire';
+        const anecdote = data.anecdote || data.souvenir || data.histoire || data['amour-souvenir'] || data['anniv-souvenir'] || data['adoration-temoignage'] || data['promo-anecdote'] || 'un concept unique';
         const duree = data.duree || data.duree_relation || data.age || data['anniv-age'] || 'des années';
-        const momentDifficile = data.moment_difficile || data.momentDifficile || data['adoration-epreuve'] || data['adoration-moment'] || 'la tempête';
-        const benediction = data.benediction || data['adoration-benediction'] || data['adoration-grace'] || 'tes bienfaits';
+        const momentDifficile = data.moment_difficile || data.momentDifficile || data['adoration-epreuve'] || 'la tempête';
+        const benediction = data.benediction || data['adoration-benediction'] || 'tes bienfaits';
+        
+        // Champs spécifiques à la promotion
+        const produit = data.produit || data.service || data.evenement || data['promo-produit'] || data['promo-service'] || 'notre offre';
+        const argument = data.argument || data.avantage || data.benefice || data['promo-argument'] || 'une qualité exceptionnelle';
+        const cta = data.cta || data.action || data['promo-cta'] || 'clique ici sans tarder';
+        const objectif = data.objectif || data['promo-objectif'] || 'notre défi';
+        const succes = data.succes || data['promo-succes'] || 'notre réussite';
+        const hashtag = data.hashtag || data['promo-hashtag'] || '#NovaTempo';
 
         // Remplacement des balises entre accolades {}
         template = template.replace(/\{NOM\}/g, nom);
@@ -21,6 +29,15 @@ function fillTemplate(template, data) {
         template = template.replace(/\{DUREE_RELATION\}/g, duree);
         template = template.replace(/\{MOMENT_DIFFICILE\}/g, momentDifficile);
         template = template.replace(/\{BENEDICTION\}/g, benediction);
+
+        template = template.replace(/\{PRODUIT\}/g, produit);
+        template = template.replace(/\{SERVICE\}/g, produit);
+        template = template.replace(/\{EVENEMENT\}/g, produit);
+        template = template.replace(/\{ARGUMENT\}/g, argument);
+        template = template.replace(/\{CTA\}/g, cta);
+        template = template.replace(/\{OBJECTIF\}/g, objectif);
+        template = template.replace(/\{SUCCES\}/g, succes);
+        template = template.replace(/\{HASHTAG\}/g, hashtag);
 
         // Remplacement des balises secondaires entre crochets []
         template = template.replace(/\[prenom_destinataire\]/g, nom);
@@ -34,6 +51,8 @@ function fillTemplate(template, data) {
         template = template.replace(/\[duree\]/g, duree);
         template = template.replace(/\[moment_difficile\]/g, momentDifficile);
         template = template.replace(/\[benediction\]/g, benediction);
+        template = template.replace(/\[produit\]/g, produit);
+        template = template.replace(/\[cta\]/g, cta);
 
         // Nettoyage des ponctuations et espaces orphelins
         template = template.replace(/, ,/g, ',');
@@ -47,10 +66,10 @@ function fillTemplate(template, data) {
 }
 
 function buildFallbackLyrics(data, occasion) {
-    const nom = data.nom || data.cible || 'mon ami(e)';
+    const nom = data.nom || data.cible || 'ami(e)';
     const relation = data.relation || 'proche';
     const anecdote = data.anecdote || data.souvenir || 'nos beaux moments';
-    const detail = data.detail || data.histoire || 'un souvenir unique';
+    const detail = data.detail || data.histoire || 'un moment unique';
 
     return `[Couplet 1]
 Les jours passent et je repense à toi
