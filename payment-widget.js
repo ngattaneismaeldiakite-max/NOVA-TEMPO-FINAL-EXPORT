@@ -118,9 +118,9 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         </div>
     `;
-    document.body.insertAdjacentHTML('beforeend', paymentHTML);
+    document.head.insertAdjacentHTML('beforeend', paymentCSS);
     
-    // VERIFICATION DES PARAMS DE RETOUR APRES PAIEMENT
+    // GESTION DU RETOUR DE PAIEMENT APRES REDIRECTION
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status') || urlParams.get('payment');
     const plan = urlParams.get('plan');
@@ -128,9 +128,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (status === 'failed' || status === 'cancelled' || status === 'declined' || errReason) {
         showPaymentErrorModal(errReason ? `Échec : ${errReason}` : "Solde Mobile Money insuffisant ou transaction annulée. Aucun montant n'a été débité.");
+        sessionStorage.removeItem('nova_in_payment');
         window.history.replaceState({}, document.title, window.location.pathname);
     } else if (status === 'success' || status === 'completed') {
         showPaymentSuccessModal();
+        sessionStorage.removeItem('nova_in_payment');
         window.history.replaceState({}, document.title, window.location.pathname);
     } else if (plan && OFFERS[plan]) {
         openPaymentModal(plan);
@@ -183,10 +185,12 @@ window.resetAndRetryPayment = function() {
 };
 
 window.closePaymentModal = function() {
+    sessionStorage.removeItem('nova_in_payment');
     document.getElementById('payment-modal').style.display = 'none';
 };
 
 window.closePaymentModalAndRefresh = function() {
+    sessionStorage.removeItem('nova_in_payment');
     closePaymentModal();
     location.reload(); 
 };
@@ -204,6 +208,9 @@ window.processPayment = async function() {
         return;
     }
     
+    // Marquer l'action de paiement pour protéger la session utilisateur
+    sessionStorage.setItem('nova_in_payment', 'true');
+
     const btn = document.getElementById('pay-btn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-inline"></span> Initialisation GeniusPay...';
