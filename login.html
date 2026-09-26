@@ -8,9 +8,9 @@
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Script Supabase (Lien sécurisé) -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+
     <style>
         :root {
             --bg-dark: #06060A; --card-bg: #111118;
@@ -19,9 +19,9 @@
         }
         body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; display: flex; flex-direction: column; }
         
-        nav { padding: 1.5rem 4rem; position: absolute; width: 100%; box-sizing: border-box; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; }
-        .logo i { color: var(--neon-lime); }
+        nav { padding: 1.5rem 4rem; position: absolute; width: 100%; box-sizing: border-box; z-index: 10; }
+        .logo { font-size: 1.4rem; font-weight: 900; color: var(--text-light); text-decoration: none; display: flex; align-items: center; gap: 0.75rem; }
+        .logo img { height: 38px; width: auto; border-radius: 6px; object-fit: contain; }
         
         .auth-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 2rem; position: relative; }
         
@@ -30,141 +30,116 @@
         .auth-card { background: rgba(17, 17, 24, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 3rem; width: 100%; max-width: 450px; z-index: 1; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         .auth-card h2 { font-size: 2rem; text-transform: uppercase; margin-top: 0; margin-bottom: 2rem; text-align: center; color: var(--neon-lime); }
         
-        /* Bouton Google */
         .btn-google { width: 100%; padding: 1rem; background: #FFFFFF; color: #000000; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 1.5rem; transition: transform 0.3s; }
         .btn-google:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255,255,255,0.2); }
         .btn-google i { font-size: 1.2rem; }
         
-        /* Séparateur OU */
         .divider { display: flex; align-items: center; margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
         .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .divider span { padding: 0 15px; }
-
-        .form-group { margin-bottom: 1.5rem; position: relative; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
-        .form-group input { width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-family: inherit; font-size: 1rem; box-sizing: border-box; transition: all 0.3s; }
-        .form-group input:focus { outline: none; border-color: var(--neon-lime); background: rgba(212, 255, 0, 0.05); }
+        .divider span { padding: 0 10px; }
         
-        .toggle-password { position: absolute; right: 15px; top: 40px; color: var(--text-muted); cursor: pointer; font-size: 1.2rem; transition: color 0.3s; }
-        .toggle-password:hover { color: var(--neon-lime); }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); }
+        .form-group input { width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; font-family: inherit; font-size: 1rem; box-sizing: border-box; outline: none; transition: border-color 0.3s; }
+        .form-group input:focus { border-color: var(--neon-lime); }
         
-        .btn-submit { width: 100%; padding: 1.2rem; background: var(--neon-lime); color: var(--bg-dark); border: none; border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; margin-top: 1rem; transition: transform 0.3s; }
-        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(212, 255, 0, 0.2); }
+        .btn-submit { width: 100%; padding: 1rem; background: var(--neon-lime); color: var(--bg-dark); border: none; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; text-transform: uppercase; margin-top: 1rem; transition: all 0.3s; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(212, 255, 0, 0.4); }
         
-        .error-msg { color: var(--neon-pink); background: rgba(255,0,102,0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; display: none; font-size: 0.9rem; border: 1px solid rgba(255,0,102,0.3); }
-        .footer-link { text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.95rem; }
-        .footer-link a { color: var(--neon-lime); text-decoration: none; font-weight: 700; }
+        .auth-footer { text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.9rem; }
+        .auth-footer a { color: var(--neon-lime); text-decoration: none; font-weight: 700; }
+        .auth-footer a:hover { text-decoration: underline; }
+        
+        #error-msg { background: rgba(255, 0, 102, 0.2); border: 1px solid var(--neon-pink); color: #fff; padding: 0.8rem; border-radius: 8px; font-size: 0.9rem; margin-bottom: 1rem; display: none; text-align: center; }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Nova Tempo">
+            NOVA TEMPO
+        </a>
     </nav>
 
     <div class="auth-container">
         <div class="bg-image"></div>
         <div class="auth-card">
-            <h2>Connexion</h2>
+            <h2>Bon retour !</h2>
             
-            <div id="error-message" class="error-msg"></div>
+            <div id="error-msg"></div>
 
-            <button type="button" class="btn-google" onclick="loginGoogle()">
+            <button type="button" class="btn-google" onclick="loginWithGoogle()">
                 <i class="fab fa-google"></i> Continuer avec Google
             </button>
             
             <div class="divider"><span>ou avec votre email</span></div>
-
-            <form id="login-form" onsubmit="loginEmail(event)">
+            
+            <form id="login-form" onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label>Adresse Email</label>
                     <input type="email" id="email" required placeholder="nom@exemple.com">
                 </div>
-                
                 <div class="form-group">
                     <label>Mot de passe</label>
-                    <input type="password" id="password" required placeholder="Votre mot de passe">
-                    <i class="fas fa-eye toggle-password" id="eye-icon" onclick="togglePassword()"></i>
+                    <input type="password" id="password" required placeholder="••••••••">
                 </div>
-                
                 <button type="submit" class="btn-submit" id="submit-btn">Se connecter</button>
             </form>
             
-            <div class="footer-link">
-                Pas encore de compte ? <a href="signup.html">Créer un compte</a>
+            <div class="auth-footer">
+                Vous n'avez pas de compte ? <a href="signup.html">Créer un compte</a>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT CORRIGÉ SANS ERREUR DE REDIRECTION -->
     <script>
-        // 1. Initialisation Supabase
-        const supabaseUrl = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
-        const supabaseKey = 'sb_publishable_DrMH4qQCF4s1KyoPjvlJeA_puXHR_rr';
-        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-        // 2. Redirection automatique si déjà connecté
-        window.addEventListener('DOMContentLoaded', async () => {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) {
-                window.location.href = 'studio.html';
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (window.supabaseClient) {
+                const { data: { session } } = await window.supabaseClient.auth.getSession();
+                if (session) {
+                    window.location.href = 'studio.html';
+                }
             }
         });
 
-        // 3. Masquer / afficher le mot de passe
-        function togglePassword() {
-            const pwd = document.getElementById('password');
-            const icon = document.getElementById('eye-icon');
-            
-            if (pwd.type === 'password') {
-                pwd.type = 'text';
-                icon.className = 'fas fa-eye-slash toggle-password';
-            } else {
-                pwd.type = 'password';
-                icon.className = 'fas fa-eye toggle-password';
-            }
-        }
-
-        // 4. Connexion avec Google
-        async function loginGoogle() {
-            const { data, error } = await supabaseClient.auth.signInWithOAuth({
-                provider: 'google',
-                options: {
-                    redirectTo: window.location.origin + '/studio.html'
-                }
-            });
-            
-            if (error) {
-                alert("Erreur Google : " + error.message + "\nAssurez-vous d'avoir activé Google dans Supabase.");
-            }
-        }
-
-        // 5. Connexion par Email & Mot de Passe
-        async function loginEmail(event) {
-            event.preventDefault(); 
-            
-            const btn = document.getElementById('submit-btn');
-            const errorDiv = document.getElementById('error-message');
-            
-            btn.textContent = 'Connexion...';
-            btn.disabled = true;
-            errorDiv.style.display = 'none';
-
+        async function handleLogin(e) {
+            e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const btn = document.getElementById('submit-btn');
+            const errorDiv = document.getElementById('error-msg');
+            
+            btn.disabled = true;
+            btn.textContent = "Connexion en cours...";
+            errorDiv.style.display = 'none';
 
-            const { data, error } = await supabaseClient.auth.signInWithPassword({
-                email: email,
-                password: password
-            });
+            try {
+                const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password,
+                });
 
-            if (error) {
+                if (error) throw error;
+                window.location.href = 'studio.html';
+            } catch (err) {
+                errorDiv.textContent = err.message || "Erreur de connexion";
                 errorDiv.style.display = 'block';
-                errorDiv.textContent = 'Email ou mot de passe incorrect.';
-                btn.textContent = 'Se connecter';
                 btn.disabled = false;
-            } else {
-                window.location.href = 'studio.html'; 
+                btn.textContent = "Se connecter";
+            }
+        }
+
+        async function loginWithGoogle() {
+            try {
+                const redirectTarget = window.location.origin + '/studio.html';
+                const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: { redirectTo: redirectTarget }
+                });
+                if (error) throw error;
+            } catch (err) {
+                alert("Erreur Google Auth: " + err.message);
             }
         }
     </script>
