@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova Tempo - Composez vos émotions</title>
     
-    <!-- Polices et Icones -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=instrument-serif@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* THEME DARK NEON */
         :root {
             --bg-dark: #06060A;
             --card-bg: #111118;
@@ -23,9 +21,8 @@
 
         body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); overflow-x: hidden; }
 
-        /* NAVIGATION UNIFIÉE */
         nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; position: absolute; top: 0; left: 0; right: 0; z-index: 100; box-sizing: border-box; }
-        .logo { font-size: 1.4rem; font-weight: 900; color: var(--text-light); text-decoration: none; letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.75rem; }
+        .logo { font-size: 1.4rem; font-weight: 900; color: var(--text-light); text-decoration: none; display: flex; align-items: center; gap: 0.75rem; }
         .logo img { height: 38px; width: auto; border-radius: 6px; object-fit: contain; }
         .nav-links { display: flex; gap: 2rem; align-items: center; }
         .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.3s; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
@@ -36,7 +33,6 @@
         .btn-signup { background-color: var(--neon-lime); color: var(--bg-dark); box-shadow: 0 0 15px rgba(212, 255, 0, 0.2); }
         .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(212, 255, 0, 0.4); }
 
-        /* HERO SECTION RECONSTRUITE & HARMONISÉE */
         .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 8rem 2rem 4rem 2rem; box-sizing: border-box; }
         .hero-bg { position: absolute; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; filter: blur(3px) brightness(0.85); transform: scale(1.02); z-index: 0; clip-path: inset(0); }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(6,6,10,0.85) 0%, rgba(6,6,10,0.7) 60%, #06060A 100%); z-index: 1; }
@@ -46,7 +42,6 @@
         .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5.2rem; }
         .hero-text p { font-size: 1.25rem; color: rgba(255,255,255,0.9); margin: 0 auto; max-width: 650px; line-height: 1.6; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
 
-        /* POSITIONNEMENT STABLE DES DISQUES */
         .vinyl-showcase { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 1rem; margin-bottom: 2rem; }
         .vinyl-text-new { color: var(--text-light); font-size: 3rem; font-family: 'Instrument Serif', serif; font-style: italic; text-align: center; margin-bottom: 2rem; text-shadow: 0 4px 20px rgba(0,0,0,0.9); }
         .vinyl-text-new span { color: var(--neon-lime); font-family: 'Satoshi', sans-serif; font-weight: 900; font-style: normal; font-size: 2rem; text-transform: uppercase; display: inline-block; margin-left: 10px; }
@@ -80,7 +75,6 @@
             100% { box-shadow: 0 0 50px rgba(212, 255, 0, 0.9), 0 0 25px rgba(255, 0, 102, 0.4); transform: rotate(-90deg) scale(1.08); } 
         }
 
-        /* SECTION OCCASIONS */
         .occasions-section { padding: 5rem 4rem 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
         .section-title { font-size: 3rem; font-weight: 900; text-align: center; margin-bottom: 1rem; text-transform: uppercase; }
         .section-subtitle { text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-bottom: 3.5rem; }
@@ -92,15 +86,6 @@
         .occ-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,6,10,0.9) 0%, rgba(6,6,10,0.1) 100%); display: flex; align-items: flex-end; padding: 2rem; }
         .occ-overlay h3 { margin: 0; color: var(--text-light); font-size: 1.5rem; font-weight: 800; text-transform: uppercase; }
 
-        /* MODALS */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1000; }
-        .modal:target { opacity: 1; visibility: visible; }
-        .modal-content { background: var(--card-bg); padding: 3rem; border-radius: 24px; width: 90%; max-width: 650px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 85vh; overflow-y: auto; }
-        .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--text-muted); text-decoration: none; font-size: 1.5rem; }
-        .modal-close:hover { color: var(--neon-lime); }
-        .modal h2 { margin-top: 0; color: var(--neon-lime); text-transform: uppercase; font-size: 2rem; margin-bottom: 1.5rem; }
-
-        /* RESPONSIVE DESIGN */
         @media (max-width: 1100px) {
             nav { position: relative; padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: var(--bg-dark); }
             .hero { padding: 6rem 2rem 3rem 2rem; min-height: auto; }
@@ -140,8 +125,13 @@
 
     <nav>
         <a href="index.html" class="logo">
+            <div class="logo-eq">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
             <img src="logo.png" alt="Nova Tempo">
-            NOVA TEMPO
         </a>
         <div class="nav-links">
             <a href="#modal-tarifs">Tarifs</a>
@@ -202,71 +192,12 @@
         </div>
     </section>
 
-    <!-- MODAL TARIFS -->
-    <div id="modal-tarifs" class="modal">
-        <div class="modal-content">
-            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
-            <h2>Nos Tarifs</h2>
-            <p>Un modèle simple. Haute qualité, téléchargement inclus.</p>
-            <ul style="list-style:none; padding:0; margin-top: 2rem;">
-                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Essai (1 Chanson) :</strong> 1 500 FCFA</li>
-                <li style="margin-bottom:1rem; padding:1rem; background:rgba(212, 255, 0, 0.05); border:1px solid var(--neon-lime); border-radius:12px;"><strong>Pack Duo (Recommandé) :</strong> 2 700 FCFA (2 chansons)</li>
-                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Pack Collection :</strong> 6 000 FCFA (5 chansons)</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- MODAL FAQ ACCORDEON -->
-    <div id="modal-faq" class="modal">
-        <div class="modal-content">
-            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
-            <h2>Questions Fréquentes</h2>
-            
-            <div class="faq-category"><i class="fas fa-music"></i> Comment ça marche</div>
-            <details>
-                <summary>Comment je crée ma chanson ?</summary>
-                <div class="faq-answer">Rien de compliqué. Tu choisis l'occasion (anniversaire, amour, hommage...), tu sélectionnes un style musical, tu nous racontes en quelques mots qui est la personne et ce que tu veux lui dire — et NovaTempo s'occupe du reste : paroles et musique générées en quelques minutes.</div>
-            </details>
-            <details>
-                <summary>Combien de temps prend la génération ?</summary>
-                <div class="faq-answer">La génération de la chanson complète prend généralement entre 1 et 3 minutes. Tu recevras une notification dès qu'elle est prête pour l'écouter et la télécharger.</div>
-            </details>
-
-            <div class="faq-category"><i class="fas fa-credit-card"></i> Paiements & Crédits</div>
-            <details>
-                <summary>Quels sont les moyens de paiement acceptés ?</summary>
-                <div class="faq-answer">Nous acceptons les paiements Mobile Money (Wave, Orange Money, MTN MoMo, Moov Money) en toute sécurité via GeniusPay.</div>
-            </details>
-        </div>
-    </div>
-
-    <!-- MODAL TÉMOIGNAGES -->
-    <div id="modal-temoignages" class="modal">
-        <div class="modal-content">
-            <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
-            <h2>Témoignages</h2>
-            <div style="display:flex; flex-direction:column; gap:1.5rem; margin-top:1.5rem;">
-                <div style="background:rgba(255,255,255,0.04); padding:1.5rem; border-radius:16px;">
-                    <div style="color:var(--neon-lime); margin-bottom:0.5rem;">★★★★★</div>
-                    <p style="margin:0 0 0.5rem 0; font-style:italic;">"J'ai fait une chanson pour l'anniversaire de ma mère. Elle a pleuré de joie en l'écoutant. Un souvenir inestimable !"</p>
-                    <small style="color:var(--text-muted);">- Marc A.</small>
-                </div>
-                <div style="background:rgba(255,255,255,0.04); padding:1.5rem; border-radius:16px;">
-                    <div style="color:var(--neon-lime); margin-bottom:0.5rem;">★★★★★</div>
-                    <p style="margin:0 0 0.5rem 0; font-style:italic;">"La qualité de la voix et des paroles est bluffante. Mes invités au mariage n'en revenaient pas."</p>
-                    <small style="color:var(--text-muted);">- Sarah & Kévin</small>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         let currentAudio = null;
         let currentBtn = null;
 
         function toggleAudio(id, btn) {
             const audio = document.getElementById(id);
-            
             if (currentAudio && currentAudio !== audio) {
                 currentAudio.pause();
                 currentAudio.currentTime = 0;
