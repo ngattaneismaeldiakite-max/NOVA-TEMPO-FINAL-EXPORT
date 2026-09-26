@@ -23,10 +23,10 @@
 
         body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); overflow-x: hidden; }
 
-        /* NAVIGATION */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; position: absolute; top: 0; left: 0; right: 0; z-index: 100; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; }
-        .logo i { color: var(--neon-lime); }
+        /* NAVIGATION UNIFIÉE */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; position: absolute; top: 0; left: 0; right: 0; z-index: 100; box-sizing: border-box; }
+        .logo { font-size: 1.4rem; font-weight: 900; color: var(--text-light); text-decoration: none; letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.75rem; }
+        .logo img { height: 38px; width: auto; border-radius: 6px; object-fit: contain; }
         .nav-links { display: flex; gap: 2rem; align-items: center; }
         .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.3s; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .nav-links a:hover { color: var(--neon-lime); }
@@ -36,28 +36,28 @@
         .btn-signup { background-color: var(--neon-lime); color: var(--bg-dark); box-shadow: 0 0 15px rgba(212, 255, 0, 0.2); }
         .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(212, 255, 0, 0.4); }
 
-        /* HERO SECTION */
-        .hero { min-height: 100vh; display: flex; align-items: center; padding: 0 4rem; position: relative; }
-        .hero-bg { position: absolute; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; filter: blur(3px) brightness(0.9); transform: scale(1.02); z-index: 0; clip-path: inset(0); }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, #06060A 0%, rgba(6,6,10,0.85) 45%, rgba(6,6,10,0.2) 100%); z-index: 1; }
+        /* HERO SECTION RECONSTRUITE & HARMONISÉE */
+        .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 8rem 2rem 4rem 2rem; box-sizing: border-box; }
+        .hero-bg { position: absolute; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; filter: blur(3px) brightness(0.85); transform: scale(1.02); z-index: 0; clip-path: inset(0); }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(6,6,10,0.85) 0%, rgba(6,6,10,0.7) 60%, #06060A 100%); z-index: 1; }
         
-        .hero-content { display: block; width: 100%; max-width: 1400px; margin: 0 auto; margin-bottom: 25rem; position: relative; z-index: 2; }
-        .hero-text { max-width: 700px; }
-        .hero-text h1 { font-size: 5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5.5rem; }
-        .hero-text p { font-size: 1.25rem; color: rgba(255,255,255,0.9); margin-bottom: 0; max-width: 550px; line-height: 1.6; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
+        .hero-content { position: relative; z-index: 2; width: 100%; max-width: 950px; text-align: center; margin-bottom: 3rem; margin-top: 2rem; }
+        .hero-text h1 { font-size: 4.8rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.2rem; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .hero-text h1 span { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--neon-lime); text-transform: lowercase; font-weight: 400; font-size: 5.2rem; }
+        .hero-text p { font-size: 1.25rem; color: rgba(255,255,255,0.9); margin: 0 auto; max-width: 650px; line-height: 1.6; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
 
-        /* POSITIONNEMENT DES DISQUES */
-        .vinyl-showcase { position: absolute; bottom: -6rem; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .vinyl-text-new { color: var(--text-light); font-size: 3.5rem; font-family: 'Instrument Serif', serif; font-style: italic; text-align: center; margin-bottom: 2rem; text-shadow: 0 4px 20px rgba(0,0,0,0.9); }
-        .vinyl-text-new span { color: var(--neon-lime); font-family: 'Satoshi', sans-serif; font-weight: 900; font-style: normal; font-size: 2.2rem; text-transform: uppercase; display: inline-block; margin-left: 10px; }
-        .vinyl-container { display: flex; gap: 3rem; align-items: center; }
+        /* POSITIONNEMENT STABLE DES DISQUES */
+        .vinyl-showcase { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 1rem; margin-bottom: 2rem; }
+        .vinyl-text-new { color: var(--text-light); font-size: 3rem; font-family: 'Instrument Serif', serif; font-style: italic; text-align: center; margin-bottom: 2rem; text-shadow: 0 4px 20px rgba(0,0,0,0.9); }
+        .vinyl-text-new span { color: var(--neon-lime); font-family: 'Satoshi', sans-serif; font-weight: 900; font-style: normal; font-size: 2rem; text-transform: uppercase; display: inline-block; margin-left: 10px; }
         
-        .vinyl { width: 240px; height: 240px; border-radius: 50%; background-color: #1a1a1a; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; position: relative; box-shadow: 0 15px 50px rgba(0,0,0,0.9); cursor: pointer; transition: transform 0.3s, border-color 0.3s; overflow: hidden; }
-        .vinyl.middle { width: 320px; height: 320px; border-width: 3px; }
+        .vinyl-container { display: flex; gap: 2.5rem; align-items: center; justify-content: center; flex-wrap: wrap; }
         
-        .vinyl::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); border-radius: 50%; z-index: 0; transition: background 0.3s; }
-        .vinyl:hover::after { background: rgba(0,0,0,0.2); }
+        .vinyl { width: 230px; height: 230px; border-radius: 50%; background-color: #1a1a1a; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.25); display: flex; justify-content: center; align-items: center; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.8); cursor: pointer; transition: transform 0.3s, border-color 0.3s; overflow: hidden; }
+        .vinyl.middle { width: 300px; height: 300px; border-width: 3px; }
+        
+        .vinyl::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.35); border-radius: 50%; z-index: 0; transition: background 0.3s; }
+        .vinyl:hover::after { background: rgba(0,0,0,0.15); }
         .vinyl:hover { border-color: var(--neon-lime); transform: scale(1.05); }
         
         .vinyl.rotated-left { transform: rotate(-90deg); }
@@ -67,94 +67,82 @@
 
         .vinyl.playing { border-color: var(--neon-lime); animation: pulseNeon 1.5s infinite alternate; }
         
-        .vinyl::before { content: ''; position: absolute; width: 55px; height: 55px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 15px rgba(0,0,0,0.6); }
+        .vinyl::before { content: ''; position: absolute; width: 50px; height: 50px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 15px rgba(0,0,0,0.6); }
         .vinyl.playing::before { background: var(--neon-pink); }
-        .vinyl i { color: #000; z-index: 2; font-size: 1.8rem; margin-left: 5px; }
+        .vinyl i { color: #000; z-index: 2; font-size: 1.6rem; margin-left: 4px; }
         
         @keyframes pulseNeon { 
             0% { box-shadow: 0 0 20px rgba(212, 255, 0, 0.4); transform: scale(1.05); }
-            100% { box-shadow: 0 0 60px rgba(212, 255, 0, 0.9), 0 0 30px rgba(255, 0, 102, 0.4); transform: scale(1.08); } 
+            100% { box-shadow: 0 0 50px rgba(212, 255, 0, 0.9), 0 0 25px rgba(255, 0, 102, 0.4); transform: scale(1.08); } 
         }
         @keyframes pulseNeonRotated { 
             0% { box-shadow: 0 0 20px rgba(212, 255, 0, 0.4); transform: rotate(-90deg) scale(1.05); }
-            100% { box-shadow: 0 0 60px rgba(212, 255, 0, 0.9), 0 0 30px rgba(255, 0, 102, 0.4); transform: rotate(-90deg) scale(1.08); } 
+            100% { box-shadow: 0 0 50px rgba(212, 255, 0, 0.9), 0 0 25px rgba(255, 0, 102, 0.4); transform: rotate(-90deg) scale(1.08); } 
         }
 
         /* SECTION OCCASIONS */
-        .occasions-section { padding: 14rem 4rem 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
+        .occasions-section { padding: 5rem 4rem 6rem 4rem; background: var(--bg-dark); max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
         .section-title { font-size: 3rem; font-weight: 900; text-align: center; margin-bottom: 1rem; text-transform: uppercase; }
-        .section-subtitle { text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-bottom: 4rem; }
+        .section-subtitle { text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-bottom: 3.5rem; }
         .occ-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
-        .occ-card { width: 100%; max-width: 320px; height: 280px; position: relative; border-radius: 20px; overflow: hidden; text-decoration: none; border: 1px solid rgba(255,255,255,0.05); transition: all 0.4s ease; }
+        .occ-card { width: 100%; max-width: 320px; height: 280px; position: relative; border-radius: 20px; overflow: hidden; text-decoration: none; border: 1px solid rgba(255,255,255,0.05); transition: all 0.4s ease; background-color: #111118; }
         .occ-card:hover { transform: translateY(-10px); border-color: var(--neon-lime); box-shadow: 0 15px 30px rgba(212, 255, 0, 0.15); }
-        .occ-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .occ-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
         .occ-card:hover img { transform: scale(1.05); }
         .occ-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,6,10,0.9) 0%, rgba(6,6,10,0.1) 100%); display: flex; align-items: flex-end; padding: 2rem; }
         .occ-overlay h3 { margin: 0; color: var(--text-light); font-size: 1.5rem; font-weight: 800; text-transform: uppercase; }
 
         /* MODALS */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1000; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 1000; }
         .modal:target { opacity: 1; visibility: visible; }
         .modal-content { background: var(--card-bg); padding: 3rem; border-radius: 24px; width: 90%; max-width: 650px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 85vh; overflow-y: auto; }
         .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--text-muted); text-decoration: none; font-size: 1.5rem; }
         .modal-close:hover { color: var(--neon-lime); }
         .modal h2 { margin-top: 0; color: var(--neon-lime); text-transform: uppercase; font-size: 2rem; margin-bottom: 1.5rem; }
 
-        /* STYLE ACCORDEON FAQ */
-        .faq-category { color: var(--neon-lime); font-size: 1.1rem; margin-top: 2rem; margin-bottom: 1rem; text-transform: uppercase; font-weight: 900; }
-        .faq-category:first-of-type { margin-top: 0; }
-        .faq-category i { margin-right: 8px; }
-        
-        details { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-bottom: 0.8rem; overflow: hidden; transition: all 0.3s; }
-        details:hover { border-color: rgba(212, 255, 0, 0.3); background: rgba(255,255,255,0.05); }
-        summary { padding: 1.2rem; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--text-light); }
-        summary::-webkit-details-marker { display: none; }
-        summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--neon-lime); transition: transform 0.3s; }
-        details[open] summary::after { transform: rotate(180deg); }
-        .faq-answer { padding: 0 1.2rem 1.2rem 1.2rem; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; }
-
         /* RESPONSIVE DESIGN */
         @media (max-width: 1100px) {
             nav { position: relative; padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; background: var(--bg-dark); }
-            .hero { padding: 0 2rem; min-height: calc(100vh - 150px); }
-            .hero-overlay { background: linear-gradient(180deg, rgba(6,6,10,0.6) 0%, #06060A 100%); }
-            .hero-content { margin-bottom: 18rem; margin-top: 1rem; text-align: center; } 
-            .vinyl-showcase { bottom: -4rem; }
+            .hero { padding: 6rem 2rem 3rem 2rem; min-height: auto; }
+            .hero-overlay { background: linear-gradient(180deg, rgba(6,6,10,0.7) 0%, #06060A 100%); }
+            .hero-content { margin-bottom: 2rem; text-align: center; } 
             .hero-text h1 { font-size: 3.5rem; }
             .hero-text h1 span { font-size: 4rem; }
-            .occasions-section { padding: 10rem 2rem 4rem 2rem; }
+            .occasions-section { padding: 4rem 2rem 4rem 2rem; }
             
-            .vinyl-container { gap: 2rem; }
-            .vinyl { width: 160px; height: 160px; }
-            .vinyl.middle { width: 220px; height: 220px; }
-            .vinyl::before { width: 40px; height: 40px; }
-            .vinyl-text-new { font-size: 2.8rem; }
-            .vinyl-text-new span { font-size: 1.8rem; }
+            .vinyl-container { gap: 1.5rem; }
+            .vinyl { width: 150px; height: 150px; }
+            .vinyl.middle { width: 210px; height: 210px; }
+            .vinyl::before { width: 36px; height: 36px; }
+            .vinyl-text-new { font-size: 2.5rem; }
+            .vinyl-text-new span { font-size: 1.6rem; }
         }
         
         @media (max-width: 600px) {
             nav { padding: 1rem; gap: 1.2rem; }
-            .nav-links { gap: 1.5rem; }
-            .hero-content { margin-bottom: 14rem; margin-top: 2rem; }
-            .vinyl-showcase { bottom: -2rem; }
-            .hero-text h1 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 1rem; }
-            .hero-text h1 span { font-size: 3.2rem; }
-            .hero-text p { font-size: 1.1rem; }
+            .nav-links { gap: 1.2rem; }
+            .hero-content { margin-bottom: 2rem; margin-top: 1rem; }
+            .hero-text h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 1rem; }
+            .hero-text h1 span { font-size: 3rem; }
+            .hero-text p { font-size: 1rem; }
             
-            .vinyl-container { gap: 1rem; }
-            .vinyl { width: 110px; height: 110px; }
-            .vinyl.middle { width: 150px; height: 150px; }
-            .vinyl-text-new { font-size: 2rem; margin-bottom: 1rem; }
-            .vinyl-text-new span { font-size: 1.4rem; display: block; margin-left: 0; margin-top: 5px; }
-            .occasions-section { padding: 8rem 1.5rem 4rem 1.5rem; }
-            .occ-card { max-width: 100%; } 
+            .vinyl-container { gap: 0.8rem; }
+            .vinyl { width: 100px; height: 100px; }
+            .vinyl.middle { width: 140px; height: 140px; }
+            .vinyl-text-new { font-size: 1.8rem; margin-bottom: 1rem; }
+            .vinyl-text-new span { font-size: 1.3rem; display: block; margin-left: 0; margin-top: 4px; }
+            .occasions-section { padding: 3rem 1.2rem 4rem 1.2rem; }
+            .occ-card { max-width: 100%; height: 240px; } 
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Nova Tempo">
+            NOVA TEMPO
+        </a>
         <div class="nav-links">
             <a href="#modal-tarifs">Tarifs</a>
             <a href="#modal-faq">FAQ</a>
@@ -162,7 +150,7 @@
         </div>
         <div class="auth-buttons">
             <a href="login.html" class="btn-login">Connexion</a>
-            <a href="studio.html" class="btn-signup">Créer une chanson</a>
+            <a href="signup.html" class="btn-signup">Créer une chanson</a>
         </div>
     </nav>
 
@@ -183,13 +171,13 @@
             </div>
             
             <div class="vinyl-container">
-                <div class="vinyl" onclick="toggleAudio('audio1', this)" style="background-image: url('pour-toi.jpg.png?v=1'); animation-delay: 0s;">
+                <div class="vinyl" onclick="toggleAudio('audio1', this)" style="background-image: url('pour-toi.jpg'); animation-delay: 0s;">
                     <i class="fas fa-play"></i>
                 </div>
-                <div class="vinyl middle rotated-left" onclick="toggleAudio('audio3', this)" style="background-image: url('nova-tempo.jpg.png?v=1'); animation-delay: 0.3s;">
+                <div class="vinyl middle rotated-left" onclick="toggleAudio('audio3', this)" style="background-image: url('nova-tempo.jpg'); animation-delay: 0.3s;">
                     <i class="fas fa-play"></i>
                 </div>
-                <div class="vinyl" onclick="toggleAudio('audio2', this)" style="background-image: url('maman.jpg.png?v=1'); animation-delay: 0.6s;">
+                <div class="vinyl" onclick="toggleAudio('audio2', this)" style="background-image: url('maman.jpg'); animation-delay: 0.6s;">
                     <i class="fas fa-play"></i>
                 </div>
             </div>
@@ -206,11 +194,11 @@
         <p class="section-subtitle">Mariage, anniversaire, réussite, hommage... chaque émotion a sa mélodie.</p>
 
         <div class="occ-grid">
-            <a href="studio.html" class="occ-card"><img src="anniversaire.jpg" alt="Anniversaire"><div class="occ-overlay"><h3>Anniversaire</h3></div></a>
-            <a href="studio.html" class="occ-card"><img src="mariage.jpg" alt="Mariage"><div class="occ-overlay"><h3>Mariage</h3></div></a>
-            <a href="studio.html" class="occ-card"><img src="hommage.jpg" alt="Hommage"><div class="occ-overlay"><h3>Hommage</h3></div></a>
-            <a href="studio.html" class="occ-card"><img src="evenement.jpg" alt="Événement"><div class="occ-overlay"><h3>Événement</h3></div></a>
-            <a href="studio.html" class="occ-card"><img src="adoration.jpg" alt="Adoration"><div class="occ-overlay"><h3>Adoration</h3></div></a>
+            <a href="studio.html" class="occ-card"><img src="anniversaire.jpg" alt="Anniversaire" loading="eager"><div class="occ-overlay"><h3>Anniversaire</h3></div></a>
+            <a href="studio.html" class="occ-card"><img src="mariage.jpg" alt="Mariage" loading="eager"><div class="occ-overlay"><h3>Mariage</h3></div></a>
+            <a href="studio.html" class="occ-card"><img src="hommage.jpg" alt="Hommage" loading="eager"><div class="occ-overlay"><h3>Hommage</h3></div></a>
+            <a href="studio.html" class="occ-card"><img src="evenement.jpg" alt="Événement" loading="eager"><div class="occ-overlay"><h3>Événement</h3></div></a>
+            <a href="studio.html" class="occ-card"><img src="adoration.jpg" alt="Adoration" loading="eager"><div class="occ-overlay"><h3>Adoration</h3></div></a>
         </div>
     </section>
 
@@ -221,9 +209,9 @@
             <h2>Nos Tarifs</h2>
             <p>Un modèle simple. Haute qualité, téléchargement inclus.</p>
             <ul style="list-style:none; padding:0; margin-top: 2rem;">
-                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Unitaire :</strong> 1 000 FCFA (1 création)</li>
-                <li style="margin-bottom:1rem; padding:1rem; background:rgba(212, 255, 0, 0.05); border:1px solid var(--neon-lime); border-radius:12px;"><strong>Pack 3 (Populaire) :</strong> 2 500 FCFA (3 créations)</li>
-                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Pack 5 :</strong> 4 000 FCFA (5 créations)</li>
+                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Essai (1 Chanson) :</strong> 1 500 FCFA</li>
+                <li style="margin-bottom:1rem; padding:1rem; background:rgba(212, 255, 0, 0.05); border:1px solid var(--neon-lime); border-radius:12px;"><strong>Pack Duo (Recommandé) :</strong> 2 700 FCFA (2 chansons)</li>
+                <li style="margin-bottom:1rem; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;"><strong>Pack Collection :</strong> 6 000 FCFA (5 chansons)</li>
             </ul>
         </div>
     </div>
@@ -240,106 +228,73 @@
                 <div class="faq-answer">Rien de compliqué. Tu choisis l'occasion (anniversaire, amour, hommage...), tu sélectionnes un style musical, tu nous racontes en quelques mots qui est la personne et ce que tu veux lui dire — et NovaTempo s'occupe du reste : paroles et musique générées en quelques minutes.</div>
             </details>
             <details>
-                <summary>Combien de temps ça prend ?</summary>
-                <div class="faq-answer">En général entre 1 et 3 minutes pour avoir ta chanson complète, prête à écouter et à télécharger. Le temps peut varier légèrement selon l'affluence.</div>
-            </details>
-            <details>
-                <summary>Je ne sais pas quoi écrire, c'est grave ?</summary>
-                <div class="faq-answer">Pas du tout. Il te suffit de donner un nom, une relation et une anecdote ou un détail. NovaTempo transforme ça en vraies paroles, dans un français simple et vivant.</div>
-            </details>
-            <details>
-                <summary>Puis-je modifier les paroles ?</summary>
-                <div class="faq-answer">Oui, une fois les paroles proposées, tu peux les ajuster à ta guise avant de lancer la génération musicale finale.</div>
+                <summary>Combien de temps prend la génération ?</summary>
+                <div class="faq-answer">La génération de la chanson complète prend généralement entre 1 et 3 minutes. Tu recevras une notification dès qu'elle est prête pour l'écouter et la télécharger.</div>
             </details>
 
-            <div class="faq-category"><i class="fas fa-compact-disc"></i> Styles musicaux</div>
+            <div class="faq-category"><i class="fas fa-credit-card"></i> Paiements & Crédits</div>
             <details>
-                <summary>Quels styles sont disponibles ?</summary>
-                <div class="faq-answer">Afrobeat, Amapiano, Coupé Décalé, Rap, Zouk, Gospel, et d'autres à venir. Chaque style a son ambiance propre.</div>
-            </details>
-            <details>
-                <summary>Puis-je changer de style après génération ?</summary>
-                <div class="faq-answer">Oui, tu peux relancer une nouvelle génération avec un style différent, avec le même texte ou en le modifiant.</div>
-            </details>
-
-            <div class="faq-category"><i class="fas fa-credit-card"></i> Tarifs et paiement</div>
-            <details>
-                <summary>Combien ça coûte ? y a-t-il des frais cachés ?</summary>
-                <div class="faq-answer">1 chanson = 1 000 FCFA. Il existe aussi des packs dégressifs (ex: 3 chansons = 2 500 FCFA). Aucun frais caché, pas d'abonnement. Le prix affiché est le prix final, avec téléchargement haute qualité inclus.</div>
-            </details>
-            <details>
-                <summary>Comment je paie et est-ce sécurisé ?</summary>
-                <div class="faq-answer">Par Wave, Orange Money, MTN Mobile Money ou Moov Money. Chaque transaction passe par une plateforme de paiement certifiée. Nous n'avons jamais accès à tes identifiants.</div>
-            </details>
-
-            <div class="faq-category"><i class="fas fa-download"></i> Après la génération</div>
-            <details>
-                <summary>Où retrouver et télécharger mes chansons ?</summary>
-                <div class="faq-answer">Toutes tes créations sont sauvegardées dans ta rubrique "Ma Bibliothèque". Tu peux télécharger chaque chanson en fichier audio pour la partager sur WhatsApp ou les réseaux.</div>
-            </details>
-            <details>
-                <summary>Je peux partager ma chanson publiquement ?</summary>
-                <div class="faq-answer">Oui, la chanson t'appartient dès qu'elle est générée et payée — tu peux la partager librement partout.</div>
-            </details>
-
-            <div class="faq-category"><i class="fas fa-shield-alt"></i> Compte et confidentialité</div>
-            <details>
-                <summary>Mes informations sont-elles privées ?</summary>
-                <div class="faq-answer">Oui. Seul toi as accès à tes créations. Personne d'autre ne peut voir tes chansons ou les informations que tu as renseignées.</div>
-            </details>
-
-            <div class="faq-category"><i class="fas fa-headset"></i> Support</div>
-            <details>
-                <summary>J'ai un problème, comment vous contacter ?</summary>
-                <div class="faq-answer">Le petit chat en bas à droite de l'écran est là pour ça — écris-nous directement, on te répond au plus vite ! NovaTempo fonctionne partout où tu as internet.</div>
+                <summary>Quels sont les moyens de paiement acceptés ?</summary>
+                <div class="faq-answer">Nous acceptons les paiements Mobile Money (Wave, Orange Money, MTN MoMo, Moov Money) en toute sécurité via GeniusPay.</div>
             </details>
         </div>
     </div>
 
-    <!-- MODAL TEMOIGNAGES -->
+    <!-- MODAL TÉMOIGNAGES -->
     <div id="modal-temoignages" class="modal">
         <div class="modal-content">
             <a href="#" class="modal-close"><i class="fas fa-times"></i></a>
             <h2>Témoignages</h2>
-            <div style="margin-top:2rem;">
-                <div style="padding:1.5rem; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:1rem;">
-                    <p style="font-style:italic; margin-top:0;">"J'ai créé une chanson pour le mariage de ma sœur. Tout le monde pleurait de joie !"</p>
-                    <strong style="color:var(--neon-lime);">— Aminata</strong>
+            <div style="display:flex; flex-direction:column; gap:1.5rem; margin-top:1.5rem;">
+                <div style="background:rgba(255,255,255,0.04); padding:1.5rem; border-radius:16px;">
+                    <div style="color:var(--neon-lime); margin-bottom:0.5rem;">★★★★★</div>
+                    <p style="margin:0 0 0.5rem 0; font-style:italic;">"J'ai fait une chanson pour l'anniversaire de ma mère. Elle a pleuré de joie en l'écoutant. Un souvenir inestimable !"</p>
+                    <small style="color:var(--text-muted);">- Marc A.</small>
                 </div>
-                <div style="padding:1.5rem; background:rgba(255,255,255,0.05); border-radius:12px;">
-                    <p style="font-style:italic; margin-top:0;">"L'Afrobeat généré pour la promo de ma boutique est incroyable. Rapide et pro."</p>
-                    <strong style="color:var(--neon-lime);">— Cédric</strong>
+                <div style="background:rgba(255,255,255,0.04); padding:1.5rem; border-radius:16px;">
+                    <div style="color:var(--neon-lime); margin-bottom:0.5rem;">★★★★★</div>
+                    <p style="margin:0 0 0.5rem 0; font-style:italic;">"La qualité de la voix et des paroles est bluffante. Mes invités au mariage n'en revenaient pas."</p>
+                    <small style="color:var(--text-muted);">- Sarah & Kévin</small>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT DU LECTEUR -->
     <script>
-        function toggleAudio(audioId, vinylElement) {
-            const audio = document.getElementById(audioId);
-            const allAudios = document.querySelectorAll('audio');
-            const allVinyls = document.querySelectorAll('.vinyl');
+        let currentAudio = null;
+        let currentBtn = null;
+
+        function toggleAudio(id, btn) {
+            const audio = document.getElementById(id);
+            
+            if (currentAudio && currentAudio !== audio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                if (currentBtn) {
+                    currentBtn.classList.remove('playing');
+                    currentBtn.querySelector('i').className = 'fas fa-play';
+                }
+            }
 
             if (audio.paused) {
-                allAudios.forEach(a => { a.pause(); a.currentTime = 0; });
-                allVinyls.forEach(v => {
-                    v.classList.remove('playing');
-                    v.querySelector('i').classList.replace('fa-pause', 'fa-play');
-                });
-                
                 audio.play();
-                vinylElement.classList.add('playing');
-                vinylElement.querySelector('i').classList.replace('fa-play', 'fa-pause');
+                btn.classList.add('playing');
+                btn.querySelector('i').className = 'fas fa-pause';
+                currentAudio = audio;
+                currentBtn = btn;
             } else {
                 audio.pause();
-                vinylElement.classList.remove('playing');
-                vinylElement.querySelector('i').classList.replace('fa-pause', 'fa-play');
+                btn.classList.remove('playing');
+                btn.querySelector('i').className = 'fas fa-play';
+                currentAudio = null;
+                currentBtn = null;
             }
 
             audio.onended = function() {
-                vinylElement.classList.remove('playing');
-                vinylElement.querySelector('i').classList.replace('fa-pause', 'fa-play');
+                btn.classList.remove('playing');
+                btn.querySelector('i').className = 'fas fa-play';
+                currentAudio = null;
+                currentBtn = null;
             };
         }
     </script>
