@@ -112,22 +112,24 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div id="payment-error" style="display: none; text-align: center; padding: 10px 0;">
                     <div style="margin-bottom: 15px;"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#E60023" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>
                     <h3 style="font-size: 22px; color: #0a0a0a; margin-bottom: 10px; font-weight: 800;">Paiement non effectué</h3>
-                    <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 20px;" id="error-modal-message">Solde Mobile Money insuffisant ou transaction annulée. Aucun débit n'a été effectué sur votre compte.</p>
-                    <button type="button" onclick="resetAndRetryPayment()" class="pay-submit-btn" style="width: 100%; background: #0a0a0a;">Réessayer</button>
+                    <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 20px;" id="error-modal-message">Paiement refusé : solde insuffisant ou transaction annulée. Aucun débit n'a été effectué sur votre compte.</p>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button type="button" onclick="resetAndRetryPayment()" class="pay-submit-btn" style="width: 100%; background: #0a0a0a;">Réessayer le paiement</button>
+                        <button type="button" onclick="redirectToStudio()" class="pay-submit-btn" style="width: 100%; background: #0047AB;">Retourner au Studio</button>
+                    </div>
                 </div>
             </div>
         </div>
     `;
-    document.head.insertAdjacentHTML('beforeend', paymentCSS);
+    document.body.insertAdjacentHTML('beforeend', paymentHTML);
     
-    // GESTION DU RETOUR DE PAIEMENT APRES REDIRECTION
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status') || urlParams.get('payment');
     const plan = urlParams.get('plan');
     const errReason = urlParams.get('error') || urlParams.get('reason');
 
     if (status === 'failed' || status === 'cancelled' || status === 'declined' || errReason) {
-        showPaymentErrorModal(errReason ? `Échec : ${errReason}` : "Solde Mobile Money insuffisant ou transaction annulée. Aucun montant n'a été débité.");
+        showPaymentErrorModal(errReason ? `Paiement refusé : ${errReason}` : "Paiement refusé : solde insuffisant ou transaction annulée. Aucun montant n'a été débité.");
         sessionStorage.removeItem('nova_in_payment');
         window.history.replaceState({}, document.title, window.location.pathname);
     } else if (status === 'success' || status === 'completed') {
@@ -184,6 +186,11 @@ window.resetAndRetryPayment = function() {
     document.getElementById('payment-success').style.display = 'none';
 };
 
+window.redirectToStudio = function() {
+    sessionStorage.removeItem('nova_in_payment');
+    window.location.href = 'studio.html';
+};
+
 window.closePaymentModal = function() {
     sessionStorage.removeItem('nova_in_payment');
     document.getElementById('payment-modal').style.display = 'none';
@@ -208,7 +215,6 @@ window.processPayment = async function() {
         return;
     }
     
-    // Marquer l'action de paiement pour protéger la session utilisateur
     sessionStorage.setItem('nova_in_payment', 'true');
 
     const btn = document.getElementById('pay-btn');
@@ -245,7 +251,7 @@ window.processPayment = async function() {
         }
     } catch (err) {
         console.error("Erreur paiement:", err);
-        showPaymentErrorModal("Une erreur réseau s'est produite lors de l'initialisation.");
+        showPaymentErrorModal("Paiement refusé : solde insuffisant ou erreur réseau.");
     } finally {
         btn.disabled = false;
     }
