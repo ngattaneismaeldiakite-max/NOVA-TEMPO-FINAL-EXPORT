@@ -10,6 +10,7 @@ function initSupabaseClient() {
     }
 }
 
+// Initialisation immédiate ou sur chargement du script SDK
 if (window.supabase) {
     initSupabaseClient();
     setTimeout(checkUserAuth, 300);
@@ -37,6 +38,7 @@ async function checkUserAuth() {
                              currentPath.includes('login.html') || 
                              currentPath.includes('signup.html');
         
+        // Détecter si l'utilisateur revient d'une tentative de paiement Mobile Money ou possède un jeton stocké
         const isPaymentReturn = window.location.search.includes('status=') || 
                                 window.location.search.includes('payment=') || 
                                 window.location.search.includes('trx=') || 
@@ -46,6 +48,7 @@ async function checkUserAuth() {
         const hasLocalAuthToken = Object.keys(localStorage).some(k => k.includes('-auth-token'));
 
         if (!session && !isPublicPage && !isPaymentReturn && !hasLocalAuthToken) {
+            // Laisser un délai de grâce pour la restauration de la session en mémoire
             setTimeout(async () => {
                 const { data: { session: retrySession } } = await window.supabaseClient.auth.getSession();
                 const stillHasToken = Object.keys(localStorage).some(k => k.includes('-auth-token'));
@@ -63,6 +66,7 @@ async function checkUserAuth() {
     }
 }
 
+// SAUVEGARDE DE LA MUSIQUE DANS SUPABASE
 async function saveTrackToDatabase(trackData) {
     initSupabaseClient();
     if (!window.supabaseClient) return;
