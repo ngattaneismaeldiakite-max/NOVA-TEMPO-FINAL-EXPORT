@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <div id="payment-modal" class="payment-overlay">
             <div class="payment-modal">
                 <button class="payment-close" onclick="closePaymentModal()">&times;</button>
-                <h2 class="payment-title">Recharger avec Mobile Money</h2>
+                <h2 class="payment-title" id="modal-header-title">Recharger avec Mobile Money</h2>
                 
                 <div id="payment-step-1">
                     <div class="offer-summary">
@@ -102,21 +102,37 @@ document.addEventListener("DOMContentLoaded", function() {
                     <button id="pay-btn" type="button" class="pay-submit-btn" onclick="processPayment()">Payer 1 500 FCFA</button>
                 </div>
                 
-                <div id="payment-success" style="display: none; text-align: center; padding: 20px 0;">
+                <div id="payment-success" style="display: none; text-align: center; padding: 10px 0;">
                     <div style="margin-bottom: 15px;"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
                     <h3 style="font-size: 22px; color: #0a0a0a; margin-bottom: 10px; font-weight: 800;">Demande de paiement transmise !</h3>
-                    <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">Veuillez valider le paiement sur votre téléphone. Vos crédits seront crédités immédiatement dès confirmation GeniusPay.</p>
+                    <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">Veuillez valider la transaction sur votre téléphone. Vos crédits seront ajoutés immédiatement après validation.</p>
                     <button type="button" onclick="closePaymentModalAndRefresh()" class="pay-submit-btn" style="width: 100%;">Terminer</button>
+                </div>
+
+                <div id="payment-error" style="display: none; text-align: center; padding: 10px 0;">
+                    <div style="margin-bottom: 15px;"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#E60023" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>
+                    <h3 style="font-size: 22px; color: #0a0a0a; margin-bottom: 10px; font-weight: 800;">Paiement non effectué</h3>
+                    <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 20px;" id="error-modal-message">Solde Mobile Money insuffisant ou transaction annulée. Aucun débit n'a été effectué sur votre compte.</p>
+                    <button type="button" onclick="resetAndRetryPayment()" class="pay-submit-btn" style="width: 100%; background: #0a0a0a;">Réessayer</button>
                 </div>
             </div>
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', paymentHTML);
     
-    // Auto open if query param plan is passed
+    // VERIFICATION DES PARAMS DE RETOUR APRES PAIEMENT
     const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status') || urlParams.get('payment');
     const plan = urlParams.get('plan');
-    if (plan && OFFERS[plan]) {
+    const errReason = urlParams.get('error') || urlParams.get('reason');
+
+    if (status === 'failed' || status === 'cancelled' || status === 'declined' || errReason) {
+        showPaymentErrorModal(errReason ? `Échec : ${errReason}` : "Solde Mobile Money insuffisant ou transaction annulée. Aucun montant n'a été débité.");
+        window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (status === 'success' || status === 'completed') {
+        showPaymentSuccessModal();
+        window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (plan && OFFERS[plan]) {
         openPaymentModal(plan);
         window.history.replaceState({}, document.title, window.location.pathname);
     }
@@ -130,13 +146,39 @@ window.openPaymentModal = function(offerId) {
     const modalName = document.getElementById('modal-offer-name');
     const modalPrice = document.getElementById('modal-offer-price');
     const payBtn = document.getElementById('pay-btn');
+    const titleEl = document.getElementById('modal-header-title');
     
+    if (titleEl) titleEl.textContent = "Recharger avec Mobile Money";
     if (modalName) modalName.textContent = offer.name;
     if (modalPrice) modalPrice.textContent = offer.price.toLocaleString('fr-FR') + " FCFA";
     if (payBtn) payBtn.textContent = "Payer " + offer.price.toLocaleString('fr-FR') + " FCFA";
     
     document.getElementById('payment-modal').style.display = 'flex';
     document.getElementById('payment-step-1').style.display = 'block';
+    document.getElementById('payment-success').style.display = 'none';
+    document.getElementById('payment-error').style.display = 'none';
+};
+
+window.showPaymentErrorModal = function(msg) {
+    document.getElementById('payment-modal').style.display = 'flex';
+    document.getElementById('payment-step-1').style.display = 'none';
+    document.getElementById('payment-success').style.display = 'none';
+    document.getElementById('payment-error').style.display = 'block';
+    
+    const msgEl = document.getElementById('error-modal-message');
+    if (msgEl && msg) msgEl.textContent = msg;
+};
+
+window.showPaymentSuccessModal = function() {
+    document.getElementById('payment-modal').style.display = 'flex';
+    document.getElementById('payment-step-1').style.display = 'none';
+    document.getElementById('payment-success').style.display = 'block';
+    document.getElementById('payment-error').style.display = 'none';
+};
+
+window.resetAndRetryPayment = function() {
+    document.getElementById('payment-step-1').style.display = 'block';
+    document.getElementById('payment-error').style.display = 'none';
     document.getElementById('payment-success').style.display = 'none';
 };
 
@@ -192,12 +234,11 @@ window.processPayment = async function() {
             document.getElementById('payment-step-1').style.display = 'none';
             document.getElementById('payment-success').style.display = 'block';
         } else {
-            alert("Erreur lors de l'initialisation : " + (resData.error || "Impossible d'initier le paiement"));
+            showPaymentErrorModal(resData.error || "Impossible d'initier le paiement Mobile Money.");
         }
     } catch (err) {
         console.error("Erreur paiement:", err);
-        document.getElementById('payment-step-1').style.display = 'none';
-        document.getElementById('payment-success').style.display = 'block';
+        showPaymentErrorModal("Une erreur réseau s'est produite lors de l'initialisation.");
     } finally {
         btn.disabled = false;
     }
