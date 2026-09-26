@@ -123,13 +123,14 @@ document.addEventListener("DOMContentLoaded", function() {
     `;
     document.body.insertAdjacentHTML('beforeend', paymentHTML);
     
+    // GESTION DU RETOUR DE PAIEMENT APRES REDIRECTION
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status') || urlParams.get('payment');
     const plan = urlParams.get('plan');
     const errReason = urlParams.get('error') || urlParams.get('reason');
 
     if (status === 'failed' || status === 'cancelled' || status === 'declined' || errReason) {
-        showPaymentErrorModal(errReason ? `Paiement refusé : ${errReason}` : "Paiement refusé : solde insuffisant ou transaction annulée. Aucun montant n'a été débité.");
+        showPaymentErrorModal(errReason ? `Échec : ${errReason}` : "Solde Mobile Money insuffisant ou transaction annulée. Aucun montant n'a été débité.");
         sessionStorage.removeItem('nova_in_payment');
         window.history.replaceState({}, document.title, window.location.pathname);
     } else if (status === 'success' || status === 'completed') {
@@ -215,6 +216,7 @@ window.processPayment = async function() {
         return;
     }
     
+    // Marquer l'action de paiement pour protéger la session utilisateur en cas de redirection
     sessionStorage.setItem('nova_in_payment', 'true');
 
     const btn = document.getElementById('pay-btn');
@@ -251,7 +253,7 @@ window.processPayment = async function() {
         }
     } catch (err) {
         console.error("Erreur paiement:", err);
-        showPaymentErrorModal("Paiement refusé : solde insuffisant ou erreur réseau.");
+        showPaymentErrorModal("Une erreur réseau s'est produite lors de l'initialisation.");
     } finally {
         btn.disabled = false;
     }
