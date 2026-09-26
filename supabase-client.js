@@ -21,16 +21,25 @@ async function checkUserAuth() {
     
     const isPublicPage = window.location.pathname.includes('index.html') || window.location.pathname.includes('login.html') || window.location.pathname.includes('signup.html');
     
-    if (!session && !isPublicPage) {
-        window.location.href = 'login.html';
+    // Si l'utilisateur revient d'une redirection GeniusPay / Mobile Money, ne pas le déconnecter
+    const isPaymentReturn = window.location.search.includes('status=') || window.location.search.includes('payment=') || window.location.search.includes('trx=') || window.location.search.includes('error=');
+
+    if (!session && !isPublicPage && !isPaymentReturn) {
+        // Délais de grâce avant de rediriger
+        setTimeout(async () => {
+            const { data: { session: retrySession } } = await window.supabaseClient.auth.getSession();
+            if (!retrySession) {
+                window.location.href = 'login.html';
+            }
+        }, 1200);
     } else if (session) {
         const user = session.user;
         const usernameEls = document.querySelectorAll('.display-username');
-        usernameEls.forEach(el => el.textContent = user.user_metadata.full_name || 'Utilisateur');
+        usernameEls.forEach(el => el.textContent = user.user_metadata?.full_name || 'Utilisateur');
     }
 }
 
-// LA FAMEUSE FONCTION QUI SAUVEGARDE LA MUSIQUE
+// SAUVEGARDE DE LA MUSIQUE DANS SUPABASE
 async function saveTrackToDatabase(trackData) {
     if (!window.supabaseClient) return;
     const { data: { session } } = await window.supabaseClient.auth.getSession();
