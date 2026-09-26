@@ -10,6 +10,7 @@
     
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
     
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
@@ -68,7 +69,6 @@
         .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212, 255, 0, 0.4); }
         .btn-generate:disabled { background: #333; color: #888; cursor: not-allowed; box-shadow: none; transform: none; }
 
-        /* Styles des étapes et des transitions douces */
         .fade-step { transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
         .fade-out-active { opacity: 0 !important; transform: translateY(-15px) !important; pointer-events: none !important; }
         .fade-in-active { opacity: 1 !important; transform: translateY(0) !important; }
@@ -81,7 +81,6 @@
         .btn-new-song { background: transparent; border: 2px solid var(--neon-lime); color: var(--neon-lime); padding: 1rem 2rem; border-radius: 12px; font-size: 1.1rem; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: 2rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; }
         .btn-new-song:hover { background: var(--neon-lime); color: var(--bg-dark); transform: translateY(-2px); }
 
-        /* Banner de notification In-App & iOS Push */
         .notif-prompt-box { background: rgba(212, 255, 0, 0.08); border: 1px solid var(--neon-lime); border-radius: 16px; padding: 1.2rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
         .btn-enable-notif { background: var(--neon-lime); color: var(--bg-dark); border: none; padding: 0.7rem 1.2rem; border-radius: 50px; font-weight: 800; cursor: pointer; white-space: nowrap; font-size: 0.9rem; }
 
@@ -120,7 +119,15 @@
     </div>
 
     <nav>
-        <a href="index.html" class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</a>
+        <a href="index.html" class="nova-brand-logo">
+            <div class="logo-eq-bars">
+                <span class="eq-bar bar-1"></span>
+                <span class="eq-bar bar-2"></span>
+                <span class="eq-bar bar-3"></span>
+                <span class="eq-bar bar-4"></span>
+            </div>
+            <img src="logo.png" alt="Nova Tempo" style="height: 38px; width: auto;">
+        </a>
         <div class="nav-links">
             <a href="profil.html"><i class="fas fa-user"></i> Mon Profil</a>
             <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
@@ -210,7 +217,7 @@
                 </button>
             </form>
 
-            <!-- BLOC 2 : CHARGEMENT EN COURS (Entièrement isolé) -->
+            <!-- BLOC 2 : CHARGEMENT EN COURS -->
             <div id="loading-container">
                 <div style="margin-bottom: 1.5rem;">
                     <i class="fas fa-compact-disc fa-spin" style="font-size: 4rem; color: var(--neon-lime);"></i>
@@ -226,7 +233,7 @@
                 </div>
             </div>
 
-            <!-- BLOC 3 : RÉSULTAT FINAL (Affiche uniquement le lecteur audio) -->
+            <!-- BLOC 3 : RÉSULTAT FINAL -->
             <div id="result-container">
                 <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🎉</div>
                 <h2 style="color: var(--neon-lime); margin-top: 0; font-size: 2rem; text-transform: uppercase;">Ta chanson est prête !</h2>
@@ -259,7 +266,6 @@
                 document.getElementById('page-loader').style.opacity = '0';
                 setTimeout(() => { document.getElementById('page-loader').style.display = 'none'; }, 500);
 
-                // 1. Enregistrement du Service Worker sw.js
                 if ('serviceWorker' in navigator) {
                     try {
                         swRegistration = await navigator.serviceWorker.register('/sw.js');
@@ -269,7 +275,6 @@
                     }
                 }
 
-                // 2. Vérification des permissions notifications & affichage des banners
                 verifierBannersNotifications();
             }
         });
@@ -302,12 +307,10 @@
             window.location.href = 'login.html';
         }
 
-        // Déclenchement de la notification via Service Worker (fonctionne écran verrouillé)
         async function notifierMorceauPret(nomCible) {
             const titre = "🎉 Ta chanson NovaTempo est prête !";
             const corps = `La chanson exclusive pour ${nomCible} est terminée. Cliquez pour l'écouter !`;
 
-            // 1. Notification via Service Worker (Requis pour écran verrouillé / arrière-plan)
             if (swRegistration && "showNotification" in swRegistration) {
                 try {
                     await swRegistration.showNotification(titre, {
@@ -324,7 +327,6 @@
                 new Notification(titre, { body: corps, icon: 'logo.png' });
             }
 
-            // 2. Bannière In-App
             const banner = document.getElementById('notification-banner');
             document.getElementById('notif-title').textContent = titre;
             document.getElementById('notif-body').textContent = corps;
@@ -332,7 +334,6 @@
             setTimeout(() => { banner.style.display = 'none'; }, 8000);
         }
 
-        // Fonction générique pour effectuer des transitions douces entre 2 blocs
         async function switchView(fromEl, toEl) {
             if (fromEl && fromEl.style.display !== 'none') {
                 fromEl.classList.add('fade-step', 'fade-out-active');
@@ -343,7 +344,7 @@
             if (toEl) {
                 toEl.style.display = 'block';
                 toEl.classList.add('fade-step', 'fade-out-active');
-                void toEl.offsetWidth; // Forcer le reflow CSS
+                void toEl.offsetWidth;
                 toEl.classList.remove('fade-out-active');
                 toEl.classList.add('fade-in-active');
                 setTimeout(() => {
@@ -437,7 +438,6 @@
             event.preventDefault(); 
             const btn = document.getElementById('generate-btn');
 
-            // 1. VÉRIFICATION DE LA SESSION ET DES CRÉDITS
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (!session) {
                 window.location.href = 'login.html';
@@ -471,7 +471,6 @@
             const style = document.querySelector('input[name="style"]:checked').value;
             const voice = document.querySelector('input[name="voice"]:checked').value;
             
-            // Collecter les réponses du formulaire
             const payloadLyrics = {
                 nom: cible,
                 occasion: occasion
@@ -484,7 +483,6 @@
                 }
             });
 
-            // Transition douce du Formulaire vers l'Écran de Chargement
             loadingBar.style.width = '15%';
             loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Composition des paroles en cours...';
             await switchView(formEl, loadingEl);
@@ -500,7 +498,6 @@
             let progressPercent = 30;
 
             try {
-                // 1. GÉNÉRATION OU SÉLECTION DU TEMPLATE DE PAROLES (generate-lyrics)
                 const resLyrics = await fetch('/api/songs/generate-lyrics', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -513,7 +510,6 @@
                 loadingBar.style.width = '35%';
                 loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Enregistrement studio en cours...';
 
-                // 2. GÉNÉRATION AUDIO SUNO AVEC PAROLES STRUCTURÉES (generate-audio)
                 const resCreation = await fetch('/api/songs/generate-audio', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -540,7 +536,6 @@
                         if (dataStatut.status === 'completed' && dataStatut.outputs && dataStatut.outputs.length > 0) {
                             clearInterval(verificationIntervalle);
                             
-                            // 100% complété
                             loadingBar.style.width = '100%';
                             loadingText.innerHTML = '<i class="fas fa-check-circle" style="color: var(--neon-lime);"></i> Chanson terminée !';
                             
@@ -550,10 +545,8 @@
                             const audioPlayer = document.getElementById('audio-player');
                             audioPlayer.src = urlAudio;
 
-                            // Déclencher la notification Push via le Service Worker (Écran verrouillé & Arrière-plan)
                             await notifierMorceauPret(cible);
 
-                            // Attendre un bref instant pour laisser la barre atteindre 100%, puis transition douce vers le Résultat Final
                             setTimeout(async () => {
                                 await switchView(loadingEl, resultEl);
                                 audioPlayer.play();
