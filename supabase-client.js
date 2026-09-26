@@ -29,15 +29,30 @@ async function checkUserAuth() {
     initSupabaseClient();
     if (!window.supabaseClient) return;
     
+    // Ecouter les changements d'état d'authentification (ex: retour de Google OAuth)
+    if (!window._authListenerAttached) {
+        window._authListenerAttached = true;
+        window.supabaseClient.auth.onAuthStateChange((event, session) => {
+            const path = window.location.pathname.toLowerCase();
+            if (session && (path.includes('login.html') || path.includes('signup.html'))) {
+                window.location.href = 'studio.html';
+            }
+        });
+    }
+
     try {
         const { data: { session } } = await window.supabaseClient.auth.getSession();
         
         const currentPath = window.location.pathname.toLowerCase();
-        const isPublicPage = currentPath.endsWith('/') || 
-                             currentPath.includes('index.html') || 
-                             currentPath.includes('login.html') || 
-                             currentPath.includes('signup.html');
+        const isAuthPage = currentPath.includes('login.html') || currentPath.includes('signup.html');
+        const isPublicPage = currentPath.endsWith('/') || currentPath.includes('index.html') || isAuthPage;
         
+        // Si l'utilisateur est connecté et se trouve sur login/signup, le rediriger au Studio
+        if (session && isAuthPage) {
+            window.location.href = 'studio.html';
+            return;
+        }
+
         // Détecter si l'utilisateur revient d'une tentative de paiement Mobile Money ou possède un jeton stocké
         const isPaymentReturn = window.location.search.includes('status=') || 
                                 window.location.search.includes('payment=') || 
