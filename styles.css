@@ -1,54 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600;700;800&display=swap');
-
-* { box-sizing: border-box; }
-:root {
-    --primary-magenta: #0047AB;
-    --primary-purple: #0F172A;
-    --primary-yellow: #E60023;
-    --white: #ffffff;
-    --bg-light: #ffffff;
-    --bg-gray: #f7f7f8;
-    --bg-glass: rgba(255, 255, 255, 0.85);
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --metallic-gradient: linear-gradient(135deg, #0047AB 0%, #E60023 100%);
-}
-
-body, html {
-    overflow-x: hidden; width: 100%; max-width: 100vw;
-    margin: 0; padding: 0;
-    font-family: 'Inter', sans-serif;
-    color: var(--text-main);
-    background-color: var(--white);
-    scroll-behavior: smooth;
-}
-
-h1, h2, h3, .logo {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    letter-spacing: -0.02em;
-}
-
-/* ANIMATION ÉGALISEUR LOGO (BANDES VERTE QUI BOUGENT DE HAUT EN BAS) */
-.logo-eq {
+/* ==========================================
+   ANIMATION ÉGALISEUR LOGO ANIMÉ OFFICIEL
+   ========================================== */
+.nova-brand-logo {
     display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    user-select: none;
+}
+
+.logo-eq-bars {
+    display: flex;
     align-items: flex-end;
     gap: 3px;
-    height: 24px;
-    margin-right: 10px;
-    vertical-align: middle;
+    height: 26px;
 }
-.logo-eq .bar {
-    width: 4px;
-    background: linear-gradient(180deg, #D4FF00 0%, #76e600 100%);
-    border-radius: 2px;
-    animation: soundWaveEq 1.1s ease-in-out infinite alternate;
-}
-.logo-eq .bar:nth-child(1) { height: 12px; animation-delay: 0.1s; }
-.logo-eq .bar:nth-child(2) { height: 22px; animation-delay: 0.3s; }
-.logo-eq .bar:nth-child(3) { height: 16px; animation-delay: 0.2s; }
-.logo-eq .bar:nth-child(4) { height: 10px; animation-delay: 0.4s; }
 
-@keyframes soundWaveEq {
-    0% { height: 6px; transform: scaleY(0.4); }
-    100% { height: 24px; transform: scaleY(1.1); }
+.eq-bar {
+    width: 5px;
+    background: linear-gradient(180deg, #D4FF00 0%, #76e600 100%);
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(212, 255, 0, 0.4);
+    animation: moveEqBars 1.1s ease-in-out infinite alternate;
+}
+
+.eq-bar.bar-1 { height: 12px; animation-delay: 0.1s; }
+.eq-bar.bar-2 { height: 24px; animation-delay: 0.3s; }
+.eq-bar.bar-3 { height: 18px; animation-delay: 0.2s; }
+.eq-bar.bar-4 { height: 10px; animation-delay: 0.4s; }
+
+@keyframes moveEqBars {
+    0% { transform: scaleY(0.35); }
+    100% { transform: scaleY(1.15); }
 }
