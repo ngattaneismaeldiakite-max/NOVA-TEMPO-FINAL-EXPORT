@@ -259,8 +259,15 @@
         let swRegistration = null;
 
         window.addEventListener('DOMContentLoaded', async () => {
-            const { data: { session } } = await supabaseClient.auth.getSession();
+            let { data: { session } } = await supabaseClient.auth.getSession();
             if (!session) {
+                await new Promise(r => setTimeout(r, 400));
+                const res = await supabaseClient.auth.getSession();
+                session = res.data?.session;
+            }
+            const hasLocalAuth = Object.keys(localStorage).some(k => k.includes('-auth-token'));
+
+            if (!session && !hasLocalAuth) {
                 window.location.href = 'login.html'; 
             } else {
                 document.getElementById('page-loader').style.opacity = '0';
@@ -438,6 +445,7 @@
             event.preventDefault(); 
             const btn = document.getElementById('generate-btn');
 
+            // 1. VÉRIFICATION DE LA SESSION ET DES CRÉDITS
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (!session) {
                 window.location.href = 'login.html';
@@ -471,6 +479,7 @@
             const style = document.querySelector('input[name="style"]:checked').value;
             const voice = document.querySelector('input[name="voice"]:checked').value;
             
+            // Collecter les réponses du formulaire
             const payloadLyrics = {
                 nom: cible,
                 occasion: occasion
@@ -483,6 +492,7 @@
                 }
             });
 
+            // Transition douce du Formulaire vers l'Écran de Chargement
             loadingBar.style.width = '15%';
             loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Composition des paroles en cours...';
             await switchView(formEl, loadingEl);
@@ -498,21 +508,34 @@
             let progressPercent = 30;
 
             try {
+                const headers = {
+                    'Content-Type': 'application/json'
+                };
+                if (session && session.access_token) {
+                    headers['Authorization'] = `Bearer ${session.access_token}`;
+                }
+
+                // 1. GÉNÉRATION OU SÉLECTION DU TEMPLATE DE PAROLES (generate-lyrics)
                 const resLyrics = await fetch('/api/songs/generate-lyrics', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: headers,
                     body: JSON.stringify(payloadLyrics)
                 });
 
                 const dataLyrics = await resLyrics.json();
+                if (!resLyrics.ok && dataLyrics.error) {
+                    throw new Error(dataLyrics.error);
+                }
+
                 const parolesFinales = dataLyrics.lyrics || `[Couplet 1]\nPour toi ${cible}, une chanson unique.\n[Refrain]\nNovaTempo chante pour toi.\n[Outro]\nPour toujours.`;
 
                 loadingBar.style.width = '35%';
                 loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Enregistrement studio en cours...';
 
+                // 2. GÉNÉRATION AUDIO SUNO AVEC PAROLES STRUCTURÉES (generate-audio)
                 const resCreation = await fetch('/api/songs/generate-audio', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: headers,
                     body: JSON.stringify({
                         lyrics: parolesFinales,
                         genre: style,
@@ -522,6 +545,10 @@
 
                 const dataCreation = await resCreation.json();
                 
+                if (!resCreation.ok && dataCreation.error) {
+                    throw new Error(dataCreation.error);
+                }
+
                 if (dataCreation.error || !dataCreation.job_id) {
                     throw new Error(dataCreation.error || "Pas de Job ID reçu.");
                 }
@@ -536,6 +563,7 @@
                         if (dataStatut.status === 'completed' && dataStatut.outputs && dataStatut.outputs.length > 0) {
                             clearInterval(verificationIntervalle);
                             
+                            // 100% complété
                             loadingBar.style.width = '100%';
                             loadingText.innerHTML = '<i class="fas fa-check-circle" style="color: var(--neon-lime);"></i> Chanson terminée !';
                             
@@ -545,8 +573,10 @@
                             const audioPlayer = document.getElementById('audio-player');
                             audioPlayer.src = urlAudio;
 
+                            // Déclencher la notification Push via le Service Worker (Écran verrouillé & Arrière-plan)
                             await notifierMorceauPret(cible);
 
+                            // Attendre un bref instant pour laisser la barre atteindre 100%, puis transition douce vers le Résultat Final
                             setTimeout(async () => {
                                 await switchView(loadingEl, resultEl);
                                 audioPlayer.play();
