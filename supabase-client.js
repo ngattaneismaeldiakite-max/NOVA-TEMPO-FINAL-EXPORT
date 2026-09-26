@@ -10,7 +10,6 @@ function initSupabaseClient() {
     }
 }
 
-// Initialisation immédiate ou sur chargement du script SDK
 if (window.supabase) {
     initSupabaseClient();
     setTimeout(checkUserAuth, 300);
@@ -38,21 +37,22 @@ async function checkUserAuth() {
                              currentPath.includes('login.html') || 
                              currentPath.includes('signup.html');
         
-        // Détecter si l'utilisateur revient d'une tentative de paiement Mobile Money
         const isPaymentReturn = window.location.search.includes('status=') || 
                                 window.location.search.includes('payment=') || 
                                 window.location.search.includes('trx=') || 
                                 window.location.search.includes('error=') ||
                                 sessionStorage.getItem('nova_in_payment') === 'true';
+        
+        const hasLocalAuthToken = Object.keys(localStorage).some(k => k.includes('-auth-token'));
 
-        if (!session && !isPublicPage && !isPaymentReturn) {
-            // Laisser un délai de grâce pour la restauration de la session en mémoire
+        if (!session && !isPublicPage && !isPaymentReturn && !hasLocalAuthToken) {
             setTimeout(async () => {
                 const { data: { session: retrySession } } = await window.supabaseClient.auth.getSession();
-                if (!retrySession && !isPublicPage && sessionStorage.getItem('nova_in_payment') !== 'true') {
+                const stillHasToken = Object.keys(localStorage).some(k => k.includes('-auth-token'));
+                if (!retrySession && !isPublicPage && !stillHasToken && sessionStorage.getItem('nova_in_payment') !== 'true') {
                     window.location.href = 'login.html';
                 }
-            }, 1000);
+            }, 1500);
         } else if (session) {
             const user = session.user;
             const usernameEls = document.querySelectorAll('.display-username');
@@ -63,7 +63,6 @@ async function checkUserAuth() {
     }
 }
 
-// SAUVEGARDE DE LA MUSIQUE DANS SUPABASE
 async function saveTrackToDatabase(trackData) {
     initSupabaseClient();
     if (!window.supabaseClient) return;
