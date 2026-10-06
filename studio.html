@@ -91,6 +91,59 @@
         .spinner { width: 50px; height: 50px; border: 4px solid rgba(212, 255, 0, 0.3); border-top-color: var(--neon-lime); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
+        /* --- Solde dans la barre de navigation --- */
+        .credits-pill { display: inline-flex; align-items: center; gap: 8px; padding: 0.45rem 1rem; border-radius: 50px; border: 1px solid rgba(212,255,0,0.35); background: rgba(212,255,0,0.08); color: var(--neon-lime) !important; font-weight: 800; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; }
+        .credits-pill:hover { background: rgba(212,255,0,0.16); box-shadow: 0 0 18px rgba(212,255,0,0.25); }
+        .credits-pill.empty { border-color: rgba(255,0,102,0.45); background: rgba(255,0,102,0.08); color: var(--neon-pink) !important; }
+
+        /* --- Fenêtre "Crédits" --- */
+        .nt-modal { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 1.2rem; background: rgba(3,3,6,0.72); backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+        .nt-modal.open { opacity: 1; pointer-events: auto; }
+        .nt-modal-card { position: relative; width: 100%; max-width: 560px; max-height: calc(100vh - 2.4rem); overflow-y: auto; background: linear-gradient(160deg, rgba(24,24,34,0.97), rgba(10,10,16,0.97)); border: 1px solid rgba(255,255,255,0.1); border-radius: 28px; padding: 2.4rem 2rem 1.8rem; box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,255,0,0.05) inset; transform: translateY(24px) scale(0.97); transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2); box-sizing: border-box; }
+        .nt-modal.open .nt-modal-card { transform: translateY(0) scale(1); }
+        .nt-modal-close { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; border-radius: 50%; border: none; background: rgba(255,255,255,0.06); color: var(--text-muted); font-size: 1rem; cursor: pointer; transition: all 0.2s; }
+        .nt-modal-close:hover { background: rgba(255,255,255,0.14); color: white; }
+        .nt-modal-icon { width: 64px; height: 64px; margin: 0 auto 1.1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: var(--bg-dark); background: var(--neon-lime); box-shadow: 0 0 35px rgba(212,255,0,0.45); }
+        .nt-modal h2 { margin: 0 0 0.5rem; text-align: center; font-size: 1.6rem; font-weight: 900; line-height: 1.2; }
+        .nt-modal h2 span { color: var(--neon-lime); }
+        .nt-modal-sub { margin: 0 auto 1.8rem; max-width: 400px; text-align: center; color: var(--text-muted); font-size: 0.98rem; line-height: 1.5; }
+        .nt-packs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+        .nt-pack { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 1.4rem 0.6rem 1.1rem; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: white; font-family: inherit; cursor: pointer; transition: all 0.25s ease; }
+        .nt-pack:hover:not(:disabled) { border-color: var(--neon-lime); background: rgba(212,255,0,0.06); transform: translateY(-3px); }
+        .nt-pack:disabled { cursor: wait; opacity: 0.55; }
+        .nt-pack.popular { border-color: rgba(212,255,0,0.55); background: rgba(212,255,0,0.07); box-shadow: 0 0 30px rgba(212,255,0,0.12); }
+        .nt-pack-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 3px 10px; border-radius: 50px; background: var(--neon-lime); color: var(--bg-dark); font-size: 0.68rem; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+        .nt-pack-main, .nt-pack-pricebox { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+        .nt-pack-songs { font-size: 2rem; font-weight: 900; line-height: 1; }
+        .nt-pack-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+        .nt-pack-price { margin-top: 0.6rem; font-size: 1.05rem; font-weight: 900; color: var(--neon-lime); }
+        .nt-pack-unit { font-size: 0.72rem; color: rgba(255,255,255,0.45); }
+        .nt-pay-methods { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-top: 1.6rem; color: rgba(255,255,255,0.45); font-size: 0.78rem; }
+        .nt-pay-methods img { width: 30px; height: 30px; border-radius: 8px; object-fit: cover; }
+        .nt-modal-later { display: block; margin: 1.1rem auto 0; background: none; border: none; color: var(--text-muted); font-family: inherit; font-size: 0.9rem; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+        .nt-modal-later:hover { color: white; }
+        .nt-modal-state { text-align: center; padding: 1rem 0 0.5rem; }
+        .nt-modal-state .spinner { margin: 0 auto 1.2rem; }
+
+        /* --- Messages flottants --- */
+        #nt-toast { position: fixed; top: 22px; left: 50%; z-index: 10001; display: flex; align-items: center; gap: 12px; max-width: calc(100vw - 32px); padding: 0.9rem 1.3rem; border-radius: 16px; background: rgba(17,17,24,0.96); border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 20px 40px rgba(0,0,0,0.5); backdrop-filter: blur(12px); font-weight: 700; font-size: 0.95rem; transform: translate(-50%, -140%); transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2); box-sizing: border-box; }
+        #nt-toast.show { transform: translate(-50%, 0); }
+        #nt-toast i { font-size: 1.2rem; }
+        #nt-toast.success i { color: var(--neon-lime); }
+        #nt-toast.error i { color: var(--neon-pink); }
+        #nt-toast.info i { color: #7cc4ff; }
+
+        @media (max-width: 560px) {
+            .nt-modal-card { padding: 2.2rem 1.2rem 1.4rem; border-radius: 24px; }
+            .nt-packs { grid-template-columns: 1fr; }
+            .nt-pack { flex-direction: row; justify-content: space-between; padding: 1rem 1.2rem; text-align: left; }
+            .nt-pack-main { flex-direction: row; align-items: baseline; gap: 0.5rem; }
+            .nt-pack-pricebox { align-items: flex-end; }
+            .nt-pack-songs { font-size: 1.5rem; }
+            .nt-pack-price { margin-top: 0; }
+            .nt-pack-badge { left: auto; right: 14px; transform: none; }
+        }
+
         @media (max-width: 768px) {
             nav { padding: 1rem; flex-direction: column; gap: 1rem; }
             .radio-grid { grid-template-columns: repeat(2, 1fr); }
@@ -118,6 +171,50 @@
         </div>
     </div>
 
+    <!-- Message flottant -->
+    <div id="nt-toast" role="status" aria-live="polite"><i class="fas fa-check-circle"></i><span id="nt-toast-text"></span></div>
+
+    <!-- Fenêtre Crédits -->
+    <div class="nt-modal" id="credits-modal" role="dialog" aria-modal="true" aria-labelledby="credits-modal-title" onclick="if (event.target === this) fermerModalCredits()">
+        <div class="nt-modal-card">
+            <button type="button" class="nt-modal-close" onclick="fermerModalCredits()" aria-label="Fermer"><i class="fas fa-times"></i></button>
+
+            <div id="credits-modal-offer">
+                <div class="nt-modal-icon"><i class="fas fa-music"></i></div>
+                <h2 id="credits-modal-title">Ta chanson est <span>prête à naître</span></h2>
+                <p class="nt-modal-sub" id="credits-modal-sub">Il te faut 1 crédit pour lancer l'enregistrement. Choisis ton pack : tes réponses restent enregistrées.</p>
+
+                <div class="nt-packs">
+                    <button type="button" class="nt-pack" onclick="acheterPack('pack1', this)">
+                        <div class="nt-pack-main"><span class="nt-pack-songs">1</span><span class="nt-pack-label">chanson</span></div>
+                        <div class="nt-pack-pricebox"><span class="nt-pack-price">1 000 F</span><span class="nt-pack-unit">1 000 F / chanson</span></div>
+                    </button>
+                    <button type="button" class="nt-pack popular" onclick="acheterPack('pack3', this)">
+                        <span class="nt-pack-badge">Populaire</span>
+                        <div class="nt-pack-main"><span class="nt-pack-songs">3</span><span class="nt-pack-label">chansons</span></div>
+                        <div class="nt-pack-pricebox"><span class="nt-pack-price">2 500 F</span><span class="nt-pack-unit">≈ 833 F / chanson</span></div>
+                    </button>
+                    <button type="button" class="nt-pack" onclick="acheterPack('pack5', this)">
+                        <div class="nt-pack-main"><span class="nt-pack-songs">5</span><span class="nt-pack-label">chansons</span></div>
+                        <div class="nt-pack-pricebox"><span class="nt-pack-price">4 000 F</span><span class="nt-pack-unit">800 F / chanson</span></div>
+                    </button>
+                </div>
+
+                <div class="nt-pay-methods">
+                    <img src="logo_wave.jpg" alt="Wave"><img src="logo_orange.jpg" alt="Orange Money"><img src="logo_mtn.jpg" alt="MTN MoMo"><img src="logo_moov.jpg" alt="Moov Money">
+                    <span><i class="fas fa-lock"></i> Paiement sécurisé</span>
+                </div>
+                <button type="button" class="nt-modal-later" onclick="fermerModalCredits()">Plus tard</button>
+            </div>
+
+            <div id="credits-modal-state" class="nt-modal-state" style="display: none;">
+                <div class="spinner"></div>
+                <h2 id="credits-state-title">Confirmation du paiement…</h2>
+                <p class="nt-modal-sub" id="credits-state-sub" style="margin-bottom: 0;">Quelques secondes, on vérifie avec ton opérateur.</p>
+            </div>
+        </div>
+    </div>
+
     <nav>
         <a href="index.html" class="nova-brand-logo">
             <div class="logo-eq-bars">
@@ -129,6 +226,7 @@
             <img src="logo.png" alt="Nova Tempo" style="height: 38px; width: auto;">
         </a>
         <div class="nav-links">
+            <a class="credits-pill" id="credits-pill" onclick="ouvrirModalCredits('solde')"><i class="fas fa-coins"></i> <span id="studio-credits">…</span></a>
             <a href="profil.html"><i class="fas fa-user"></i> Mon Profil</a>
             <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
         </div>
@@ -283,8 +381,176 @@
                 }
 
                 verifierBannersNotifications();
+                await chargerSolde();
+                await gererRetourPaiement();
             }
         });
+
+        // ==========================================
+        // CRÉDITS : solde, fenêtre d'achat, retour de paiement
+        // ==========================================
+        let soldeCredits = null;
+        const BROUILLON_KEY = 'nova_studio_brouillon';
+
+        async function chargerSolde() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) return null;
+            const { data: profile } = await supabaseClient.from('profiles').select('credits').eq('id', session.user.id).single();
+            soldeCredits = profile ? profile.credits : 0;
+            const pill = document.getElementById('credits-pill');
+            document.getElementById('studio-credits').textContent = `${soldeCredits} crédit${soldeCredits > 1 ? 's' : ''}`;
+            pill.classList.toggle('empty', soldeCredits <= 0);
+            return soldeCredits;
+        }
+
+        function afficherToast(message, type = 'success', duree = 4500) {
+            const toast = document.getElementById('nt-toast');
+            const icones = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+            toast.className = `${type} show`;
+            toast.querySelector('i').className = `fas ${icones[type] || icones.info}`;
+            document.getElementById('nt-toast-text').textContent = message;
+            clearTimeout(afficherToast._t);
+            afficherToast._t = setTimeout(() => toast.classList.remove('show'), duree);
+        }
+
+        function ouvrirModalCredits(raison = 'insuffisant') {
+            const titre = document.getElementById('credits-modal-title');
+            const sous = document.getElementById('credits-modal-sub');
+            if (raison === 'solde') {
+                titre.innerHTML = soldeCredits > 0
+                    ? `Tu as <span>${soldeCredits} crédit${soldeCredits > 1 ? 's' : ''}</span>`
+                    : `Ton solde est <span>à zéro</span>`;
+                sous.textContent = "1 crédit = 1 chanson complète, paroles et voix comprises. Recharge quand tu veux :";
+            } else {
+                titre.innerHTML = 'Ta chanson est <span>prête à naître</span>';
+                sous.textContent = "Il te faut 1 crédit pour lancer l'enregistrement. Choisis ton pack : tes réponses restent enregistrées.";
+            }
+            document.getElementById('credits-modal-offer').style.display = 'block';
+            document.getElementById('credits-modal-state').style.display = 'none';
+            document.querySelectorAll('.nt-pack').forEach(b => b.disabled = false);
+            document.getElementById('credits-modal').classList.add('open');
+        }
+
+        function fermerModalCredits() {
+            document.getElementById('credits-modal').classList.remove('open');
+        }
+
+        function afficherEtatModal(titre, texte, avecSpinner = true) {
+            document.getElementById('credits-modal-offer').style.display = 'none';
+            document.getElementById('credits-modal-state').style.display = 'block';
+            document.querySelector('#credits-modal-state .spinner').style.display = avecSpinner ? 'block' : 'none';
+            document.getElementById('credits-state-title').textContent = titre;
+            document.getElementById('credits-state-sub').textContent = texte;
+            document.getElementById('credits-modal').classList.add('open');
+        }
+
+        // Sauvegarde / restauration du formulaire pendant le passage par la page de paiement
+        function sauverBrouillon() {
+            const coche = name => document.querySelector(`input[name="${name}"]:checked`)?.value || null;
+            const brouillon = {
+                cible: document.getElementById('target-name').value,
+                occasion: coche('occasion'),
+                style: coche('style'),
+                voice: coche('voice'),
+                champs: Array.from(document.querySelectorAll('.custom-data')).map(c => c.value)
+            };
+            try { sessionStorage.setItem(BROUILLON_KEY, JSON.stringify(brouillon)); } catch (e) {}
+        }
+
+        function restaurerBrouillon() {
+            let brouillon = null;
+            try { brouillon = JSON.parse(sessionStorage.getItem(BROUILLON_KEY)); } catch (e) {}
+            if (!brouillon) return false;
+            const cocher = (name, value) => {
+                const input = value && document.querySelector(`input[name="${name}"][value="${CSS.escape(value)}"]`);
+                if (input) input.checked = true;
+            };
+            document.getElementById('target-name').value = brouillon.cible || '';
+            if (brouillon.occasion) {
+                cocher('occasion', brouillon.occasion);
+                genererFormulaireOccasion(brouillon.occasion);
+                document.querySelectorAll('.custom-data').forEach((c, i) => { c.value = brouillon.champs?.[i] || ''; });
+            }
+            cocher('style', brouillon.style);
+            cocher('voice', brouillon.voice);
+            try { sessionStorage.removeItem(BROUILLON_KEY); } catch (e) {}
+            return true;
+        }
+
+        async function acheterPack(pack, bouton) {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) { window.location.href = 'login.html'; return; }
+
+            document.querySelectorAll('.nt-pack').forEach(b => b.disabled = true);
+            bouton.querySelector('.nt-pack-price').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            sauverBrouillon();
+            sessionStorage.setItem('nova_in_payment', 'true');
+
+            try {
+                const response = await fetch('/api/pay/create-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+                    body: JSON.stringify({ pack, return_to: 'studio' })
+                });
+                const data = await response.json();
+                if (data.checkout_url) {
+                    window.location.href = data.checkout_url;
+                    return;
+                }
+                throw new Error(data.error || "Le paiement n'a pas pu démarrer.");
+            } catch (err) {
+                sessionStorage.removeItem('nova_in_payment');
+                ouvrirModalCredits();
+                afficherToast(err.message || "Erreur de connexion au service de paiement.", 'error');
+                const prix = { pack1: '1 000 F', pack3: '2 500 F', pack5: '4 000 F' };
+                document.querySelectorAll('.nt-pack').forEach(b => {
+                    const p = b.getAttribute('onclick').match(/pack\d/)[0];
+                    b.querySelector('.nt-pack-price').textContent = prix[p];
+                });
+            }
+        }
+
+        async function gererRetourPaiement() {
+            const params = new URLSearchParams(window.location.search);
+            const statut = params.get('payment');
+            const pid = params.get('pid');
+            if (!statut) return;
+
+            history.replaceState(null, '', '/studio.html');
+            sessionStorage.removeItem('nova_in_payment');
+            const formulaireRestaure = restaurerBrouillon();
+
+            if (statut !== 'success' || !pid) {
+                afficherToast("Paiement annulé. Tes réponses sont toujours là.", 'info');
+                return;
+            }
+
+            afficherEtatModal('Confirmation du paiement…', 'Quelques secondes, on vérifie avec ton opérateur.');
+            for (let essai = 0; essai < 8; essai++) {
+                try {
+                    const { data: { session } } = await supabaseClient.auth.getSession();
+                    const res = await fetch(`/api/pay/verify-payment?pid=${encodeURIComponent(pid)}`, {
+                        headers: { 'Authorization': `Bearer ${session ? session.access_token : ''}` }
+                    });
+                    const result = await res.json();
+                    if (result.status === 'success') {
+                        await chargerSolde();
+                        fermerModalCredits();
+                        afficherToast(formulaireRestaure
+                            ? `Paiement confirmé ! Tu as ${soldeCredits} crédit${soldeCredits > 1 ? 's' : ''}. Tes réponses t'attendent, il ne reste qu'à générer.`
+                            : `Paiement confirmé ! Tu as ${soldeCredits} crédit${soldeCredits > 1 ? 's' : ''}.`, 'success', 7000);
+                        if (formulaireRestaure) document.getElementById('generate-btn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        return;
+                    }
+                    if (result.status === 'failed' || !res.ok) break;
+                } catch (e) {
+                    console.error('Vérification paiement:', e);
+                }
+                await new Promise(r => setTimeout(r, 4000));
+            }
+            afficherEtatModal('Paiement en cours de validation',
+                "Ton opérateur n'a pas encore confirmé. Tes crédits apparaîtront automatiquement dès validation : actualise la page dans une minute. Un souci ? Écris-nous sur WhatsApp.", false);
+        }
 
         function verifierBannersNotifications() {
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -304,7 +570,7 @@
                 const result = await Notification.requestPermission();
                 if (result === "granted") {
                     document.getElementById('notif-permission-box').style.display = 'none';
-                    alert("✅ Notifications activées ! Vous serez alerté même si votre téléphone est éteint.");
+                    afficherToast("Notifications activées ! Tu seras alerté même téléphone verrouillé.");
                 }
             }
         }
@@ -453,15 +719,9 @@
             }
 
             try {
-                const { data: profile } = await supabaseClient
-                    .from('profiles')
-                    .select('credits')
-                    .eq('id', session.user.id)
-                    .single();
-
-                if (!profile || !profile.credits || profile.credits <= 0) {
-                    alert("⚠️ Vous n'avez pas de crédits suffisants (0 FCFA).\nVous allez être redirigé vers la page de recharge.");
-                    window.location.href = 'profil.html';
+                const solde = await chargerSolde();
+                if (solde !== null && solde <= 0) {
+                    ouvrirModalCredits();
                     return;
                 }
             } catch(e) {
@@ -548,8 +808,9 @@
                 const dataCreation = await resCreation.json();
 
                 if (resCreation.status === 402) {
-                    alert("⚠️ " + dataCreation.error);
-                    window.location.href = 'profil.html';
+                    await switchView(loadingEl, formEl);
+                    await chargerSolde();
+                    ouvrirModalCredits();
                     return;
                 }
 
@@ -558,6 +819,7 @@
                 }
 
                 const jobId = dataCreation.job_id;
+                chargerSolde();
 
                 const verificationIntervalle = setInterval(async () => {
                     try {
@@ -591,10 +853,11 @@
 
                         } else if (dataStatut.status === 'failed') {
                             clearInterval(verificationIntervalle);
-                            alert("Oups ! Nos musiciens ont rencontré un petit problème. Ton crédit t'a été rendu : modifie un peu le texte et réessaie.");
                             btn.disabled = false;
                             btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
                             await switchView(loadingEl, formEl);
+                            await chargerSolde();
+                            afficherToast("Nos musiciens ont eu un souci. Ton crédit t'a été rendu : modifie un peu le texte et réessaie.", 'error', 8000);
                         } else {
                             progressPercent = Math.min(progressPercent + 10, 92);
                             loadingBar.style.width = progressPercent + '%';
@@ -608,10 +871,11 @@
 
             } catch (erreur) {
                 console.error(erreur);
-                alert("Oups ! Problème de connexion avec le studio. " + erreur.message);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
                 await switchView(loadingEl, formEl);
+                chargerSolde();
+                afficherToast(erreur.message || "Problème de connexion avec le studio. Réessaie dans un instant.", 'error', 8000);
             }
         }
     </script>

@@ -15,6 +15,9 @@ module.exports = async (req, res) => {
         const pack = PACKS[packId];
         if (!pack) return res.status(400).json({ error: 'Pack invalide' });
 
+        // Page de retour après paiement : le Studio (achat en cours de création) ou le Profil
+        const returnPage = (req.body || {}).return_to === 'studio' ? 'studio' : 'profil';
+
         // 1. Enregistrer le paiement en attente
         const [payment] = await rest('payments', {
             method: 'POST',
@@ -37,8 +40,8 @@ module.exports = async (req, res) => {
                 amount: pack.amount,
                 currency: 'XOF',
                 description: pack.title,
-                success_url: `${baseUrl}/profil.html?payment=success&pid=${payment.id}`,
-                error_url: `${baseUrl}/profil.html?payment=cancel&pid=${payment.id}`,
+                success_url: `${baseUrl}/${returnPage}.html?payment=success&pid=${payment.id}`,
+                error_url: `${baseUrl}/${returnPage}.html?payment=cancel&pid=${payment.id}`,
                 customer: {
                     name: user.email ? user.email.split('@')[0] : 'Client NovaTempo',
                     email: user.email
