@@ -30,7 +30,7 @@ Le DJ envoie, le sol vibre fort
 Derrière chaque grande fête il y a quelqu'un
 {NOM}, c'est toi qui as tout préparé
 {ANECDOTE}, tu l'as rêvé depuis loin
-Et ce soir {RELATION} est venu te saluer
+{RELATION}, ce soir on est venus te saluer
 
 [Refrain]
 Applaudissez {NOM}, applaudissez fort
@@ -99,7 +99,7 @@ Une équipe, un rêve, une victoire
 Le compte à rebours a commencé
 {ANECDOTE}, le grand jour est arrivé
 {NOM}, tout le monde attendait ce moment
-{RELATION} est là, les yeux brillants
+{RELATION}, vous êtes là, les yeux brillants
 
 [Refrain]
 Trois, deux, un, c'est lancé !
@@ -168,7 +168,7 @@ Ensemble pour l'éternité`,
 Les nuits à réviser, les doutes, la fatigue
 {NOM}, tu as tenu bon jusqu'au bout
 {ANECDOTE}, aujourd'hui c'est ta victoire
-{RELATION} est fier de toi, debout
+{RELATION}, on est fiers de toi, debout
 
 [Refrain]
 Diplômé, champion, la tête haute
@@ -306,7 +306,7 @@ Les bêtises, les cours, les premiers rêves
 Tant d'années de service et de sourires
 {NOM}, aujourd'hui c'est ton grand jour
 {ANECDOTE}, on est là pour te le dire
-{RELATION} te remercie avec amour
+{RELATION}, on te remercie avec amour
 
 [Refrain]
 Merci {NOM}, pour tout ce que tu as donné

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="studio-parcours.js"></script>
     
     <style>
         :root { --bg-dark: #06060A; --card-bg: #111118; --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6); --neon-lime: #D4FF00; --neon-pink: #FF0066; }
@@ -52,6 +53,54 @@
         .dynamic-field { margin-bottom: 1.5rem; animation: fadeIn 0.5s ease; text-align: left; }
         .dynamic-field label { display: block; margin-bottom: 0.6rem; color: var(--text-muted); font-size: 0.95rem; font-weight: 600; }
         .field-tip { margin: 0.4rem 0 0; font-size: 0.85rem; color: var(--text-muted); text-align: left; }
+
+        /* --- Parcours guidé --- */
+        .pc-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.7rem; color: var(--text-muted); font-size: 0.85rem; font-weight: 700; }
+        .pc-progress { height: 6px; border-radius: 10px; background: rgba(255,255,255,0.08); overflow: hidden; margin-bottom: 2rem; }
+        .pc-progress-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--neon-lime), #9BDB22); border-radius: 10px; transition: width 0.45s ease; }
+        .pc-occasion-pill { display: inline-flex; align-items: center; gap: 6px; padding: 0.25rem 0.8rem; border-radius: 50px; background: rgba(212,255,0,0.08); border: 1px solid rgba(212,255,0,0.3); color: var(--neon-lime); }
+        .pc-title { font-size: 1.6rem; font-weight: 900; line-height: 1.25; margin: 0 0 0.4rem; }
+        .pc-sub { color: var(--text-muted); margin: 0 0 1.6rem; font-size: 1rem; line-height: 1.5; }
+        .pc-body { animation: fadeIn 0.35s ease; }
+        .pc-block { margin-bottom: 1.6rem; }
+        .pc-label { display: block; margin-bottom: 0.7rem; font-weight: 700; color: var(--text-light); }
+        .pc-occasions { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.9rem; }
+        .pc-occasion { display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem; padding: 1.1rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: var(--text-light); font-family: inherit; text-align: left; cursor: pointer; transition: all 0.25s; }
+        .pc-occasion:hover { border-color: rgba(212,255,0,0.5); transform: translateY(-2px); }
+        .pc-occasion .e { font-size: 1.7rem; }
+        .pc-occasion .t { font-weight: 800; font-size: 1.05rem; }
+        .pc-occasion .a { color: var(--text-muted); font-size: 0.82rem; }
+        .pc-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .chip { padding: 0.7rem 1.1rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.14); background: rgba(0,0,0,0.3); color: var(--text-light); font-family: inherit; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .chip:hover { border-color: rgba(212,255,0,0.5); }
+        .chip.on { background: rgba(212,255,0,0.12); border-color: var(--neon-lime); color: var(--neon-lime); box-shadow: 0 0 12px rgba(212,255,0,0.18); }
+        .chip .reco { margin-left: 6px; font-size: 0.7rem; font-weight: 900; color: var(--bg-dark); background: var(--neon-lime); padding: 2px 7px; border-radius: 50px; vertical-align: middle; }
+        .pc-autre { margin-top: 0.9rem; }
+        .pc-error { display: none; margin-top: 1rem; color: var(--neon-pink); font-weight: 700; font-size: 0.92rem; }
+        .pc-nav { display: flex; gap: 0.8rem; margin-top: 2.2rem; }
+        .pc-nav .btn-generate { margin-top: 0; flex: 1; }
+        .btn-retour { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); border-radius: 12px; padding: 0 1.3rem; font-family: inherit; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s; }
+        .btn-retour:hover { border-color: var(--neon-lime); color: var(--neon-lime); }
+        .lyrics-preview { white-space: pre-wrap; background: rgba(0,0,0,0.4); border: 1px solid rgba(212,255,0,0.25); border-radius: 16px; padding: 1.4rem; line-height: 1.7; font-size: 1rem; max-height: 52vh; overflow-y: auto; }
+        .lyrics-preview .sec { display: block; color: var(--neon-lime); font-weight: 800; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; margin: 1.1rem 0 0.3rem; }
+        .lyrics-preview .ln { display: block; }
+        .lyrics-preview .sec:first-child { margin-top: 0; }
+        .pc-actions-sec { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1rem; }
+        .btn-soft { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: var(--text-light); border-radius: 50px; padding: 0.7rem 1.2rem; font-family: inherit; font-weight: 700; font-size: 0.92rem; cursor: pointer; transition: all 0.2s; }
+        .btn-soft:hover:not(:disabled) { border-color: var(--neon-lime); color: var(--neon-lime); }
+        .btn-soft:disabled { opacity: 0.5; cursor: wait; }
+        .btn-cout { font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 50px; background: rgba(6,6,10,0.15); text-transform: none; }
+        @media (max-width: 600px) {
+            .studio-card { padding: 1.6rem 1.2rem; }
+            .pc-title { font-size: 1.35rem; }
+            .pc-occasions { grid-template-columns: 1fr 1fr; }
+            .lyrics-preview { padding: 1rem; font-size: 0.95rem; line-height: 1.6; }
+            .btn-generate { font-size: 1rem; padding: 1rem; }
+            .pc-actions-sec .btn-soft { flex: 1; text-align: center; }
+            .studio-card { padding: 1.4rem 1rem; }
+            h1 { font-size: 2.2rem; }
+            .subtitle { margin-bottom: 1.6rem; }
+        }
         .optional-tag { font-size: 0.8rem; color: rgba(255,255,255,0.4); font-weight: normal; margin-left: 5px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -143,7 +192,7 @@
         }
 
         @media (max-width: 768px) {
-            nav { padding: 1rem; flex-direction: column; gap: 1rem; }
+            nav { padding: 1rem; flex-direction: column; gap: 0.8rem; position: static; }
             .nav-links { flex-wrap: wrap; justify-content: center; gap: 0.9rem 1.2rem; }
             .radio-grid { grid-template-columns: repeat(2, 1fr); }
             #notification-banner { left: 10px; right: 10px; max-width: none; }
@@ -261,82 +310,17 @@
 
         <div class="studio-card">
             
-            <!-- BLOC 1 : FORMULAIRE DE CRÉATION -->
-            <form id="studio-form" onsubmit="handleGenerate(event)">
-                
-                <div class="form-group">
-                    <label class="main-label" id="label-target-name" for="target-name">1. Pour qui est cette chanson ? (Prénom)</label>
-                    <input type="text" id="target-name" maxlength="40" placeholder="Ex: Marc, Awa, Sarah...">
-                    <p class="field-tip" id="target-name-tip">💡 Ce prénom sera chanté dans la chanson.</p>
+            <!-- BLOC 1 : PARCOURS GUIDÉ (étapes décrites dans studio-parcours.js) -->
+            <div id="parcours">
+                <div class="pc-head"><span id="pc-etape"></span><span id="pc-occasion-pill"></span></div>
+                <div class="pc-progress"><div class="pc-progress-bar" id="pc-bar"></div></div>
+                <div id="pc-body" class="pc-body"></div>
+                <p class="pc-error" id="pc-error" role="alert"></p>
+                <div class="pc-nav" id="pc-nav">
+                    <button type="button" class="btn-retour" id="pc-retour" onclick="etapePrecedente()"><i class="fas fa-arrow-left"></i></button>
+                    <button type="button" class="btn-generate" id="pc-suivant" onclick="etapeSuivante()">Suivant <i class="fas fa-arrow-right"></i></button>
                 </div>
-                
-                <div class="form-group">
-                    <label class="main-label">2. Quelle est l'occasion ?</label>
-                    <div class="radio-grid">
-                        <label class="radio-card"><input type="radio" name="occasion" value="amour" required onchange="genererFormulaireOccasion(this.value)"><span class="card-content">❤️ Amour</span></label>
-                        <label class="radio-card"><input type="radio" name="occasion" value="anniversaire" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🎂 Anniversaire</span></label>
-                        <label class="radio-card"><input type="radio" name="occasion" value="mariage" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">💍 Mariage</span></label>
-                        <label class="radio-card"><input type="radio" name="occasion" value="hommage" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🕊️ Hommage</span></label>
-                        <label class="radio-card"><input type="radio" name="occasion" value="adoration" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🙌 Adoration</span></label>
-                        <label class="radio-card"><input type="radio" name="occasion" value="promotion" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🚀 Promotion</span></label>
-                        <label class="radio-card"><input type="radio" name="occasion" value="evenement" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🎉 Événement</span></label>
-                    </div>
-
-                    <!-- Accord des paroles (masculin / féminin), selon l'occasion -->
-                    <div id="sexe-group" style="display: none; margin-top: 1.6rem;">
-                        <label class="main-label" style="font-size: 0.95rem; margin-bottom: 0.8rem;">Cette chanson est pour…</label>
-                        <div class="radio-grid">
-                            <label class="radio-card"><input type="radio" name="sexe" value="h"><span class="card-content">👨 Un homme</span></label>
-                            <label class="radio-card"><input type="radio" name="sexe" value="f"><span class="card-content">👩 Une femme</span></label>
-                            <label class="radio-card"><input type="radio" name="sexe" value="groupe"><span class="card-content">👥 Un couple / un groupe</span></label>
-                        </div>
-                    </div>
-
-                    <!-- Lien avec la personne : choisit le bon type de texte (anniversaire) -->
-                    <div id="lien-group" style="display: none; margin-top: 1.6rem;">
-                        <label class="main-label" style="font-size: 0.95rem; margin-bottom: 0.8rem;">Ton lien avec cette personne</label>
-                        <div class="radio-grid">
-                            <label class="radio-card"><input type="radio" name="lien" value="amour"><span class="card-content">💕 Mon amour</span></label>
-                            <label class="radio-card"><input type="radio" name="lien" value="parent"><span class="card-content">👪 Mon parent / grand-parent</span></label>
-                            <label class="radio-card"><input type="radio" name="lien" value="enfant"><span class="card-content">🧒 Mon enfant</span></label>
-                            <label class="radio-card"><input type="radio" name="lien" value="proche"><span class="card-content">🤝 Famille, ami(e) ou collègue</span></label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="main-label">3. Quel style musical ?</label>
-                    <div class="radio-grid">
-                        <label class="radio-card"><input type="radio" name="style" value="Afrobeat" required><span class="card-content">🌍 Afrobeat</span></label>
-                        <label class="radio-card"><input type="radio" name="style" value="Rap Français"><span class="card-content">🎤 Rap Français</span></label>
-                        <label class="radio-card"><input type="radio" name="style" value="Coupé Décalé"><span class="card-content">🕺 Coupé Décalé</span></label>
-                        <label class="radio-card"><input type="radio" name="style" value="Zouk"><span class="card-content">💃 Zouk</span></label>
-                        <label class="radio-card"><input type="radio" name="style" value="Amapiano"><span class="card-content">🔥 Amapiano</span></label>
-                        <label class="radio-card"><input type="radio" name="style" value="Ndombolo"><span class="card-content">🎸 Ndombolo</span></label>
-                        <label class="radio-card"><input type="radio" name="style" value="Gospel"><span class="card-content">🙏 Gospel</span></label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="main-label">4. Quelle voix ?</label>
-                    <div class="radio-grid">
-                        <label class="radio-card"><input type="radio" name="voice" value="male" required><span class="card-content">👨 Homme</span></label>
-                        <label class="radio-card"><input type="radio" name="voice" value="female"><span class="card-content">👩 Femme</span></label>
-                        <label class="radio-card"><input type="radio" name="voice" value="duo"><span class="card-content">👫 Duo</span></label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="main-label">5. Les détails (Personnalisation optionnelle)</label>
-                    <div id="dynamic-form-container" style="padding: 1rem; border: 1px dashed rgba(212,255,0,0.3); border-radius: 12px; color: var(--text-muted);">
-                        <div style="text-align: center;">Veuillez sélectionner une occasion ci-dessus.</div>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-generate" id="generate-btn">
-                    <i class="fas fa-magic"></i> Générer ma chanson
-                </button>
-            </form>
+            </div>
 
             <!-- BLOC 2 : CHARGEMENT EN COURS -->
             <div id="loading-container">
@@ -467,43 +451,6 @@
             document.getElementById('credits-modal').classList.add('open');
         }
 
-        // Sauvegarde / restauration du formulaire pendant le passage par la page de paiement
-        function sauverBrouillon() {
-            const coche = name => document.querySelector(`input[name="${name}"]:checked`)?.value || null;
-            const brouillon = {
-                cible: document.getElementById('target-name').value,
-                occasion: coche('occasion'),
-                style: coche('style'),
-                voice: coche('voice'),
-                sexe: coche('sexe'),
-                lien: coche('lien'),
-                champs: Array.from(document.querySelectorAll('.custom-data')).map(c => c.value)
-            };
-            try { sessionStorage.setItem(BROUILLON_KEY, JSON.stringify(brouillon)); } catch (e) {}
-        }
-
-        function restaurerBrouillon() {
-            let brouillon = null;
-            try { brouillon = JSON.parse(sessionStorage.getItem(BROUILLON_KEY)); } catch (e) {}
-            if (!brouillon) return false;
-            const cocher = (name, value) => {
-                const input = value && document.querySelector(`input[name="${name}"][value="${CSS.escape(value)}"]`);
-                if (input) input.checked = true;
-            };
-            document.getElementById('target-name').value = brouillon.cible || '';
-            if (brouillon.occasion) {
-                cocher('occasion', brouillon.occasion);
-                genererFormulaireOccasion(brouillon.occasion);
-                document.querySelectorAll('.custom-data').forEach((c, i) => { c.value = brouillon.champs?.[i] || ''; });
-            }
-            cocher('style', brouillon.style);
-            cocher('voice', brouillon.voice);
-            cocher('sexe', brouillon.sexe);
-            cocher('lien', brouillon.lien);
-            try { sessionStorage.removeItem(BROUILLON_KEY); } catch (e) {}
-            return true;
-        }
-
         async function acheterPack(pack, bouton) {
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (!session) { window.location.href = 'login.html'; return; }
@@ -564,9 +511,9 @@
                         await chargerSolde();
                         fermerModalCredits();
                         afficherToast(formulaireRestaure
-                            ? `Paiement confirmé ! Tu as ${soldeCredits} crédit${soldeCredits > 1 ? 's' : ''}. Tes réponses t'attendent, il ne reste qu'à générer.`
+                            ? `Paiement confirmé ! Tu as ${soldeCredits} crédit${soldeCredits > 1 ? 's' : ''}. Tes paroles t'attendent, il ne reste qu'à créer ta chanson.`
                             : `Paiement confirmé ! Tu as ${soldeCredits} crédit${soldeCredits > 1 ? 's' : ''}.`, 'success', 7000);
-                        if (formulaireRestaure) document.getElementById('generate-btn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        if (formulaireRestaure) document.getElementById('generate-btn')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         return;
                     }
                     if (result.status === 'failed' || !res.ok) break;
@@ -655,172 +602,363 @@
             }
         }
         
-        const questionsPersonnalisees = {
-            'amour': `
-                <div class="dynamic-field"><label>Comment l'appelles-tu ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" maxlength="40" placeholder="Ex : mon cœur, mon bébé, ma chérie"></div>
-                <div class="dynamic-field"><label>Depuis combien de temps êtes-vous ensemble ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" maxlength="25" placeholder="Ex : 3 ans, six mois"></div>
-                <div class="dynamic-field"><label>Un souvenir à vous deux <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" maxlength="80" placeholder="Ex : notre voyage à Assinie, notre premier rendez-vous"></div>
-                <p class="field-tip">💡 Écris de courts groupes de mots : ils seront chantés tels quels dans la chanson.</p>
-            `,
-            'anniversaire': `
-                <div class="dynamic-field"><label>Quel âge fête-t-on ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="age" maxlength="15" placeholder="Ex : 30 ans"></div>
-                <div class="dynamic-field"><label>Comment l'appelles-tu ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" maxlength="40" placeholder="Ex : mon frère, ma fille, maman, mon meilleur ami"></div>
-                <div class="dynamic-field"><label>Depuis combien de temps vous vous connaissez ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" maxlength="25" placeholder="Ex : 10 ans, depuis l'enfance"></div>
-                <div class="dynamic-field"><label>Un souvenir ou une qualité <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" maxlength="80" placeholder="Ex : nos fous rires d'enfance, ton grand cœur"></div>
-                <p class="field-tip">💡 Écris de courts groupes de mots : ils seront chantés tels quels dans la chanson.</p>
-            `,
-            'mariage': `
-                <div class="dynamic-field"><label>Comment appelles-tu ton/ta partenaire ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" maxlength="40" placeholder="Ex : mon épouse, mon mari, ma chérie"></div>
-                <div class="dynamic-field"><label>Depuis combien de temps êtes-vous ensemble ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" maxlength="25" placeholder="Ex : 5 ans"></div>
-                <div class="dynamic-field"><label>Un souvenir ou votre lieu de rencontre <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" maxlength="80" placeholder="Ex : notre rencontre à la fac, la demande sur la plage"></div>
-                <p class="field-tip">💡 Écris de courts groupes de mots : ils seront chantés tels quels dans la chanson.</p>
-            `,
-            'hommage': `
-                <div class="dynamic-field"><label>Qui était cette personne pour toi ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" maxlength="40" placeholder="Ex : mon grand-père, ma maman, mon ami fidèle"></div>
-                <div class="dynamic-field"><label>Depuis combien de temps nous a-t-elle quittés ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" maxlength="25" placeholder="Ex : 2 ans, dix ans"></div>
-                <div class="dynamic-field"><label>Un souvenir ou un enseignement qu'elle t'a laissé <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" maxlength="80" placeholder="Ex : ses repas du dimanche, sa sagesse"></div>
-                <p class="field-tip">💡 Écris de courts groupes de mots : ils seront chantés tels quels dans la chanson.</p>
-            `,
-            'adoration': `
-                <div class="dynamic-field"><label>Qualité / Titre divin célébré <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: mon rocher, mon berger, le Roi des rois"></div>
-                <div class="dynamic-field"><label>Témoignage ou souvenir personnel <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Quand Tu m'as sauvé de la maladie, Ton amour dans ma vie"></div>
-                <div class="dynamic-field"><label>L'épreuve ou moment difficile surmonté <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="moment_difficile" placeholder="Ex: La traversée du désert, la maladie surmontée"></div>
-                <div class="dynamic-field"><label>La grâce, délivrance ou bénédiction reçue <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="benediction" placeholder="Ex: La guérison miraculeuse, la paix retrouvée"></div>
-            `,
-            'promotion': `
-                <div class="dynamic-field"><label>Nom du produit, service ou événement <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="produit" placeholder="Ex: NovaTempo, notre restaurant, l'Appartement VIP"></div>
-                <div class="dynamic-field"><label>Le bénéfice fort / Argument principal <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="argument" placeholder="Ex: 100% bio et fait maison, résultats garantis en 7 jours"></div>
-                <div class="dynamic-field"><label>L'appel à l'action (Call to action) <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="cta" placeholder="Ex: Cliquez sur le lien, appelez au 0707..., venez nous rendre visite"></div>
-                <div class="dynamic-field"><label>Accroche / Anecdote ou contexte <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Déjà 5000 clients satisfaits, une offre limitée"></div>
-            `,
-            'evenement': `
-                <div class="dynamic-field"><label>Nom / Type d'événement <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Le concert de fin d'année, le grand barbecue du quartier"></div>
-                <div class="dynamic-field"><label>Rôle ou public cible <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: les invités, nos amis, les passionnés"></div>
-                <div class="dynamic-field"><label>Date / Ambiance <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" placeholder="Ex: Ce samedi à 20h, ambiance festive et conviviale"></div>
-            `
-        };
+        // ==========================================
+        // PARCOURS GUIDÉ (étapes décrites dans studio-parcours.js)
+        // ==========================================
+        const { OCCASIONS, STYLES } = window.NOVA_PARCOURS;
+        const NOMS_OCCASIONS = { amour: "d'amour", anniversaire: "d'anniversaire", hommage: 'hommage', mariage: 'de mariage', adoration: "d'adoration", promotion: 'promotionnelle', evenement: "d'événement" };
 
-        function genererFormulaireOccasion(occasion) {
-            const container = document.getElementById('dynamic-form-container');
-            const labelTarget = document.getElementById('label-target-name');
-            const inputTarget = document.getElementById('target-name');
+        function etatInitial() {
+            return { occasion: null, etape: 0, reponses: {}, style: null, voix: null, paroles: null };
+        }
+        let etat = etatInitial();
 
-            // Question 1 adaptée à l'occasion ; prénom obligatoire quand la chanson s'adresse à une personne
-            const QUESTION_NOM = {
-                amour: ["1. Comment s'appelle la personne que tu aimes ?", "Ex : Awa, Koffi, Sarah", true],
-                anniversaire: ["1. Qui fête son anniversaire ? (Prénom)", "Ex : Awa, Papa Koffi, Sarah", true],
-                mariage: ["1. Prénom de ton/ta partenaire", "Ex : Awa, Koffi", true],
-                hommage: ["1. À qui rends-tu hommage ? (Prénom ou nom)", "Ex : Papa Koffi, Grand-mère Aya", true],
-                adoration: ["1. Qui adores-tu / célèbres-tu ? (optionnel)", "Ex : Seigneur, Jésus, mon Père", false],
-                promotion: ["1. À qui s'adresse la chanson ? (optionnel)", "Ex : chers clients, notre communauté", false],
-                evenement: ["1. Qui est à l'honneur ? (optionnel)", "Ex : Awa, les jeunes mariés, toute l'équipe", false]
-            };
-            const [question, exemple, obligatoire] = QUESTION_NOM[occasion] || QUESTION_NOM.amour;
-            labelTarget.textContent = question;
-            inputTarget.placeholder = exemple;
-            inputTarget.required = obligatoire;
-            document.getElementById('target-name-tip').textContent = obligatoire
-                ? '💡 Ce prénom sera chanté plusieurs fois dans la chanson.'
-                : '💡 Si tu le remplis, il sera chanté dans la chanson.';
+        const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-            if (questionsPersonnalisees[occasion]) {
-                container.innerHTML = questionsPersonnalisees[occasion];
-            } else {
-                container.innerHTML = `<div class="dynamic-field"><label>Racontez votre histoire / Détails <span class="optional-tag">(optionnel)</span> :</label><textarea class="custom-data" data-key="anecdote" placeholder="Racontez votre histoire ici..."></textarea></div>`;
+        // Étapes de l'occasion choisie (l'étape 0 = choix de l'occasion)
+        function etapes() {
+            return etat.occasion ? [{ type: 'occasion' }, ...OCCASIONS[etat.occasion].etapes] : [{ type: 'occasion' }];
+        }
+
+        // Texte d'une option selon le genre ("généreux" / "généreuse")
+        function libelle(option) {
+            if (typeof option === 'string') return option;
+            const s = etat.reponses.sexe;
+            return s === 'f' ? option.f : option.h;
+        }
+        function optionsDe(etape) {
+            const liste = typeof etape.options === 'function' ? etape.options(etat) : etape.options;
+            // Couple / groupe : seulement les mots identiques au masculin et au féminin
+            const groupe = etat.reponses.sexe === 'groupe';
+            return liste.filter(o => typeof o === 'string' || !groupe || o.h === o.f).map(libelle);
+        }
+
+        // "{lui}" / "{le}" / "{il}" dans les titres selon le genre
+        function accorderTitre(t) {
+            const s = etat.reponses.sexe;
+            const f = s === 'f', g = s === 'groupe';
+            return String(t || '')
+                .replace(/\{lui\}/g, g ? 'eux' : f ? 'elle' : 'lui')
+                .replace(/\{le\}/g, g ? 'les' : f ? 'la' : 'le')
+                .replace(/\{il\}/g, g ? 'ils' : f ? 'elle' : 'il');
+        }
+
+        function erreurParcours(texte) {
+            const el = document.getElementById('pc-error');
+            el.textContent = texte || '';
+            el.style.display = texte ? 'block' : 'none';
+        }
+
+        function rendreEtape() {
+            const liste = etapes();
+            const etape = liste[etat.etape];
+            const corps = document.getElementById('pc-body');
+            const total = etat.occasion ? liste.length : 7;
+            erreurParcours('');
+
+            document.getElementById('pc-etape').textContent = `Étape ${etat.etape + 1} sur ${total}`;
+            document.getElementById('pc-bar').style.width = `${Math.round(((etat.etape + 1) / total) * 100)}%`;
+            const occ = etat.occasion && OCCASIONS[etat.occasion];
+            document.getElementById('pc-occasion-pill').innerHTML = occ ? `<span class="pc-occasion-pill">${occ.emoji} ${esc(occ.label)}</span>` : '';
+
+            const nav = document.getElementById('pc-nav');
+            const retour = document.getElementById('pc-retour');
+            const suivant = document.getElementById('pc-suivant');
+            nav.style.display = etape.type === 'occasion' || etape.type === 'apercu' ? 'none' : 'flex';
+            retour.style.visibility = etat.etape > 0 ? 'visible' : 'hidden';
+            suivant.innerHTML = 'Suivant <i class="fas fa-arrow-right"></i>';
+
+            corps.innerHTML = '';
+            corps.classList.remove('pc-body'); void corps.offsetWidth; corps.classList.add('pc-body');
+            ({ occasion: rendreOccasion, personne: rendrePersonne, choix: rendreChoix, textes: rendreTextes, musique: rendreMusique, apercu: rendreApercu })[etape.type](corps, etape);
+            mettreAJourBoutonSuivant();
+            if (rendreEtape.deja) document.getElementById('parcours').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            rendreEtape.deja = true;
+        }
+
+        // "Passer" quand l'étape facultative est vide
+        function mettreAJourBoutonSuivant() {
+            const etape = etapes()[etat.etape];
+            const suivant = document.getElementById('pc-suivant');
+            if (etape.type === 'musique') { suivant.innerHTML = '<i class="fas fa-eye"></i> Voir mes paroles'; return; }
+            let vide = false;
+            if (etape.type === 'choix' && !etape.requis) {
+                const v = etat.reponses[etape.cle];
+                vide = !v || (Array.isArray(v) && !v.length);
+            } else if (etape.type === 'textes') {
+                vide = etape.champs.filter(c => !c.si || c.si(etat)).every(c => !String(etat.reponses[c.cle] || '').trim()) && !etape.champs.some(c => c.requis);
             }
+            suivant.innerHTML = vide ? 'Passer <i class="fas fa-forward"></i>' : 'Suivant <i class="fas fa-arrow-right"></i>';
+        }
 
-            // Question homme / femme pour accorder les paroles
-            const avecSexe = OCCASIONS_GENREES.includes(occasion);
-            document.getElementById('sexe-group').style.display = avecSexe ? 'block' : 'none';
-            document.querySelectorAll('input[name="sexe"]').forEach((r, i) => {
-                r.required = avecSexe && i === 0;
-                if (!avecSexe) r.checked = false;
-            });
+        function titreHtml(etape) {
+            return `<h2 class="pc-title">${esc(accorderTitre(etape.titre))}</h2>` + (etape.sousTitre ? `<p class="pc-sub">${esc(accorderTitre(etape.sousTitre))}</p>` : '');
+        }
 
-            // Lien avec la personne (choix du type de texte)
-            const avecLien = occasion === 'anniversaire';
-            document.getElementById('lien-group').style.display = avecLien ? 'block' : 'none';
-            document.querySelectorAll('input[name="lien"]').forEach((r, i) => {
-                r.required = avecLien && i === 0;
-                if (!avecLien) r.checked = false;
+        function rendreOccasion(corps) {
+            corps.innerHTML = `<h2 class="pc-title">Quelle est l'occasion ?</h2><p class="pc-sub">Choisis, et on te guide pas à pas.</p><div class="pc-occasions">` +
+                Object.entries(OCCASIONS).map(([cle, o]) => `<button type="button" class="pc-occasion" data-occ="${cle}"><span class="e">${o.emoji}</span><span class="t">${esc(o.label)}</span><span class="a">${esc(o.accroche)}</span></button>`).join('') + '</div>';
+            corps.querySelectorAll('[data-occ]').forEach(b => b.onclick = () => {
+                if (etat.occasion !== b.dataset.occ) {
+                    etat = etatInitial();
+                    etat.occasion = b.dataset.occ;
+                    etat.style = OCCASIONS[etat.occasion].style;
+                }
+                etat.etape = 1;
+                rendreEtape();
             });
         }
-        const OCCASIONS_GENREES = ['amour', 'anniversaire', 'hommage', 'mariage'];
+
+        // Groupe de choix uniques (cartes radio) réutilisé par l'étape "personne"
+        function groupeRadio(titre, cle, options) {
+            return `<div class="pc-block"><span class="pc-label">${esc(titre)}</span><div class="pc-chips">` +
+                options.map(([v, l]) => `<button type="button" class="chip${etat.reponses[cle] === v ? ' on' : ''}" data-radio="${cle}" data-v="${esc(v)}">${l}</button>`).join('') + '</div></div>';
+        }
+
+        function rendrePersonne(corps, etape) {
+            const r = etat.reponses;
+            let html = `<h2 class="pc-title">${esc(etape.nom.label)}</h2><p class="pc-sub">Ce prénom sera chanté plusieurs fois dans la chanson.</p>
+                <div class="pc-block"><input type="text" id="pc-nom" maxlength="40" placeholder="${esc(etape.nom.exemple)}" value="${esc(r.nom || '')}" autocomplete="off"></div>`;
+            if (etape.sexe) html += groupeRadio('Cette chanson est pour…', 'sexe', [['h', '👨 Un homme'], ['f', '👩 Une femme'], ['groupe', '👥 Un couple / un groupe']]);
+            if (etape.lien) html += groupeRadio('Ton lien avec cette personne', 'lien', [['amour', '💕 Mon amour'], ['parent', '👪 Mon parent / grand-parent'], ['enfant', '🧒 Mon enfant'], ['proche', '🤝 Famille, ami(e) ou collègue']]);
+            if (etape.statut) html += groupeRadio('Cet hommage est…', 'statut', [['disparu', '🕊️ Pour une personne disparue'], ['vivant', '🌟 De son vivant']]);
+            corps.innerHTML = html;
+            const champ = document.getElementById('pc-nom');
+            champ.oninput = () => { r.nom = champ.value; };
+            champ.onkeydown = e => { if (e.key === 'Enter') etapeSuivante(); };
+            corps.querySelectorAll('[data-radio]').forEach(b => b.onclick = () => {
+                const cle = b.dataset.radio;
+                // Changer le genre ou le lien invalide les mots déjà choisis (accords)
+                if ((cle === 'sexe' || cle === 'lien') && r[cle] !== b.dataset.v) { delete r.relation; delete r.qualites; }
+                r[cle] = b.dataset.v;
+                corps.querySelectorAll(`[data-radio="${cle}"]`).forEach(x => x.classList.toggle('on', x === b));
+                erreurParcours('');
+            });
+            if (!r.nom) champ.focus();
+        }
+
+        function rendreChoix(corps, etape) {
+            const r = etat.reponses;
+            const max = etape.multiple || 1;
+            const opts = optionsDe(etape);
+            const actuel = () => (max > 1 ? (r[etape.cle] || []) : (r[etape.cle] ? [r[etape.cle]] : []));
+            const libre = actuel().find(v => !opts.includes(v)) || '';
+            corps.innerHTML = titreHtml(etape) + '<div class="pc-chips">' +
+                opts.map(o => `<button type="button" class="chip${actuel().includes(o) ? ' on' : ''}" data-v="${esc(o)}">${esc(o)}</button>`).join('') + '</div>' +
+                (etape.autre ? `<div class="pc-autre"><input type="text" id="pc-autre" maxlength="40" placeholder="${esc(etape.autre)}" value="${esc(libre)}"></div>` : '');
+
+            const appliquer = valeurs => {
+                if (max > 1) r[etape.cle] = valeurs; else r[etape.cle] = valeurs[0] || '';
+                corps.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', valeurs.includes(c.dataset.v)));
+                mettreAJourBoutonSuivant();
+                erreurParcours('');
+            };
+            corps.querySelectorAll('.chip').forEach(c => c.onclick = () => {
+                const v = c.dataset.v;
+                let valeurs = actuel().filter(x => opts.includes(x));
+                if (valeurs.includes(v)) valeurs = valeurs.filter(x => x !== v);
+                else if (max > 1) {
+                    if (valeurs.length >= max) { erreurParcours(`Tu peux en choisir ${max} maximum.`); return; }
+                    valeurs.push(v);
+                } else valeurs = [v];
+                const autre = document.getElementById('pc-autre');
+                if (autre && max === 1) autre.value = '';
+                appliquer(valeurs);
+                // Choix unique : on avance tout seul pour aller plus vite
+                if (max === 1 && valeurs.length) setTimeout(etapeSuivante, 220);
+            });
+            const autre = document.getElementById('pc-autre');
+            if (autre) autre.oninput = () => {
+                const v = autre.value.trim();
+                if (max > 1) appliquer([...actuel().filter(x => opts.includes(x)), ...(v ? [v] : [])].slice(0, max));
+                else appliquer(v ? [v] : []);
+            };
+        }
+
+        function rendreTextes(corps, etape) {
+            const r = etat.reponses;
+            const champs = etape.champs.filter(c => !c.si || c.si(etat));
+            corps.innerHTML = titreHtml(etape) + champs.map(c =>
+                `<div class="pc-block"><label class="pc-label" for="pc-${c.cle}">${esc(accorderTitre(c.label))}${c.requis ? '' : ' <span class="optional-tag">(facultatif)</span>'}</label>
+                 <input type="text" id="pc-${c.cle}" data-cle="${c.cle}" maxlength="${c.max || 80}" placeholder="${esc(c.exemple)}" value="${esc(r[c.cle] || '')}" autocomplete="off"></div>`).join('') +
+                '<p class="field-tip">💡 Écris de courts groupes de mots : ils seront chantés tels quels.</p>';
+            corps.querySelectorAll('input[data-cle]').forEach(i => i.oninput = () => { r[i.dataset.cle] = i.value; mettreAJourBoutonSuivant(); erreurParcours(''); });
+            corps.querySelector('input')?.focus();
+        }
+
+        function rendreMusique(corps) {
+            const occ = OCCASIONS[etat.occasion];
+            corps.innerHTML = `<h2 class="pc-title">La musique</h2><p class="pc-sub">On te conseille un style, tu peux le changer.</p>
+                <div class="pc-block"><span class="pc-label">Style musical</span><div class="pc-chips">` +
+                STYLES.map(s => `<button type="button" class="chip${etat.style === s.v ? ' on' : ''}" data-style="${esc(s.v)}">${s.e} ${esc(s.v)}${s.v === occ.style ? '<span class="reco">CONSEILLÉ</span>' : ''}</button>`).join('') +
+                `</div></div><div class="pc-block"><span class="pc-label">Quelle voix ?</span><div class="pc-chips">` +
+                [['male', '👨 Homme'], ['female', '👩 Femme'], ['duo', '👫 Duo']].map(([v, l]) => `<button type="button" class="chip${etat.voix === v ? ' on' : ''}" data-voix="${v}">${l}</button>`).join('') + '</div></div>';
+            corps.querySelectorAll('[data-style]').forEach(b => b.onclick = () => { etat.style = b.dataset.style; corps.querySelectorAll('[data-style]').forEach(x => x.classList.toggle('on', x === b)); });
+            corps.querySelectorAll('[data-voix]').forEach(b => b.onclick = () => { etat.voix = b.dataset.voix; corps.querySelectorAll('[data-voix]').forEach(x => x.classList.toggle('on', x === b)); erreurParcours(''); });
+            document.getElementById('pc-suivant').innerHTML = '<i class="fas fa-eye"></i> Voir mes paroles';
+        }
+
+        function parolesHtml(texte) {
+            // Les lignes vides entre parties sont remplacées par l'espace au-dessus des titres
+            return texte.split('\n').filter(l => l.trim()).map(l => /^\[.*\]$/.test(l.trim())
+                ? `<span class="sec">${esc(l.replace(/[\[\]]/g, ''))}</span>`
+                : `<span class="ln">${esc(l)}</span>`).join('');
+        }
+
+        function rendreApercu(corps) {
+            const nom = (etat.reponses.nom || '').trim();
+            const titres = {
+                adoration: 'Voici ton chant de louange ✨',
+                promotion: `Voici la chanson de ${esc(etat.reponses.produit || 'ton offre')} ✨`,
+                evenement: 'Voici la chanson de ton événement ✨'
+            };
+            const titre = titres[etat.occasion] || `Voici ta chanson${nom ? ` pour ${esc(nom)}` : ''} ✨`;
+            corps.innerHTML = `<h2 class="pc-title">${titre}</h2>
+                <p class="pc-sub">Lis tes paroles. Elles ne te plaisent pas ? Demande une autre version, c'est gratuit.</p>
+                <div class="lyrics-preview" id="pc-paroles">${etat.paroles ? parolesHtml(etat.paroles) : '<i class="fas fa-spinner fa-spin"></i> Écriture des paroles…'}</div>
+                <div class="pc-actions-sec">
+                    <button type="button" class="btn-soft" id="pc-autre-version"><i class="fas fa-sync-alt"></i> Une autre version</button>
+                    <button type="button" class="btn-soft" id="pc-modifier"><i class="fas fa-pen"></i> Modifier mes réponses</button>
+                </div>
+                <button type="button" class="btn-generate" id="generate-btn"><i class="fas fa-music"></i> Créer ma chanson <span class="btn-cout">1 crédit</span></button>`;
+            document.getElementById('pc-autre-version').onclick = () => ecrireParoles(true);
+            document.getElementById('pc-modifier').onclick = () => { etat.etape = 1; rendreEtape(); };
+            document.getElementById('generate-btn').onclick = lancerCreation;
+            if (!etat.paroles) ecrireParoles(false);
+        }
+
+        // Réponses envoyées au serveur
+        function donneesParoles() {
+            const r = etat.reponses;
+            const d = { occasion: etat.occasion, voix: etat.voix || '' };
+            for (const [cle, v] of Object.entries(r)) {
+                if (Array.isArray(v)) { if (v.length) d[cle] = v; }
+                else if (String(v || '').trim()) d[cle] = String(v).trim();
+            }
+            // Les champs masqués (ex. durée d'un hommage de son vivant) ne sont pas envoyés
+            const visibles = new Set(etapes().flatMap(e => e.type === 'textes' ? e.champs.filter(c => !c.si || c.si(etat)).map(c => c.cle) : []));
+            etapes().forEach(e => e.type === 'textes' && e.champs.forEach(c => { if (!visibles.has(c.cle)) delete d[c.cle]; }));
+            return d;
+        }
+
+        async function ecrireParoles(autreVersion) {
+            const zone = document.getElementById('pc-paroles');
+            const bouton = document.getElementById('pc-autre-version');
+            const creer = document.getElementById('generate-btn');
+            if (bouton) bouton.disabled = true;
+            if (creer) creer.disabled = true;
+            const precedente = etat.paroles;
+            try {
+                let texte = null;
+                // Pour "une autre version", on évite de retomber sur la même
+                for (let essai = 0; essai < 4; essai++) {
+                    const res = await fetch('/api/songs/generate-lyrics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(donneesParoles()) });
+                    const data = await res.json();
+                    if (!data.lyrics) throw new Error(data.error || 'Paroles indisponibles');
+                    texte = data.lyrics;
+                    if (!autreVersion || texte !== precedente) break;
+                }
+                etat.paroles = texte;
+                if (zone) { zone.innerHTML = parolesHtml(texte); zone.scrollTop = 0; }
+            } catch (e) {
+                if (zone) zone.innerHTML = '';
+                afficherToast("Les paroles n'ont pas pu être écrites. Vérifie ta connexion et réessaie.", 'error');
+            } finally {
+                if (bouton) bouton.disabled = false;
+                if (creer) creer.disabled = !etat.paroles;
+            }
+        }
+
+        // Contrôles avant de passer à l'étape suivante
+        function etapeValide(etape) {
+            const r = etat.reponses;
+            if (etape.type === 'personne') {
+                if (!String(r.nom || '').trim()) return 'Écris le prénom : il sera chanté dans la chanson.';
+                if (etape.sexe && !r.sexe) return 'Indique pour qui est la chanson.';
+                if (etape.lien && !r.lien) return 'Indique ton lien avec cette personne.';
+                if (etape.statut && !r.statut) return 'Indique si la personne est disparue ou si c\'est un hommage de son vivant.';
+            }
+            if (etape.type === 'choix' && etape.requis) {
+                const v = r[etape.cle];
+                if (!v || (Array.isArray(v) && !v.length)) return 'Fais un choix pour continuer.';
+            }
+            if (etape.type === 'textes') {
+                const manquant = etape.champs.find(c => c.requis && !String(r[c.cle] || '').trim());
+                if (manquant) return `Indique : ${accorderTitre(manquant.label).toLowerCase()}.`;
+            }
+            if (etape.type === 'musique') {
+                if (!etat.style) return 'Choisis un style musical.';
+                if (!etat.voix) return 'Choisis la voix.';
+            }
+            return null;
+        }
+
+        function etapeSuivante() {
+            const etape = etapes()[etat.etape];
+            const erreur = etapeValide(etape);
+            if (erreur) { erreurParcours(erreur); return; }
+            if (etat.etape < etapes().length - 1) {
+                etat.etape++;
+                // Toute modification des réponses oblige à réécrire les paroles
+                if (etapes()[etat.etape].type === 'apercu') etat.paroles = null;
+                rendreEtape();
+            }
+        }
+
+        function etapePrecedente() {
+            if (etat.etape > 0) { etat.etape--; rendreEtape(); }
+        }
+
+        // Sauvegarde / restauration du parcours pendant le passage par la page de paiement
+        function sauverBrouillon() {
+            try { sessionStorage.setItem(BROUILLON_KEY, JSON.stringify(etat)); } catch (e) {}
+        }
+
+        function restaurerBrouillon() {
+            let brouillon = null;
+            try { brouillon = JSON.parse(sessionStorage.getItem(BROUILLON_KEY)); } catch (e) {}
+            try { sessionStorage.removeItem(BROUILLON_KEY); } catch (e) {}
+            if (!brouillon || !brouillon.occasion || !OCCASIONS[brouillon.occasion]) return false;
+            etat = { ...etatInitial(), ...brouillon };
+            etat.etape = Math.min(etat.etape, etapes().length - 1);
+            rendreEtape();
+            return true;
+        }
 
         async function resetStudio() {
-            const form = document.getElementById('studio-form');
+            const parcours = document.getElementById('parcours');
             const result = document.getElementById('result-container');
             const audio = document.getElementById('audio-player');
-            
             audio.pause();
             audio.src = '';
-            form.reset();
-            
-            const btn = document.getElementById('generate-btn');
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-magic"></i> Générer ma chanson';
-
-            document.getElementById('dynamic-form-container').innerHTML = '<div style="text-align: center;">Veuillez sélectionner une occasion ci-dessus.</div>';
-            document.getElementById('sexe-group').style.display = 'none';
-            document.getElementById('lien-group').style.display = 'none';
-
-            await switchView(result, form);
+            etat = etatInitial();
+            rendreEtape();
+            await switchView(result, parcours);
         }
 
-        async function handleGenerate(event) {
-            event.preventDefault(); 
-            const btn = document.getElementById('generate-btn');
-
-            // 1. VÉRIFICATION DE LA SESSION ET DES CRÉDITS
+        async function lancerCreation() {
             const { data: { session } } = await supabaseClient.auth.getSession();
-            if (!session) {
-                window.location.href = 'login.html';
-                return;
-            }
+            if (!session) { window.location.href = 'login.html'; return; }
+            if (!etat.paroles) return;
 
             try {
                 const solde = await chargerSolde();
-                if (solde !== null && solde <= 0) {
-                    ouvrirModalCredits();
-                    return;
-                }
-            } catch(e) {
-                console.log("Attention solde:", e);
+                if (solde !== null && solde <= 0) { sauverBrouillon(); ouvrirModalCredits(); return; }
+            } catch (e) {
+                console.log('Attention solde:', e);
             }
 
-            const formEl = document.getElementById('studio-form');
+            const parcoursEl = document.getElementById('parcours');
             const loadingEl = document.getElementById('loading-container');
             const resultEl = document.getElementById('result-container');
             const loadingText = document.getElementById('loading-status-text');
             const loadingBar = document.getElementById('loading-bar');
+            const nom = (etat.reponses.nom || '').trim();
+            const personnelle = ['amour', 'anniversaire', 'mariage', 'hommage'].includes(etat.occasion);
 
-            const cible = document.getElementById('target-name').value.trim(); // peut être vide
-            const NOMS_OCCASIONS = { amour: "d'amour", anniversaire: "d'anniversaire", hommage: 'hommage', mariage: 'de mariage', adoration: "d'adoration", promotion: 'promotionnelle', evenement: "d'événement" };
-            const occasion = document.querySelector('input[name="occasion"]:checked').value;
-            const style = document.querySelector('input[name="style"]:checked').value;
-            const voice = document.querySelector('input[name="voice"]:checked').value;
-            
-            // Collecter les réponses du formulaire
-            const payloadLyrics = {
-                // Vide = le serveur choisit un nom adapté à l'occasion
-                nom: document.getElementById('target-name').value.trim(),
-                occasion: occasion,
-                sexe: document.querySelector('input[name="sexe"]:checked')?.value || '',
-                lien: document.querySelector('input[name="lien"]:checked')?.value || '',
-                voix: voice
-            };
-
-            document.querySelectorAll('.custom-data').forEach(champ => {
-                const key = champ.getAttribute('data-key') || champ.getAttribute('data-label').toLowerCase();
-                if (champ.value.trim() !== "") {
-                    payloadLyrics[key] = champ.value.trim();
-                }
-            });
-
-            // Transition douce du Formulaire vers l'Écran de Chargement
-            loadingBar.style.width = '15%';
-            loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Composition des paroles en cours...';
-            await switchView(formEl, loadingEl);
+            loadingBar.style.width = '25%';
+            loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Enregistrement studio en cours...';
+            await switchView(parcoursEl, loadingEl);
 
             const phrasesAttente = [
                 "🎸 Les musiciens accordent leurs guitares...",
@@ -832,58 +970,34 @@
             let phraseIndex = 0;
             let progressPercent = 30;
 
+            const retourAuParcours = async (message) => {
+                await switchView(loadingEl, parcoursEl);
+                await chargerSolde();
+                if (message) afficherToast(message, 'error', 8000);
+            };
+
             try {
-                const headers = {
-                    'Content-Type': 'application/json'
-                };
-                if (session && session.access_token) {
-                    headers['Authorization'] = `Bearer ${session.access_token}`;
-                }
-
-                // 1. GÉNÉRATION OU SÉLECTION DU TEMPLATE DE PAROLES (generate-lyrics)
-                const resLyrics = await fetch('/api/songs/generate-lyrics', {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(payloadLyrics)
-                });
-
-                const dataLyrics = await resLyrics.json();
-                if (!resLyrics.ok && dataLyrics.error) {
-                    throw new Error(dataLyrics.error);
-                }
-
-                if (!dataLyrics.lyrics) {
-                    throw new Error("Les paroles n'ont pas pu être écrites. Réessaie dans un instant, aucun crédit n'a été utilisé.");
-                }
-                const parolesFinales = dataLyrics.lyrics;
-
-                loadingBar.style.width = '35%';
-                loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Enregistrement studio en cours...';
-
-                // 2. GÉNÉRATION AUDIO SUNO AVEC PAROLES STRUCTURÉES (generate-audio)
                 const resCreation = await fetch('/api/songs/generate-audio', {
                     method: 'POST',
-                    headers: headers,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
                     body: JSON.stringify({
-                        lyrics: parolesFinales,
-                        genre: style,
-                        voice: voice,
-                        occasion: occasion,
-                        titre: cible ? `Pour ${cible}` : `Ma chanson ${NOMS_OCCASIONS[occasion] || ''}`.trim()
+                        lyrics: etat.paroles,
+                        genre: etat.style,
+                        voice: etat.voix,
+                        occasion: etat.occasion,
+                        titre: nom && personnelle ? `Pour ${nom}` : `Ma chanson ${NOMS_OCCASIONS[etat.occasion] || ''}`.trim()
                     })
                 });
-
                 const dataCreation = await resCreation.json();
 
                 if (resCreation.status === 402) {
-                    await switchView(loadingEl, formEl);
-                    await chargerSolde();
+                    await retourAuParcours();
+                    sauverBrouillon();
                     ouvrirModalCredits();
                     return;
                 }
-
                 if (dataCreation.error || !dataCreation.job_id) {
-                    throw new Error(dataCreation.error || "Pas de Job ID reçu.");
+                    throw new Error(dataCreation.error || "La création n'a pas pu démarrer.");
                 }
 
                 const jobId = dataCreation.job_id;
@@ -899,33 +1013,18 @@
 
                         if (dataStatut.status === 'completed' && dataStatut.outputs && dataStatut.outputs.length > 0) {
                             clearInterval(verificationIntervalle);
-                            
-                            // 100% complété
                             loadingBar.style.width = '100%';
                             loadingText.innerHTML = '<i class="fas fa-check-circle" style="color: var(--neon-lime);"></i> Chanson terminée !';
-                            
-                            const laChanson = dataStatut.outputs[0];
-                            const urlAudio = laChanson.audio_url || laChanson.url || laChanson.song_path;
-                            
                             const audioPlayer = document.getElementById('audio-player');
-                            audioPlayer.src = urlAudio;
-
-                            // Déclencher la notification Push via le Service Worker (Écran verrouillé & Arrière-plan)
-                            await notifierMorceauPret(cible);
-
-                            // Attendre un bref instant pour laisser la barre atteindre 100%, puis transition douce vers le Résultat Final
+                            audioPlayer.src = dataStatut.outputs[0].audio_url;
+                            await notifierMorceauPret(personnelle ? nom : '');
                             setTimeout(async () => {
                                 await switchView(loadingEl, resultEl);
                                 audioPlayer.play();
                             }, 500);
-
                         } else if (dataStatut.status === 'failed') {
                             clearInterval(verificationIntervalle);
-                            btn.disabled = false;
-                            btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
-                            await switchView(loadingEl, formEl);
-                            await chargerSolde();
-                            afficherToast("Nos musiciens ont eu un souci. Ton crédit t'a été rendu : modifie un peu le texte et réessaie.", 'error', 8000);
+                            await retourAuParcours("Nos musiciens ont eu un souci. Ton crédit t'a été rendu : demande une autre version des paroles et réessaie.");
                         } else {
                             progressPercent = Math.min(progressPercent + 10, 92);
                             loadingBar.style.width = progressPercent + '%';
@@ -935,17 +1034,14 @@
                     } catch (errCheck) {
                         console.error(errCheck);
                     }
-                }, 5000); 
-
+                }, 5000);
             } catch (erreur) {
                 console.error(erreur);
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
-                await switchView(loadingEl, formEl);
-                chargerSolde();
-                afficherToast(erreur.message || "Problème de connexion avec le studio. Réessaie dans un instant.", 'error', 8000);
+                await retourAuParcours(erreur.message || 'Problème de connexion avec le studio. Réessaie dans un instant.');
             }
         }
+
+        rendreEtape();
     </script>
 </body>
 </html>

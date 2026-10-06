@@ -8,7 +8,8 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 - **Pages** : HTML/CSS/JS statiques à la racine, sans framework ni build.
   - `index.html` accueil (démos, occasions, tarifs, FAQ, pied de page)
   - `login.html`, `signup.html`, `reset-password.html` authentification
-  - `studio.html` création d'une chanson (+ fenêtre d'achat de crédits intégrée)
+  - `studio.html` création d'une chanson : **parcours guidé en étapes** (une question par écran, choix rapides, aperçu gratuit des paroles avec « Une autre version » avant de dépenser un crédit) + fenêtre d'achat de crédits intégrée
+  - `studio-parcours.js` **description des étapes de chaque occasion** (questions, options accordées h/f, clé envoyée au serveur, style conseillé). Pour changer une question, modifier ce fichier ; chaque `cle` doit correspondre à une balise utilisée dans les textes.
   - `profil.html` solde, achat de packs, chansons ; `creations.html` paroles
   - `cgu.html`, `privacy.html`
 - **Logo** : uniquement via `logo.css` + `logo-nova-tempo.png` (texte détouré) et 4 barres `.eq-bar` animées. Même balisage sur toutes les pages ; ne pas créer d'autre version.
@@ -29,6 +30,9 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 - Textes de chansons : `api/_lib/templates/<occasion>.js`, balises `{NOM}`, `{RELATION}`, `{ANECDOTE}`, `{DUREE_RELATION}`… ; à enregistrer dans `TEMPLATES` de `api/songs/generate-lyrics.js`.
 - **Accord masculin/féminin** : jamais de « ami(e) » dans les modèles. Écrire `{T:masc|fém}` pour la personne fêtée (question « Cette chanson est pour… » du Studio, sinon déduit du mot de relation) et `{J:masc|fém}` pour le chanteur (voix choisie). Couple/groupe ou duo : la forme est retirée comme un champ vide.
 - **Lien avec la personne** (Anniversaire) : la question du Studio (`amour` / `parent` / `enfant` / `proche`) filtre les modèles via `LIENS` dans `generate-lyrics.js` (numéros des modèles, à tenir à jour si on en ajoute). Sans réponse : déduit du mot de relation, sinon modèles « general » (jamais de texte romantique).
+- **Couplet sur mesure [Pont]** : construit dans `construirePont` (generate-lyrics.js) à partir de `qualites`, `voeux`, `lecons`, `promesses`, `message`, inséré avant l'[Outro]. Hommage `statut: 'vivant'` : les lignes de deuil sont retirées (`LIGNES_DE_DEUIL`).
+- **Événement** : chaque type proposé dans le Studio tire ses textes via `TYPES_EVENEMENT` (numéros des modèles de evenement.js) ; type libre → fêtes génériques.
+- Anti-doublon : le surnom choisi ne se répète pas dans une même ligne.
 - **Questions du formulaire = usage dans les textes** : `{DUREE_RELATION}` s'emploie toujours en « ___ que je t'aime » (une durée), `{AGE}` pour l'âge fêté. Un nombre seul devient « N ans ».
 - **Champ vide = jamais de valeur bidon** (« mon cher / ma chère », « un concept unique »…) : `generate-lyrics.js` retire l'interpellation, remplace « pour {NOM} » par « pour toi » ou retire la ligne, puis choisit le modèle qui reste le plus complet. Écrire les nouveaux modèles pour que les balises soient des morceaux entre virgules (« {NOM}, … ») autant que possible.
 - Messages d'erreur d'auth en français via `auth-messages.js`.
