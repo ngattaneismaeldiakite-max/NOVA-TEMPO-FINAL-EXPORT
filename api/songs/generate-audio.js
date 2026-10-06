@@ -15,6 +15,12 @@ const STYLES = {
 const VOICES = { male: 'male vocal', female: 'female vocal', duo: 'male and female duet' };
 const OCCASIONS = ['amour', 'anniversaire', 'hommage', 'evenement', 'mariage', 'adoration', 'promotion'];
 
+// Code de diagnostic ajouté aux erreurs (aucun secret) : aide au support sans accès aux logs
+const codeErreur = (etape, err) => {
+    const m = String((err && err.message) || '').match(/\((\d{3})\)/);
+    return `${etape}${m ? '-' + m[1] : ''}`;
+};
+
 module.exports = async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).json({ error: 'Méthode non autorisée' });
 
@@ -23,7 +29,7 @@ module.exports = async function handler(req, res) {
         user = await getUserFromRequest(req);
     } catch (err) {
         console.error('generate-audio config:', err.message);
-        return res.status(500).json({ error: 'Service momentanément indisponible.' });
+        return res.status(500).json({ error: `Service momentanément indisponible (code ${codeErreur('A1', err)}).` });
     }
     if (!user) return res.status(401).json({ error: 'Accès refusé : vous devez être connecté.' });
 
@@ -38,7 +44,7 @@ module.exports = async function handler(req, res) {
 
     if (!process.env.SUNO_API_KEY) {
         console.error('generate-audio: SUNO_API_KEY manquante');
-        return res.status(500).json({ error: 'Service momentanément indisponible.' });
+        return res.status(500).json({ error: 'Service momentanément indisponible (code A2).' });
     }
 
     // 1. Retrait atomique d'un crédit
@@ -47,7 +53,7 @@ module.exports = async function handler(req, res) {
         newBalance = await rpc('consume_credit', { p_user: user.id });
     } catch (err) {
         console.error('generate-audio consume_credit:', err.message);
-        return res.status(500).json({ error: 'Service momentanément indisponible.' });
+        return res.status(500).json({ error: `Service momentanément indisponible (code ${codeErreur('A3', err)}).` });
     }
     if (newBalance === null || newBalance === undefined) {
         return res.status(402).json({ error: 'Solde insuffisant ! Rechargez votre compte dans Mon Espace.' });
