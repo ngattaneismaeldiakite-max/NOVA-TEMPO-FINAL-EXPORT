@@ -179,15 +179,43 @@
             document.getElementById('user-email').textContent = currentUser.email;
             document.getElementById('app-content').style.display = 'block';
 
-            // Alerte paiement
+            // Retour de GeniusPay : on fait confirmer le paiement par le serveur
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('payment') === 'success') {
-                document.getElementById('alert-payment').style.display = 'block';
+            if (urlParams.get('payment') === 'success' && urlParams.get('pid')) {
+                await confirmPayment(urlParams.get('pid'), data.session.access_token);
             }
 
             // Charger crédits et musiques
             loadUserCredits();
             loadUserSongs();
+        }
+
+        async function confirmPayment(pid, accessToken) {
+            const alertEl = document.getElementById('alert-payment');
+            // Le paiement peut mettre quelques secondes à être confirmé par l'opérateur
+            for (let essai = 0; essai < 6; essai++) {
+                try {
+                    const res = await fetch(`/api/pay/verify-payment?pid=${encodeURIComponent(pid)}`, {
+                        headers: { 'Authorization': `Bearer ${accessToken}` }
+                    });
+                    const result = await res.json();
+                    if (result.status === 'success') {
+                        alertEl.style.display = 'block';
+                        history.replaceState(null, '', '/profil.html');
+                        return;
+                    }
+                    if (result.status === 'failed' || !res.ok) break;
+                } catch (e) {
+                    console.error('Vérification paiement:', e);
+                }
+                await new Promise(r => setTimeout(r, 5000));
+            }
+            alertEl.style.display = 'block';
+            alertEl.textContent = "Paiement en cours de confirmation. Tes crédits apparaîtront dès validation par l'opérateur (actualise la page dans une minute). Un souci ? Écris-nous sur WhatsApp.";
+        }
+
+        function esc(valeur) {
+            return String(valeur ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
         }
 
         async function loadUserCredits() {
@@ -204,9 +232,10 @@
             const libraryContainer = document.getElementById('library-content');
 
             const { data: songs, error } = await supabaseClient
-                .from('songs')
+                .from('tracks')
                 .select('*')
                 .eq('user_id', currentUser.id)
+                .eq('statut', 'completed')
                 .order('created_at', { ascending: false });
 
             if (error || !songs || songs.length === 0) {
@@ -224,20 +253,20 @@
             let htmlContent = '';
             songs.forEach(song => {
                 const dateFormatee = new Date(song.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
-                const messageWhatsapp = encodeURIComponent(`Écoute la chanson personnalisée que j'ai créée sur Nova Tempo : ${song.audio_url}`);
-                
+                const messageWhatsapp = encodeURIComponent(`Écoute la chanson personnalisée que j'ai créée sur Nova Tempo : ${song.url_audio}`);
+
                 htmlContent += `
                     <div class="song-item">
                         <div class="song-header">
                             <div>
-                                <div class="song-title">${song.title}</div>
+                                <div class="song-title">${esc(song.titre)}</div>
                                 <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Créée le ${dateFormatee}</div>
                             </div>
-                            <span class="song-badge">${song.genre || 'Afrobeat'}</span>
+                            <span class="song-badge">${esc(song.style_musical || 'Afrobeat')}</span>
                         </div>
-                        <audio controls style="width: 100%; margin: 0.5rem 0;" src="${song.audio_url}"></audio>
+                        <audio controls style="width: 100%; margin: 0.5rem 0;" src="${esc(song.url_audio)}"></audio>
                         <div class="song-actions">
-                            <a href="${song.audio_url}" download target="_blank" class="btn-action btn-download">
+                            <a href="${esc(song.url_audio)}" download target="_blank" class="btn-action btn-download">
                                 <i class="fas fa-download"></i> Télécharger MP3
                             </a>
                             <a href="https://api.whatsapp.com/send?text=${messageWhatsapp}" target="_blank" class="btn-action btn-whatsapp">
@@ -259,14 +288,14 @@
                 const btnClicked = evt.currentTarget;
                 btnClicked.style.opacity = '0.5';
 
+                const { data: { session } } = await supabaseClient.auth.getSession();
                 const response = await fetch('/api/pay/create-payment', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        pack: packName,
-                        user_id: currentUser.id,
-                        user_email: currentUser.email
-                    })
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${session ? session.access_token : ''}`
+                    },
+                    body: JSON.stringify({ pack: packName })
                 });
 
                 const data = await response.json();

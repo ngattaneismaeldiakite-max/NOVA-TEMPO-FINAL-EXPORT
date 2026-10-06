@@ -1,88 +1,48 @@
 // api/webhook/geniuspay.js
+// Notification GeniusPay. Le contenu reçu n'est jamais cru tel quel :
+// on retrouve le paiement chez nous, puis on redemande son statut réel à GeniusPay.
+const { rest } = require('../_lib/supabase');
+const { findPayment, settlePayment } = require('../_lib/payments');
+
+const UUID = /^[0-9a-f-]{36}$/i;
+
 module.exports = async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-    }
-
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Méthode non autorisée' });
-    }
+    if (req.method !== 'POST') return res.status(405).json({ error: 'Méthode non autorisée' });
 
     try {
-        const payload = req.body;
-        console.log('Webhook GeniusPay reçu :', JSON.stringify(payload));
+        const body = req.body || {};
+        const data = body.data || body;
+        const reference = data.reference || body.reference;
+        const metadata = data.metadata || body.metadata || {};
 
-        // Extraction du statut de transaction
-        const status = payload.status || payload.event || (payload.data && payload.data.status);
-        const isSuccess = ['SUCCESS', 'SUCCESSFUL', 'PAID', 'COMPLETED', 'payment.success'].includes(status);
-
-        if (!isSuccess) {
-            console.log(`Paiement non finalisé ou échec (statut: ${status}).`);
-            return res.status(200).json({ received: true, status: 'ignored' });
+        let payment = null;
+        if (reference) {
+            payment = await findPayment(`provider_reference=eq.${encodeURIComponent(reference)}`);
         }
-
-        // Récupération des données utilisateur et crédits
-        const metadata = payload.metadata || payload.custom_data || (payload.data && payload.data.metadata) || {};
-        const userId = metadata.user_id;
-        const creditsToAdd = parseInt(metadata.credits || 50, 10);
-
-        if (!userId) {
-            console.error('Erreur Webhook: Aucun user_id trouvé dans le payload.');
-            return res.status(400).json({ error: 'user_id manquant' });
-        }
-
-        // Configuration Supabase pour mise à jour sécurisée
-        const supabaseUrl = process.env.SUPABASE_URL || 'https://wxkeuyyppzuqplnutwzk.supabase.co';
-        const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-        if (!supabaseServiceRoleKey) {
-            console.error('Erreur Webhook: SUPABASE_SERVICE_ROLE_KEY manquante sur le serveur.');
-            return res.status(500).json({ error: 'Configuration serveur incomplète' });
-        }
-
-        // 1. Récupération du solde actuel
-        const getProfileRes = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}&select=credits`, {
-            headers: {
-                'apikey': supabaseServiceRoleKey,
-                'Authorization': `Bearer ${supabaseServiceRoleKey}`
+        if (!payment && metadata.payment_id && UUID.test(metadata.payment_id)) {
+            payment = await findPayment(`id=eq.${metadata.payment_id}`);
+            // Référence pas encore enregistrée (course avec create-payment) : on la rattache.
+            if (payment && !payment.provider_reference && reference) {
+                await rest(`payments?id=eq.${payment.id}&provider_reference=is.null`, {
+                    method: 'PATCH',
+                    body: { provider_reference: reference },
+                    prefer: 'return=minimal'
+                });
+                payment.provider_reference = reference;
             }
-        });
-
-        const profiles = await getProfileRes.json();
-        const currentCredits = (profiles && profiles.length > 0) ? (profiles[0].credits || 0) : 0;
-        const newCredits = currentCredits + creditsToAdd;
-
-        // 2. Mise à jour des crédits dans Supabase
-        const updateRes = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}`, {
-            method: 'PATCH',
-            headers: {
-                'apikey': supabaseServiceRoleKey,
-                'Authorization': `Bearer ${supabaseServiceRoleKey}`,
-                'Content-Type': 'application/json',
-                'Prefer': 'return=minimal'
-            },
-            body: JSON.stringify({
-                credits: newCredits,
-                updated_at: new Date().toISOString()
-            })
-        });
-
-        if (!updateRes.ok) {
-            const errText = await updateRes.text();
-            console.error('Erreur lors de la mise à jour des crédits Supabase :', errText);
-            return res.status(500).json({ error: 'Échec de la mise à jour des crédits' });
         }
 
-        console.log(`Succès Webhook : +${creditsToAdd} crédits ajoutés à l'utilisateur ${userId}. Nouveau solde : ${newCredits}`);
-        return res.status(200).json({ success: true, message: 'Crédits mis à jour avec succès', credits: newCredits });
+        if (!payment) {
+            console.warn('Webhook GeniusPay: paiement introuvable', reference);
+            return res.status(200).json({ received: true, status: 'unknown' });
+        }
 
+        const result = await settlePayment(payment);
+        console.log(`Webhook GeniusPay: paiement ${payment.id} -> ${result.status}`);
+        return res.status(200).json({ received: true, status: result.status });
     } catch (err) {
-        console.error('Exception Webhook GeniusPay :', err);
-        return res.status(500).json({ error: 'Erreur interne du Webhook', details: err.message });
+        console.error('Webhook GeniusPay:', err);
+        // 500 => GeniusPay réessaiera plus tard
+        return res.status(500).json({ error: 'Erreur interne' });
     }
 };

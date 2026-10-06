@@ -105,7 +105,7 @@
         
         <div style="background: var(--white); border: 1px solid #eaeaea; border-radius: 12px; padding: 15px; margin: 0 20px 20px 20px; text-align: center;">
             <p style="margin: 0; font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Solde Actuel</p>
-            <p class="display-credits" style="margin: 5px 0 0 0; font-size: 22px; font-weight: 800; color: var(--text-main);">150 <span style="font-size:12px;">Crédits</span></p>
+            <p class="display-credits" style="margin: 5px 0 0 0; font-size: 22px; font-weight: 800; color: var(--text-main);">-- <span style="font-size:12px;">Crédits</span></p>
             <button onclick="window.location.href='recharge.html'" style="margin-top: 10px; width: 100%; padding: 8px; background: var(--bg-gray); border: 1px solid #ddd; border-radius: 8px; font-weight: 700; cursor: pointer;">Faire un dépôt</button>
         </div>
 
@@ -215,14 +215,29 @@ function previewProfileImage(event) {
             // Update global sidebar if exists
             const displayAvatars = document.querySelectorAll('.display-avatar');
             displayAvatars.forEach(av => {
-                av.innerHTML = <img src=" + avatarSrc + " style="width:100%; height:100%; border-radius:50%; object-fit:cover;">;
+                const img = document.createElement('img');
+                img.src = avatarSrc;
+                img.style.cssText = 'width:100%; height:100%; border-radius:50%; object-fit:cover;';
+                av.replaceChildren(img);
             });
         }
         reader.readAsDataURL(file);
     }
 }
-        reader.readAsDataURL(file);
+
+// Solde réel
+document.addEventListener('DOMContentLoaded', async () => {
+    if (!window.supabaseClient) return;
+    const { data: { session } } = await window.supabaseClient.auth.getSession();
+    if (!session) return;
+    const { data: profile } = await window.supabaseClient.from('profiles').select('credits').eq('id', session.user.id).single();
+    if (profile) {
+        document.querySelectorAll('.display-credits').forEach(el => {
+            el.firstChild.textContent = `${profile.credits} `;
+        });
     }
-}
+});
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
 </html>

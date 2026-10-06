@@ -539,14 +539,18 @@
                     body: JSON.stringify({
                         lyrics: parolesFinales,
                         genre: style,
-                        voice: voice
+                        voice: voice,
+                        occasion: occasion,
+                        titre: `Pour ${cible}`
                     })
                 });
 
                 const dataCreation = await resCreation.json();
-                
-                if (!resCreation.ok && dataCreation.error) {
-                    throw new Error(dataCreation.error);
+
+                if (resCreation.status === 402) {
+                    alert("⚠️ " + dataCreation.error);
+                    window.location.href = 'profil.html';
+                    return;
                 }
 
                 if (dataCreation.error || !dataCreation.job_id) {
@@ -557,7 +561,10 @@
 
                 const verificationIntervalle = setInterval(async () => {
                     try {
-                        const resStatut = await fetch(`/api/songs/check-status?id=${jobId}`);
+                        const { data: { session: s } } = await supabaseClient.auth.getSession();
+                        const resStatut = await fetch(`/api/songs/check-status?id=${jobId}`, {
+                            headers: { 'Authorization': `Bearer ${s ? s.access_token : ''}` }
+                        });
                         const dataStatut = await resStatut.json();
 
                         if (dataStatut.status === 'completed' && dataStatut.outputs && dataStatut.outputs.length > 0) {
@@ -584,7 +591,7 @@
 
                         } else if (dataStatut.status === 'failed') {
                             clearInterval(verificationIntervalle);
-                            alert("Oups ! Nos musiciens ont rencontré un petit problème. Essaie de modifier un peu le texte et réessaie.");
+                            alert("Oups ! Nos musiciens ont rencontré un petit problème. Ton crédit t'a été rendu : modifie un peu le texte et réessaie.");
                             btn.disabled = false;
                             btn.innerHTML = '<i class="fas fa-magic"></i> Réessayer';
                             await switchView(loadingEl, formEl);

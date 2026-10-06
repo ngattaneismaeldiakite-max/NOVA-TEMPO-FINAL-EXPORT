@@ -177,10 +177,13 @@
 
             // Creations
             const { data: creations, error: fetchError } = await window.supabaseClient
-                .from('creations')
+                .from('tracks')
                 .select('*')
                 .eq('user_id', currentUserId)
+                .eq('statut', 'completed')
                 .order('created_at', { ascending: false });
+
+            const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
             const grid = document.getElementById('creationsGrid');
             const loading = document.getElementById('loadingMessage');
@@ -206,10 +209,10 @@
                 card.className = 'creation-card';
                 card.innerHTML = `
                     <div class="creation-header">
-                        <div class="occasion-badge"><i class="fas fa-compact-disc"></i> ${item.occasion}</div>
+                        <div class="occasion-badge"><i class="fas fa-compact-disc"></i> ${esc(item.occasion)}</div>
                         <div class="creation-date">${dateStr}</div>
                     </div>
-                    <div class="lyrics-content">${item.lyrics}</div>
+                    <div class="lyrics-content">${esc(item.paroles)}</div>
                 `;
                 grid.appendChild(card);
             });

@@ -95,22 +95,17 @@ ${nom}, cette chanson est pour toi maintenant`;
 }
 
 module.exports = async (req, res) => {
-    // CORS
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-    res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
-
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Méthode non autorisée' });
     }
 
     try {
         const data = req.body || {};
-        const occasion = (data.occasion || 'amour').toLowerCase();
+        const requested = String(data.occasion || 'amour').toLowerCase();
+        const occasion = ALLOWED_OCCASIONS.includes(requested) ? requested : 'amour';
 
         let templates = null;
-        
+
         // Charger le fichier de templates de l'occasion si existant
         try {
             const templatePath = path.join(__dirname, 'templates', `${occasion}.js`);

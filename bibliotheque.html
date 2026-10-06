@@ -133,56 +133,43 @@
                 } catch(e) { console.error("Auth check:", e); }
             }
 
+            const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
             let tracks = [];
-            if (window.supabaseClient) {
+            if (window.supabaseClient && userId) {
                 try {
-                    let query = window.supabaseClient.from('songs').select('*').order('created_at', { ascending: false });
-                    if (userId) query = query.eq('user_id', userId);
-                    const { data, error } = await query;
+                    const { data, error } = await window.supabaseClient
+                        .from('tracks')
+                        .select('*')
+                        .eq('user_id', userId)
+                        .eq('statut', 'completed')
+                        .order('created_at', { ascending: false });
                     if (!error && data) tracks = data;
-                } catch(e) { console.error("Erreur fetch songs:", e); }
+                } catch(e) { console.error("Erreur chargement chansons:", e); }
             }
 
-            if (tracks.length === 0 && window.supabaseClient) {
-                try {
-                    const { data } = await window.supabaseClient.from('tracks').select('*').order('created_at', { ascending: false });
-                    if (data) tracks = data;
-                } catch(e) {}
+            if (tracks.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+                        <p style="font-size: 1.1rem; font-weight: 700;">Vous n'avez pas encore créé de chanson.</p>
+                        <a href="studio.html" style="display: inline-block; margin-top: 1rem; background: var(--metallic-gradient); color: white; padding: 10px 20px; border-radius: 12px; font-weight: bold; text-decoration: none;">Créer ma première chanson</a>
+                    </div>`;
+                return;
             }
 
-            if (!tracks || tracks.length === 0) {
-                tracks = [
-                    {
-                        id: 'demo-1',
-                        title: 'Mon Amour Éternel',
-                        occasion: 'Amour',
-                        style: 'Afro-Zouk Romantique',
-                        url_audio: 'demo1.mp3',
-                        cover_url: 'hero.jpg',
-                        lyrics: '[Couplet 1]\nDepuis le premier jour où nos regards se sont croisés...\n\n[Refrain]\nMon amour pour toi brille comme une étoile...',
-                        created_at: new Date().toISOString()
-                    },
-                    {
-                        id: 'demo-2',
-                        title: 'Joyeux Anniversaire Sarah',
-                        occasion: 'Anniversaire',
-                        style: 'Afrobeats Dynamique',
-                        url_audio: 'demo2.mp3',
-                        cover_url: 'anniversaire.jpg',
-                        lyrics: '[Couplet 1]\nUne bougie de plus sur le gâteau aujourd’hui...\n\n[Refrain]\nCélébrons Sarah toute la nuit !',
-                        created_at: new Date().toISOString()
-                    }
-                ];
-            }
+            container.addEventListener('click', e => {
+                const btn = e.target.closest('[data-play]');
+                if (btn) playTrack(btn.dataset.title, btn.dataset.occasion, btn.dataset.cover, btn.dataset.audio);
+            });
 
             let html = '';
             tracks.forEach(t => {
-                const title = t.title || t.titre || 'Sans titre';
-                const occasion = t.occasion || 'Spéciale';
-                const style = t.style || t.style_musical || 'Afro-Pop';
-                const audioUrl = t.url_audio || t.audio_url || 'demo1.mp3';
-                const coverUrl = t.cover_url || t.image_url || 'hero.jpg';
-                const lyrics = t.lyrics || t.paroles || 'Aucune parole disponible.';
+                const title = esc(t.titre || 'Sans titre');
+                const occasion = esc(t.occasion || 'Spéciale');
+                const style = esc(t.style_musical || 'Afro-Pop');
+                const audioUrl = esc(t.url_audio);
+                const coverUrl = 'hero.jpg';
+                const lyrics = esc(t.paroles || 'Aucune parole disponible.');
                 const dateStr = new Date(t.created_at || Date.now()).toLocaleDateString('fr-FR');
 
                 html += `
@@ -202,7 +189,7 @@
                     </div>
 
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 15px; pt-15px; border-top: 1px solid #eaeaea;">
-                        <button type="button" onclick="playTrack('${title.replace(/'/g, "\\'")}', '${occasion}', '${coverUrl}', '${audioUrl}')" style="background: var(--metallic-gradient); color: white; border: none; padding: 10px 20px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <button type="button" data-play data-title="${title}" data-occasion="${occasion}" data-cover="${coverUrl}" data-audio="${audioUrl}" style="background: var(--metallic-gradient); color: white; border: none; padding: 10px 20px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
                             ▶ Écouter
                         </button>
                         <div style="display: flex; gap: 10px;">

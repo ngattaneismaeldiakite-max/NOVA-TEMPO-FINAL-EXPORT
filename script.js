@@ -31,7 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedAvatar) {
         const displayAvatars = document.querySelectorAll('.display-avatar');
         displayAvatars.forEach(av => {
-            av.innerHTML = <img src=" + savedAvatar + " style="width:100%; height:100%; border-radius:50%; object-fit:cover;">;
+            const img = document.createElement('img');
+            img.src = savedAvatar;
+            img.style.cssText = 'width:100%; height:100%; border-radius:50%; object-fit:cover;';
+            av.replaceChildren(img);
         });
         
         // Also update preview in parametres if present
