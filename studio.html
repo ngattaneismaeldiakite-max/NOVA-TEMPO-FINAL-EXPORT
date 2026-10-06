@@ -265,8 +265,9 @@
             <form id="studio-form" onsubmit="handleGenerate(event)">
                 
                 <div class="form-group">
-                    <label class="main-label" id="label-target-name">1. Pour qui est cette chanson ? (Prénom)</label>
-                    <input type="text" id="target-name" placeholder="Ex: Marc, Awa, Sarah...">
+                    <label class="main-label" id="label-target-name" for="target-name">1. Pour qui est cette chanson ? (Prénom)</label>
+                    <input type="text" id="target-name" maxlength="40" placeholder="Ex: Marc, Awa, Sarah...">
+                    <p class="field-tip" id="target-name-tip">💡 Ce prénom sera chanté dans la chanson.</p>
                 </div>
                 
                 <div class="form-group">
@@ -704,16 +705,23 @@
             const labelTarget = document.getElementById('label-target-name');
             const inputTarget = document.getElementById('target-name');
 
-            if (occasion === 'adoration') {
-                labelTarget.textContent = "1. Qui adores-tu / Célèbres-tu ? (Titre ou Prénom)";
-                inputTarget.placeholder = "Ex: Seigneur, Dieu, Jésus, Mon Père...";
-            } else if (occasion === 'promotion') {
-                labelTarget.textContent = "1. Nom du client ou groupe ciblé (Prénom / Audience)";
-                inputTarget.placeholder = "Ex: Chers clients, Awa, Notre communauté...";
-            } else {
-                labelTarget.textContent = "1. Pour qui est cette chanson ? (Prénom)";
-                inputTarget.placeholder = "Ex: Marc, Awa, Sarah...";
-            }
+            // Question 1 adaptée à l'occasion ; prénom obligatoire quand la chanson s'adresse à une personne
+            const QUESTION_NOM = {
+                amour: ["1. Comment s'appelle la personne que tu aimes ?", "Ex : Awa, Koffi, Sarah", true],
+                anniversaire: ["1. Qui fête son anniversaire ? (Prénom)", "Ex : Awa, Papa Koffi, Sarah", true],
+                mariage: ["1. Prénom de ton/ta partenaire", "Ex : Awa, Koffi", true],
+                hommage: ["1. À qui rends-tu hommage ? (Prénom ou nom)", "Ex : Papa Koffi, Grand-mère Aya", true],
+                adoration: ["1. Qui adores-tu / célèbres-tu ? (optionnel)", "Ex : Seigneur, Jésus, mon Père", false],
+                promotion: ["1. À qui s'adresse la chanson ? (optionnel)", "Ex : chers clients, notre communauté", false],
+                evenement: ["1. Qui est à l'honneur ? (optionnel)", "Ex : Awa, les jeunes mariés, toute l'équipe", false]
+            };
+            const [question, exemple, obligatoire] = QUESTION_NOM[occasion] || QUESTION_NOM.amour;
+            labelTarget.textContent = question;
+            inputTarget.placeholder = exemple;
+            inputTarget.required = obligatoire;
+            document.getElementById('target-name-tip').textContent = obligatoire
+                ? '💡 Ce prénom sera chanté plusieurs fois dans la chanson.'
+                : '💡 Si tu le remplis, il sera chanté dans la chanson.';
 
             if (questionsPersonnalisees[occasion]) {
                 container.innerHTML = questionsPersonnalisees[occasion];
