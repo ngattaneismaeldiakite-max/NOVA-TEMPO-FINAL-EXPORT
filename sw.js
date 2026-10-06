@@ -38,8 +38,8 @@ self.addEventListener('push', (event) => {
 
   const options = {
     body: payload.body || "Ta chanson est prête !",
-    icon: 'logo.png',
-    badge: 'logo.png',
+    icon: 'assets/images/logo.png',
+    badge: 'assets/images/logo.png',
     vibrate: [200, 100, 200],
     data: { url: payload.url || '/studio.html' }
   };

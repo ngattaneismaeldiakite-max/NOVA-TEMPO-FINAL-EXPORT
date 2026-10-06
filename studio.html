@@ -12,13 +12,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <script src="studio-parcours.js"></script>
+    <script src="assets/js/studio-parcours.js"></script>
     
     <style>
         :root { --bg-dark: #06060A; --card-bg: #111118; --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6); --neon-lime: #D4FF00; --neon-pink: #FF0066; }
         body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; position: relative; }
         
-        .bg-image { position: fixed; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; opacity: 0.2; filter: blur(5px); z-index: -1; }
+        .bg-image { position: fixed; inset: 0; background-image: url('assets/images/fille-casque.jpg'); background-size: cover; background-position: center; opacity: 0.2; filter: blur(5px); z-index: -1; }
         
         nav { padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(6, 6, 10, 0.6); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
         
@@ -199,7 +199,7 @@
             .notif-prompt-box { flex-direction: column; text-align: center; }
         }
     </style>
-    <link rel="stylesheet" href="logo.css">
+    <link rel="stylesheet" href="assets/css/logo.css">
 </head>
 <body>
 
@@ -250,7 +250,7 @@
                 </div>
 
                 <div class="nt-pay-methods">
-                    <img src="logo_wave.jpg" alt="Wave"><img src="logo_orange.jpg" alt="Orange Money"><img src="logo_mtn.jpg" alt="MTN MoMo"><img src="logo_moov.jpg" alt="Moov Money">
+                    <img src="assets/images/logo_wave.jpg" alt="Wave"><img src="assets/images/logo_orange.jpg" alt="Orange Money"><img src="assets/images/logo_mtn.jpg" alt="MTN MoMo"><img src="assets/images/logo_moov.jpg" alt="Moov Money">
                     <span><i class="fas fa-lock"></i> Paiement sécurisé</span>
                 </div>
                 <button type="button" class="nt-modal-later" onclick="fermerModalCredits()">Plus tard</button>
@@ -272,7 +272,7 @@
                 <span class="eq-bar bar-3"></span>
                 <span class="eq-bar bar-4"></span>
             </div>
-            <img src="logo-nova-tempo.png" alt="Nova Tempo" class="nova-brand-img">
+            <img src="assets/images/logo-nova-tempo.png" alt="Nova Tempo" class="nova-brand-img">
         </a>
         <div class="nav-links">
             <a class="credits-pill" id="credits-pill" onclick="ouvrirModalCredits('solde')"><i class="fas fa-coins"></i> <span id="studio-credits">…</span></a>
@@ -564,8 +564,8 @@
                 try {
                     await swRegistration.showNotification(titre, {
                         body: corps,
-                        icon: 'logo.png',
-                        badge: 'logo.png',
+                        icon: 'assets/images/logo.png',
+                        badge: 'assets/images/logo.png',
                         vibrate: [200, 100, 200],
                         tag: 'song-ready'
                     });
@@ -573,7 +573,7 @@
                     console.log("Erreur Notification ServiceWorker:", e);
                 }
             } else if ("Notification" in window && Notification.permission === "granted") {
-                new Notification(titre, { body: corps, icon: 'logo.png' });
+                new Notification(titre, { body: corps, icon: 'assets/images/logo.png' });
             }
 
             const banner = document.getElementById('notification-banner');

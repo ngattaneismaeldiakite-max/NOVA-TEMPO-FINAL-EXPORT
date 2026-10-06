@@ -5,14 +5,14 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 
 ## Architecture
 
-- **Pages** : HTML/CSS/JS statiques à la racine, sans framework ni build.
+- **Pages** : HTML statiques à la racine (les adresses du site en dépendent), sans framework ni build. Fichiers statiques rangés dans `assets/` : `images/`, `audio/`, `css/`, `js/`. `manifest.json` et `sw.js` restent à la racine (portée du service worker).
   - `index.html` accueil (démos, occasions, tarifs, FAQ, pied de page)
   - `login.html`, `signup.html`, `reset-password.html` authentification
   - `studio.html` création d'une chanson : **parcours guidé en étapes** (une question par écran, choix rapides, aperçu gratuit des paroles avec « Une autre version » avant de dépenser un crédit) + fenêtre d'achat de crédits intégrée
-  - `studio-parcours.js` **description des étapes de chaque occasion** (questions, options accordées h/f, clé envoyée au serveur, style conseillé). Pour changer une question, modifier ce fichier ; chaque `cle` doit correspondre à une balise utilisée dans les textes.
+  - `assets/js/studio-parcours.js` **description des étapes de chaque occasion** (questions, options accordées h/f, clé envoyée au serveur, style conseillé). Pour changer une question, modifier ce fichier ; chaque `cle` doit correspondre à une balise utilisée dans les textes.
   - `profil.html` solde, achat de packs, chansons ; `creations.html` paroles
   - `cgu.html`, `privacy.html`
-- **Logo** : uniquement via `logo.css` + `logo-nova-tempo.png` (texte détouré) et 4 barres `.eq-bar` animées. Même balisage sur toutes les pages ; ne pas créer d'autre version.
+- **Logo** : uniquement via `assets/css/logo.css` + `assets/images/logo-nova-tempo.png` (texte détouré) et 4 barres `.eq-bar` animées. Même balisage sur toutes les pages ; ne pas créer d'autre version.
 - **API** : fonctions Vercel dans `api/` (CommonJS, sans dépendance npm, `fetch` natif).
   - Code partagé dans `api/_lib/` (le préfixe `_` empêche Vercel d'en faire des fonctions).
   - **Limite plan Hobby : 12 fonctions max** (7 aujourd'hui). Tout fichier `.js` hors `_lib` compte.
@@ -35,7 +35,7 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 - Anti-doublon : le surnom choisi ne se répète pas dans une même ligne.
 - **Questions du formulaire = usage dans les textes** : `{DUREE_RELATION}` s'emploie toujours en « ___ que je t'aime » (une durée), `{AGE}` pour l'âge fêté. Un nombre seul devient « N ans ».
 - **Champ vide = jamais de valeur bidon** (« mon cher / ma chère », « un concept unique »…) : `generate-lyrics.js` retire l'interpellation, remplace « pour {NOM} » par « pour toi » ou retire la ligne, puis choisit le modèle qui reste le plus complet. Écrire les nouveaux modèles pour que les balises soient des morceaux entre virgules (« {NOM}, … ») autant que possible.
-- Messages d'erreur d'auth en français via `auth-messages.js`.
+- Messages d'erreur d'auth en français via `assets/js/auth-messages.js`.
 - Design : fond noir `#06060A`, vert néon `#D4FF00`, rose `#FF0066`, police Satoshi. Pas d'`alert()` : fenêtres et notifications intégrées.
 - Pas de faux témoignages ni de faux avis sur le site.
 
