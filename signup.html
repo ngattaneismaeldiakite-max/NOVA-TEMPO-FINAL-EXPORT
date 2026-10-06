@@ -158,7 +158,9 @@
             const { data, error } = await supabaseClient.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: window.location.origin + '/studio.html'
+                    redirectTo: window.location.origin + '/studio.html',
+                    // Toujours proposer le choix du compte Google
+                    queryParams: { prompt: 'select_account' }
                 }
             });
             

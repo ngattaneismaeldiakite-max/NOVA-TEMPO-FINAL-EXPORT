@@ -135,7 +135,8 @@
                 const redirectTarget = window.location.origin + '/studio.html';
                 const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
                     provider: 'google',
-                    options: { redirectTo: redirectTarget }
+                    // Toujours proposer le choix du compte Google
+                    options: { redirectTo: redirectTarget, queryParams: { prompt: 'select_account' } }
                 });
                 if (error) throw error;
             } catch (err) {
