@@ -10,6 +10,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
+    <script src="auth-messages.js"></script>
 
     <style>
         :root {
@@ -49,6 +50,22 @@
         .auth-footer a:hover { text-decoration: underline; }
         
         #error-msg { background: rgba(255, 0, 102, 0.2); border: 1px solid var(--neon-pink); color: #fff; padding: 0.8rem; border-radius: 8px; font-size: 0.9rem; margin-bottom: 1rem; display: none; text-align: center; }
+        #error-msg a, .info-msg a { color: var(--neon-lime); font-weight: 700; cursor: pointer; text-decoration: underline; }
+        .info-msg { background: rgba(212, 255, 0, 0.08); border: 1px solid rgba(212, 255, 0, 0.45); color: #fff; padding: 0.9rem; border-radius: 8px; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; display: none; text-align: center; }
+
+        .forgot-link { display: block; margin: -0.4rem 0 0.4rem auto; width: fit-content; background: none; border: none; padding: 0; color: var(--text-muted); font-family: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: color 0.2s; }
+        .forgot-link:hover { color: var(--neon-lime); }
+        .auth-sub { text-align: center; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin: -1rem 0 1.8rem; }
+        .btn-back { display: block; margin: 1.4rem auto 0; background: none; border: none; color: var(--text-muted); font-family: inherit; font-size: 0.9rem; cursor: pointer; }
+        .btn-back:hover { color: var(--neon-lime); }
+        .btn-submit:disabled { opacity: 0.6; cursor: wait; transform: none; box-shadow: none; }
+        #view-forgot { display: none; }
+
+        @media (max-width: 600px) {
+            nav { padding: 1rem; display: flex; justify-content: center; }
+            .auth-container { padding: 5.5rem 1rem 2rem; }
+            .auth-card { padding: 2rem 1.4rem; }
+        }
     </style>
     <link rel="stylesheet" href="logo.css">
 </head>
@@ -69,30 +86,55 @@
     <div class="auth-container">
         <div class="bg-image"></div>
         <div class="auth-card">
-            <h2>Bon retour !</h2>
-            
-            <div id="error-msg"></div>
+            <!-- Vue : connexion -->
+            <div id="view-login">
+                <h2>Bon retour !</h2>
 
-            <button type="button" class="btn-google" onclick="loginWithGoogle()">
-                <i class="fab fa-google"></i> Continuer avec Google
-            </button>
-            
-            <div class="divider"><span>ou avec votre email</span></div>
-            
-            <form id="login-form" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label>Adresse Email</label>
-                    <input type="email" id="email" required placeholder="nom@exemple.com">
+                <div id="error-msg" role="alert"></div>
+                <div id="login-info" class="info-msg" role="status"></div>
+
+                <button type="button" class="btn-google" onclick="loginWithGoogle()">
+                    <i class="fab fa-google"></i> Continuer avec Google
+                </button>
+
+                <div class="divider"><span>ou avec votre email</span></div>
+
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="email">Adresse Email</label>
+                        <input type="email" id="email" required autocomplete="email" placeholder="nom@exemple.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" required autocomplete="current-password" placeholder="••••••••">
+                    </div>
+                    <button type="button" class="forgot-link" onclick="afficherVue('forgot')">Mot de passe oublié ?</button>
+                    <button type="submit" class="btn-submit" id="submit-btn">Se connecter</button>
+                </form>
+
+                <div class="auth-footer">
+                    Vous n'avez pas de compte ? <a href="signup.html">Créer un compte</a>
                 </div>
-                <div class="form-group">
-                    <label>Mot de passe</label>
-                    <input type="password" id="password" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn-submit" id="submit-btn">Se connecter</button>
-            </form>
-            
-            <div class="auth-footer">
-                Vous n'avez pas de compte ? <a href="signup.html">Créer un compte</a>
+            </div>
+
+            <!-- Vue : mot de passe oublié -->
+            <div id="view-forgot">
+                <h2>Mot de passe oublié</h2>
+                <p class="auth-sub">Indique l'e-mail de ton compte : on t'envoie un lien pour choisir un nouveau mot de passe.</p>
+
+                <div id="forgot-error" class="info-msg" role="alert" style="background: rgba(255,0,102,0.2); border-color: var(--neon-pink);"></div>
+                <div id="forgot-info" class="info-msg" role="status"></div>
+
+                <form id="forgot-form" onsubmit="envoyerLienReset(event)">
+                    <div class="form-group">
+                        <label for="forgot-email">Adresse Email</label>
+                        <input type="email" id="forgot-email" required autocomplete="email" placeholder="nom@exemple.com">
+                    </div>
+                    <button type="submit" class="btn-submit" id="forgot-btn">Recevoir le lien</button>
+                </form>
+
+                <button type="button" class="btn-back" onclick="afficherVue('login')"><i class="fas fa-arrow-left"></i> Retour à la connexion</button>
+                <p class="auth-sub" style="margin: 1.2rem 0 0; font-size: 0.82rem;">Tu t'étais inscrit avec Google ? Pas besoin de mot de passe : utilise simplement « Continuer avec Google ».</p>
             </div>
         </div>
     </div>
@@ -107,45 +149,100 @@
             }
         });
 
+        // Affiche un message ; `lien` = { texte, action } optionnel, ajouté à la suite
+        function afficherMessage(id, texte, lien) {
+            const el = document.getElementById(id);
+            el.textContent = texte;
+            if (lien) {
+                const a = document.createElement('a');
+                a.textContent = lien.texte;
+                a.onclick = lien.action;
+                el.append(' ', a);
+            }
+            el.style.display = 'block';
+        }
+
+        function masquerMessages() {
+            ['error-msg', 'login-info', 'forgot-error', 'forgot-info'].forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+        }
+
+        function afficherVue(vue) {
+            masquerMessages();
+            document.getElementById('view-login').style.display = vue === 'login' ? 'block' : 'none';
+            document.getElementById('view-forgot').style.display = vue === 'forgot' ? 'block' : 'none';
+            if (vue === 'forgot') {
+                const champ = document.getElementById('forgot-email');
+                champ.value = champ.value || document.getElementById('email').value;
+                champ.focus();
+            }
+        }
+
         async function handleLogin(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const btn = document.getElementById('submit-btn');
-            const errorDiv = document.getElementById('error-msg');
-            
+
             btn.disabled = true;
             btn.textContent = "Connexion en cours...";
-            errorDiv.style.display = 'none';
+            masquerMessages();
 
             try {
-                const { data, error } = await window.supabaseClient.auth.signInWithPassword({
-                    email: email,
-                    password: password,
-                });
-
+                const { error } = await window.supabaseClient.auth.signInWithPassword({ email, password });
                 if (error) throw error;
                 window.location.href = 'studio.html';
             } catch (err) {
-                errorDiv.textContent = err.message || "Erreur de connexion";
-                errorDiv.style.display = 'block';
+                const oubli = novaAuthCode(err) === 'invalid_credentials'
+                    ? { texte: 'Mot de passe oublié ?', action: () => afficherVue('forgot') }
+                    : null;
+                afficherMessage('error-msg', novaAuthMessage(err), oubli);
                 btn.disabled = false;
                 btn.textContent = "Se connecter";
             }
         }
 
+        async function envoyerLienReset(e) {
+            e.preventDefault();
+            const email = document.getElementById('forgot-email').value.trim();
+            const btn = document.getElementById('forgot-btn');
+            btn.disabled = true;
+            btn.textContent = "Envoi en cours...";
+            masquerMessages();
+
+            const { error } = await window.supabaseClient.auth.resetPasswordForEmail(email, {
+                redirectTo: window.location.origin + '/reset-password.html'
+            });
+
+            btn.disabled = false;
+            btn.textContent = "Recevoir le lien";
+            if (error) {
+                afficherMessage('forgot-error', novaAuthMessage(error));
+                return;
+            }
+            // Message identique que le compte existe ou non (on ne révèle pas quels e-mails sont inscrits)
+            afficherMessage('forgot-info', `C'est envoyé ! Si un compte existe avec ${email}, tu vas recevoir un e-mail avec un lien pour choisir un nouveau mot de passe. Pense à regarder dans tes spams.`);
+        }
+
         async function loginWithGoogle() {
+            masquerMessages();
             try {
                 const redirectTarget = window.location.origin + '/studio.html';
-                const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
+                const { error } = await window.supabaseClient.auth.signInWithOAuth({
                     provider: 'google',
                     // Toujours proposer le choix du compte Google
                     options: { redirectTo: redirectTarget, queryParams: { prompt: 'select_account' } }
                 });
                 if (error) throw error;
             } catch (err) {
-                alert("Erreur Google Auth: " + err.message);
+                afficherMessage('error-msg', "La connexion Google n'a pas pu démarrer. " + novaAuthMessage(err));
             }
+        }
+
+        // Retour depuis la page de nouveau mot de passe
+        if (new URLSearchParams(location.search).get('reset') === 'ok') {
+            document.addEventListener('DOMContentLoaded', () => afficherMessage('login-info', 'Mot de passe modifié ! Tu peux te connecter.'));
         }
     </script>
 </body>

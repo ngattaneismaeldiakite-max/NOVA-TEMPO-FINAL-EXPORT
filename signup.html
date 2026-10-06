@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Script Supabase (Lien sécurisé) -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth-messages.js"></script>
     
     <style>
         :root {
@@ -59,6 +60,8 @@
         
         @media (max-width: 600px) {
             nav { padding: 1rem; text-align: center; display: flex; justify-content: center;}
+            .auth-container { padding: 5.5rem 1rem 2rem; }
+            .auth-card { padding: 2rem 1.4rem; }
         }
     </style>
     <link rel="stylesheet" href="logo.css">
@@ -94,12 +97,12 @@
             <form id="signup-form" onsubmit="signupEmail(event)">
                 <div class="form-group">
                     <label>Adresse Email</label>
-                    <input type="email" id="email" required placeholder="nom@exemple.com">
+                    <input type="email" id="email" required autocomplete="email" placeholder="nom@exemple.com">
                 </div>
                 
                 <div class="form-group">
                     <label>Mot de passe</label>
-                    <input type="password" id="password" required minlength="6" placeholder="6 caractères minimum">
+                    <input type="password" id="password" required minlength="8" autocomplete="new-password" placeholder="8 caractères minimum">
                     <i class="fas fa-eye toggle-password" id="eye-icon" onclick="togglePassword()"></i>
                 </div>
                 
@@ -135,7 +138,8 @@
 
         // 3. Inscription Google
         async function loginGoogle() {
-            const { data, error } = await supabaseClient.auth.signInWithOAuth({
+            document.getElementById('error-message').style.display = 'none';
+            const { error } = await supabaseClient.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
                     redirectTo: window.location.origin + '/studio.html',
@@ -143,36 +147,67 @@
                     queryParams: { prompt: 'select_account' }
                 }
             });
-            
+
             if (error) {
-                alert("Erreur Google : " + error.message + "\nAssurez-vous d'avoir activé Google dans Supabase.");
+                afficherErreur("L'inscription Google n'a pas pu démarrer. " + novaAuthMessage(error));
             }
         }
+
+        function afficherErreur(texte, lien) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = texte;
+            if (lien) {
+                const a = document.createElement('a');
+                a.textContent = lien.texte;
+                a.href = lien.href || '#';
+                if (lien.action) a.onclick = (e) => { e.preventDefault(); lien.action(); };
+                a.style.cssText = 'color: var(--neon-lime); font-weight: 700; text-decoration: underline; cursor: pointer;';
+                errorDiv.append(' ', a);
+            }
+            errorDiv.style.display = 'block';
+        }
+
+        // Fautes de frappe fréquentes dans l'e-mail (aucune confirmation par e-mail n'est demandée)
+        const DOMAINES_CORRIGES = {
+            'gmial.com': 'gmail.com', 'gmal.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gmail.co': 'gmail.com', 'gamil.com': 'gmail.com', 'gmail.fr': 'gmail.com', 'gmaill.com': 'gmail.com', 'gmail.con': 'gmail.com',
+            'hotmial.com': 'hotmail.com', 'hotmal.com': 'hotmail.com', 'hotmail.con': 'hotmail.com', 'hotmai.fr': 'hotmail.fr',
+            'yaho.fr': 'yahoo.fr', 'yahou.fr': 'yahoo.fr', 'yahoo.con': 'yahoo.com', 'outlok.com': 'outlook.com', 'outlook.con': 'outlook.com'
+        };
+        let suggestionRefusee = false;
 
         // 4. Inscription Email
         async function signupEmail(event) {
             event.preventDefault();
-            
+
             const btn = document.getElementById('submit-btn');
             const errorDiv = document.getElementById('error-message');
             const successDiv = document.getElementById('success-message');
-            
-            btn.textContent = 'Création en cours...';
-            btn.disabled = true;
+            const champEmail = document.getElementById('email');
+            const email = champEmail.value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+
             errorDiv.style.display = 'none';
             successDiv.style.display = 'none';
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const [local, domaine] = email.split('@');
+            if (!suggestionRefusee && DOMAINES_CORRIGES[domaine]) {
+                const corrige = `${local}@${DOMAINES_CORRIGES[domaine]}`;
+                afficherErreur(`Tu voulais dire ${corrige} ?`, {
+                    texte: 'Oui, corriger',
+                    action: () => { champEmail.value = corrige; errorDiv.style.display = 'none'; }
+                });
+                suggestionRefusee = true; // un 2e clic sur « M'inscrire » garde l'e-mail tel quel
+                return;
+            }
 
-            const { data, error } = await supabaseClient.auth.signUp({
-                email: email,
-                password: password
-            });
+            btn.textContent = 'Création en cours...';
+            btn.disabled = true;
+
+            const { error } = await supabaseClient.auth.signUp({ email, password });
 
             if (error) {
-                errorDiv.style.display = 'block';
-                errorDiv.textContent = 'Erreur : ' + error.message;
+                const existe = ['user_already_exists', 'email_exists'].includes(novaAuthCode(error));
+                afficherErreur(novaAuthMessage(error), existe ? { texte: 'Me connecter', href: '/login.html' } : null);
                 btn.textContent = 'M\'inscrire';
                 btn.disabled = false;
             } else {
