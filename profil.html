@@ -20,8 +20,14 @@
         }
         body { margin: 0; padding: 0; font-family: 'Satoshi', sans-serif; background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; }
         
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.05); flex-wrap: wrap; gap: 1rem; }
+        .nav-right { display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap; }
+        .nav-right a { color: var(--text-light); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: color 0.3s; }
+        .nav-right a:hover { color: var(--neon-lime); }
+        @media (max-width: 768px) {
+            nav { padding: 1rem; justify-content: center; }
+            .nav-right { justify-content: center; gap: 1rem; }
+        }
 
         .container { max-width: 1200px; margin: 3rem auto; padding: 0 2rem; }
         .header-profil { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
@@ -84,7 +90,11 @@
             </div>
             <img src="logo-nova-tempo.png" alt="Nova Tempo" class="nova-brand-img">
         </a>
-        <button id="btn-logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+        <div class="nav-right">
+            <a href="studio.html"><i class="fas fa-magic"></i> Studio</a>
+            <a href="creations.html"><i class="fas fa-compact-disc"></i> Mes créations</a>
+            <button id="btn-logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+        </div>
     </nav>
 
     <div class="container" id="app-content" style="display: none;">

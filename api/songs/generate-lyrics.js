@@ -1,24 +1,32 @@
 // Textes par occasion (dans _lib pour ne pas compter comme fonctions Vercel).
-// "evenement" n'a pas encore de textes : il utilise buildFallbackLyrics.
 const TEMPLATES = {
     amour: require('../_lib/templates/amour'),
     anniversaire: require('../_lib/templates/anniversaire'),
     hommage: require('../_lib/templates/hommage'),
     mariage: require('../_lib/templates/mariage'),
     adoration: require('../_lib/templates/adoration'),
-    promotion: require('../_lib/templates/promotion')
+    promotion: require('../_lib/templates/promotion'),
+    evenement: require('../_lib/templates/evenement')
 };
 
 const ALLOWED_OCCASIONS = ['amour', 'anniversaire', 'hommage', 'evenement', 'mariage', 'adoration', 'promotion'];
 
-function fillTemplate(template, data) {
+// Valeurs utilisées quand le client laisse un champ vide, adaptées à l'occasion
+const DEFAUTS = {
+    standard: { nom: 'mon cher / ma chère', relation: 'partenaire', anecdote: 'un concept unique', duree: 'des années' },
+    promotion: { nom: 'cher client', relation: 'partenaire', anecdote: 'un concept unique', duree: 'des années' },
+    evenement: { nom: "l'hôte de la soirée", relation: 'tout le monde', anecdote: 'cette grande fête', duree: 'ce soir' }
+};
+
+function fillTemplate(template, data, occasion) {
     if (!template) return '';
 
     try {
-        const nom = data.nom || data.cible || data.target || data['amour-prenom'] || data['anniv-prenom'] || data['hommage-nom'] || data['adoration-prenom'] || data['adoration-nom'] || data['mariage-prenom'] || data['promo-nom'] || 'cher client';
-        const relation = data.relation || data['amour-surnom'] || data['hommage-lien'] || data['mariage-surnom'] || data['anniv-relation'] || 'partenaire';
-        const anecdote = data.anecdote || data.souvenir || data.histoire || data['amour-souvenir'] || data['anniv-souvenir'] || data['adoration-temoignage'] || data['promo-anecdote'] || 'un concept unique';
-        const duree = data.duree || data.duree_relation || data.age || data['anniv-age'] || 'des années';
+        const def = DEFAUTS[occasion] || DEFAUTS.standard;
+        const nom = data.nom || data.cible || data.target || data['amour-prenom'] || data['anniv-prenom'] || data['hommage-nom'] || data['adoration-prenom'] || data['adoration-nom'] || data['mariage-prenom'] || data['promo-nom'] || def.nom;
+        const relation = data.relation || data['amour-surnom'] || data['hommage-lien'] || data['mariage-surnom'] || data['anniv-relation'] || def.relation;
+        const anecdote = data.anecdote || data.souvenir || data.histoire || data['amour-souvenir'] || data['anniv-souvenir'] || data['adoration-temoignage'] || data['promo-anecdote'] || def.anecdote;
+        const duree = data.duree || data.duree_relation || data.age || data['anniv-age'] || def.duree;
         const momentDifficile = data.moment_difficile || data.momentDifficile || data['adoration-epreuve'] || 'la tempête';
         const benediction = data.benediction || data['adoration-benediction'] || 'tes bienfaits';
         
@@ -65,7 +73,10 @@ function fillTemplate(template, data) {
         // Nettoyage des ponctuations et espaces orphelins
         template = template.replace(/, ,/g, ',');
         template = template.replace(/ \./g, '.');
-        
+
+        // Majuscule en début de ligne (les réponses du client peuvent commencer en minuscule)
+        template = template.replace(/^(\s*)(\p{Ll})/gmu, (m, espace, lettre) => espace + lettre.toUpperCase());
+
         return template;
     } catch (error) {
         console.error("Erreur lors du remplissage du template:", error);
@@ -119,7 +130,7 @@ module.exports = async (req, res) => {
         if (templates && Array.isArray(templates) && templates.length > 0) {
             // Tirage aléatoire parmi les templates rédigés
             const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
-            finalLyrics = fillTemplate(randomTemplate, data);
+            finalLyrics = fillTemplate(randomTemplate, data, occasion);
         } else {
             // Fallback propre structuré avec couplets/refrain
             finalLyrics = buildFallbackLyrics(data, occasion);

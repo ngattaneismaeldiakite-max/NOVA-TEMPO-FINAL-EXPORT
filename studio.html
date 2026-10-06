@@ -143,6 +143,7 @@
 
         @media (max-width: 768px) {
             nav { padding: 1rem; flex-direction: column; gap: 1rem; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 0.9rem 1.2rem; }
             .radio-grid { grid-template-columns: repeat(2, 1fr); }
             #notification-banner { left: 10px; right: 10px; max-width: none; }
             .notif-prompt-box { flex-direction: column; text-align: center; }
@@ -225,6 +226,7 @@
         </a>
         <div class="nav-links">
             <a class="credits-pill" id="credits-pill" onclick="ouvrirModalCredits('solde')"><i class="fas fa-coins"></i> <span id="studio-credits">…</span></a>
+            <a href="creations.html"><i class="fas fa-compact-disc"></i> Mes créations</a>
             <a href="profil.html"><i class="fas fa-user"></i> Mon Profil</a>
             <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
         </div>
@@ -739,7 +741,8 @@
             
             // Collecter les réponses du formulaire
             const payloadLyrics = {
-                nom: cible,
+                // Vide = le serveur choisit un nom adapté à l'occasion
+                nom: document.getElementById('target-name').value.trim(),
                 occasion: occasion
             };
 
