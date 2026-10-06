@@ -45,8 +45,10 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 - Node n'est pas installé : pour tester en local, `ELECTRON_RUN_AS_NODE=1` avec l'exécutable d'Antigravity IDE (`%LOCALAPPDATA%\Programs\Antigravity IDE\Antigravity IDE.exe`).
 - Le propriétaire est francophone et non développeur : expliquer simplement, en français.
 
-## Points ouverts
+## Points ouverts (mis de côté à la demande du propriétaire)
 
-- Brancher un SMTP (Brevo ou Resend) dans Supabase et traduire les e-mails d'auth en français.
-- Vérifier Supabase → URL Configuration : Site URL `https://novatempo.vercel.app`, Redirect URLs `https://novatempo.vercel.app/**` et `https://nova-tempo-final-export-*-isma20.vercel.app/**`.
-- Ajouter une section témoignages quand de vrais avis clients existeront.
+- **E-mails (SMTP)** — reporté le 06/10/2026. Sans SMTP, l'e-mail « mot de passe oublié » n'arrive pas chez les clients (le SMTP par défaut de Supabase n'envoie qu'à l'équipe). Brevo : compte créé, plan gratuit, mais **vérification par SMS bloquée** (SMS non reçus sur numéro ivoirien) → réessayer / support Brevo. Alternative prête : SMTP Gmail dédié (`smtp.gmail.com:465` + mot de passe d'application). Ensuite : traduire en français le modèle « Reset Password » de Supabase.
+- **Nom de domaine** — pas encore acheté. Prévu : `novatempo.ci` ou `.com` → Vercel + expéditeur e-mail fiable (Brevo).
+- **E-mails transactionnels** (après SMTP) : reçu de paiement, « ta chanson est prête », relances / promotions (fête des mères, Saint-Valentin…).
+- **Témoignages** : section à ajouter quand de vrais avis clients existeront (jamais de faux avis).
+- Vérifier Supabase → URL Configuration : Site URL `https://novatempo.vercel.app`, Redirect URLs `https://novatempo.vercel.app/**` et `https://nova-tempo-final-export-*-isma20.vercel.app/**` (non confirmé par le propriétaire).
