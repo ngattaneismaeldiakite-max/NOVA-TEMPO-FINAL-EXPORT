@@ -1,5 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+// Textes par occasion (dans _lib pour ne pas compter comme fonctions Vercel).
+// "evenement" n'a pas encore de textes : il utilise buildFallbackLyrics.
+const TEMPLATES = {
+    amour: require('../_lib/templates/amour'),
+    anniversaire: require('../_lib/templates/anniversaire'),
+    hommage: require('../_lib/templates/hommage'),
+    mariage: require('../_lib/templates/mariage'),
+    adoration: require('../_lib/templates/adoration'),
+    promotion: require('../_lib/templates/promotion')
+};
 
 const ALLOWED_OCCASIONS = ['amour', 'anniversaire', 'hommage', 'evenement', 'mariage', 'adoration', 'promotion'];
 
@@ -104,17 +112,7 @@ module.exports = async (req, res) => {
         const requested = String(data.occasion || 'amour').toLowerCase();
         const occasion = ALLOWED_OCCASIONS.includes(requested) ? requested : 'amour';
 
-        let templates = null;
-
-        // Charger le fichier de templates de l'occasion si existant
-        try {
-            const templatePath = path.join(__dirname, 'templates', `${occasion}.js`);
-            if (fs.existsSync(templatePath)) {
-                templates = require(templatePath);
-            }
-        } catch(e) {
-            console.log(`Pas de fichier de template pour ${occasion}, utilisation du fallback.`);
-        }
+        const templates = TEMPLATES[occasion] || null;
 
         let finalLyrics = "";
 
