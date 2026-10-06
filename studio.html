@@ -279,6 +279,16 @@
                         <label class="radio-card"><input type="radio" name="occasion" value="promotion" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🚀 Promotion</span></label>
                         <label class="radio-card"><input type="radio" name="occasion" value="evenement" onchange="genererFormulaireOccasion(this.value)"><span class="card-content">🎉 Événement</span></label>
                     </div>
+
+                    <!-- Accord des paroles (masculin / féminin), selon l'occasion -->
+                    <div id="sexe-group" style="display: none; margin-top: 1.6rem;">
+                        <label class="main-label" style="font-size: 0.95rem; margin-bottom: 0.8rem;">Cette chanson est pour…</label>
+                        <div class="radio-grid">
+                            <label class="radio-card"><input type="radio" name="sexe" value="h"><span class="card-content">👨 Un homme</span></label>
+                            <label class="radio-card"><input type="radio" name="sexe" value="f"><span class="card-content">👩 Une femme</span></label>
+                            <label class="radio-card"><input type="radio" name="sexe" value="groupe"><span class="card-content">👥 Un couple / un groupe</span></label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -452,6 +462,7 @@
                 occasion: coche('occasion'),
                 style: coche('style'),
                 voice: coche('voice'),
+                sexe: coche('sexe'),
                 champs: Array.from(document.querySelectorAll('.custom-data')).map(c => c.value)
             };
             try { sessionStorage.setItem(BROUILLON_KEY, JSON.stringify(brouillon)); } catch (e) {}
@@ -473,6 +484,7 @@
             }
             cocher('style', brouillon.style);
             cocher('voice', brouillon.voice);
+            cocher('sexe', brouillon.sexe);
             try { sessionStorage.removeItem(BROUILLON_KEY); } catch (e) {}
             return true;
         }
@@ -689,7 +701,16 @@
             } else {
                 container.innerHTML = `<div class="dynamic-field"><label>Racontez votre histoire / Détails <span class="optional-tag">(optionnel)</span> :</label><textarea class="custom-data" data-key="anecdote" placeholder="Racontez votre histoire ici..."></textarea></div>`;
             }
+
+            // Question homme / femme pour accorder les paroles
+            const avecSexe = OCCASIONS_GENREES.includes(occasion);
+            document.getElementById('sexe-group').style.display = avecSexe ? 'block' : 'none';
+            document.querySelectorAll('input[name="sexe"]').forEach((r, i) => {
+                r.required = avecSexe && i === 0;
+                if (!avecSexe) r.checked = false;
+            });
         }
+        const OCCASIONS_GENREES = ['amour', 'anniversaire', 'hommage', 'mariage'];
 
         async function resetStudio() {
             const form = document.getElementById('studio-form');
@@ -705,6 +726,7 @@
             btn.innerHTML = '<i class="fas fa-magic"></i> Générer ma chanson';
 
             document.getElementById('dynamic-form-container').innerHTML = '<div style="text-align: center;">Veuillez sélectionner une occasion ci-dessus.</div>';
+            document.getElementById('sexe-group').style.display = 'none';
 
             await switchView(result, form);
         }
@@ -746,7 +768,9 @@
             const payloadLyrics = {
                 // Vide = le serveur choisit un nom adapté à l'occasion
                 nom: document.getElementById('target-name').value.trim(),
-                occasion: occasion
+                occasion: occasion,
+                sexe: document.querySelector('input[name="sexe"]:checked')?.value || '',
+                voix: voice
             };
 
             document.querySelectorAll('.custom-data').forEach(champ => {

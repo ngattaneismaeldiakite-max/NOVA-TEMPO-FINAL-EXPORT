@@ -80,7 +80,7 @@ Tu es ma force, tu es ma grâce
 [Couplet 2]
 Le village se souvient de ta bonté
 {ANECDOTE}, et les anciens en parlent encore
-{DUREE_RELATION} que tu es parti(e), mais ton nom vit
+{DUREE_RELATION} que tu es {T:parti|partie}, mais ton nom vit
 {NOM}, mon {RELATION}, t'es mon trésor
 
 [Outro]
@@ -144,7 +144,7 @@ C'est ta voix qui me guide quand je ne sais pas
 Je te rends hommage, je ne t'oublie pas
 
 [Couplet 2]
-La vie m'a éloigné(e), mais mon cœur est resté
+La vie m'a {J:éloigné|éloignée}, mais mon cœur est resté
 {ANECDOTE}, et je te parle dans mes prières
 {DUREE_RELATION} que je vis avec ton héritage
 {NOM}, mon {RELATION}, t'es ma lumière
@@ -179,7 +179,7 @@ Merci pour tout... merci pour moi...
     `[Couplet 1]
 {ANECDOTE}, c'est le fil qui nous relie
 {DUREE_RELATION} que je le tiens fort
-{NOM}, mon {RELATION}, tu es parti(e) mais tu es là
+{NOM}, mon {RELATION}, tu es {T:parti|partie} mais tu es là
 Dans chaque geste, dans chaque effort
 
 [Refrain]
@@ -212,7 +212,7 @@ Je te rends hommage, je te rends grâce
 [Couplet 2]
 Les années ont passé, mais ton enseignement reste
 {ANECDOTE}, et je le transmets à mes enfants
-{DUREE_RELATION} que tu es parti(e), mais ton nom vit
+{DUREE_RELATION} que tu es {T:parti|partie}, mais ton nom vit
 {NOM}, mon {RELATION}, t'es mon printemps
 
 [Outro]
@@ -227,7 +227,7 @@ Merci... repose en paix...
 Et je te chante avec des mots tout doux
 
 [Refrain]
-Papa, maman, merci pour tout
+{NOM}, merci pour tout
 Ce que tu m'as donné, c'est pour toujours
 Je te rends hommage, je t'aime, c'est tout
 
@@ -243,19 +243,19 @@ Merci... je t'aime...
 
     // Template 12
     `[Couplet 1]
-On a grandi ensemble, tu m'as vu(e) devenir
+On a grandi ensemble, tu m'as {J:vu|vue} devenir
 {ANECDOTE}, et tu étais toujours là
 {NOM}, mon {RELATION}, tu m'as appris à sourire
 Même quand le monde ne souriait pas
 
 [Refrain]
 Je te rends hommage avec mon cœur d'enfant
-Tu es mon père, ma mère, mon confident
+Tu es {T:mon père|ma mère}, {T:mon guide|ma guide}, {T:mon confident|ma confidente}
 Je t'aime simplement, profondément
 
 [Couplet 2]
 Les années ont passé, tu as les cheveux blancs
-{ANECDOTE}, et moi je suis devenu(e) grand(e)
+{ANECDOTE}, et moi je suis {J:devenu grand|devenue grande}
 {DUREE_RELATION} que je te dois tout
 {NOM}, mon {RELATION}, t'es mon amour
 
@@ -271,15 +271,15 @@ Tu m'as appris à pêcher, à chanter, à prier
 Et je te rends hommage avec émotion
 
 [Refrain]
-Papa, maman, t'es mon héros
-Celui qui m'a appris à voler haut
+{NOM}, t'es {T:mon héros|mon héroïne}
+{T:Celui|Celle} qui m'a appris à voler haut
 Je te rends hommage, je t'aime trop
 
 [Couplet 2]
 La famille, c'est toi qui l'as construite
 {ANECDOTE}, et on est là grâce à toi
 {DUREE_RELATION} que tu veilles sur nous
-{NOM}, mon {RELATION}, t'es notre roi
+{NOM}, mon {RELATION}, t'es notre {T:roi|reine}
 
 [Outro]
 Merci... je t'aime...
@@ -300,7 +300,7 @@ Tu es ma famille, tu es mon idole
 [Couplet 2]
 Les enfants jouent dans la cour comme avant
 {ANECDOTE}, et je te vois dans leurs yeux
-{DUREE_RELATION} que tu es parti(e), mais tu es là
+{DUREE_RELATION} que tu es {T:parti|partie}, mais tu es là
 {NOM}, mon {RELATION}, t'es mon feu
 
 [Outro]
@@ -315,7 +315,7 @@ Tu m'as appris à dire "je t'aime" sans avoir peur
 Et je te rends hommage avec bonheur
 
 [Refrain]
-Papa, maman, merci pour la vie
+{NOM}, merci pour la vie
 Pour les rires, les pleurs, les nuits
 Je te rends hommage, je te dis merci
 
@@ -332,7 +332,7 @@ Merci... je t'aime...
     // Template 16
     `[Couplet 1]
 {ANECDOTE}, c'est l'histoire qu'on raconte encore
-{DUREE_RELATION} que tu es parti(e), mais ton nom vit
+{DUREE_RELATION} que tu es {T:parti|partie}, mais ton nom vit
 {NOM}, mon {RELATION}, tu es notre trésor
 Et on te chante avec tout notre esprit
 
@@ -359,7 +359,7 @@ Tu m'as appris à danser sous la pluie
 Et je te rends hommage avec mon cœur
 
 [Refrain]
-Papa, maman, t'es mon soleil
+{NOM}, t'es mon soleil
 Celui qui me réchauffe quand le ciel est gris
 Je te rends hommage, je te bénis
 
@@ -388,7 +388,7 @@ Tu es ma famille, tu es mon sang
 [Couplet 2]
 La vie continue, mais ton souvenir reste
 {ANECDOTE}, et je le transmets à mon tour
-{DUREE_RELATION} que tu es parti(e), mais tu vis
+{DUREE_RELATION} que tu es {T:parti|partie}, mais tu vis
 {NOM}, mon {RELATION}, t'es mon amour
 
 [Outro]
@@ -403,7 +403,7 @@ Tu m'as appris à respecter la terre
 Et je te rends hommage avec émotion
 
 [Refrain]
-Papa, maman, merci pour tout
+{NOM}, merci pour tout
 Ce que tu m'as donné, c'est pour toujours
 Je te rends hommage, je t'aime, c'est tout
 

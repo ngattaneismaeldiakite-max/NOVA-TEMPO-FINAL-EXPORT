@@ -41,8 +41,52 @@ function lireValeurs(data) {
         CTA: champ('cta', 'action', 'promo-cta'),
         OBJECTIF: champ('objectif', 'promo-objectif'),
         SUCCES: champ('succes', 'promo-succes'),
-        HASHTAG: champ('hashtag', 'promo-hashtag') || '#NovaTempo'
+        HASHTAG: champ('hashtag', 'promo-hashtag') || '#NovaTempo',
+        GENRE_INCONNU: null // forme genrée qu'on ne peut pas accorder (couple, groupe, duo)
     };
+}
+
+// Mots de relation dont le genre est évident ("frère", "tata"...)
+const MOTS_MASC = ['frère', 'frérot', 'père', 'papa', 'papi', 'fils', 'oncle', 'tonton', 'cousin', 'ami', 'mari', 'époux', 'chéri', 'copain', 'pote', 'gars', 'grand-père', 'parrain', 'neveu', 'beau-père', 'beau-frère', 'patron', 'roi', 'prince', 'homme', 'monsieur', 'fiancé', 'compagnon'];
+const MOTS_FEM = ['sœur', 'soeur', 'mère', 'maman', 'mamie', 'fille', 'tante', 'tata', 'cousine', 'amie', 'femme', 'épouse', 'chérie', 'copine', 'grand-mère', 'marraine', 'nièce', 'belle-mère', 'belle-sœur', 'patronne', 'reine', 'princesse', 'dame', 'madame', 'go', 'fiancée', 'compagne'];
+
+function genreDeRelation(valeur) {
+    if (!valeur) return null;
+    const mots = valeur.toLowerCase().split(/[\s,.!?'’]+/).filter(Boolean);
+    const h = mots.some(m => MOTS_MASC.includes(m));
+    const f = mots.some(m => MOTS_FEM.includes(m));
+    return h && !f ? 'h' : f && !h ? 'f' : null;
+}
+
+// Genre de la personne fêtée (question du Studio, sinon déduit de la relation)
+// et du chanteur (voix choisie). null = inconnu ou plusieurs personnes.
+function lireGenres(data, valeurs) {
+    const sexe = String(data.sexe || '').toLowerCase();
+    const voix = String(data.voix || data.voice || '').toLowerCase();
+    let T = sexe === 'h' || sexe === 'homme' ? 'h' : sexe === 'f' || sexe === 'femme' ? 'f' : null;
+    if (!T && !sexe) T = genreDeRelation(valeurs.RELATION);
+    return {
+        T,
+        J: voix === 'male' ? 'h' : voix === 'female' ? 'f' : null
+    };
+}
+
+// {T:masc|fém} = personne fêtée, {J:masc|fém} = chanteur
+function accorderGenres(modele, genres) {
+    return modele.replace(/\{([TJ]):([^|{}]*)\|([^{}]*)\}/g, (m, qui, masc, fem) => {
+        const g = genres[qui];
+        return g === 'h' ? masc : g === 'f' ? fem : '{GENRE_INCONNU}';
+    });
+}
+
+// Possessif accordé : "ma {RELATION}" + "frère" pour un homme -> "mon frère"
+function possessif(det, valeur, genrePersonne) {
+    const d = det.toLowerCase();
+    const genre = genreDeRelation(valeur) || genrePersonne;
+    if (!genre || (d !== 'mon' && d !== 'ma')) return det;
+    const voyelle = /^[aeiouyàâéèêëîïôûœh]/i.test(valeur);
+    const accord = genre === 'h' || voyelle ? 'mon' : 'ma';
+    return det[0] === det[0].toUpperCase() ? accord[0].toUpperCase() + accord.slice(1) : accord;
 }
 
 const BALISE = /\{([A-Z_]+)\}/g;
@@ -63,7 +107,7 @@ function morceauRetirable(morceau, manquantes) {
 }
 
 // Retourne la ligne adaptée, ou null si elle doit être retirée.
-function adapterLigne(ligne, valeurs, manquantes) {
+function adapterLigne(ligne, valeurs, manquantes, genres = {}) {
     if (!ligne.trim()) return ''; // ligne vide entre deux parties
     if (/^\s*\[[^\]]+\]\s*$/.test(ligne)) return ligne.trim(); // [Refrain], [Couplet 1]...
     let l = ligne;
@@ -90,7 +134,8 @@ function adapterLigne(ligne, valeurs, manquantes) {
     l = l.replace(/\b(mon|ma|mes|ton|ta|tes|notre|nos|votre|vos)\s+\{([A-Z_]+)\}/gi, (m, det, cle) => {
         const v = valeurs[cle];
         if (v == null) return m;
-        return DETERMINANT_EN_TETE.test(v) ? v : `${det} ${v}`;
+        if (DETERMINANT_EN_TETE.test(v)) return v;
+        return `${cle === 'RELATION' ? possessif(det, v, genres.T) : det} ${v}`;
     });
     l = l.replace(BALISE, (m, cle) => (valeurs[cle] != null ? valeurs[cle] : m));
 
@@ -108,16 +153,16 @@ function adapterLigne(ligne, valeurs, manquantes) {
 }
 
 // Remplit un modèle. Retourne { texte, ratio } (ratio = part des lignes conservées).
-function remplir(modele, valeurs) {
+function remplir(modele, valeurs, genres = {}) {
     const manquantes = new Set(Object.keys(valeurs).filter(k => valeurs[k] == null));
-    const lignes = modele.split('\n');
+    const lignes = accorderGenres(modele, genres).split('\n');
     const resultat = [];
     let total = 0, gardees = 0;
 
     for (const ligne of lignes) {
         const estContenu = ligne.trim() && !/^\s*\[[^\]]+\]\s*$/.test(ligne);
         if (estContenu) total++;
-        const adaptee = adapterLigne(ligne, valeurs, manquantes);
+        const adaptee = adapterLigne(ligne, valeurs, manquantes, genres);
         if (adaptee === null) continue;
         if (estContenu) gardees++;
         resultat.push(adaptee);
@@ -142,7 +187,8 @@ function remplir(modele, valeurs) {
 // Choisit au hasard parmi les modèles qui restent les plus complets
 function genererParoles(occasion, data) {
     const valeurs = lireValeurs(data);
-    const candidats = TEMPLATES[occasion].map(m => remplir(m, valeurs));
+    const genres = lireGenres(data, valeurs);
+    const candidats = TEMPLATES[occasion].map(m => remplir(m, valeurs, genres));
     const meilleur = Math.max(...candidats.map(c => c.ratio));
     const bons = candidats.filter(c => c.ratio >= meilleur - 0.08 && c.texte.split('\n').filter(l => l.trim() && !l.startsWith('[')).length >= 6);
     const choix = bons.length ? bons : candidats.sort((a, b) => b.ratio - a.ratio).slice(0, 1);

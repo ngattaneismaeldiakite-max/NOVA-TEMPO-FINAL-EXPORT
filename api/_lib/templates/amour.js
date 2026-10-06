@@ -69,7 +69,7 @@ Je t'aime... je t'attends...
     `[Couplet 1]
 J'ai gardé nos messages, je les relis le soir
 {ANECDOTE}, c'est bête mais ça me fait du bien
-{DUREE_RELATION} que je danse seul dans le noir
+{DUREE_RELATION} que je danse {J:seul|seule} dans le noir
 {NOM}, mon {RELATION}, reviens, j'ai plus personne à qui tenir la main
 
 [Refrain]
@@ -155,7 +155,7 @@ Je t'attends... je t'espère...
 
     // Template 8
     `[Couplet 1]
-Je t'ai vue dans un rêve, tu portais ton sourire
+Je t'ai {T:vu|vue} dans un rêve, tu portais ton sourire
 {ANECDOTE}, et au réveil j'ai voulu te retenir
 {DUREE_RELATION} que je passe mes nuits à écrire
 {NOM}, mon {RELATION}, dis-moi comment te reconquérir
@@ -229,7 +229,7 @@ Je te choisis encore, sans aucun doute, maintenant
 [Refrain]
 Toi et moi c'est écrit, c'est pas compliqué
 Je t'aime à ma façon, faut juste me laisser faire
-Baby, t'es ma go, t'es ma reine, t'es ma terre
+Baby, t'es {T:mon homme|ma go}, t'es {T:mon roi|ma reine}, t'es ma terre
 
 [Couplet 2]
 On a grandi ensemble, on a tout partagé
@@ -260,7 +260,7 @@ Je te regarde danser, je perds la raison
 {NOM}, mon {RELATION}, t'es ma seule passion
 
 [Outro]
-Ma chérie... t'es ma vie...
+{T:Mon chéri|Ma chérie}... t'es ma vie...
 {NOM}, mon {RELATION}, je t'aime à l'infini`,
 
     // Template 13
@@ -273,7 +273,7 @@ On s'est rencontrés, c'était pas prévu
 [Refrain]
 Je t'aime, c'est dit, c'est sorti, c'est réel
 Toi et moi, c'est le plus beau des réels
-Baby, t'es ma go, t'es mon ciel
+Baby, t'es {T:mon homme|ma go}, t'es mon ciel
 
 [Couplet 2]
 On s'est construits, on a tout traversé
@@ -294,8 +294,8 @@ Je veux danser avec toi jusqu'à la défaite
 
 [Refrain]
 Laisse-moi t'aimer, laisse-moi te le dire
-T'es la seule que je veux, la seule à retenir
-Baby, t'es ma go, t'es mon avenir
+T'es {T:le seul|la seule} que je veux, {T:le seul|la seule} à retenir
+Baby, t'es {T:mon homme|ma go}, t'es mon avenir
 
 [Couplet 2]
 Je te prends par la main, on s'envole ailleurs
@@ -304,7 +304,7 @@ Je te prends par la main, on s'envole ailleurs
 {NOM}, mon {RELATION}, t'es mon bonheur
 
 [Outro]
-Ma chérie... reste avec moi...
+{T:Mon chéri|Ma chérie}... reste avec moi...
 {NOM}, mon {RELATION}, je t'aime à chaque pas`,
 
     // Template 15
@@ -317,7 +317,7 @@ Je t'aime à la folie, faut pas se le cacher
 [Refrain]
 Toi et moi, c'est pour la vie, on s'est choisis
 Je te tiens, je te garde, je te veux, c'est dit
-Baby, t'es ma go, t'es ma reine, t'es ma vie
+Baby, t'es {T:mon homme|ma go}, t'es {T:mon roi|ma reine}, t'es ma vie
 
 [Couplet 2]
 On a eu des bas, on a eu des hauts
@@ -334,10 +334,10 @@ Toi et moi... c'est pour toujours...
 {DUREE_RELATION} qu'on se parle tous les jours
 {ANECDOTE}, et j'en veux toujours plus
 {NOM}, mon {RELATION}, t'es mon amour
-Celui qui me réveille, celui qui me rend fou
+Celui qui me réveille, celui qui me rend {J:fou|folle}
 
 [Refrain]
-Baby, t'es ma go, t'es ma reine, t'es ma tout
+Baby, t'es {T:mon homme|ma go}, t'es {T:mon roi|ma reine}, t'es mon tout
 Je t'aime à l'infini, et ça c'est pour toujours
 Toi et moi, c'est écrit, on s'aime sans détour
 
@@ -348,30 +348,30 @@ Je te regarde sourire, je fonds direct
 {NOM}, mon {RELATION}, t'es ma seule conquête
 
 [Outro]
-Ma chérie... je t'aime...
-{NOM}, mon {RELATION}, t'es ma reine, mon problème`,
+{T:Mon chéri|Ma chérie}... je t'aime...
+{NOM}, mon {RELATION}, t'es {T:mon roi|ma reine}, mon problème`,
 
     // Template 17
     `[Couplet 1]
 On a commencé par un simple "ça va ?"
-{ANECDOTE}, et maintenant je suis fou de toi
+{ANECDOTE}, et maintenant je suis {J:fou|folle} de toi
 {DUREE_RELATION} que je te vois dans mes bras
 {NOM}, mon {RELATION}, t'es ma seule voix
 
 [Refrain]
 Je t'aime comme on aime le soleil en hiver
 Avec la certitude que tu réchauffes ma terre
-Baby, t'es ma go, t'es ma lumière
+Baby, t'es {T:mon homme|ma go}, t'es ma lumière
 
 [Couplet 2]
 On a construit quelque chose de solide
 {ANECDOTE}, et je veux pas qu'on se vide
 {DUREE_RELATION} que je t'aime sans ride
-{NOM}, mon {RELATION}, t'es ma seule guide
+{NOM}, mon {RELATION}, t'es mon seul guide
 
 [Outro]
 Toi et moi... c'est pour la vie...
-{NOM}, mon {RELATION}, je t'aime mon amie`,
+{NOM}, mon {RELATION}, je t'aime {T:mon ami|mon amie}`,
 
     // Template 18
     `[Couplet 1]
@@ -383,7 +383,7 @@ Je t'aime trop fort, faut que ça s'arrête ou que ça progresse
 [Refrain]
 Dans mes bras, t'es chez toi, reste encore
 Je t'écris cette chanson, c'est mon trésor
-Baby, t'es ma go, t'es mon or
+Baby, t'es {T:mon homme|ma go}, t'es mon or
 
 [Couplet 2]
 Je te promets le meilleur, je te promets demain
@@ -392,23 +392,23 @@ Je te promets le meilleur, je te promets demain
 {NOM}, mon {RELATION}, t'es mon seul chemin
 
 [Outro]
-Ma chérie... reste avec moi...
+{T:Mon chéri|Ma chérie}... reste avec moi...
 {NOM}, mon {RELATION}, je t'aime à chaque pas`,
 
     // Template 19
     `[Couplet 1]
 Eh, {DUREE_RELATION} que je te vois dans mes rêves
 {ANECDOTE}, et ça me donne envie de te dire "je t'aime"
-{NOM}, mon {RELATION}, t'es ma reine
+{NOM}, mon {RELATION}, t'es {T:mon roi|ma reine}
 Je te veux à ma table, je te veux dans ma vie, sans problème
 
 [Refrain]
 Toi et moi, c'est pas pour rire, c'est pour de vrai
 Je t'aime à la folie, et ça, c'est à jamais
-Baby, t'es ma go, t'es ma reine, t'es ma paix
+Baby, t'es {T:mon homme|ma go}, t'es {T:mon roi|ma reine}, t'es ma paix
 
 [Couplet 2]
-Je te regarde dormir, je te trouve belle
+Je te regarde dormir, je te trouve {T:beau|belle}
 {ANECDOTE}, et je veux pas te perdre, c'est cruel
 {DUREE_RELATION} que je t'aime sans appel
 {NOM}, mon {RELATION}, t'es mon éternel
@@ -421,13 +421,13 @@ Toi et moi... c'est pour toujours...
     `[Couplet 1]
 {DUREE_RELATION} que tu me fais vibrer
 {ANECDOTE}, et j'ai plus envie de me cacher
-{NOM}, mon {RELATION}, t'es mon alliée
+{NOM}, mon {RELATION}, t'es {T:mon allié|mon alliée}
 Je t'aime à la vie, à la mort, à l'éternité
 
 [Refrain]
-Ma chérie, t'es mon cœur, t'es mon âme sœur
+{T:Mon chéri|Ma chérie}, t'es mon cœur, t'es mon âme sœur
 Je te choisis encore, et ça, pour toujours
-Baby, t'es ma go, t'es ma reine, t'es mon amour
+Baby, t'es {T:mon homme|ma go}, t'es {T:mon roi|ma reine}, t'es mon amour
 
 [Couplet 2]
 On a traversé les tempêtes ensemble

@@ -32,7 +32,7 @@ De te voir briller sous le regard de Dieu
 [Refrain]
 Je te promets le respect, la tendresse et l'honneur
 Te garder près de moi, protéger ton bonheur
-Ma {RELATION}, tu es l'unique reine de mon cœur
+Ma {RELATION}, tu es {T:l'unique roi|l'unique reine} de mon cœur
 
 [Couplet 2]
 On a traversé le temps, main dans la main
@@ -41,7 +41,7 @@ On a traversé le temps, main dans la main
 {NOM}, ma {RELATION}, t'es ma plus douce sève
 
 [Outro]
-Mon épouse, mon amour...
+{T:Mon époux|Mon épouse}, mon amour...
 {NOM}, ma {RELATION}, je t'aime toujours`,
 
     // Template 3
@@ -85,14 +85,14 @@ Nos mains entrelacées sous les regards joyeux
 {NOM}, ma {RELATION}, t'es mon ange sur cette terre
 
 [Outro]
-Mon amour, ma reine...
+Mon amour, {T:mon roi|ma reine}...
 {NOM}, ma {RELATION}, je t'aime sans peine`,
 
     // Template 5
     `[Couplet 1]
 Rumba douce et romantique pour notre union
 {ANECDOTE}, et je te rechante ma passion
-{NOM}, ma {RELATION}, je suis fier de ton nom
+{NOM}, ma {RELATION}, je suis {J:fier|fière} de ton nom
 Tu es le soleil qui éclaire ma maison
 
 [Refrain]
@@ -129,7 +129,7 @@ Devant le monde entier je célèbre ton sourire
 {NOM}, ma {RELATION}, t'es ma seule vérité
 
 [Outro]
-Mon amour... mon roi, ma reine...
+Mon amour... {T:mon roi|ma reine}...
 {NOM}, ma {RELATION}, tu es ma seule veine`,
 
     // Template 7
@@ -151,7 +151,7 @@ Chaque pas vers l'autel était une évidence
 {NOM}, ma {RELATION}, t'es mon plus grand bonheur
 
 [Outro]
-À jamais uni(e) à toi...
+À jamais {J:uni|unie} à toi...
 {NOM}, ma {RELATION}, je n'aime que toi`,
 
     // Template 8
@@ -217,7 +217,7 @@ Ce jour de fête restera gravé dans nos mémoires
 {NOM}, ma {RELATION}, t'es ma seule chanson
 
 [Outro]
-Mon épouse, mon époux...
+{T:Mon époux|Mon épouse}...
 {NOM}, ma {RELATION}, je t'aime par-dessus tout`,
 
     // --- DIRECTION 2 : Esprit Serge Beynaud (Coupé décalé, énergie festive, bénédiction) ---

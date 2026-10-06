@@ -18,7 +18,7 @@ Tu es la plus belle chose qui me soit arrivée
 {NOM}, ma {RELATION}, tu es ma destinée
 
 [Outro]
-Joyeux anniversaire, ma reine
+Joyeux anniversaire, {T:mon roi|ma reine}
 {NOM}, ma {RELATION}, je t'aime à en perdre haleine`,
 
     // Template 2 — Direction 1 (Fally Ipupa) : Souvenir du jour de la naissance
@@ -95,9 +95,9 @@ Il n'y a personne comme toi sur cette terre
 Et aujourd'hui, on va te célébrer
 
 [Refrain]
-Joyeux anniversaire, ma perle précieuse
+Joyeux anniversaire, {T:mon trésor précieux|ma perle précieuse}
 Que ta journée soit douce et merveilleuse
-{NOM}, ma {RELATION}, tu es majestueuse
+{NOM}, ma {RELATION}, tu es {T:majestueux|majestueuse}
 
 [Couplet 2]
 Ton sourire éclaire même les jours gris
@@ -106,8 +106,8 @@ Ton sourire éclaire même les jours gris
 {NOM}, ma {RELATION}, tu es mon paradis
 
 [Outro]
-Joyeux anniversaire, ma reine
-{NOM}, ma {RELATION}, tu es ma reine`,
+Joyeux anniversaire, {T:mon roi|ma reine}
+{NOM}, ma {RELATION}, tu es {T:mon roi|ma reine}`,
 
     // Template 6 — Direction 1 (Fally Ipupa) : Merci pour sa présence dans ma vie
     `[Couplet 1]
@@ -135,22 +135,22 @@ Joyeux anniversaire, mon ange
     `[Couplet 1]
 Tu as traversé tant de choses sans plier
 {ANECDOTE}, et tu es encore debout
-{NOM}, ma {RELATION}, tu es une guerrière
-Et je suis fier(fière) de toi, surtout
+{NOM}, ma {RELATION}, tu es {T:un guerrier|une guerrière}
+Et je suis {J:fier|fière} de toi, surtout
 
 [Refrain]
-Joyeux anniversaire, ma battante
+Joyeux anniversaire, {T:mon battant|ma battante}
 Que ta force continue d'être éclatante
-{NOM}, ma {RELATION}, tu es épatante
+{NOM}, ma {RELATION}, tu es {T:épatant|épatante}
 
 [Couplet 2]
-Chaque épreuve t'a rendu plus belle
+Chaque épreuve {T:t'a rendu plus fort|t'a rendue plus belle}
 {ANECDOTE}, et tu rayonnes aujourd'hui
 {DUREE_RELATION} que tu te bats, et tu es fidèle
 {NOM}, ma {RELATION}, tu es mon appui
 
 [Outro]
-Joyeux anniversaire, ma guerrière
+Joyeux anniversaire, {T:mon guerrier|ma guerrière}
 {NOM}, ma {RELATION}, tu es ma lumière`,
 
     // Template 8 — Direction 1 (Fally Ipupa) : Vœu de bonheur pour elle
@@ -183,7 +183,7 @@ Si je devais t'écrire une lettre ce soir
 Et je t'aime depuis le premier instant
 
 [Refrain]
-Joyeux anniversaire, ma bien-aimée
+Joyeux anniversaire, {T:mon bien-aimé|ma bien-aimée}
 Que cette chanson te fasse rêver
 {NOM}, ma {RELATION}, je t'aime à en crever
 
@@ -245,7 +245,7 @@ Joyeux anniversaire ! Hey ! Hey !
     `[Couplet 1]
 Toute la famille est réunie pour toi
 {ANECDOTE}, et on va célébrer ça
-{NOM}, ma {RELATION}, t'es notre roi (reine)
+{NOM}, ma {RELATION}, t'es notre {T:roi|reine}
 Aujourd'hui, tout le monde est là !
 
 [Refrain]
@@ -261,7 +261,7 @@ Les tantes, les oncles, les cousins sont venus
 
 [Outro]
 Joyeux anniversaire ! Famille !
-{NOM}, ma {RELATION}, on t'aime, ma fille (mon gars) !`,
+{NOM}, ma {RELATION}, on t'aime, {T:mon gars|ma fille} !`,
 
     // Template 13 — Direction 2 (Serge Beynaud) : Surprise organisée pour l'anniversaire
     `[Couplet 1]
@@ -283,7 +283,7 @@ Les lumières s'allument, les cris fusent
 
 [Outro]
 Surprise ! Joyeux anniversaire !
-{NOM}, ma {RELATION}, on t'aime, ma mère (mon père) !`,
+{NOM}, ma {RELATION}, on t'aime, {T:mon père|ma mère} !`,
 
     // Template 14 — Direction 2 (Serge Beynaud) : Danse collective pour célébrer
     `[Couplet 1]
@@ -327,7 +327,7 @@ Les anciens prient pour toi, les enfants chantent
 
 [Outro]
 Bénis ! Bénis ! Sois bénis !
-{NOM}, ma {RELATION}, tu es béni(e) !`,
+{NOM}, ma {RELATION}, tu es {T:béni|bénie} !`,
 
     // Template 16 — Direction 2 (Serge Beynaud) : Souvenir des fêtes d'anniversaire passées
     `[Couplet 1]
@@ -364,7 +364,7 @@ Que ta vie soit douce, sans mélange !
 {NOM}, mon {RELATION}, on t'aime, c'est étrange !
 
 [Couplet 2]
-Tu es né(e), et notre monde a changé
+Tu es {T:né|née}, et notre monde a changé
 {ANECDOTE}, et on te regarde grandir
 {DUREE_RELATION} qu'on t'aime, et on va t'aider
 {NOM}, mon {RELATION}, tu es notre avenir !
@@ -375,7 +375,7 @@ Joyeux anniversaire, mon bébé !
 
     // Template 18 — Direction 2 (Serge Beynaud) : Anniversaire d'une figure importante (maman, papa, grand-parent)
     `[Couplet 1]
-Maman (Papa), aujourd'hui c'est ton jour
+{T:Papa|Maman}, aujourd'hui c'est ton jour
 {ANECDOTE}, et on veut te dire merci
 {NOM}, ma {RELATION}, tu es notre amour
 On te célèbre, et on te dit bravo !
@@ -392,18 +392,18 @@ Tu as tout donné pour qu'on soit debout
 {NOM}, ma {RELATION}, tu es notre paix !
 
 [Outro]
-Joyeux anniversaire, notre reine (roi) !
+Joyeux anniversaire, notre {T:roi|reine} !
 {NOM}, ma {RELATION}, on t'aime à jamais !`,
 
     // Template 19 — Direction 2 (Serge Beynaud) : Anniversaire d'un(e) ami(e) proche
     `[Couplet 1]
-Mon ami(e), mon frère (sœur), mon confident
+{T:Mon ami|Mon amie}, {T:mon frère|ma sœur}, {T:mon confident|ma confidente}
 {ANECDOTE}, et on est là pour toi
-{NOM}, ma {RELATION}, tu es important(e)
+{NOM}, ma {RELATION}, tu es {T:important|importante}
 On va fêter ça, tu verras !
 
 [Refrain]
-Joyeux anniversaire, mon ami(e) !
+Joyeux anniversaire, {T:mon ami|mon amie} !
 Que cette année soit remplie de folie !
 {NOM}, ma {RELATION}, on t'aime, c'est dit !
 
@@ -414,7 +414,7 @@ On a ri, on a pleuré, on a tout partagé
 {NOM}, ma {RELATION}, on va célébrer !
 
 [Outro]
-Joyeux anniversaire, mon pote !
+Joyeux anniversaire, {T:mon pote|ma copine} !
 {NOM}, ma {RELATION}, on t'aime, c'est cadeau !`,
 
     // Template 20 — Direction 2 (Serge Beynaud) : Anniversaire surprise qui tourne à la fête totale
