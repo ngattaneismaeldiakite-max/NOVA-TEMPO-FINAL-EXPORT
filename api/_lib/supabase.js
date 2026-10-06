@@ -1,8 +1,25 @@
 // api/_lib/supabase.js
 // Accès serveur à Supabase (clé service_role), sans dépendance npm.
 
-const SUPABASE_URL = (process.env.SUPABASE_URL || 'https://wxkeuyyppzuqplnutwzk.supabase.co').replace(/\/$/, '');
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const URL_PAR_DEFAUT = 'https://wxkeuyyppzuqplnutwzk.supabase.co';
+
+// Tolère les erreurs de saisie dans la variable Vercel (espaces, guillemets,
+// "https://" manquant, chemin en trop comme /rest/v1) ; sinon adresse du projet.
+function normaliserUrl(brute) {
+    const v = String(brute || '').trim().replace(/^["']|["']$/g, '');
+    if (!v) return URL_PAR_DEFAUT;
+    try {
+        const u = new URL(/^https?:\/\//i.test(v) ? v : `https://${v}`);
+        if (!/\.supabase\.(co|in)$/i.test(u.hostname)) throw new Error('hôte inattendu');
+        return `https://${u.hostname}`;
+    } catch (e) {
+        console.error(`SUPABASE_URL invalide sur Vercel (${e.message}) : adresse du projet utilisée.`);
+        return URL_PAR_DEFAUT;
+    }
+}
+
+const SUPABASE_URL = normaliserUrl(process.env.SUPABASE_URL);
+const SERVICE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim().replace(/^["']|["']$/g, '') || undefined;
 
 function assertConfigured() {
     if (!SERVICE_KEY) {
