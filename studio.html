@@ -582,7 +582,9 @@
 
         async function notifierMorceauPret(nomCible) {
             const titre = "🎉 Ta chanson NovaTempo est prête !";
-            const corps = `La chanson exclusive pour ${nomCible} est terminée. Cliquez pour l'écouter !`;
+            const corps = nomCible
+                ? `La chanson exclusive pour ${nomCible} est terminée. Clique pour l'écouter !`
+                : `Ta chanson exclusive est terminée. Clique pour l'écouter !`;
 
             if (swRegistration && "showNotification" in swRegistration) {
                 try {
@@ -734,7 +736,8 @@
             const loadingText = document.getElementById('loading-status-text');
             const loadingBar = document.getElementById('loading-bar');
 
-            const cible = document.getElementById('target-name').value || 'mon cher / ma chère';
+            const cible = document.getElementById('target-name').value.trim(); // peut être vide
+            const NOMS_OCCASIONS = { amour: "d'amour", anniversaire: "d'anniversaire", hommage: 'hommage', mariage: 'de mariage', adoration: "d'adoration", promotion: 'promotionnelle', evenement: "d'événement" };
             const occasion = document.querySelector('input[name="occasion"]:checked').value;
             const style = document.querySelector('input[name="style"]:checked').value;
             const voice = document.querySelector('input[name="voice"]:checked').value;
@@ -788,7 +791,10 @@
                     throw new Error(dataLyrics.error);
                 }
 
-                const parolesFinales = dataLyrics.lyrics || `[Couplet 1]\nPour toi ${cible}, une chanson unique.\n[Refrain]\nNovaTempo chante pour toi.\n[Outro]\nPour toujours.`;
+                if (!dataLyrics.lyrics) {
+                    throw new Error("Les paroles n'ont pas pu être écrites. Réessaie dans un instant, aucun crédit n'a été utilisé.");
+                }
+                const parolesFinales = dataLyrics.lyrics;
 
                 loadingBar.style.width = '35%';
                 loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Enregistrement studio en cours...';
@@ -802,7 +808,7 @@
                         genre: style,
                         voice: voice,
                         occasion: occasion,
-                        titre: `Pour ${cible}`
+                        titre: cible ? `Pour ${cible}` : `Ma chanson ${NOMS_OCCASIONS[occasion] || ''}`.trim()
                     })
                 });
 

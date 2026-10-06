@@ -27,6 +27,7 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 - Chansons : table unique `tracks` (`statut` pending/processing/completed/failed). Les tables `songs`, `creations`, `user_credits`, `song_jobs` sont historiques et inutilisées.
 - Échec de génération → crédit rendu une seule fois (`markFailed` dans `api/_lib/tracks.js`).
 - Textes de chansons : `api/_lib/templates/<occasion>.js`, balises `{NOM}`, `{RELATION}`, `{ANECDOTE}`, `{DUREE_RELATION}`… ; à enregistrer dans `TEMPLATES` de `api/songs/generate-lyrics.js`.
+- **Champ vide = jamais de valeur bidon** (« mon cher / ma chère », « un concept unique »…) : `generate-lyrics.js` retire l'interpellation, remplace « pour {NOM} » par « pour toi » ou retire la ligne, puis choisit le modèle qui reste le plus complet. Écrire les nouveaux modèles pour que les balises soient des morceaux entre virgules (« {NOM}, … ») autant que possible.
 - Messages d'erreur d'auth en français via `auth-messages.js`.
 - Design : fond noir `#06060A`, vert néon `#D4FF00`, rose `#FF0066`, police Satoshi. Pas d'`alert()` : fenêtres et notifications intégrées.
 - Pas de faux témoignages ni de faux avis sur le site.

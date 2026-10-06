@@ -1,3 +1,9 @@
+// api/songs/generate-lyrics.js
+// Choisit un modèle de paroles pour l'occasion et le remplit avec les réponses du client.
+// Un champ laissé vide n'est jamais remplacé par un texte bidon : la phrase est adaptée
+// (interpellation retirée, "pour Awa" -> "pour toi") ou la ligne est retirée, et on choisit
+// le modèle qui reste le plus complet avec les informations données.
+
 // Textes par occasion (dans _lib pour ne pas compter comme fonctions Vercel).
 const TEMPLATES = {
     amour: require('../_lib/templates/amour'),
@@ -9,108 +15,138 @@ const TEMPLATES = {
     evenement: require('../_lib/templates/evenement')
 };
 
-const ALLOWED_OCCASIONS = ['amour', 'anniversaire', 'hommage', 'evenement', 'mariage', 'adoration', 'promotion'];
+const ALLOWED_OCCASIONS = Object.keys(TEMPLATES);
 
-// Valeurs utilisées quand le client laisse un champ vide, adaptées à l'occasion
-const DEFAUTS = {
-    standard: { nom: 'mon cher / ma chère', relation: 'partenaire', anecdote: 'un concept unique', duree: 'des années' },
-    promotion: { nom: 'cher client', relation: 'partenaire', anecdote: 'un concept unique', duree: 'des années' },
-    evenement: { nom: "l'hôte de la soirée", relation: 'tout le monde', anecdote: 'cette grande fête', duree: 'ce soir' }
-};
-
-function fillTemplate(template, data, occasion) {
-    if (!template) return '';
-
-    try {
-        const def = DEFAUTS[occasion] || DEFAUTS.standard;
-        const nom = data.nom || data.cible || data.target || data['amour-prenom'] || data['anniv-prenom'] || data['hommage-nom'] || data['adoration-prenom'] || data['adoration-nom'] || data['mariage-prenom'] || data['promo-nom'] || def.nom;
-        const relation = data.relation || data['amour-surnom'] || data['hommage-lien'] || data['mariage-surnom'] || data['anniv-relation'] || def.relation;
-        const anecdote = data.anecdote || data.souvenir || data.histoire || data['amour-souvenir'] || data['anniv-souvenir'] || data['adoration-temoignage'] || data['promo-anecdote'] || def.anecdote;
-        const duree = data.duree || data.duree_relation || data.age || data['anniv-age'] || def.duree;
-        const momentDifficile = data.moment_difficile || data.momentDifficile || data['adoration-epreuve'] || 'la tempête';
-        const benediction = data.benediction || data['adoration-benediction'] || 'tes bienfaits';
-        
-        // Champs spécifiques à la promotion
-        const produit = data.produit || data.service || data.evenement || data['promo-produit'] || data['promo-service'] || 'notre offre';
-        const argument = data.argument || data.avantage || data.benefice || data['promo-argument'] || 'une qualité exceptionnelle';
-        const cta = data.cta || data.action || data['promo-cta'] || 'clique ici sans tarder';
-        const objectif = data.objectif || data['promo-objectif'] || 'notre défi';
-        const succes = data.succes || data['promo-succes'] || 'notre réussite';
-        const hashtag = data.hashtag || data['promo-hashtag'] || '#NovaTempo';
-
-        // Remplacement des balises entre accolades {}
-        template = template.replace(/\{NOM\}/g, nom);
-        template = template.replace(/\{RELATION\}/g, relation);
-        template = template.replace(/\{ANECDOTE\}/g, anecdote);
-        template = template.replace(/\{DUREE_RELATION\}/g, duree);
-        template = template.replace(/\{MOMENT_DIFFICILE\}/g, momentDifficile);
-        template = template.replace(/\{BENEDICTION\}/g, benediction);
-
-        template = template.replace(/\{PRODUIT\}/g, produit);
-        template = template.replace(/\{SERVICE\}/g, produit);
-        template = template.replace(/\{EVENEMENT\}/g, produit);
-        template = template.replace(/\{ARGUMENT\}/g, argument);
-        template = template.replace(/\{CTA\}/g, cta);
-        template = template.replace(/\{OBJECTIF\}/g, objectif);
-        template = template.replace(/\{SUCCES\}/g, succes);
-        template = template.replace(/\{HASHTAG\}/g, hashtag);
-
-        // Remplacement des balises secondaires entre crochets []
-        template = template.replace(/\[prenom_destinataire\]/g, nom);
-        template = template.replace(/\[prenom\]/g, nom);
-        template = template.replace(/\[nom\]/g, nom);
-        template = template.replace(/\[surnom\]/g, relation);
-        template = template.replace(/\[lien\]/g, relation);
-        template = template.replace(/\[souvenir\]/g, anecdote);
-        template = template.replace(/\[anecdote\]/g, anecdote);
-        template = template.replace(/\[age\]/g, duree);
-        template = template.replace(/\[duree\]/g, duree);
-        template = template.replace(/\[moment_difficile\]/g, momentDifficile);
-        template = template.replace(/\[benediction\]/g, benediction);
-        template = template.replace(/\[produit\]/g, produit);
-        template = template.replace(/\[cta\]/g, cta);
-
-        // Nettoyage des ponctuations et espaces orphelins
-        template = template.replace(/, ,/g, ',');
-        template = template.replace(/ \./g, '.');
-
-        // Majuscule en début de ligne (les réponses du client peuvent commencer en minuscule)
-        template = template.replace(/^(\s*)(\p{Ll})/gmu, (m, espace, lettre) => espace + lettre.toUpperCase());
-
-        return template;
-    } catch (error) {
-        console.error("Erreur lors du remplissage du template:", error);
-        return template; 
-    }
+// Réponses du formulaire -> balises des modèles
+function lireValeurs(data) {
+    const champ = (...cles) => {
+        for (const cle of cles) {
+            const v = data[cle];
+            if (typeof v === 'string' && v.trim()) return v.trim().slice(0, 200);
+        }
+        return null;
+    };
+    const produit = champ('produit', 'service', 'evenement', 'promo-produit', 'promo-service');
+    return {
+        NOM: champ('nom', 'cible', 'target', 'amour-prenom', 'anniv-prenom', 'hommage-nom', 'adoration-prenom', 'adoration-nom', 'mariage-prenom', 'promo-nom'),
+        RELATION: champ('relation', 'amour-surnom', 'hommage-lien', 'mariage-surnom', 'anniv-relation'),
+        ANECDOTE: champ('anecdote', 'souvenir', 'histoire', 'amour-souvenir', 'anniv-souvenir', 'adoration-temoignage', 'promo-anecdote'),
+        DUREE_RELATION: champ('duree', 'duree_relation', 'age', 'anniv-age'),
+        MOMENT_DIFFICILE: champ('moment_difficile', 'momentDifficile', 'adoration-epreuve'),
+        BENEDICTION: champ('benediction', 'adoration-benediction'),
+        PRODUIT: produit,
+        SERVICE: produit,
+        EVENEMENT: produit,
+        ARGUMENT: champ('argument', 'avantage', 'benefice', 'promo-argument'),
+        CTA: champ('cta', 'action', 'promo-cta'),
+        OBJECTIF: champ('objectif', 'promo-objectif'),
+        SUCCES: champ('succes', 'promo-succes'),
+        HASHTAG: champ('hashtag', 'promo-hashtag') || '#NovaTempo'
+    };
 }
 
-function buildFallbackLyrics(data, occasion) {
-    const nom = data.nom || data.cible || 'ami(e)';
-    const relation = data.relation || 'proche';
-    const anecdote = data.anecdote || data.souvenir || 'nos beaux moments';
-    const detail = data.detail || data.histoire || 'un moment unique';
+const BALISE = /\{([A-Z_]+)\}/g;
+// Mots qui accompagnent une balise et disparaissent avec elle ("ma {RELATION}", "ô {NOM}")
+const ACCOMPAGNANTS = /^(?:mon|ma|mes|ton|ta|tes|notre|nos|votre|vos|le|la|les|l'|l’|cher|chère|ô|oh|et|à|depuis|ça fait|cela fait)$/i;
+const DETERMINANT_EN_TETE = /^(?:mon|ma|mes|ton|ta|tes|notre|nos|votre|vos|le|la|les|un|une|des)\s|^l['’]/i;
 
-    return `[Couplet 1]
-Les jours passent et je repense à toi
-${nom}, mon ${relation}, t'es toujours là
-${anecdote}, un souvenir gravé en moi
-Rien ne pourra effacer tes pas
+// Un morceau de phrase (entre virgules) qui ne contient que des balises manquantes et
+// des petits mots d'accompagnement peut être retiré sans casser la phrase.
+function morceauRetirable(morceau, manquantes) {
+    if (![...morceau.matchAll(BALISE)].some(m => manquantes.has(m[1]))) return false;
+    const reste = morceau
+        .replace(BALISE, (m, cle) => (manquantes.has(cle) ? ' ' : m))
+        .replace(/[!?.…«»"]/g, ' ')
+        .split(/\s+/)
+        .filter(Boolean);
+    return reste.every(mot => ACCOMPAGNANTS.test(mot));
+}
 
-[Refrain]
-C'est pour toi que résonne cette mélodie
-Pour célébrer notre histoire et la vie
-Que la musique apporte sa douceur
-${nom}, tu fais mon bonheur
+// Retourne la ligne adaptée, ou null si elle doit être retirée.
+function adapterLigne(ligne, valeurs, manquantes) {
+    if (!ligne.trim()) return ''; // ligne vide entre deux parties
+    if (/^\s*\[[^\]]+\]\s*$/.test(ligne)) return ligne.trim(); // [Refrain], [Couplet 1]...
+    let l = ligne;
 
-[Couplet 2]
-On avance ensemble sur le chemin
-${detail}, la main dans la main
-Les moments partagés restent au présent
-Tu es là dans mes pensées à chaque instant
+    if (manquantes.size && BALISE.test(l)) {
+        BALISE.lastIndex = 0;
+        // 1. Retirer les morceaux qui ne servaient qu'à porter l'info manquante
+        const morceaux = l.split(',');
+        const gardes = morceaux.filter(m => !morceauRetirable(m, manquantes));
+        if (gardes.length && gardes.length < morceaux.length) {
+            l = gardes.join(',');
+        }
+        // 2. Prénom manquant après une préposition ou une formule : "pour {NOM}" -> "pour toi"
+        if (manquantes.has('NOM')) {
+            l = l.replace(/\b(pour|à|chez|avec|de|sur|vers|contre|sans)\s+\{NOM\}/gi, '$1 toi');
+            l = l.replace(/\b(Merci|Bravo|Félicitations|Bienvenue|Joyeux anniversaire|Bon anniversaire|Bonne fête|Dédicace à|Applaudissez)\s+\{NOM\}/gi, (m, f) => f === 'Dédicace à' ? 'Dédicace à toi' : f);
+        }
+        // 3. S'il reste une info manquante, la ligne n'a plus de sens : on la retire
+        BALISE.lastIndex = 0;
+        if ([...l.matchAll(BALISE)].some(m => manquantes.has(m[1]))) return null;
+    }
 
-[Outro]
-Merci d'être là, tout simplement
-${nom}, cette chanson est pour toi maintenant`;
+    // "ma {RELATION}" + réponse "ma chérie" -> "ma chérie" (pas "ma ma chérie")
+    l = l.replace(/\b(mon|ma|mes|ton|ta|tes|notre|nos|votre|vos)\s+\{([A-Z_]+)\}/gi, (m, det, cle) => {
+        const v = valeurs[cle];
+        if (v == null) return m;
+        return DETERMINANT_EN_TETE.test(v) ? v : `${det} ${v}`;
+    });
+    l = l.replace(BALISE, (m, cle) => (valeurs[cle] != null ? valeurs[cle] : m));
+
+    // Nettoyage de la ponctuation laissée par les retraits
+    l = l.replace(/\s+,/g, ',')
+        .replace(/,\s*,+/g, ',')
+        .replace(/^\s*[,;]\s*/, '')
+        .replace(/[,;]\s*$/, '')
+        .replace(/,\s*([!?.…])/g, '$1')
+        .replace(/ {2,}/g, ' ')
+        .replace(/ \./g, '.')
+        .trim();
+    l = l.replace(/^\p{Ll}/u, lettre => lettre.toUpperCase());
+    return l.trim() ? l : null;
+}
+
+// Remplit un modèle. Retourne { texte, ratio } (ratio = part des lignes conservées).
+function remplir(modele, valeurs) {
+    const manquantes = new Set(Object.keys(valeurs).filter(k => valeurs[k] == null));
+    const lignes = modele.split('\n');
+    const resultat = [];
+    let total = 0, gardees = 0;
+
+    for (const ligne of lignes) {
+        const estContenu = ligne.trim() && !/^\s*\[[^\]]+\]\s*$/.test(ligne);
+        if (estContenu) total++;
+        const adaptee = adapterLigne(ligne, valeurs, manquantes);
+        if (adaptee === null) continue;
+        if (estContenu) gardees++;
+        resultat.push(adaptee);
+    }
+
+    // Retirer les sections devenues vides et les lignes vides en double
+    const propre = [];
+    for (let i = 0; i < resultat.length; i++) {
+        const l = resultat[i];
+        if (/^\s*\[[^\]]+\]\s*$/.test(l)) {
+            const suivante = resultat.slice(i + 1).find(x => x.trim());
+            if (!suivante || /^\s*\[[^\]]+\]\s*$/.test(suivante)) continue;
+        }
+        if (!l.trim() && (!propre.length || !propre[propre.length - 1].trim())) continue;
+        propre.push(l);
+    }
+    while (propre.length && !propre[propre.length - 1].trim()) propre.pop();
+
+    return { texte: propre.join('\n'), ratio: total ? gardees / total : 0 };
+}
+
+// Choisit au hasard parmi les modèles qui restent les plus complets
+function genererParoles(occasion, data) {
+    const valeurs = lireValeurs(data);
+    const candidats = TEMPLATES[occasion].map(m => remplir(m, valeurs));
+    const meilleur = Math.max(...candidats.map(c => c.ratio));
+    const bons = candidats.filter(c => c.ratio >= meilleur - 0.08 && c.texte.split('\n').filter(l => l.trim() && !l.startsWith('[')).length >= 6);
+    const choix = bons.length ? bons : candidats.sort((a, b) => b.ratio - a.ratio).slice(0, 1);
+    return choix[Math.floor(Math.random() * choix.length)].texte;
 }
 
 module.exports = async (req, res) => {
@@ -122,27 +158,11 @@ module.exports = async (req, res) => {
         const data = req.body || {};
         const requested = String(data.occasion || 'amour').toLowerCase();
         const occasion = ALLOWED_OCCASIONS.includes(requested) ? requested : 'amour';
-
-        const templates = TEMPLATES[occasion] || null;
-
-        let finalLyrics = "";
-
-        if (templates && Array.isArray(templates) && templates.length > 0) {
-            // Tirage aléatoire parmi les templates rédigés
-            const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
-            finalLyrics = fillTemplate(randomTemplate, data, occasion);
-        } else {
-            // Fallback propre structuré avec couplets/refrain
-            finalLyrics = buildFallbackLyrics(data, occasion);
-        }
-
-        return res.status(200).json({ lyrics: finalLyrics });
-        
+        return res.status(200).json({ lyrics: genererParoles(occasion, data) });
     } catch (error) {
         console.error('Erreur interne generate-lyrics:', error);
-        return res.status(500).json({ 
-            error: 'Erreur lors de la génération des paroles',
-            details: error.message 
-        });
+        return res.status(500).json({ error: 'Erreur lors de la génération des paroles' });
     }
 };
+
+module.exports.genererParoles = genererParoles;
