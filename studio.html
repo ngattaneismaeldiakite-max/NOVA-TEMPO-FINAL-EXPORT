@@ -51,6 +51,7 @@
         
         .dynamic-field { margin-bottom: 1.5rem; animation: fadeIn 0.5s ease; text-align: left; }
         .dynamic-field label { display: block; margin-bottom: 0.6rem; color: var(--text-muted); font-size: 0.95rem; font-weight: 600; }
+        .field-tip { margin: 0.4rem 0 0; font-size: 0.85rem; color: var(--text-muted); text-align: left; }
         .optional-tag { font-size: 0.8rem; color: rgba(255,255,255,0.4); font-weight: normal; margin-left: 5px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -289,6 +290,17 @@
                             <label class="radio-card"><input type="radio" name="sexe" value="groupe"><span class="card-content">👥 Un couple / un groupe</span></label>
                         </div>
                     </div>
+
+                    <!-- Lien avec la personne : choisit le bon type de texte (anniversaire) -->
+                    <div id="lien-group" style="display: none; margin-top: 1.6rem;">
+                        <label class="main-label" style="font-size: 0.95rem; margin-bottom: 0.8rem;">Ton lien avec cette personne</label>
+                        <div class="radio-grid">
+                            <label class="radio-card"><input type="radio" name="lien" value="amour"><span class="card-content">💕 Mon amour</span></label>
+                            <label class="radio-card"><input type="radio" name="lien" value="parent"><span class="card-content">👪 Mon parent / grand-parent</span></label>
+                            <label class="radio-card"><input type="radio" name="lien" value="enfant"><span class="card-content">🧒 Mon enfant</span></label>
+                            <label class="radio-card"><input type="radio" name="lien" value="proche"><span class="card-content">🤝 Famille, ami(e) ou collègue</span></label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -463,6 +475,7 @@
                 style: coche('style'),
                 voice: coche('voice'),
                 sexe: coche('sexe'),
+                lien: coche('lien'),
                 champs: Array.from(document.querySelectorAll('.custom-data')).map(c => c.value)
             };
             try { sessionStorage.setItem(BROUILLON_KEY, JSON.stringify(brouillon)); } catch (e) {}
@@ -485,6 +498,7 @@
             cocher('style', brouillon.style);
             cocher('voice', brouillon.voice);
             cocher('sexe', brouillon.sexe);
+            cocher('lien', brouillon.lien);
             try { sessionStorage.removeItem(BROUILLON_KEY); } catch (e) {}
             return true;
         }
@@ -642,24 +656,29 @@
         
         const questionsPersonnalisees = {
             'amour': `
-                <div class="dynamic-field"><label>Relation / Surnom affectif <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: mon chéri, ma femme, mon amour, mon trésor"></div>
-                <div class="dynamic-field"><label>Depuis combien de temps êtes-vous ensemble ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" placeholder="Ex: 3 ans, 6 mois, 10 ans"></div>
-                <div class="dynamic-field"><label>Un souvenir marquant ou une anecdote <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Notre voyage à Assinie, notre premier baiser sous la pluie"></div>
+                <div class="dynamic-field"><label>Comment l'appelles-tu ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" maxlength="40" placeholder="Ex : mon cœur, mon bébé, ma chérie"></div>
+                <div class="dynamic-field"><label>Depuis combien de temps êtes-vous ensemble ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" maxlength="25" placeholder="Ex : 3 ans, six mois"></div>
+                <div class="dynamic-field"><label>Un souvenir à vous deux <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" maxlength="80" placeholder="Ex : notre voyage à Assinie, notre premier rendez-vous"></div>
+                <p class="field-tip">💡 Écris de courts groupes de mots : ils seront chantés tels quels dans la chanson.</p>
             `,
             'anniversaire': `
-                <div class="dynamic-field"><label>Âge fêté ou durée de la relation <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" placeholder="Ex: 30 ans, 10 ans d'amitié"></div>
-                <div class="dynamic-field"><label>Relation avec la personne <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: mon frère, ma fille, mon meilleur ami, maman"></div>
-                <div class="dynamic-field"><label>Un souvenir / anecdote ou qualité <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Il perd toujours ses clés, nos rires d'enfance"></div>
+                <div class="dynamic-field"><label>Quel âge fête-t-on ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="age" maxlength="15" placeholder="Ex : 30 ans"></div>
+                <div class="dynamic-field"><label>Comment l'appelles-tu ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" maxlength="40" placeholder="Ex : mon frère, ma fille, maman, mon meilleur ami"></div>
+                <div class="dynamic-field"><label>Depuis combien de temps vous vous connaissez ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" maxlength="25" placeholder="Ex : 10 ans, depuis l'enfance"></div>
+                <div class="dynamic-field"><label>Un souvenir ou une qualité <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" maxlength="80" placeholder="Ex : nos fous rires d'enfance, ton grand cœur"></div>
+                <p class="field-tip">💡 Écris de courts groupes de mots : ils seront chantés tels quels dans la chanson.</p>
             `,
             'mariage': `
-                <div class="dynamic-field"><label>Lien / Qui sont les mariés ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: mon épouse, les mariés, mon mari"></div>
-                <div class="dynamic-field"><label>Durée de la relation / Années ensemble <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" placeholder="Ex: 5 ans d'amour, 10 ans d'union"></div>
-                <div class="dynamic-field"><label>Lieu de rencontre ou souvenir de mariage <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Rencontre à la fac en 2018, la demande sur la plage"></div>
+                <div class="dynamic-field"><label>Comment appelles-tu ton/ta partenaire ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" maxlength="40" placeholder="Ex : mon épouse, mon mari, ma chérie"></div>
+                <div class="dynamic-field"><label>Depuis combien de temps êtes-vous ensemble ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" maxlength="25" placeholder="Ex : 5 ans"></div>
+                <div class="dynamic-field"><label>Un souvenir ou votre lieu de rencontre <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" maxlength="80" placeholder="Ex : notre rencontre à la fac, la demande sur la plage"></div>
+                <p class="field-tip">💡 Écris de courts groupes de mots : ils seront chantés tels quels dans la chanson.</p>
             `,
             'hommage': `
-                <div class="dynamic-field"><label>Relation avec cette personne <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: mon grand-père, mon ami fidèle, ma maman"></div>
-                <div class="dynamic-field"><label>Nombre d'années ou message de mémoire <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" placeholder="Ex: 40 ans de présence, Pour toujours dans nos cœurs"></div>
-                <div class="dynamic-field"><label>Un souvenir précieux ou enseignement laissé <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" placeholder="Ex: Ses repas du dimanche, sa sagesse au village"></div>
+                <div class="dynamic-field"><label>Qui était cette personne pour toi ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" maxlength="40" placeholder="Ex : mon grand-père, ma maman, mon ami fidèle"></div>
+                <div class="dynamic-field"><label>Depuis combien de temps nous a-t-elle quittés ? <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="duree" maxlength="25" placeholder="Ex : 2 ans, dix ans"></div>
+                <div class="dynamic-field"><label>Un souvenir ou un enseignement qu'elle t'a laissé <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="anecdote" maxlength="80" placeholder="Ex : ses repas du dimanche, sa sagesse"></div>
+                <p class="field-tip">💡 Écris de courts groupes de mots : ils seront chantés tels quels dans la chanson.</p>
             `,
             'adoration': `
                 <div class="dynamic-field"><label>Qualité / Titre divin célébré <span class="optional-tag">(optionnel)</span> :</label><input type="text" class="custom-data" data-key="relation" placeholder="Ex: mon rocher, mon berger, le Roi des rois"></div>
@@ -709,6 +728,14 @@
                 r.required = avecSexe && i === 0;
                 if (!avecSexe) r.checked = false;
             });
+
+            // Lien avec la personne (choix du type de texte)
+            const avecLien = occasion === 'anniversaire';
+            document.getElementById('lien-group').style.display = avecLien ? 'block' : 'none';
+            document.querySelectorAll('input[name="lien"]').forEach((r, i) => {
+                r.required = avecLien && i === 0;
+                if (!avecLien) r.checked = false;
+            });
         }
         const OCCASIONS_GENREES = ['amour', 'anniversaire', 'hommage', 'mariage'];
 
@@ -727,6 +754,7 @@
 
             document.getElementById('dynamic-form-container').innerHTML = '<div style="text-align: center;">Veuillez sélectionner une occasion ci-dessus.</div>';
             document.getElementById('sexe-group').style.display = 'none';
+            document.getElementById('lien-group').style.display = 'none';
 
             await switchView(result, form);
         }
@@ -770,6 +798,7 @@
                 nom: document.getElementById('target-name').value.trim(),
                 occasion: occasion,
                 sexe: document.querySelector('input[name="sexe"]:checked')?.value || '',
+                lien: document.querySelector('input[name="lien"]:checked')?.value || '',
                 voix: voice
             };
 

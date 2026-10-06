@@ -23,7 +23,7 @@ Joyeux anniversaire, {T:mon roi|ma reine}
 
     // Template 2 — Direction 1 (Fally Ipupa) : Souvenir du jour de la naissance
     `[Couplet 1]
-Il y a {DUREE_RELATION}, le monde t'a accueilli
+Il y a {AGE}, le monde t'a accueilli
 {ANECDOTE}, et depuis ce jour, tu illumines
 {NOM}, ma {RELATION}, le ciel t'a choisi
 Et aujourd'hui, on célèbre ta vie
@@ -36,7 +36,7 @@ Que chaque jour soit une aquarelle
 [Couplet 2]
 Tes parents ont pleuré de joie ce jour-là
 {ANECDOTE}, et le monde a gagné une étoile
-{DUREE_RELATION} que tu brilles, et tu es là
+{AGE} que tu brilles, et tu es là
 {NOM}, ma {RELATION}, tu es mon idéal
 
 [Outro]

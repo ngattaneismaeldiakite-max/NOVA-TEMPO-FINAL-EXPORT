@@ -28,6 +28,8 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 - Échec de génération → crédit rendu une seule fois (`markFailed` dans `api/_lib/tracks.js`).
 - Textes de chansons : `api/_lib/templates/<occasion>.js`, balises `{NOM}`, `{RELATION}`, `{ANECDOTE}`, `{DUREE_RELATION}`… ; à enregistrer dans `TEMPLATES` de `api/songs/generate-lyrics.js`.
 - **Accord masculin/féminin** : jamais de « ami(e) » dans les modèles. Écrire `{T:masc|fém}` pour la personne fêtée (question « Cette chanson est pour… » du Studio, sinon déduit du mot de relation) et `{J:masc|fém}` pour le chanteur (voix choisie). Couple/groupe ou duo : la forme est retirée comme un champ vide.
+- **Lien avec la personne** (Anniversaire) : la question du Studio (`amour` / `parent` / `enfant` / `proche`) filtre les modèles via `LIENS` dans `generate-lyrics.js` (numéros des modèles, à tenir à jour si on en ajoute). Sans réponse : déduit du mot de relation, sinon modèles « general » (jamais de texte romantique).
+- **Questions du formulaire = usage dans les textes** : `{DUREE_RELATION}` s'emploie toujours en « ___ que je t'aime » (une durée), `{AGE}` pour l'âge fêté. Un nombre seul devient « N ans ».
 - **Champ vide = jamais de valeur bidon** (« mon cher / ma chère », « un concept unique »…) : `generate-lyrics.js` retire l'interpellation, remplace « pour {NOM} » par « pour toi » ou retire la ligne, puis choisit le modèle qui reste le plus complet. Écrire les nouveaux modèles pour que les balises soient des morceaux entre virgules (« {NOM}, … ») autant que possible.
 - Messages d'erreur d'auth en français via `auth-messages.js`.
 - Design : fond noir `#06060A`, vert néon `#D4FF00`, rose `#FF0066`, police Satoshi. Pas d'`alert()` : fenêtres et notifications intégrées.

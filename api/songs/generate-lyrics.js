@@ -27,11 +27,14 @@ function lireValeurs(data) {
         return null;
     };
     const produit = champ('produit', 'service', 'evenement', 'promo-produit', 'promo-service');
+    // "30" -> "30 ans" (âge ou durée tapés en chiffres seuls)
+    const enAnnees = v => (v && /^\d{1,3}$/.test(v) ? `${v} ans` : v);
     return {
+        AGE: enAnnees(champ('age', 'anniv-age')),
         NOM: champ('nom', 'cible', 'target', 'amour-prenom', 'anniv-prenom', 'hommage-nom', 'adoration-prenom', 'adoration-nom', 'mariage-prenom', 'promo-nom'),
         RELATION: champ('relation', 'amour-surnom', 'hommage-lien', 'mariage-surnom', 'anniv-relation'),
         ANECDOTE: champ('anecdote', 'souvenir', 'histoire', 'amour-souvenir', 'anniv-souvenir', 'adoration-temoignage', 'promo-anecdote'),
-        DUREE_RELATION: champ('duree', 'duree_relation', 'age', 'anniv-age'),
+        DUREE_RELATION: enAnnees(champ('duree', 'duree_relation')),
         MOMENT_DIFFICILE: champ('moment_difficile', 'momentDifficile', 'adoration-epreuve'),
         BENEDICTION: champ('benediction', 'adoration-benediction'),
         PRODUIT: produit,
@@ -184,11 +187,49 @@ function remplir(modele, valeurs, genres = {}) {
     return { texte: propre.join('\n'), ratio: total ? gardees / total : 0 };
 }
 
+// Modèles adaptés à chaque lien (numéros 1-based dans le fichier de l'occasion).
+// "general" = utilisable pour n'importe qui, quand le lien n'est pas connu.
+const LIENS = {
+    anniversaire: {
+        amour: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        parent: [7, 11, 12, 13, 14, 15, 16, 18, 20],
+        enfant: [2, 7, 11, 12, 14, 15, 17, 20],
+        proche: [2, 7, 11, 12, 14, 15, 16, 19, 20],
+        general: [7, 11, 14, 15, 16, 20]
+    }
+};
+
+// Lien déduit du mot de relation si la question n'a pas été posée
+const MOTS_LIEN = {
+    parent: ['papa', 'maman', 'père', 'mère', 'papi', 'mamie', 'grand-père', 'grand-mère', 'tonton', 'tata', 'oncle', 'tante'],
+    enfant: ['fils', 'fille', 'enfant', 'bébé', 'petit-fils', 'petite-fille', 'neveu', 'nièce'],
+    amour: ['chéri', 'chérie', 'amour', 'mari', 'femme', 'époux', 'épouse', 'fiancé', 'fiancée', 'cœur', 'go', 'homme'],
+    proche: ['frère', 'sœur', 'soeur', 'ami', 'amie', 'pote', 'copain', 'copine', 'collègue', 'cousin', 'cousine', 'voisin', 'voisine', 'boss', 'patron', 'patronne']
+};
+
+function lienDeRelation(relation) {
+    if (!relation) return null;
+    const mots = relation.toLowerCase().split(/[\s,.!?'’]+/).filter(Boolean);
+    for (const lien of ['parent', 'enfant', 'amour', 'proche']) {
+        if (mots.some(m => MOTS_LIEN[lien].includes(m))) return lien;
+    }
+    return null;
+}
+
+function modelesPour(occasion, data, valeurs) {
+    const tous = TEMPLATES[occasion];
+    const table = LIENS[occasion];
+    if (!table) return tous;
+    const demande = String(data.lien || '').toLowerCase();
+    const lien = table[demande] ? demande : (lienDeRelation(valeurs.RELATION) || 'general');
+    return table[lien].map(n => tous[n - 1]).filter(Boolean);
+}
+
 // Choisit au hasard parmi les modèles qui restent les plus complets
 function genererParoles(occasion, data) {
     const valeurs = lireValeurs(data);
     const genres = lireGenres(data, valeurs);
-    const candidats = TEMPLATES[occasion].map(m => remplir(m, valeurs, genres));
+    const candidats = modelesPour(occasion, data, valeurs).map(m => remplir(m, valeurs, genres));
     const meilleur = Math.max(...candidats.map(c => c.ratio));
     const bons = candidats.filter(c => c.ratio >= meilleur - 0.08 && c.texte.split('\n').filter(l => l.trim() && !l.startsWith('[')).length >= 6);
     const choix = bons.length ? bons : candidats.sort((a, b) => b.ratio - a.ratio).slice(0, 1);
