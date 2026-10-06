@@ -25,8 +25,7 @@
 
         /* Sidebar */
         .sidebar { width: 260px; background-color: var(--bg-dark); padding: 2.5rem 2rem; border-right: 1px solid rgba(255, 255, 255, 0.05); }
-        .logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 3rem; color: var(--text-light); letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; }
-        .logo i { color: var(--neon-lime); }
+        .sidebar .nova-brand-logo { margin-bottom: 3rem; }
         .nav-links { list-style: none; padding: 0; }
         .nav-links li { margin-bottom: 0.5rem; }
         .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; border-radius: 12px; transition: all 0.2s ease; }
@@ -122,12 +121,21 @@
             .creation-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
         }
     </style>
+    <link rel="stylesheet" href="logo.css">
 </head>
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="logo"><i class="fas fa-asterisk"></i> NOVA TEMPO</div>
+            <a href="index.html" class="nova-brand-logo" aria-label="Nova Tempo - Accueil">
+                <div class="logo-eq-bars" aria-hidden="true">
+                    <span class="eq-bar bar-1"></span>
+                    <span class="eq-bar bar-2"></span>
+                    <span class="eq-bar bar-3"></span>
+                    <span class="eq-bar bar-4"></span>
+                </div>
+                <img src="logo.png" alt="Nova Tempo" class="nova-brand-img">
+            </a>
             <ul class="nav-links">
                 <li><a href="/studio.html"><i class="fas fa-music"></i> Studio</a></li>
                 <li><a href="/creations.html" class="active"><i class="fas fa-list"></i> Mes Créations</a></li>

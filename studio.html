@@ -10,7 +10,6 @@
     
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
     
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
@@ -21,8 +20,6 @@
         .bg-image { position: fixed; inset: 0; background-image: url('fille-casque.jpg'); background-size: cover; background-position: center; opacity: 0.2; filter: blur(5px); z-index: -1; }
         
         nav { padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(6, 6, 10, 0.6); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--text-light); text-decoration: none; }
-        .logo i { color: var(--neon-lime); }
         
         .nav-links { display: flex; gap: 2rem; align-items: center; }
         .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 600; transition: color 0.3s; display: flex; align-items: center; gap: 8px; }
@@ -151,6 +148,7 @@
             .notif-prompt-box { flex-direction: column; text-align: center; }
         }
     </style>
+    <link rel="stylesheet" href="logo.css">
 </head>
 <body>
 
@@ -216,14 +214,14 @@
     </div>
 
     <nav>
-        <a href="index.html" class="nova-brand-logo">
-            <div class="logo-eq-bars">
+        <a href="index.html" class="nova-brand-logo" aria-label="Nova Tempo - Accueil">
+            <div class="logo-eq-bars" aria-hidden="true">
                 <span class="eq-bar bar-1"></span>
                 <span class="eq-bar bar-2"></span>
                 <span class="eq-bar bar-3"></span>
                 <span class="eq-bar bar-4"></span>
             </div>
-            <img src="logo.png" alt="Nova Tempo" style="height: 38px; width: auto;">
+            <img src="logo.png" alt="Nova Tempo" class="nova-brand-img">
         </a>
         <div class="nav-links">
             <a class="credits-pill" id="credits-pill" onclick="ouvrirModalCredits('solde')"><i class="fas fa-coins"></i> <span id="studio-credits">…</span></a>
