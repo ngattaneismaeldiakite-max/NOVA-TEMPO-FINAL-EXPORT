@@ -20,6 +20,17 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 - **GeniusPay** : paiement Mobile Money (Wave, Orange, MTN, Moov).
 - **SunoAPI** : génération audio (fichiers conservés 14 jours chez Suno → copiés dans le bucket Storage `tracks`).
 
+## Visuel, médias et responsive
+
+-  : style commun de cgu.html et privacy.html (design sombre, texte juridique inchangé).
+-  : cache navigateur 1 jour sur  (images/audio allégés).
+- Démos  en 128 kbps (originaux dans l'historique git) ; images optimisées (cartes 880 px, pochettes 640 px, hero 1200 px). Garder ces tailles pour tout nouvel ajout.
+-  : téléchargement et partage du vrai MP3 (Web Share API).
+- Chaque page se termine par un bloc CSS « Finitions responsive » : zones tactiles ≥ 44 px, aucun débordement de 320 à 1600 px. À re-vérifier après toute modification de mise en page.
+- Accueil : les 3 disques sont sur une seule ligne (tailles en clamp) et tiennent dans le premier écran d'un portable.
+- Les chansons générées ne sont pas recompressées (impossible côté Vercel) : surveiller le stockage Supabase (plan gratuit 1 Go) et prévoir rétention, plan Pro ou Cloudflare R2.
+- CGU : mentionne des offres « Mensuel/Annuel » qui n'existent pas — à trancher par le propriétaire.
+
 ## Règles métier (ne pas casser)
 
 - 1 crédit = 1 chanson. Prix uniquement dans `api/_lib/pricing.js` : pack1 1 000 F / pack3 2 500 F / pack5 4 000 F. Nouvel inscrit : 0 crédit.

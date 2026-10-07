@@ -31,7 +31,7 @@
         .btn-signup { background-color: var(--neon-lime); color: var(--bg-dark); box-shadow: 0 0 15px rgba(212, 255, 0, 0.2); }
         .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(212, 255, 0, 0.4); }
 
-        .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 8rem 2rem 4rem 2rem; box-sizing: border-box; }
+        .hero { position: relative; overflow-x: clip; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 8rem 2rem 4rem 2rem; box-sizing: border-box; }
         .hero-bg { position: absolute; inset: 0; background-image: url('assets/images/fille-casque.jpg'); background-size: cover; background-position: center; filter: blur(3px) brightness(0.85); transform: scale(1.02); z-index: 0; clip-path: inset(0); }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(6,6,10,0.85) 0%, rgba(6,6,10,0.7) 60%, #06060A 100%); z-index: 1; }
         
@@ -44,10 +44,10 @@
         .vinyl-text-new { color: var(--text-light); font-size: 3rem; font-family: 'Instrument Serif', serif; font-style: italic; text-align: center; margin-bottom: 2rem; text-shadow: 0 4px 20px rgba(0,0,0,0.9); }
         .vinyl-text-new span { color: var(--neon-lime); font-family: 'Satoshi', sans-serif; font-weight: 900; font-style: normal; font-size: 2rem; text-transform: uppercase; display: inline-block; margin-left: 10px; }
         
-        .vinyl-container { display: flex; gap: 2.5rem; align-items: center; justify-content: center; flex-wrap: wrap; }
+        .vinyl-container { display: flex; gap: clamp(0.5rem, 2vw, 2.5rem); align-items: center; justify-content: center; flex-wrap: nowrap; width: 100%; }
         
-        .vinyl { width: 230px; height: 230px; border-radius: 50%; background-color: #1a1a1a; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.25); display: flex; justify-content: center; align-items: center; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.8); cursor: pointer; transition: transform 0.3s, border-color 0.3s; overflow: hidden; }
-        .vinyl.middle { width: 300px; height: 300px; border-width: 3px; }
+        .vinyl { flex: 0 0 auto; width: clamp(64px, 23vw, 230px); height: clamp(64px, 23vw, 230px); border-radius: 50%; background-color: #1a1a1a; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.25); display: flex; justify-content: center; align-items: center; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.8); cursor: pointer; transition: transform 0.3s, border-color 0.3s; overflow: hidden; }
+        .vinyl.middle { width: clamp(90px, 31vw, 300px); height: clamp(90px, 31vw, 300px); border-width: 3px; }
         
         .vinyl::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.35); border-radius: 50%; z-index: 0; transition: background 0.3s; }
         .vinyl:hover::after { background: rgba(0,0,0,0.15); }
@@ -60,9 +60,9 @@
 
         .vinyl.playing { border-color: var(--neon-lime); animation: pulseNeon 1.5s infinite alternate; }
         
-        .vinyl::before { content: ''; position: absolute; width: 50px; height: 50px; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 15px rgba(0,0,0,0.6); }
+        .vinyl::before { content: ''; position: absolute; width: clamp(30px, 22%, 50px); aspect-ratio: 1; height: auto; background: var(--neon-lime); border-radius: 50%; z-index: 1; transition: background 0.3s; box-shadow: 0 0 15px rgba(0,0,0,0.6); }
         .vinyl.playing::before { background: var(--neon-pink); }
-        .vinyl i { color: #000; z-index: 2; font-size: 1.6rem; margin-left: 4px; }
+        .vinyl i { color: #000; z-index: 2; font-size: clamp(0.95rem, 3.2vw, 1.6rem); margin-left: 3px; }
         
         @keyframes pulseNeon { 
             0% { box-shadow: 0 0 20px rgba(212, 255, 0, 0.4); transform: scale(1.05); }
@@ -131,25 +131,19 @@
             .hero-text h1 span { font-size: 4rem; }
             .occasions-section { padding: 4rem 2rem 4rem 2rem; }
             
-            .vinyl-container { gap: 1.5rem; }
-            .vinyl { width: 150px; height: 150px; }
-            .vinyl.middle { width: 210px; height: 210px; }
-            .vinyl::before { width: 36px; height: 36px; }
             .vinyl-text-new { font-size: 2.5rem; }
             .vinyl-text-new span { font-size: 1.6rem; }
         }
         
         @media (max-width: 600px) {
             nav { padding: 1rem; gap: 1.2rem; }
+            .hero { padding-left: 1rem; padding-right: 1rem; }
             .nav-links { gap: 1.2rem; }
             .hero-content { margin-bottom: 2rem; margin-top: 1rem; }
             .hero-text h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 1rem; }
             .hero-text h1 span { font-size: 3rem; }
             .hero-text p { font-size: 1rem; }
             
-            .vinyl-container { gap: 0.8rem; }
-            .vinyl { width: 100px; height: 100px; }
-            .vinyl.middle { width: 140px; height: 140px; }
             .vinyl-text-new { font-size: 1.8rem; margin-bottom: 1rem; }
             .vinyl-text-new span { font-size: 1.3rem; display: block; margin-left: 0; margin-top: 4px; }
             .occasions-section { padding: 3rem 1.2rem 4rem 1.2rem; }
@@ -162,6 +156,28 @@
 
         @media (max-width: 900px) {
             .price-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; gap: 1.8rem; }
+        }
+    
+        /* --- Finitions responsive --- */
+        /* Ordinateur : les 3 disques doivent tenir dans le premier écran */
+        @media (min-width: 1101px) and (max-height: 920px) {
+            .hero { padding-top: 6rem; padding-bottom: 2rem; }
+            .hero-content { margin-top: 0; margin-bottom: 1rem; }
+            .hero-text h1 { font-size: 4rem; margin-bottom: 0.8rem; }
+            .hero-text h1 span { font-size: 4.4rem; }
+            .vinyl-showcase { margin-top: 0; margin-bottom: 0; }
+            .vinyl-text-new { font-size: 2.4rem; margin-bottom: 1rem; }
+            .vinyl-text-new span { font-size: 1.7rem; }
+        }
+        .nav-links a, .auth-buttons a { display: inline-flex; align-items: center; min-height: 44px; }
+        .footer-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.4rem; }
+        .price-cta, .btn-signup, .btn-login { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+        @media (max-width: 600px) {
+            .nav-links { gap: 0.2rem 0.8rem; flex-wrap: wrap; justify-content: center; }
+            .auth-buttons { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.4rem; }
+            .btn-login { margin-right: 0; }
+            .section-title { font-size: clamp(1.7rem, 8vw, 3rem); }
+            .section-subtitle { font-size: 1.05rem; margin-bottom: 2.2rem; }
         }
     </style>
     <link rel="stylesheet" href="assets/css/logo.css">
@@ -218,9 +234,9 @@
             </div>
         </div>
 
-        <audio id="audio1" src="assets/audio/demo1.mp3"></audio>
-        <audio id="audio2" src="assets/audio/demo2.mp3"></audio>
-        <audio id="audio3" src="assets/audio/demo3.mp3"></audio>
+        <audio id="audio1" preload="none" src="assets/audio/demo1.mp3"></audio>
+        <audio id="audio2" preload="none" src="assets/audio/demo2.mp3"></audio>
+        <audio id="audio3" preload="none" src="assets/audio/demo3.mp3"></audio>
 
     </section>
 

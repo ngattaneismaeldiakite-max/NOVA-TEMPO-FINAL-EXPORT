@@ -75,7 +75,7 @@
         .chip { padding: 0.7rem 1.1rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.14); background: rgba(0,0,0,0.3); color: var(--text-light); font-family: inherit; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
         .chip:hover { border-color: rgba(212,255,0,0.5); }
         .chip.on { background: rgba(212,255,0,0.12); border-color: var(--neon-lime); color: var(--neon-lime); box-shadow: 0 0 12px rgba(212,255,0,0.18); }
-        .chip .reco { margin-left: 6px; font-size: 0.7rem; font-weight: 900; color: var(--bg-dark); background: var(--neon-lime); padding: 2px 7px; border-radius: 50px; vertical-align: middle; }
+        .chip .reco { margin-left: 6px; font-size: 0.75rem; font-weight: 900; color: var(--bg-dark); background: var(--neon-lime); padding: 2px 7px; border-radius: 50px; vertical-align: middle; }
         .pc-autre { margin-top: 0.9rem; }
         .pc-error { display: none; margin-top: 1rem; color: var(--neon-pink); font-weight: 700; font-size: 0.92rem; }
         .pc-nav { display: flex; gap: 0.8rem; margin-top: 2.2rem; }
@@ -200,6 +200,21 @@
             .radio-grid { grid-template-columns: repeat(2, 1fr); }
             #notification-banner { left: 10px; right: 10px; max-width: none; }
             .notif-prompt-box { flex-direction: column; text-align: center; }
+        }
+    
+        /* --- Finitions responsive --- */
+        .pc-occasions > *, .pc-chips > * { min-width: 0; }
+        .pc-occasion { overflow-wrap: anywhere; }
+        .nav-links a, .btn-logout, .credits-pill { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; }
+        .chip { min-height: 44px; }
+        .btn-soft { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-retour { min-height: 52px; }
+        @media (max-width: 400px) {
+            .container { padding: 0 1rem; margin: 1.6rem auto; }
+            .pc-occasions { gap: 0.6rem; }
+            .pc-occasion { padding: 0.9rem; }
+            .pc-occasion .a { font-size: 0.75rem; }
+            .studio-card { padding: 1.2rem 0.9rem; }
         }
     </style>
     <link rel="stylesheet" href="assets/css/logo.css">

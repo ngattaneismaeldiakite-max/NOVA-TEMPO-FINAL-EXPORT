@@ -263,7 +263,7 @@
                             </div>
                             <span class="song-badge">${esc(song.style_musical || 'Afrobeat')}</span>
                         </div>
-                        <audio controls style="width: 100%; margin: 0.5rem 0;" src="${esc(song.url_audio)}"></audio>
+                        <audio controls preload="metadata" style="width: 100%; margin: 0.5rem 0;" src="${esc(song.url_audio)}"></audio>
                         <div class="song-actions">
                             <a href="#" class="btn-action btn-whatsapp" data-chanson="${i}" data-action="partager">
                                 <i class="fab fa-whatsapp"></i> Envoyer sur WhatsApp
@@ -359,4 +359,25 @@
         70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
         100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
     }
-</style>
+
+        /* --- Finitions responsive --- */
+        .dashboard-grid > * { min-width: 0; }
+        .nav-right a, .btn-logout { min-height: 44px; }
+        .btn-logout { display: inline-flex; align-items: center; gap: 8px; }
+        .header-profil h1 { font-size: clamp(1.9rem, 8vw, 2.8rem); overflow-wrap: anywhere; }
+        .header-profil p { overflow-wrap: anywhere; }
+        .song-header { flex-wrap: wrap; gap: 0.6rem 1rem; }
+        .song-title { min-width: 0; overflow-wrap: anywhere; }
+        .song-actions { flex-wrap: wrap; }
+        .btn-action { min-height: 44px; justify-content: center; }
+        .song-item audio { max-width: 100%; }
+        @media (max-width: 600px) {
+            .container { padding: 0 1rem; margin: 1.6rem auto; }
+            .card { padding: 1.3rem; }
+            .song-item { padding: 1.1rem; }
+            .song-actions .btn-action { flex: 1 1 100%; }
+            .pack-item { padding: 1rem; gap: 0.8rem; }
+            .solde-display { font-size: 2.4rem; }
+            nav { gap: 0.6rem; }
+        }
+    </style>
