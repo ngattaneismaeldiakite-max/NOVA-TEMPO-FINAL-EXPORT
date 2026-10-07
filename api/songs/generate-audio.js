@@ -17,8 +17,12 @@ const OCCASIONS = ['amour', 'anniversaire', 'hommage', 'evenement', 'mariage', '
 
 // Code de diagnostic ajouté aux erreurs (aucun secret) : aide au support sans accès aux logs
 const codeErreur = (etape, err) => {
-    const m = String((err && err.message) || '').match(/\((\d{3})\)/);
-    return `${etape}${m ? '-' + m[1] : ''}`;
+    const texte = String((err && err.message) || '');
+    const http = texte.match(/\((\d{3})\)/);
+    // Erreur PostgreSQL : code (ex. 23502) + colonne en cause, sans aucune donnée client
+    const pg = texte.match(/"code"\s*:\s*"([0-9A-Z]{5})"/);
+    const colonne = texte.match(/column \\?"([a-z_]+)\\?"/i);
+    return [etape, http && http[1], pg && pg[1], colonne && colonne[1]].filter(Boolean).join('-');
 };
 
 module.exports = async function handler(req, res) {
@@ -78,7 +82,7 @@ module.exports = async function handler(req, res) {
     } catch (err) {
         console.error('generate-audio insert track:', err.message);
         await rpc('refund_credit', { p_user: user.id }).catch(() => null);
-        return res.status(500).json({ error: 'Impossible de démarrer la création. Votre crédit n’a pas été débité.' });
+        return res.status(500).json({ error: `Impossible de démarrer la création. Votre crédit n’a pas été débité (code ${codeErreur('A4', err)}).` });
     }
 
     // 3. Lancer Suno
