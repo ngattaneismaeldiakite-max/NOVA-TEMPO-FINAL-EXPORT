@@ -1,6 +1,7 @@
 // api/songs/generate-audio.js
 // Retire 1 crédit, crée la chanson en base et lance la génération Suno.
 const { rest, rpc, getUserFromRequest, siteUrl } = require('../_lib/supabase');
+const { signaler } = require('../_lib/erreurs');
 const { startSunoGeneration, markFailed, refreshTrack } = require('../_lib/tracks');
 const { tropDeDemandes } = require('../_lib/securite');
 const MAX_EN_COURS = 3; // chansons simultanées par client
@@ -34,7 +35,7 @@ module.exports = async function handler(req, res) {
     try {
         user = await getUserFromRequest(req);
     } catch (err) {
-        console.error('generate-audio config:', err.message);
+        await signaler('generate-audio:config', err, { niveau: 'critique' });
         return res.status(500).json({ error: `Service momentanément indisponible (code ${codeErreur('A1', err)}).` });
     }
     if (!user) return res.status(401).json({ error: 'Accès refusé : vous devez être connecté.' });
@@ -49,7 +50,7 @@ module.exports = async function handler(req, res) {
     const title = (typeof titre === 'string' && titre.trim() ? titre.trim() : 'Hit NovaTempo').slice(0, 80);
 
     if (!process.env.SUNO_API_KEY) {
-        console.error('generate-audio: SUNO_API_KEY manquante');
+        await signaler('generate-audio:config', 'SUNO_API_KEY manquante', { niveau: 'critique' });
         return res.status(500).json({ error: 'Service momentanément indisponible (code A2).' });
     }
 
@@ -77,7 +78,7 @@ module.exports = async function handler(req, res) {
     try {
         newBalance = await rpc('consume_credit', { p_user: user.id });
     } catch (err) {
-        console.error('generate-audio consume_credit:', err.message);
+        await signaler('generate-audio:consume_credit', err, { niveau: 'critique', userId: user.id });
         return res.status(500).json({ error: `Service momentanément indisponible (code ${codeErreur('A3', err)}).` });
     }
     if (newBalance === null || newBalance === undefined) {
@@ -102,7 +103,7 @@ module.exports = async function handler(req, res) {
             }
         });
     } catch (err) {
-        console.error('generate-audio insert track:', err.message);
+        await signaler('generate-audio:insert_track', err, { niveau: 'critique', userId: user.id });
         await rpc('refund_credit', { p_user: user.id }).catch(() => null);
         return res.status(500).json({ error: `Impossible de démarrer la création. Votre crédit n’a pas été débité (code ${codeErreur('A4', err)}).` });
     }
@@ -127,7 +128,7 @@ module.exports = async function handler(req, res) {
 
         return res.status(200).json({ job_id: track.id, credits: newBalance });
     } catch (err) {
-        console.error('generate-audio Suno:', err.message);
+        await signaler('generate-audio:suno', err, { niveau: 'critique', userId: user.id });
         await markFailed(track, err.message).catch(e => console.error('markFailed:', e.message));
         return res.status(502).json({ error: 'Le studio est momentanément saturé. Votre crédit vous a été rendu, réessayez dans un instant.' });
     }

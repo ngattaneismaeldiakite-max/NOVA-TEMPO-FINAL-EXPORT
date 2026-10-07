@@ -2,6 +2,7 @@
 // Suivi d'une chanson Suno jusqu'à sa sauvegarde (table tracks + Storage).
 
 const { rest, rpc, uploadPublicFile } = require('./supabase');
+const { signaler } = require('./erreurs');
 
 const SUNO_API = 'https://api.sunoapi.org/api/v1';
 const MAX_DURATION_MS = 15 * 60 * 1000; // au-delà : échec + remboursement
@@ -67,7 +68,7 @@ async function copyAudioToStorage(track, sunoUrl) {
         return await uploadPublicFile('tracks', `${track.user_id}/${track.id}.mp3`, buffer, 'audio/mpeg');
     } catch (err) {
         // On garde le lien Suno (valable 14 jours) plutôt que de perdre la chanson.
-        console.error(`Copie audio ${track.id} impossible:`, err.message);
+        await signaler('copie-audio', `Copie audio ${track.id} impossible: ${err.message}`);
         return sunoUrl;
     }
 }

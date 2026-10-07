@@ -2,6 +2,7 @@
 // Appelé au retour de GeniusPay (profil.html?payment=success&pid=...).
 // Crédite le compte si GeniusPay confirme le paiement, même si le webhook n'est pas encore arrivé.
 const { getUserFromRequest } = require('../_lib/supabase');
+const { signaler } = require('../_lib/erreurs');
 const { findPayment, settlePayment } = require('../_lib/payments');
 
 const UUID = /^[0-9a-f-]{36}$/i;
@@ -22,7 +23,7 @@ module.exports = async (req, res) => {
         const result = await settlePayment(payment);
         return res.status(200).json({ status: result.status, credits_added: payment.credits });
     } catch (err) {
-        console.error('verify-payment:', err);
+        await signaler('verify-payment', err, { niveau: 'critique' });
         return res.status(500).json({ error: 'Vérification impossible pour le moment.' });
     }
 };

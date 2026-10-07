@@ -15,7 +15,7 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 - **Logo** : uniquement via `assets/css/logo.css` + `assets/images/logo-nova-tempo.png` (texte détouré) et 4 barres `.eq-bar` animées. Même balisage sur toutes les pages ; ne pas créer d'autre version.
 - **API** : fonctions Vercel dans `api/` (CommonJS, sans dépendance npm, `fetch` natif).
   - Code partagé dans `api/_lib/` (le préfixe `_` empêche Vercel d'en faire des fonctions).
-  - **Limite plan Hobby : 12 fonctions max** (7 aujourd'hui). Tout fichier `.js` hors `_lib` compte.
+  - **Limite plan Hobby : 12 fonctions max** (8 aujourd'hui). Tout fichier `.js` hors `_lib` compte.
 - **Supabase** (projet `wxkeuyyppzuqplnutwzk`) : auth (e-mail + Google) et base. Migrations dans `supabase/migrations/` (à exécuter à la main dans le SQL Editor).
 - **GeniusPay** : paiement Mobile Money (Wave, Orange, MTN, Moov).
 - **SunoAPI** : génération audio (fichiers conservés 14 jours chez Suno → copiés dans le bucket Storage `tracks`).
@@ -52,7 +52,7 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 
 ## Variables Vercel
 
-`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `GENIUSPAY_PUBLIC_KEY`, `GENIUSPAY_SECRET_KEY`, `SUNO_API_KEY` (Production ; Preview avec clés sandbox GeniusPay). Optionnels : `SITE_URL`, `GENIUSPAY_API_BASE`.
+`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `GENIUSPAY_PUBLIC_KEY`, `GENIUSPAY_SECRET_KEY`, `SUNO_API_KEY` (Production ; Preview avec clés sandbox GeniusPay). Optionnels : `SITE_URL`, `GENIUSPAY_API_BASE`. Alertes téléphone (facultatif) : `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`.
 
 ## Façon de travailler
 
@@ -67,3 +67,10 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 - **E-mails transactionnels** (après SMTP) : reçu de paiement, « ta chanson est prête », relances / promotions (fête des mères, Saint-Valentin…).
 - **Témoignages** : section à ajouter quand de vrais avis clients existeront (jamais de faux avis).
 - Vérifier Supabase → URL Configuration : Site URL `https://novatempo.vercel.app`, Redirect URLs `https://novatempo.vercel.app/**` et `https://nova-tempo-final-export-*-isma20.vercel.app/**` (non confirmé par le propriétaire).
+
+## Sécurité et suivi (07/10/2026)
+
+- En-têtes HTTP (CSP, HSTS…) dans `vercel.json` : toute nouvelle source externe (script, police, API) doit y être autorisée, sinon elle est bloquée.
+- `api/_lib/securite.js` : limites de débit ; `api/_lib/erreurs.js` : `signaler()` écrit dans la table `error_logs` (Supabase) et envoie une alerte Telegram pour le niveau `critique`. Les erreurs du navigateur arrivent par `api/erreurs.js` + `assets/js/suivi-erreurs.js`.
+- Migrations à lancer à la main : `20261007_durcissement_base.sql`, `20261007_journal_erreurs.sql`.
+- Tests : `node tests/simulation.js` (aussi lancés par GitHub Actions). Les relancer après toute modification de `api/`.

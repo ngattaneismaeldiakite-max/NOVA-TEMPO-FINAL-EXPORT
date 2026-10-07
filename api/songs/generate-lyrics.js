@@ -16,6 +16,7 @@ const TEMPLATES = {
 };
 
 const { ipDe, tropDeDemandes } = require('../_lib/securite');
+const { signaler } = require('../_lib/erreurs');
 
 const ALLOWED_OCCASIONS = Object.keys(TEMPLATES);
 
@@ -360,7 +361,7 @@ module.exports = async (req, res) => {
         const occasion = ALLOWED_OCCASIONS.includes(requested) ? requested : 'amour';
         return res.status(200).json({ lyrics: genererParoles(occasion, data) });
     } catch (error) {
-        console.error('Erreur interne generate-lyrics:', error);
+        await signaler('generate-lyrics', error);
         return res.status(500).json({ error: 'Erreur lors de la génération des paroles' });
     }
 };

@@ -2,6 +2,7 @@
 // Appelé par SunoAPI quand une génération avance. Sert uniquement de déclencheur :
 // le statut réel est relu chez Suno via refreshTrack (rien n'est cru du contenu reçu).
 const { rest } = require('../_lib/supabase');
+const { signaler } = require('../_lib/erreurs');
 const { refreshTrack } = require('../_lib/tracks');
 
 module.exports = async function handler(req, res) {
@@ -18,7 +19,7 @@ module.exports = async function handler(req, res) {
         }
         return res.status(200).json({ received: true });
     } catch (err) {
-        console.error('suno-callback:', err.message);
+        await signaler('suno-callback', err);
         return res.status(200).json({ received: true });
     }
 };

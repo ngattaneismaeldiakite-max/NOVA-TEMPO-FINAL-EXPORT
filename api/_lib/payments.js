@@ -2,6 +2,7 @@
 // Validation d'un paiement auprès de GeniusPay puis crédit du compte (une seule fois).
 
 const { rest, rpc } = require('./supabase');
+const { signaler } = require('./erreurs');
 const geniuspay = require('./geniuspay');
 
 async function findPayment(filter) {
@@ -22,7 +23,7 @@ async function settlePayment(payment) {
 
     if (remote.isSuccess) {
         if (!(remote.amount >= payment.amount)) {
-            console.error(`Paiement ${payment.id}: montant GeniusPay ${remote.amount} < attendu ${payment.amount}`);
+            await signaler('paiement:montant', `Paiement ${payment.id}: montant GeniusPay ${remote.amount} < attendu ${payment.amount}`, { niveau: 'critique' });
             return { status: 'pending' };
         }
         const newBalance = await rpc('credit_payment', { p_payment_id: payment.id });

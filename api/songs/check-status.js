@@ -1,6 +1,7 @@
 // api/songs/check-status.js
 // Statut d'une chanson de l'utilisateur connecté (id = id de la ligne tracks).
 const { rest, getUserFromRequest } = require('../_lib/supabase');
+const { signaler } = require('../_lib/erreurs');
 const { refreshTrack } = require('../_lib/tracks');
 
 const UUID = /^[0-9a-f-]{36}$/i;
@@ -28,7 +29,7 @@ module.exports = async function handler(req, res) {
         }
         return res.status(200).json({ status: 'processing' });
     } catch (err) {
-        console.error('check-status:', err.message);
+        await signaler('check-status', err);
         // On laisse le navigateur réessayer au prochain passage
         return res.status(200).json({ status: 'processing' });
     }

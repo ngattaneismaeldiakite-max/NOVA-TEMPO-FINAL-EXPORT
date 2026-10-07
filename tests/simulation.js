@@ -6,7 +6,7 @@ process.env.SUNO_API_KEY = 'suno';
 const ROOT = process.argv[2] || require('path').resolve(__dirname, '..');
 
 const USER = '11111111-1111-1111-1111-111111111111';
-const db = { profiles: [{ id: USER, credits: 0 }], payments: [], tracks: [] };
+const db = { profiles: [{ id: USER, credits: 0 }], payments: [], tracks: [], error_logs: [] };
 const gp = {}; // reference -> {status, amount}
 let suno = { generateFails: false, status: 'PENDING', audioUrl: null };
 let calls = [];
@@ -130,6 +130,10 @@ const check = (label, cond) => { cond ? ok++ : ko++; console.log(`${cond ? 'OK '
   securite.reinitialiser();
   let dl; for (let i = 0; i < 41; i++) dl = await call('songs/generate-lyrics', { body: { occasion: 'amour' }, garder: true });
   check('limite : la 41e demande de paroles en 1 min est refusée (429)', dl.code === 429);
+
+  check('erreur Suno enregistrée dans le journal, sans clé ni e-mail', db.error_logs.length > 0 && db.error_logs.every(l => l.niveau && !/Bearer|a@b\.ci/.test(JSON.stringify(l))));
+  const nav = await call('erreurs', { body: { message: 'x is not defined', page: '/studio.html' } });
+  check('erreur du navigateur reçue et journalisée', nav.code === 200 && db.error_logs.some(l => l.source === 'navigateur'));
 
   console.log(`\n${ok} réussis, ${ko} échoués`);
   process.exit(ko ? 1 : 0);

@@ -2,6 +2,7 @@
 // Notification GeniusPay. Le contenu reçu n'est jamais cru tel quel :
 // on retrouve le paiement chez nous, puis on redemande son statut réel à GeniusPay.
 const { rest } = require('../_lib/supabase');
+const { signaler } = require('../_lib/erreurs');
 const { findPayment, settlePayment } = require('../_lib/payments');
 
 const UUID = /^[0-9a-f-]{36}$/i;
@@ -41,7 +42,7 @@ module.exports = async (req, res) => {
         console.log(`Webhook GeniusPay: paiement ${payment.id} -> ${result.status}`);
         return res.status(200).json({ received: true, status: result.status });
     } catch (err) {
-        console.error('Webhook GeniusPay:', err);
+        await signaler('webhook-geniuspay', err, { niveau: 'critique' });
         // 500 => GeniusPay réessaiera plus tard
         return res.status(500).json({ error: 'Erreur interne' });
     }

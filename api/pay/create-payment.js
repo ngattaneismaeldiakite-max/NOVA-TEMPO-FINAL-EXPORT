@@ -1,6 +1,7 @@
 // api/pay/create-payment.js
 // Crée un paiement GeniusPay pour l'utilisateur connecté.
 const { rest, getUserFromRequest, siteUrl } = require('../_lib/supabase');
+const { signaler } = require('../_lib/erreurs');
 const { PACKS } = require('../_lib/pricing');
 const geniuspay = require('../_lib/geniuspay');
 const { tropDeDemandes } = require('../_lib/securite');
@@ -54,13 +55,13 @@ module.exports = async (req, res) => {
                 metadata: { payment_id: payment.id, user_id: user.id, pack: packId }
             });
         } catch (err) {
-            console.error('create-payment GeniusPay:', err.message);
+            await signaler('create-payment:geniuspay', err, { niveau: 'critique', userId: user.id });
             await rest(`payments?id=eq.${payment.id}`, { method: 'PATCH', body: { status: 'failed' }, prefer: 'return=minimal' });
             return res.status(502).json({ error: 'Le service de paiement est indisponible. Réessayez dans quelques minutes.' });
         }
 
         if (!checkout.checkoutUrl) {
-            console.error('create-payment: pas de checkout_url', checkout);
+            await signaler('create-payment:geniuspay', 'Pas de lien de paiement renvoyé', { niveau: 'critique', userId: user.id });
             return res.status(502).json({ error: 'Le service de paiement n’a pas renvoyé de lien.' });
         }
 
@@ -74,7 +75,7 @@ module.exports = async (req, res) => {
 
         return res.status(200).json({ success: true, checkout_url: checkout.checkoutUrl });
     } catch (err) {
-        console.error('create-payment:', err);
+        await signaler('create-payment', err, { niveau: 'critique' });
         return res.status(500).json({ error: 'Erreur serveur. Réessayez plus tard.' });
     }
 };
