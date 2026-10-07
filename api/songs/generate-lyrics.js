@@ -30,11 +30,17 @@ function lireValeurs(data) {
     };
     const produit = champ('produit', 'service', 'evenement', 'promo-produit', 'promo-service');
     // "30" -> "30 ans" (âge ou durée tapés en chiffres seuls)
-    const enAnnees = v => (v && /^\d{1,3}$/.test(v) ? `${v} ans` : v);
+    // "30", "30ans", "30 an" -> "30 ans"
+    const enAnnees = v => {
+        const m = v && v.match(/^(\d{1,3})\s*(ans?)?$/i);
+        return m ? `${m[1]} ans` : v;
+    };
+    // "Ma babydoo" -> "ma babydoo" : le petit nom est chanté au milieu d'une phrase
+    const petitNom = v => (v && /^(Mon|Ma|Mes|Ton|Ta|Tes|Notre|Nos) /.test(v) ? v[0].toLowerCase() + v.slice(1) : v);
     return {
         AGE: enAnnees(champ('age', 'anniv-age')),
         NOM: champ('nom', 'cible', 'target', 'amour-prenom', 'anniv-prenom', 'hommage-nom', 'adoration-prenom', 'adoration-nom', 'mariage-prenom', 'promo-nom'),
-        RELATION: champ('relation', 'amour-surnom', 'hommage-lien', 'mariage-surnom', 'anniv-relation'),
+        RELATION: petitNom(champ('relation', 'amour-surnom', 'hommage-lien', 'mariage-surnom', 'anniv-relation')),
         ANECDOTE: champ('anecdote', 'souvenir', 'histoire', 'amour-souvenir', 'anniv-souvenir', 'adoration-temoignage', 'promo-anecdote'),
         DUREE_RELATION: enAnnees(champ('duree', 'duree_relation')),
         MOMENT_DIFFICILE: champ('moment_difficile', 'momentDifficile', 'adoration-epreuve'),

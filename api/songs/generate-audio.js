@@ -76,7 +76,8 @@ module.exports = async function handler(req, res) {
                 style_musical: style,
                 voix,
                 paroles: lyrics,
-                statut: 'pending'
+                statut: 'pending',
+                url_audio: '' // colonne obligatoire dans la base : remplie quand Suno a fini
             }
         });
     } catch (err) {
