@@ -62,6 +62,8 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 
 ## Points ouverts (mis de côté à la demande du propriétaire)
 
+- **Reprise e-mails (07/10/2026)** : choix = Gmail dédié (création du compte en cours, validation en deux étapes à faire ensuite), puis mot de passe d'application, puis SMTP dans Supabase (Authentication > SMTP) et modèles en français. Suivi des erreurs (Telegram) : terminé et testé.
+
 - **E-mails (SMTP)** — reporté le 06/10/2026. Sans SMTP, l'e-mail « mot de passe oublié » n'arrive pas chez les clients (le SMTP par défaut de Supabase n'envoie qu'à l'équipe). Brevo : compte créé, plan gratuit, mais **vérification par SMS bloquée** (SMS non reçus sur numéro ivoirien) → réessayer / support Brevo. Alternative prête : SMTP Gmail dédié (`smtp.gmail.com:465` + mot de passe d'application). Ensuite : traduire en français le modèle « Reset Password » de Supabase.
 - **Nom de domaine** — pas encore acheté. Prévu : `novatempo.ci` ou `.com` → Vercel + expéditeur e-mail fiable (Brevo).
 - **E-mails transactionnels** (après SMTP) : reçu de paiement, « ta chanson est prête », relances / promotions (fête des mères, Saint-Valentin…).
