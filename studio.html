@@ -13,6 +13,7 @@
     
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="assets/js/studio-parcours.js"></script>
+    <script src="assets/js/partage-audio.js"></script>
     
     <style>
         :root { --bg-dark: #06060A; --card-bg: #111118; --text-light: #FFFFFF; --text-muted: rgba(255, 255, 255, 0.6); --neon-lime: #D4FF00; --neon-pink: #FF0066; }
@@ -84,6 +85,8 @@
         .lyrics-preview { white-space: pre-wrap; background: rgba(0,0,0,0.4); border: 1px solid rgba(212,255,0,0.25); border-radius: 16px; padding: 1.4rem; line-height: 1.7; font-size: 1rem; max-height: 52vh; overflow-y: auto; }
         .lyrics-preview .sec { display: block; color: var(--neon-lime); font-weight: 800; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; margin: 1.1rem 0 0.3rem; }
         .lyrics-preview .ln { display: block; }
+        .lyrics-edit { width: 100%; min-height: 52vh; box-sizing: border-box; padding: 1.1rem; background: rgba(0,0,0,0.45); border: 1px solid var(--neon-lime); border-radius: 16px; color: #fff; font-family: inherit; font-size: 1rem; line-height: 1.7; resize: vertical; }
+        .lyrics-edit:focus { outline: none; box-shadow: 0 0 15px rgba(212, 255, 0, 0.15); }
         .lyrics-preview .sec:first-child { margin-top: 0; }
         .pc-actions-sec { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1rem; }
         .btn-soft { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: var(--text-light); border-radius: 50px; padding: 0.7rem 1.2rem; font-family: inherit; font-weight: 700; font-size: 0.92rem; cursor: pointer; transition: all 0.2s; }
@@ -348,6 +351,12 @@
                     <audio id="audio-player" controls></audio>
                 </div>
 
+                <div class="pc-actions-sec" style="justify-content: center;">
+                    <a class="btn-soft" href="#" id="result-partager" style="text-decoration: none; background: #25D366; border-color: #25D366; color: #fff;"><i class="fab fa-whatsapp"></i> Envoyer sur WhatsApp</a>
+                    <a class="btn-soft" href="#" id="result-download" style="text-decoration: none;"><i class="fas fa-download"></i> Télécharger le MP3</a>
+                    <a class="btn-soft" href="creations.html" style="text-decoration: none;"><i class="fas fa-compact-disc"></i> Mes créations</a>
+                </div>
+
                 <button type="button" class="btn-new-song" onclick="resetStudio()">
                     <i class="fas fa-plus-circle"></i> Créer une autre chanson
                 </button>
@@ -596,6 +605,8 @@
                 void toEl.offsetWidth;
                 toEl.classList.remove('fade-out-active');
                 toEl.classList.add('fade-in-active');
+                // L'écran reste visible après l'animation (le CSS de départ le met à opacity: 0)
+                toEl.style.opacity = '1';
                 setTimeout(() => {
                     toEl.classList.remove('fade-step', 'fade-in-active');
                 }, 500);
@@ -814,18 +825,72 @@
             };
             const titre = titres[etat.occasion] || `Voici ta chanson${nom ? ` pour ${esc(nom)}` : ''} ✨`;
             corps.innerHTML = `<h2 class="pc-title">${titre}</h2>
-                <p class="pc-sub">Lis tes paroles. Elles ne te plaisent pas ? Demande une autre version, c'est gratuit.</p>
+                <p class="pc-sub">Lis tes paroles. <strong style="color: var(--neon-lime);">Tu peux les modifier toi-même</strong>, ou demander une autre version : c'est gratuit.</p>
                 <div class="lyrics-preview" id="pc-paroles">${etat.paroles ? parolesHtml(etat.paroles) : '<i class="fas fa-spinner fa-spin"></i> Écriture des paroles…'}</div>
-                <div class="pc-actions-sec">
+                <div id="pc-edition" style="display: none;">
+                    <textarea id="pc-texte" class="lyrics-edit" spellcheck="true" maxlength="3000"></textarea>
+                    <p class="field-tip">💡 Garde les titres entre crochets comme <strong>[Refrain]</strong> : ils guident le chanteur. Chaque ligne est chantée telle quelle.</p>
+                    <div class="pc-actions-sec">
+                        <button type="button" class="btn-soft" id="pc-valider-texte" style="border-color: var(--neon-lime); color: var(--neon-lime);"><i class="fas fa-check"></i> Valider mon texte</button>
+                        <button type="button" class="btn-soft" id="pc-annuler-texte"><i class="fas fa-times"></i> Annuler</button>
+                    </div>
+                </div>
+                <div class="pc-actions-sec" id="pc-actions-apercu">
+                    <button type="button" class="btn-soft" id="pc-editer-texte" style="border-color: var(--neon-lime); color: var(--neon-lime);"><i class="fas fa-pen"></i> Modifier le texte</button>
                     <button type="button" class="btn-soft" id="pc-autre-version"><i class="fas fa-sync-alt"></i> Une autre version</button>
-                    <button type="button" class="btn-soft" id="pc-modifier"><i class="fas fa-pen"></i> Modifier mes réponses</button>
+                    <button type="button" class="btn-soft" id="pc-modifier"><i class="fas fa-undo"></i> Changer mes réponses</button>
                 </div>
                 <button type="button" class="btn-generate" id="generate-btn"><i class="fas fa-music"></i> Créer ma chanson <span class="btn-cout">1 crédit</span></button>`;
-            document.getElementById('pc-autre-version').onclick = () => ecrireParoles(true);
+            document.getElementById('pc-autre-version').onclick = e => {
+                // Une autre version remplace le texte modifié à la main : on demande confirmation (2e clic)
+                const b = e.currentTarget;
+                if (etat.parolesModifiees && !b.dataset.confirme) {
+                    b.dataset.confirme = '1';
+                    b.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Remplacer mes modifications ?';
+                    setTimeout(() => { delete b.dataset.confirme; b.innerHTML = '<i class="fas fa-sync-alt"></i> Une autre version'; }, 4000);
+                    return;
+                }
+                delete b.dataset.confirme;
+                b.innerHTML = '<i class="fas fa-sync-alt"></i> Une autre version';
+                etat.parolesModifiees = false;
+                ecrireParoles(true);
+            };
             document.getElementById('pc-modifier').onclick = () => { etat.etape = 1; rendreEtape(); };
             document.getElementById('generate-btn').onclick = lancerCreation;
+            document.getElementById('pc-editer-texte').onclick = ouvrirEdition;
+            document.getElementById('pc-annuler-texte').onclick = fermerEdition;
+            document.getElementById('pc-valider-texte').onclick = validerEdition;
             if (!etat.paroles) ecrireParoles(false);
         }
+
+        // --- Modification du texte final par le client ---
+        function basculerEdition(enEdition) {
+            document.getElementById('pc-paroles').style.display = enEdition ? 'none' : 'block';
+            document.getElementById('pc-edition').style.display = enEdition ? 'block' : 'none';
+            document.getElementById('pc-actions-apercu').style.display = enEdition ? 'none' : 'flex';
+            document.getElementById('generate-btn').disabled = enEdition || !etat.paroles;
+        }
+        function ouvrirEdition() {
+            if (!etat.paroles) return;
+            const zone = document.getElementById('pc-texte');
+            zone.value = etat.paroles;
+            basculerEdition(true);
+            zone.focus();
+        }
+        function fermerEdition() {
+            basculerEdition(false);
+        }
+        function validerEdition() {
+            const texte = document.getElementById('pc-texte').value.replace(/\r\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+            const lignes = texte.split('\n').filter(l => l.trim() && !/^\[.*\]$/.test(l.trim()));
+            if (lignes.length < 4) { afficherToast('Ton texte est trop court : garde au moins 4 lignes à chanter.', 'error'); return; }
+            etat.paroles = texte;
+            etat.parolesModifiees = true;
+            document.getElementById('pc-paroles').innerHTML = parolesHtml(texte);
+            basculerEdition(false);
+            afficherToast('Ton texte est prêt ✍️ Il sera chanté tel quel.', 'success');
+        }
+        window.novaInfo = message => afficherToast(message, 'info', 7000);
 
         // Réponses envoyées au serveur
         function donneesParoles() {
@@ -900,7 +965,7 @@
             if (etat.etape < etapes().length - 1) {
                 etat.etape++;
                 // Toute modification des réponses oblige à réécrire les paroles
-                if (etapes()[etat.etape].type === 'apercu') etat.paroles = null;
+                if (etapes()[etat.etape].type === 'apercu') { etat.paroles = null; etat.parolesModifiees = false; }
                 rendreEtape();
             }
         }
@@ -1017,6 +1082,10 @@
                             loadingText.innerHTML = '<i class="fas fa-check-circle" style="color: var(--neon-lime);"></i> Chanson terminée !';
                             const audioPlayer = document.getElementById('audio-player');
                             audioPlayer.src = dataStatut.outputs[0].audio_url;
+                            const urlChanson = dataStatut.outputs[0].audio_url;
+                            const titreChanson = nom && personnelle ? `Pour ${nom}` : `Ma chanson ${NOMS_OCCASIONS[etat.occasion] || ''}`.trim();
+                            document.getElementById('result-partager').onclick = e => { e.preventDefault(); window.NovaAudio.partagerAudio(urlChanson, titreChanson, e.currentTarget); };
+                            document.getElementById('result-download').onclick = e => { e.preventDefault(); window.NovaAudio.telechargerAudio(urlChanson, titreChanson, e.currentTarget); };
                             await notifierMorceauPret(personnelle ? nom : '');
                             setTimeout(async () => {
                                 await switchView(loadingEl, resultEl);

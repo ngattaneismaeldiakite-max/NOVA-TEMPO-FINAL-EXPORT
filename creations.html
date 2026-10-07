@@ -6,6 +6,7 @@
     <title>Mes Créations - Nova Tempo</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/partage-audio.js"></script>
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -86,6 +87,16 @@
 
         .creation-date { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
         .lyrics-content { white-space: pre-wrap; font-size: 1.05rem; line-height: 1.7; color: var(--text-light); }
+        .creation-title { font-size: 1.4rem; font-weight: 900; margin: 0 0 1rem; }
+        .creation-audio { width: 100%; margin-bottom: 1rem; border-radius: 12px; }
+        .creation-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 1.2rem; }
+        .creation-actions a { display: inline-flex; align-items: center; gap: 8px; padding: 0.7rem 1.2rem; border-radius: 50px; font-weight: 700; font-size: 0.92rem; text-decoration: none; transition: all 0.2s; }
+        .btn-telecharger { background: var(--neon-lime); color: #06060A; }
+        .btn-whatsapp { background: #25D366; color: #fff; }
+        .creation-actions a:hover { transform: translateY(-2px); }
+        .creation-lyrics { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1rem; }
+        .creation-lyrics-titre { color: var(--neon-lime); font-weight: 800; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; margin: 0 0 0.6rem; }
+        @media (max-width: 600px) { .creation-card { padding: 1.4rem; } }
 
         .empty-state {
             text-align: center;
@@ -220,8 +231,24 @@
                         <div class="occasion-badge"><i class="fas fa-compact-disc"></i> ${esc(item.occasion)}</div>
                         <div class="creation-date">${dateStr}</div>
                     </div>
-                    <div class="lyrics-content">${esc(item.paroles)}</div>
+                    <h3 class="creation-title">${esc(item.titre || 'Ma chanson')}</h3>
+                    ${item.url_audio ? `
+                    <audio class="creation-audio" controls preload="metadata" src="${esc(item.url_audio)}"></audio>
+                    <div class="creation-actions">
+                        <a href="#" class="btn-whatsapp" data-action="partager"><i class="fab fa-whatsapp"></i> Envoyer sur WhatsApp</a>
+                        <a href="#" class="btn-telecharger" data-action="telecharger"><i class="fas fa-download"></i> Télécharger le MP3</a>
+                    </div>` : ''}
+                    <div class="creation-lyrics">
+                        <p class="creation-lyrics-titre">Les paroles</p>
+                        <div class="lyrics-content">${esc(item.paroles)}</div>
+                    </div>
                 `;
+                // Le fichier audio lui-même (pas un lien) : partage natif du téléphone ou téléchargement
+                card.querySelectorAll('[data-action]').forEach(bouton => bouton.addEventListener('click', e => {
+                    e.preventDefault();
+                    const fonction = bouton.dataset.action === 'partager' ? 'partagerAudio' : 'telechargerAudio';
+                    window.NovaAudio[fonction](item.url_audio, item.titre, bouton);
+                }));
                 grid.appendChild(card);
             });
 

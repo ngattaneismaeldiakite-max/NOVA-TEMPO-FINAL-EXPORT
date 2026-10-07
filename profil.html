@@ -11,6 +11,7 @@
     
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/partage-audio.js"></script>
     
     <style>
         :root {
@@ -250,9 +251,8 @@
 
             // Génération de la liste des chansons avec lecteur audio, téléchargement et WhatsApp
             let htmlContent = '';
-            songs.forEach(song => {
+            songs.forEach((song, i) => {
                 const dateFormatee = new Date(song.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
-                const messageWhatsapp = encodeURIComponent(`Écoute la chanson personnalisée que j'ai créée sur Nova Tempo : ${song.url_audio}`);
 
                 htmlContent += `
                     <div class="song-item">
@@ -265,11 +265,11 @@
                         </div>
                         <audio controls style="width: 100%; margin: 0.5rem 0;" src="${esc(song.url_audio)}"></audio>
                         <div class="song-actions">
-                            <a href="${esc(song.url_audio)}" download target="_blank" class="btn-action btn-download">
-                                <i class="fas fa-download"></i> Télécharger MP3
+                            <a href="#" class="btn-action btn-whatsapp" data-chanson="${i}" data-action="partager">
+                                <i class="fab fa-whatsapp"></i> Envoyer sur WhatsApp
                             </a>
-                            <a href="https://api.whatsapp.com/send?text=${messageWhatsapp}" target="_blank" class="btn-action btn-whatsapp">
-                                <i class="fab fa-whatsapp"></i> Partager sur WhatsApp
+                            <a href="#" class="btn-action btn-download" data-chanson="${i}" data-action="telecharger">
+                                <i class="fas fa-download"></i> Télécharger MP3
                             </a>
                         </div>
                     </div>
@@ -277,6 +277,13 @@
             });
 
             libraryContainer.innerHTML = htmlContent;
+            // Le fichier audio lui-même (pas un lien) : partage natif du téléphone ou téléchargement
+            libraryContainer.querySelectorAll('[data-action]').forEach(bouton => bouton.addEventListener('click', e => {
+                e.preventDefault();
+                const song = songs[bouton.dataset.chanson];
+                const fonction = bouton.dataset.action === 'partager' ? 'partagerAudio' : 'telechargerAudio';
+                window.NovaAudio[fonction](song.url_audio, song.titre, bouton);
+            }));
         }
 
         // ACHAT DE PACK
