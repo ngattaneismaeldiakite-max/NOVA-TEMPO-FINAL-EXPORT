@@ -22,10 +22,10 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 
 ## Visuel, médias et responsive
 
--  : style commun de cgu.html et privacy.html (design sombre, texte juridique inchangé).
--  : cache navigateur 1 jour sur  (images/audio allégés).
-- Démos  en 128 kbps (originaux dans l'historique git) ; images optimisées (cartes 880 px, pochettes 640 px, hero 1200 px). Garder ces tailles pour tout nouvel ajout.
--  : téléchargement et partage du vrai MP3 (Web Share API).
+- `assets/css/legal.css` : style commun de cgu.html et privacy.html (design sombre, texte juridique inchangé).
+- `vercel.json` : cache navigateur 1 jour sur `/assets/*` (images/audio allégés).
+- Démos `assets/audio/demo1-3.mp3` en 128 kbps (originaux dans l'historique git) ; images optimisées (cartes 880 px, pochettes 640 px, hero 1200 px). Garder ces tailles pour tout nouvel ajout.
+- `assets/js/partage-audio.js` : téléchargement et partage du vrai MP3 (Web Share API).
 - Chaque page se termine par un bloc CSS « Finitions responsive » : zones tactiles ≥ 44 px, aucun débordement de 320 à 1600 px. À re-vérifier après toute modification de mise en page.
 - Accueil : les 3 disques sont sur une seule ligne (tailles en clamp) et tiennent dans le premier écran d'un portable.
 - Les chansons générées ne sont pas recompressées (impossible côté Vercel) : surveiller le stockage Supabase (plan gratuit 1 Go) et prévoir rétention, plan Pro ou Cloudflare R2.
