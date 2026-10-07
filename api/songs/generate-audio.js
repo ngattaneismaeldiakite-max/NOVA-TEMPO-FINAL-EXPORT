@@ -1,7 +1,9 @@
 // api/songs/generate-audio.js
 // Retire 1 crédit, crée la chanson en base et lance la génération Suno.
 const { rest, rpc, getUserFromRequest, siteUrl } = require('../_lib/supabase');
-const { startSunoGeneration, markFailed } = require('../_lib/tracks');
+const { startSunoGeneration, markFailed, refreshTrack } = require('../_lib/tracks');
+const { tropDeDemandes } = require('../_lib/securite');
+const MAX_EN_COURS = 3; // chansons simultanées par client
 
 const STYLES = {
     'Coupé Décalé': 'ivorian coupe decale, atalaku, fast tempo, festive animation, sebene guitar, log drum',
@@ -49,6 +51,25 @@ module.exports = async function handler(req, res) {
     if (!process.env.SUNO_API_KEY) {
         console.error('generate-audio: SUNO_API_KEY manquante');
         return res.status(500).json({ error: 'Service momentanément indisponible (code A2).' });
+    }
+
+    if (tropDeDemandes(`audio:${user.id}`, 8, 10 * 60 * 1000)) {
+        return res.status(429).json({ error: 'Trop de demandes rapprochées. Patientez un instant.' });
+    }
+
+    // Chansons déjà en cours : on rattrape celles qui sont bloquées (crédit rendu), puis on plafonne
+    try {
+        const enCours = await rest(`tracks?user_id=eq.${user.id}&statut=in.(pending,processing)&select=*&limit=10`);
+        let actives = 0;
+        for (const t of enCours || []) {
+            const maj = await refreshTrack(t).catch(() => t);
+            if (maj.statut === 'pending' || maj.statut === 'processing') actives += 1;
+        }
+        if (actives >= MAX_EN_COURS) {
+            return res.status(429).json({ error: 'Tu as déjà plusieurs chansons en cours de création. Attends qu’elles soient prêtes.' });
+        }
+    } catch (err) {
+        console.error('generate-audio contrôle des chansons en cours:', err.message);
     }
 
     // 1. Retrait atomique d'un crédit

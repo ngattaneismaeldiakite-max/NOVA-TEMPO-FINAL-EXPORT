@@ -16,7 +16,7 @@ if (window.supabase) {
     setTimeout(checkUserAuth, 300);
 } else {
     const script = document.createElement('script');
-    script.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+    script.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"; script.integrity = "sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok"; script.crossOrigin = "anonymous";
     document.head.appendChild(script);
     
     script.onload = () => {
@@ -81,21 +81,3 @@ async function checkUserAuth() {
     }
 }
 
-// SAUVEGARDE DE LA MUSIQUE DANS SUPABASE
-async function saveTrackToDatabase(trackData) {
-    initSupabaseClient();
-    if (!window.supabaseClient) return;
-    const { data: { session } } = await window.supabaseClient.auth.getSession();
-    if (!session) return;
-    
-    const { error } = await window.supabaseClient.from('tracks').insert([{
-        user_id: session.user.id,
-        titre: trackData.titre,
-        occasion: trackData.occasion,
-        style_musical: trackData.style_musical,
-        url_audio: trackData.url_audio,
-        paroles: trackData.paroles
-    }]);
-    
-    if (error) console.error("Erreur sauvegarde piste:", error);
-}

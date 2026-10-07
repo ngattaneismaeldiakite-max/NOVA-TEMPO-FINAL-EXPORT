@@ -15,6 +15,8 @@ const TEMPLATES = {
     evenement: require('../_lib/templates/evenement')
 };
 
+const { ipDe, tropDeDemandes } = require('../_lib/securite');
+
 const ALLOWED_OCCASIONS = Object.keys(TEMPLATES);
 
 // Réponses du formulaire -> balises des modèles
@@ -347,6 +349,9 @@ function genererParoles(occasion, data) {
 module.exports = async (req, res) => {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Méthode non autorisée' });
+    }
+    if (tropDeDemandes(`paroles:${ipDe(req)}`, 40, 60 * 1000)) {
+        return res.status(429).json({ error: 'Trop de demandes, patientez une minute puis réessayez.' });
     }
 
     try {

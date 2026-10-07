@@ -3,6 +3,7 @@
 const { rest, getUserFromRequest, siteUrl } = require('../_lib/supabase');
 const { PACKS } = require('../_lib/pricing');
 const geniuspay = require('../_lib/geniuspay');
+const { tropDeDemandes } = require('../_lib/securite');
 
 module.exports = async (req, res) => {
     if (req.method !== 'POST') return res.status(405).json({ error: 'Méthode non autorisée' });
@@ -10,6 +11,10 @@ module.exports = async (req, res) => {
     try {
         const user = await getUserFromRequest(req);
         if (!user) return res.status(401).json({ error: 'Vous devez être connecté.' });
+
+        if (tropDeDemandes(`paiement:${user.id}`, 6, 10 * 60 * 1000)) {
+            return res.status(429).json({ error: 'Trop de tentatives. Patientez quelques minutes avant de réessayer.' });
+        }
 
         const packId = (req.body || {}).pack;
         const pack = PACKS[packId];

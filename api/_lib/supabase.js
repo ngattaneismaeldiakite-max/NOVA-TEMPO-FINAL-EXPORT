@@ -89,9 +89,11 @@ async function uploadPublicFile(bucket, objectPath, buffer, contentType) {
 
 function siteUrl(req) {
     if (process.env.SITE_URL) return process.env.SITE_URL.replace(/\/$/, '');
-    const host = req.headers['x-forwarded-host'] || req.headers.host;
-    const protocol = host && host.includes('localhost') ? 'http' : 'https';
-    return `${protocol}://${host}`;
+    // Sans SITE_URL : l'hôte de la requête n'est repris que s'il est plausible (évite les liens de retour piégés)
+    const host = String(req.headers['x-forwarded-host'] || req.headers.host || '').split(',')[0].trim().toLowerCase();
+    if (/^localhost(:d+)?$/.test(host)) return `http://${host}`;
+    if (/^[a-z0-9-]+(.[a-z0-9-]+)*.vercel.app$/.test(host)) return `https://${host}`;
+    return 'https://novatempo.vercel.app';
 }
 
 module.exports = { rest, rpc, getUserFromRequest, uploadPublicFile, siteUrl };
