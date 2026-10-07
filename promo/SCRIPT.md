@@ -1,11 +1,65 @@
 # Vidéo Nova Tempo — script, scènes et guide d'enregistrement
 
-Format **vertical 9:16 (1080×1920)**, **70 secondes**, pour TikTok, Reels, statuts WhatsApp, Facebook.
-Les écrans sont ceux du **vrai Studio** (mêmes questions, mêmes options, mêmes boutons, mêmes prix) ; les paroles montrées sont **générées par ton vrai moteur** de textes ; la chanson de la scène 8 est ta vraie démo (`demo1.mp3`).
+Format **vertical 9:16 (1080×1920)** pour TikTok, Reels, statuts WhatsApp et publicités Facebook/Instagram.
+Deux versions, dans le même fichier :
 
-Fichier à ouvrir : `promo/video.html` (double-clic, ou sur le site `…/promo/video.html`).
+- **Courte, 30 secondes (par défaut)** : faite pour la publicité, centrée sur l'effet « wahou ».
+- **Longue, 70 secondes** : explicative, pour une page d'accueil ou un tutoriel (`?version=longue`).
 
-## Script complet (voix off)
+Les écrans sont ceux du **vrai Studio** (mêmes questions, options, boutons, prix). Les paroles sont **générées par ton vrai moteur** de textes, et la chanson est ta vraie démo (`demo1.mp3`).
+
+Fichier à ouvrir : `promo/video.html` (double-clic, ou `…/promo/video.html` sur le site).
+
+## Version courte (30 s) — l'idée
+
+Le « wahou », c'est **le prénom qui apparaît dans les paroles**, puis **la chanson qui se joue**. Tout le reste sert à y arriver vite : on ne montre que 3 questions en entier, les autres défilent en accéléré, et le prix est dans l'écran final.
+
+| Temps | Écran | Voix off |
+|---|---|---|
+| 0:00–0:03 | Disque « Pour toi » qui tourne · « Et si tu lui offrais une chanson avec son prénom ? » | « Et si tu lui offrais une chanson avec son prénom ? » |
+| 0:03–0:12 | Le vrai Studio, en accéléré : occasion « Anniversaire », prénom « Awa », « une femme », « ma chérie », qualités « douce » et « forte », puis les autres questions défilent | « Avec Nova Tempo : tu choisis l'occasion, tu réponds à quelques questions simples… » |
+| 0:12–0:17 | **Les paroles apparaissent ligne par ligne, avec le prénom en évidence** | « …et tu découvres tes paroles, gratuitement. Écrites rien que pour elle. » |
+| 0:17–0:20 | « Créer ma chanson », 1 crédit, création en cours | « Un clic, et ta chanson est créée… » |
+| 0:20–0:25 | **« Ta chanson est prête ! » : la chanson se joue**, boutons WhatsApp et MP3 | « …prête à envoyer sur WhatsApp. » |
+| 0:25–0:30 | Logo · « Offre une chanson, pas un cadeau de plus. » · novatempo.vercel.app · « Dès 1 000 F · Wave, Orange, MTN, Moov » | « Dès mille francs. Nova Tempo : offre une chanson, pas un cadeau de plus. » |
+
+Les **sous-titres** sont déjà dans la vidéo : elle marche aussi sans voix, ce qui compte pour les pubs vues sans le son.
+
+Conseil pour la publicité : mets l'accroche écrite (« Et si tu lui offrais une chanson avec son prénom ? ») dans le texte de la publication, et propose une action claire (« Crée la tienne ») avec le lien du site.
+
+## Enregistrer la vidéo (Windows)
+
+1. Ouvre `promo/video.html` dans **Chrome ou Edge**, en **plein écran (F11)**. La scène 9:16 s'adapte à la hauteur de ton écran.
+2. Ajoute `?propre` à la fin de l'adresse pour cacher la fine barre de progression.
+3. Lance ton enregistreur d'écran :
+   - **Windows + G** (Xbox Game Bar), puis « Capturer » ; ou
+   - **CapCut → Enregistrement d'écran** (il peut capturer le son du système : la démo sera alors dans la vidéo) ; ou OBS.
+4. Clique sur **« Lancer la vidéo »**. Elle se joue seule et reste sur la dernière image.
+5. Arrête l'enregistrement. **Espace** relance la vidéo, **Échap** l'arrête.
+
+Options dans l'adresse (combinables, par exemple `video.html?propre&t=12`) :
+`?version=longue` (70 s) · `?muet` (ne joue pas la démo) · `?propre` (sans barre de progression) · `?t=12` (démarre à la seconde 12, pour refaire une seule partie).
+
+## Monter dans CapCut
+
+1. Importe l'enregistrement et **recadre en 9:16** si ton écran est large.
+2. **Voix off** : enregistre-la dans CapCut (« Voix off ») en lisant la colonne de droite, ou utilise « Texte en voix ».
+3. **Musique** : une piste rythmée, à **15–20 % de volume** pendant la voix.
+4. Exporte en **1080×1920, 30 images/s** (720×1280 suffit pour WhatsApp et pèse moins lourd).
+
+## Qualité de l'image
+
+L'enregistrement a la résolution de **ton écran** : sur un écran 1366×768, la vidéo sera plus floue qu'en Full HD. Les textes sont très gros exprès pour rester lisibles.
+
+## Pour modifier la vidéo
+
+- Les textes, les temps et les scènes se règlent dans `promo/source/video.tpl.html` (fonctions `filmCourt` et section « Le film »).
+- La page `promo/video.html` est fabriquée à partir de ce modèle et du **vrai CSS du Studio** (`studio.html`) avec `promo/source/build-video.js` (demande-moi de la régénérer si le Studio change d'apparence).
+- Option `?test` : affiche l'état final des animations (sert à vérifier la mise en page d'une scène à l'arrêt).
+
+---
+
+## Version longue (70 s, explicative) — script complet
 
 | Temps | Écran | Voix off (à lire posément, ton chaleureux) |
 |---|---|---|
@@ -22,35 +76,4 @@ Fichier à ouvrir : `promo/video.html` (double-clic, ou sur le site `…/promo/v
 
 Les **sous-titres** (bande en bas) sont déjà dans la vidéo : elle fonctionne aussi sans voix, notamment pour les statuts regardés sans le son.
 
-## Enregistrer la vidéo (Windows)
-
-1. Ouvre `promo/video.html` dans **Chrome ou Edge**. Mets la fenêtre en **plein écran (F11)** : la scène 9:16 s'adapte à la hauteur de ton écran.
-2. Ajoute `?propre` à la fin de l'adresse pour cacher la fine barre de progression.
-3. Lance ton enregistreur d'écran (au choix) :
-   - **Windows + G** (Xbox Game Bar) → « Capturer » → enregistrer ; ou
-   - **CapCut → Enregistrement d'écran** (le son du système peut être capturé : la démo audio de la scène 8 sera alors dans la vidéo) ; ou OBS.
-4. Clique sur **« Lancer la vidéo »**. Elle se joue seule pendant 70 secondes et reste sur la dernière image.
-5. Arrête l'enregistrement. **Espace** relance la vidéo, **Échap** l'arrête.
-
-Options dans l'adresse : `?muet` (ne joue pas la démo), `?propre`, `?t=33` (démarre à la seconde 33 : pratique pour refaire une seule scène). On peut les combiner : `video.html?propre&t=45`.
-
-## Monter dans CapCut
-
-1. Importe l'enregistrement, **recadre en 9:16** si ton écran est large (zoom pour remplir ; les bandes noires latérales disparaissent).
-2. **Voix off** : enregistre-la dans CapCut (« Voix off ») en lisant la colonne de droite, ou utilise « Texte en voix » de CapCut. Les repères de temps ci-dessus sont ceux de l'image.
-3. **Musique** : une piste douce et rythmée, **volume bas** pendant la voix (environ 15 à 20 %).
-4. Exporte en **1080×1920, 30 images/s**. Pour WhatsApp, 720×1280 suffit et pèse moins lourd.
-
-## Qualité de l'image : à savoir
-
-L'enregistrement a la résolution de **ton écran** : sur un écran 1366×768 la vidéo sera plus floue qu'en 1920×1080. Les textes sont très gros exprès pour rester lisibles. Pour le meilleur résultat, enregistre sur un écran Full HD en plein écran.
-
-## Variante courte (30 s) possible
-
-Pour un format publicitaire de 30 secondes : garder 0:00–0:04 (accroche), 0:11–0:16 (occasion), un extrait de l'étape 2, 0:37–0:45 (paroles), 0:52–0:59 (résultat) et 1:05–1:10 (appel à l'action). Dis-le-moi si tu veux que je prépare cette version.
-
-## Pour modifier la vidéo
-
-- Les textes, les temps et les scènes se règlent dans `promo/source/video.tpl.html` (section « Le film »).
-- La page `promo/video.html` est fabriquée à partir de ce modèle et du **vrai CSS du Studio** (`studio.html`). Si le Studio change d'apparence, on la régénère avec `promo/source/build-video.js` (demande-moi de le faire, c'est une commande à lancer avec Antigravity).
-- Option `?test` : affiche l'état final des animations (sert à vérifier la mise en page d'une scène à l'arrêt).
+Pour la lancer : `promo/video.html?version=longue`. Mêmes consignes d'enregistrement et de montage que ci-dessus.

@@ -271,6 +271,8 @@ body { min-height: 0; }
 .pc-title { font-size: 1.35rem !important; }
 .pc-occasions { grid-template-columns: 1fr 1fr !important; gap: .6rem !important; }
 .pc-occasion { padding: .8rem !important; }
+.lyrics-preview .nom { color: #D4FF00; font-weight: 900; text-shadow: 0 0 14px rgba(212,255,0,.5); }
+.big.sm { font-size: 90px; }
 .lyrics-preview { padding: 1rem !important; font-size: .95rem !important; line-height: 1.55 !important; max-height: 215px !important; overflow: hidden !important; }
 .btn-generate { font-size: 1rem !important; padding: .95rem !important; margin-top: 1.2rem !important; }
 .pc-progress { margin-bottom: 1.2rem !important; }
@@ -325,8 +327,9 @@ body.propre #bar-t { display: none; }
 </head>
 <body>
 <div id="depart">
-    <h1>Nova Tempo — vidéo de présentation (70 s, 1080×1920)</h1>
+    <h1 id="titre-depart">Nova Tempo — vidéo de présentation</h1>
     <p>Prépare ton enregistreur d'écran sur cette fenêtre (plein écran conseillé : touche <b>F11</b>), puis clique sur « Lancer ». À la fin, la dernière image reste affichée. <b>Espace</b> = relancer, <b>Échap</b> = arrêter.</p>
+    <p style="font-size:15px">Version : <a href="?version=courte" style="color:#D4FF00">courte (30 s, pub réseaux)</a> · <a href="?version=longue" style="color:#D4FF00">longue (70 s, explicative)</a></p>
     <p style="font-size:14px">Options dans l'adresse : <code>?muet</code> (sans le son de la démo) et <code>?propre</code> (sans la barre de progression).</p>
     <button id="go" disabled>Chargement…</button>
 </div>
@@ -409,10 +412,13 @@ body.propre #bar-t { display: none; }
     const params = new URLSearchParams(location.search);
     if (params.has('propre')) document.body.classList.add('propre');
     // Mode contrôle : les animations CSS se terminent aussitôt (permet de vérifier la mise en page d'une scène à l'arrêt)
-    if (params.has('test')) { const st = document.createElement('style'); st.textContent = '*{animation-duration:.001s!important;animation-delay:0s!important;transition:none!important}'; document.head.appendChild(st); }
+    if (params.has('test')) { const st = document.createElement('style'); st.textContent = '*{animation-duration:.001s!important;animation-delay:0s!important;animation-iteration-count:1!important;transition:none!important}'; document.head.appendChild(st); }
     const $ = s => document.querySelector(s);
     const stage = $('#stage');
-    const DUREE = 70;
+    const titreDepart = () => { $('#titre-depart').textContent = 'Nova Tempo — vidéo ' + (params.get('version') === 'longue' ? 'explicative (70 s, 1080×1920)' : 'publicitaire (30 s, 1080×1920)'); };
+    titreDepart();
+    const COURT = params.get('version') !== 'longue'; // 30 s par défaut (pub réseaux) ; ?version=longue = 70 s
+    const DUREE = COURT ? 30 : 70;
 
     // Taille : la scène 1080×1920 s'adapte à la fenêtre
     let echelle = 1;
@@ -507,9 +513,11 @@ Awa, ma chérie, je t'aime pour toujours`;
 
     // Accroche (mots animés)
     const mots = (t, d0, pas) => t.split(' ').map((m, i) => `<span class="w" style="animation-delay:${(d0 + i * pas).toFixed(2)}s">${m}</span>`).join(' ');
-    $('#s-hook').innerHTML = `<div class="hook-eq"><i></i><i></i><i></i><i></i></div>
-        <div class="hook-disc"></div>
-        <p class="big" style="margin-top:80px">${mots('Imagine une chanson', 1.0, .25)}<br>${mots('écrite rien que', 2.0, .22)} <em class="w" style="animation-delay:2.7s">pour elle.</em></p>`;
+    const hookHtml = () => `<div class="hook-eq"><i></i><i></i><i></i><i></i></div>
+        <div class="hook-disc"></div>` + (COURT
+        ? `<p class="big sm" style="margin-top:80px">${mots('Et si tu lui offrais', .5, .15)}<br>${mots('une chanson', 1.2, .15)}<br>${mots('avec', 1.55, .15)} <em class="w" style="animation-delay:1.75s">son prénom ?</em></p>`
+        : `<p class="big" style="margin-top:80px">${mots('Imagine une chanson', 1.0, .25)}<br>${mots('écrite rien que', 2.0, .22)} <em class="w" style="animation-delay:2.7s">pour elle.</em></p>`);
+    $('#s-hook').innerHTML = hookHtml();
     // Ecran des tarifs
     $('#s-prix').innerHTML = '';
 
@@ -550,14 +558,14 @@ Awa, ma chérie, je t'aime pour toujours`;
         if (fn) fn();
     }
     // clic planifié : le curseur arrive 0,8 s avant le tap
-    function clic(t, sel, fn) {
-        at(t - 0.8, () => vers($(sel)));
+    function clic(t, sel, fn, avance = 0.8) {
+        at(t - avance, () => vers($(sel)));
         at(t, () => tap($(sel), fn));
     }
     function chipDe(panelId, cle) { return document.querySelector(`#p-${panelId} [data-k="${cle}"]`); }
-    function clicChip(t, panelId, cle) {
+    function clicChip(t, panelId, cle, avance = 0.8) {
         const e = chipDe(panelId, cle);
-        at(t - 0.8, () => vers(e));
+        at(t - avance, () => vers(e));
         at(t, () => tap(e, () => e.classList.add('on')));
     }
     function taper(t, sel, texte, pas = 0.16) {
@@ -590,12 +598,78 @@ Awa, ma chérie, je t'aime pour toujours`;
         $('#bar-t').style.transition = 'none'; $('#bar-t').style.width = '0';
     }
 
+    // Affiche les paroles ligne par ligne (le prénom ressort en vert)
+    function paroles(t0, pas) {
+        LYRICS.split('\n').filter(l => l.trim()).forEach((l, i) => at(t0 + i * pas, () => {
+            const z = $('#lyr');
+            z.insertAdjacentHTML('beforeend', /^\[.*\]$/.test(l.trim())
+                ? `<span class="sec">${esc(l.replace(/[\[\]]/g, ''))}</span>`
+                : `<span class="ln">${esc(l).replace(/Awa/g, '<b class="nom">Awa</b>')}</span>`);
+            z.scrollTop = z.scrollHeight;
+        }));
+    }
+    function debiter() {
+        $('#pill-t').textContent = '0 crédit'; $('#pill').classList.add('empty');
+        const m = document.createElement('div'); m.className = 'minus'; m.textContent = '−1'; $('#screen').appendChild(m);
+    }
+
+    // ---------- Film court (30 s) : l'essentiel, centré sur l'effet « wahou » ----------
+    function filmCourt() {
+        // 0–3.3 : accroche
+        scene('hook'); sub('Et si tu lui offrais une chanson avec <b>son prénom</b> ?');
+
+        // 3.3–12.6 : le Studio en accéléré
+        at(3.3, () => { haut(690); scene('studio'); kick('ÉTAPE 1', 'Choisis l’occasion'); sub('Tu choisis l’occasion…'); });
+        at(3.6, () => { cur.style.transform = 'translate(700px, 1500px)'; });
+        clic(4.6, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'), 0.7);
+        at(5.1, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); kick('ÉTAPE 2', 'Quelques questions simples'); sub('…tu réponds à quelques questions simples…'); });
+        taper(5.5, '#in-nom', 'Awa', 0.15);
+        clicChip(6.3, 'pers', 'f', 0.6); clicChip(6.8, 'pers', 'amour', 0.5);
+        clic(7.3, SUIVANT, null, 0.5);
+        at(7.65, () => { panel('rel'); entete(3, true); });
+        clicChip(8.2, 'rel', 'ma chérie', 0.5);
+        clic(8.7, SUIVANT, null, 0.5);
+        at(9.05, () => { panel('qual'); entete(4, true); });
+        clicChip(9.6, 'qual', 'douce', 0.5); clicChip(10.0, 'qual', 'forte', 0.4);
+        clic(10.5, SUIVANT, null, 0.4);
+        // les questions suivantes défilent vite
+        at(10.85, () => { panel('voeux'); entete(5, true); });
+        at(11.3, () => { panel('det'); entete(6, true); });
+        at(11.75, () => { panel('msg'); entete(7, true); });
+        at(12.2, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); chipDe('mus', 'Coupé Décalé').classList.add('on'); chipDe('mus', 'female').classList.add('on'); });
+
+        // 12.65–17.5 : les paroles, le moment « wahou »
+        at(12.65, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 3', 'Tes paroles, gratuites'); sub('…et tu découvres tes paroles, <b>gratuitement</b>.'); cur.style.opacity = 0; });
+        paroles(13.1, 0.12);
+        at(16.1, () => sub('<b>Écrites rien que pour elle</b>, avec son prénom.'));
+
+        // 17–19.6 : création
+        clic(17.2, '#b-creer', debiter, 0.7);
+        at(17.8, () => { haut(470); $('#view-parcours').style.display = 'none'; $('#view-load').style.display = 'block'; cur.style.opacity = 0; kick('ÉTAPE 4', 'On crée ta chanson'); sub('Un clic, et ta chanson est <b>créée</b>…'); });
+        [0, 1].forEach(i => at(17.8 + i * 0.9, () => { $('#load-txt').innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> ' + PHRASES[i]; $('#loading-bar').style.width = (30 + i * 30) + '%'; }));
+        at(19.3, () => { $('#loading-bar').style.width = '100%'; });
+
+        // 19.6–25.4 : le résultat
+        at(19.6, () => {
+            haut(560); $('#view-load').style.display = 'none'; $('#view-res').style.display = 'block';
+            kick('C’EST PRÊT', 'Ta chanson est là'); sub('…prête à envoyer <b>sur WhatsApp</b>.');
+            if (!params.has('muet')) { const a = $('#res-audio'); a.currentTime = 0; a.volume = 1; a.play().catch(() => {}); }
+        });
+        clic(22.3, '#b-wa', null, 0.7);
+
+        // 25.4–30 : appel à l'action
+        at(25.4, () => { cur.style.opacity = 0; kick(); scene('cta'); sub(); });
+        at(28.6, () => { $('#res-audio').pause(); });
+        at(DUREE, () => { $('#bar-t').style.opacity = 0; });
+    }
+
     function lancer() {
         remise();
         decalage = Math.max(0, Math.min(DUREE - 1, parseFloat(params.get('t')) || 0)); rattrapage = [];
         $('#depart').style.display = 'none';
         requestAnimationFrame(() => { const b = $('#bar-t'); b.style.width = (decalage / DUREE * 100) + '%'; requestAnimationFrame(() => { b.style.transition = `width ${DUREE - decalage}s linear`; b.style.width = '100%'; }); });
 
+        if (COURT) { filmCourt(); } else {
         // 0–4 : accroche
         scene('hook'); sub('Imagine… une chanson, <b>écrite rien que pour elle.</b>');
         // 4–11 : le problème et la solution
@@ -638,12 +712,7 @@ Awa, ma chérie, je t'aime pour toujours`;
 
         // 36.7–45 : étape 4, les paroles gratuites
         at(36.65, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 4', 'Tes paroles, gratuites'); sub('<b>Étape 4 :</b> tu découvres tes paroles, <b>gratuitement</b>.'); });
-        const lignes = LYRICS.split('\n').filter(l => l.trim());
-        lignes.forEach((l, i) => at(37.3 + i * 0.16, () => {
-            const z = $('#lyr');
-            z.insertAdjacentHTML('beforeend', /^\[.*\]$/.test(l.trim()) ? `<span class="sec">${esc(l.replace(/[\[\]]/g, ''))}</span>` : `<span class="ln">${esc(l)}</span>`);
-            z.scrollTop = z.scrollHeight;
-        }));
+        paroles(37.3, 0.16);
         at(41.4, () => sub('Tu les modifies si tu veux, ou tu demandes <b>une autre version</b>, sans rien payer.'));
         clic(42.6, '#b-autre', () => { $('#i-autre').classList.add('fa-spin'); const g = document.createElement('span'); g.className = 'gratuit'; g.textContent = 'GRATUIT'; const b = $('#b-autre').getBoundingClientRect(), s = $('#screen').getBoundingClientRect(); g.style.left = (((b.left - s.left) + b.width / 2) / (echelle * 1.95)) + 'px'; g.style.top = ((b.top - s.top) / (echelle * 1.95) - 12) + 'px'; $('#screen').appendChild(g); setTimeout(() => { $('#i-autre').classList.remove('fa-spin'); g.remove(); }, 2200); });
 
@@ -680,6 +749,7 @@ Awa, ma chérie, je t'aime pour toujours`;
         // 65–70 : appel à l'action
         at(65, () => { kick(); scene('cta'); sub(); });
         at(DUREE, () => { $('#bar-t').style.opacity = 0; });
+        }
         rattrapage.sort((a, b) => a[0] - b[0]).forEach(([, fn]) => { try { fn(); } catch (e) {} });
         rattrapage = [];
     }
