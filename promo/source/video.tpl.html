@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Tempo — Vidéo de présentation (1080×1920)</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=instrument-serif@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="../assets/css/logo.css">
+<script src="../assets/js/studio-parcours.js"></script>
+<style>
+/* ===== CSS réel du Studio (copié de studio.html, sans les règles liées à la taille de la fenêtre) ===== */
+/*REAL_CSS*/
+
+/* ===== Mise en scène de la vidéo ===== */
+html, body { margin: 0; height: 100%; background: #000; overflow: hidden; font-family: 'Satoshi', sans-serif; }
+body { min-height: 0; }
+#stage { position: absolute; left: 50%; top: 50%; width: 1080px; height: 1920px; margin: -960px 0 0 -540px; background: #06060A; overflow: hidden; color: #fff; transform: scale(var(--s, .4)); transform-origin: center; }
+#bg { position: absolute; inset: -60px; background: url('../assets/images/fille-casque.jpg') center/cover; opacity: .16; }
+.glow { position: absolute; width: 1300px; height: 1300px; border-radius: 50%; opacity: .3; }
+.glow.a { left: -420px; top: -250px; background: radial-gradient(circle, #D4FF00 0%, transparent 65%); }
+.glow.b { right: -520px; bottom: -300px; background: radial-gradient(circle, #FF0066 0%, transparent 65%); opacity: .22; }
+@keyframes derive { from { transform: translate(0, 0) scale(1); } to { transform: translate(90px, 70px) scale(1.12); } }
+
+.scene { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .45s ease; }
+.scene.on { opacity: 1; }
+.scene:not(.on) * { animation: none !important; }
+
+/* Accroche */
+#s-hook { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 70px; }
+.hook-disc { width: 560px; height: 560px; border-radius: 50%; background: url('../assets/images/pour-toi.jpg') center/cover; border: 10px solid #111; box-shadow: 0 0 0 4px rgba(212,255,0,.5), 0 0 120px rgba(212,255,0,.35); position: relative; animation: pop .9s cubic-bezier(.2,1.4,.4,1) both, tourne 7s linear .9s infinite; }
+.hook-disc::after { content: ''; position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px; border-radius: 50%; background: #06060A; border: 6px solid #222; }
+@keyframes tourne { to { transform: rotate(360deg); } }
+@keyframes pop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.hook-eq { display: flex; gap: 14px; align-items: flex-end; height: 120px; margin-bottom: 70px; animation: monte .8s ease both; }
+.hook-eq i { width: 24px; border-radius: 12px; background: linear-gradient(180deg, #CBF52E, #72BE1A); box-shadow: 0 0 24px rgba(203,245,46,.5); transform-origin: bottom; animation: novaEq 1s ease-in-out infinite alternate; }
+.hook-eq i:nth-child(1) { height: 84%; animation-delay: .15s; } .hook-eq i:nth-child(2) { height: 78%; animation-delay: .45s; } .hook-eq i:nth-child(3) { height: 100%; } .hook-eq i:nth-child(4) { height: 88%; animation-delay: .3s; }
+@keyframes monte { from { transform: translateY(60px); opacity: 0; } to { transform: none; opacity: 1; } }
+.big { font-size: 108px; font-weight: 900; line-height: 1.04; letter-spacing: -2px; margin: 0; }
+.big em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: #D4FF00; text-shadow: 0 0 40px rgba(212,255,0,.45); }
+.w { display: inline-block; opacity: 0; transform: translateY(50px); animation: mot .7s cubic-bezier(.2,.9,.3,1) forwards; }
+@keyframes mot { to { opacity: 1; transform: none; } }
+
+/* Problème → solution */
+#s-problem { display: flex; flex-direction: column; justify-content: center; padding: 0 80px; gap: 40px; }
+.rate { font-size: 84px; font-weight: 800; line-height: 1.1; color: rgba(255,255,255,.55); position: relative; width: fit-content; opacity: 0; animation: mot .6s ease forwards; }
+.rate::after { content: ''; position: absolute; left: -10px; top: 54%; height: 8px; width: 0; background: #FF0066; border-radius: 8px; box-shadow: 0 0 20px #FF0066; animation: barre .5s ease forwards; }
+@keyframes barre { to { width: calc(100% + 20px); } }
+.r1 { animation-delay: .2s; } .r1::after { animation-delay: 1.2s; } .r2 { animation-delay: 1.5s; } .r2::after { animation-delay: 2.5s; }
+.vraie { font-size: 120px; font-weight: 900; line-height: 1.02; color: #D4FF00; text-shadow: 0 0 50px rgba(212,255,0,.4); opacity: 0; animation: mot .8s cubic-bezier(.2,1.2,.3,1) 3.1s forwards; }
+.ingredients { display: flex; flex-wrap: wrap; gap: 16px; opacity: 0; animation: mot .6s ease 4.1s forwards; }
+.ingredients span { font-size: 44px; font-weight: 700; padding: 14px 30px; border-radius: 60px; border: 2px solid rgba(212,255,0,.5); background: rgba(212,255,0,.1); color: #D4FF00; }
+.voici { display: flex; align-items: center; gap: 24px; margin-top: 30px; opacity: 0; animation: mot .6s ease 5.4s forwards; font-size: 56px; font-weight: 800; }
+.voici .nova-brand-img { height: 78px; } .voici .logo-eq-bars { height: 56px; } .voici .eq-bar { width: 12px; }
+
+* { backdrop-filter: none !important; }
+/* Annotations (étape, sous-titres) */
+#kick { position: absolute; left: 0; right: 0; top: 96px; text-align: center; z-index: 20; pointer-events: none; }
+#kick .k1 { display: inline-block; font-size: 34px; font-weight: 900; letter-spacing: 6px; color: #06060A; background: #D4FF00; padding: 10px 28px; border-radius: 50px; box-shadow: 0 0 40px rgba(212,255,0,.5); animation: mot .5s ease both; }
+#kick .k2 { font-size: 78px; font-weight: 900; margin-top: 22px; line-height: 1.05; text-shadow: 0 6px 30px rgba(0,0,0,.7); animation: mot .6s ease .1s both; }
+#sub { position: absolute; left: 70px; right: 70px; bottom: 34px; z-index: 20; text-align: center; font-size: 44px; font-weight: 700; line-height: 1.25; padding: 22px 30px; border-radius: 28px; background: rgba(6,6,10,.88); border: 1px solid rgba(255,255,255,.12); opacity: 0; transition: opacity .3s; text-wrap: balance; }
+#sub.on { opacity: 1; }
+#sub b { color: #D4FF00; }
+
+/* Téléphone : le vrai Studio, en largeur mobile, agrandi */
+#screen { transition: height .5s ease; position: absolute; left: 121px; top: 312px; width: 430px; height: 690px; transform: scale(1.95); transform-origin: 0 0; border-radius: 22px; overflow: hidden; background: #0a0a10; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 0 0 1.5px rgba(212,255,0,.25), 0 30px 80px rgba(0,0,0,.6), 0 0 90px rgba(212,255,0,.12); }
+.mini-nav { height: 54px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: rgba(6,6,10,.8); border-bottom: 1px solid rgba(255,255,255,.06); }
+.mini-nav .nova-brand-img { height: 24px; } .mini-nav .logo-eq-bars { height: 16px; } .mini-nav .eq-bar { width: 3px; }
+.view { margin: 12px; }
+.studio-card { padding: 1.3rem 1rem !important; }
+.pc-title { font-size: 1.35rem !important; }
+.pc-occasions { grid-template-columns: 1fr 1fr !important; gap: .6rem !important; }
+.pc-occasion { padding: .8rem !important; }
+.lyrics-preview { padding: 1rem !important; font-size: .95rem !important; line-height: 1.55 !important; max-height: 215px !important; overflow: hidden !important; }
+.btn-generate { font-size: 1rem !important; padding: .95rem !important; margin-top: 1.2rem !important; }
+.pc-progress { margin-bottom: 1.2rem !important; }
+.pc-block { margin-bottom: 1.1rem !important; }
+.pc-sub { margin-bottom: 1.1rem !important; font-size: .95rem !important; }
+.pc-nav { margin-top: 1.4rem !important; }
+.pc-nav .btn-generate { margin-top: 0 !important; }
+.panel { display: none; }
+.panel.on { display: block; animation: fadeIn .35s ease; }
+.hl { border-color: #D4FF00 !important; transform: translateY(-3px); box-shadow: 0 0 22px rgba(212,255,0,.35); }
+.press { transform: scale(.94) !important; filter: brightness(1.25); }
+input.sim { border-color: #D4FF00; background: rgba(212,255,0,.05); box-shadow: 0 0 15px rgba(212,255,0,.12); }
+.gratuit { position: absolute; z-index: 9; margin-left: -36px; background: #D4FF00; color: #06060A; font-weight: 900; font-size: .72rem; letter-spacing: 1px; padding: 3px 9px; border-radius: 50px; box-shadow: 0 0 18px rgba(212,255,0,.7); animation: pop .4s ease both; }
+.eqz { display: flex; gap: 5px; align-items: flex-end; justify-content: center; height: 46px; margin: .2rem 0 .8rem; }
+.eqz i { width: 6px; border-radius: 4px; background: linear-gradient(180deg, #CBF52E, #72BE1A); animation: novaEq .5s ease-in-out infinite alternate; transform-origin: bottom; height: 100%; }
+#res-audio { width: 100%; }
+#loading-bar { transition: width 1.2s ease; }
+.minus { position: absolute; right: 18px; top: 6px; z-index: 5; color: #FF0066; font-weight: 900; font-size: 1.3rem; animation: monteOut 1.3s ease both; }
+@keyframes monteOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-34px); } }
+#pay { display: none; }
+#pay .nt-modal-card { position: relative; margin: 14px 12px; max-width: none; transform: none; opacity: 1; animation: fadeIn .4s ease; }
+
+/* Tarifs (plein écran) */
+#s-prix { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 70px; }
+
+/* Appel à l'action */
+#s-cta { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 46px; padding: 0 70px; }
+.cta-logo { display: flex; align-items: center; gap: 28px; animation: pop .8s cubic-bezier(.2,1.4,.4,1) both; }
+.cta-logo .nova-brand-img { height: 150px; } .cta-logo .logo-eq-bars { height: 105px; gap: 8px; } .cta-logo .eq-bar { width: 20px; border-radius: 10px; }
+.cta-1 { font-size: 100px; font-weight: 900; line-height: 1.05; opacity: 0; animation: mot .7s ease .6s forwards; }
+.cta-1 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: #D4FF00; }
+.cta-url { font-size: 58px; font-weight: 900; color: #06060A; background: #D4FF00; padding: 24px 56px; border-radius: 70px; box-shadow: 0 0 70px rgba(212,255,0,.5); opacity: 0; animation: mot .7s ease 1.3s forwards, pulse 1.4s ease-in-out 2.2s infinite; }
+@keyframes pulse { 50% { transform: scale(1.05); box-shadow: 0 0 100px rgba(212,255,0,.7); } }
+.cta-2 { font-size: 40px; color: rgba(255,255,255,.7); font-weight: 600; opacity: 0; animation: mot .7s ease 2s forwards; }
+
+/* Curseur */
+#cursor { position: absolute; z-index: 30; width: 78px; height: 78px; margin: -39px 0 0 -39px; border-radius: 50%; background: rgba(255,255,255,.26); border: 4px solid #fff; box-shadow: 0 0 30px rgba(255,255,255,.4); opacity: 0; transition: transform .7s cubic-bezier(.5,0,.2,1), opacity .25s; pointer-events: none; }
+#cursor.tap { animation: tap .35s ease; }
+@keyframes tap { 50% { width: 56px; height: 56px; margin: -28px 0 0 -28px; background: rgba(212,255,0,.6); } }
+.ripple { position: absolute; z-index: 29; width: 40px; height: 40px; margin: -20px; border-radius: 50%; border: 5px solid #D4FF00; animation: onde .6s ease-out forwards; pointer-events: none; }
+@keyframes onde { to { transform: scale(4); opacity: 0; } }
+
+/* Contrôles (hors vidéo) */
+#bar-t { position: absolute; left: 0; top: 0; height: 8px; width: 0; background: #D4FF00; z-index: 40; }
+#depart { position: fixed; inset: 0; z-index: 99; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: rgba(0,0,0,.88); color: #fff; text-align: center; padding: 20px; }
+#depart h1 { margin: 0; font-size: 30px; }
+#depart p { margin: 0; color: #bbb; max-width: 560px; line-height: 1.5; }
+#depart button { font-family: inherit; font-size: 20px; font-weight: 900; background: #D4FF00; color: #06060A; border: 0; border-radius: 50px; padding: 16px 38px; cursor: pointer; }
+#depart button:disabled { opacity: .5; cursor: wait; }
+body.propre #bar-t { display: none; }
+</style>
+</head>
+<body>
+<div id="depart">
+    <h1>Nova Tempo — vidéo de présentation (70 s, 1080×1920)</h1>
+    <p>Prépare ton enregistreur d'écran sur cette fenêtre (plein écran conseillé : touche <b>F11</b>), puis clique sur « Lancer ». À la fin, la dernière image reste affichée. <b>Espace</b> = relancer, <b>Échap</b> = arrêter.</p>
+    <p style="font-size:14px">Options dans l'adresse : <code>?muet</code> (sans le son de la démo) et <code>?propre</code> (sans la barre de progression).</p>
+    <button id="go" disabled>Chargement…</button>
+</div>
+
+<div id="stage">
+    <div id="bg"></div><div class="glow a"></div><div class="glow b"></div>
+    <div id="bar-t"></div>
+
+    <!-- 1. Accroche -->
+    <section class="scene" id="s-hook"></section>
+
+    <!-- 2. Problème -> solution -->
+    <section class="scene" id="s-problem">
+        <div class="rate r1">Un message de plus ?</div>
+        <div class="rate r2">Un cadeau oublié ?</div>
+        <div class="vraie">Une vraie chanson.</div>
+        <div class="ingredients"><span>Son prénom</span><span>Votre histoire</span><span>Une vraie voix</span></div>
+        <div class="voici"><span class="nova-brand-logo"><span class="logo-eq-bars"><span class="eq-bar bar-1"></span><span class="eq-bar bar-2"></span><span class="eq-bar bar-3"></span><span class="eq-bar bar-4"></span></span><img class="nova-brand-img" src="../assets/images/logo-nova-tempo.png" alt="Nova Tempo"></span><span>Comment ça marche ?</span></div>
+    </section>
+
+    <!-- 3 à 8. Le vrai Studio -->
+    <section class="scene" id="s-studio">
+        <div id="screen">
+            <div class="mini-nav">
+                <span class="nova-brand-logo"><span class="logo-eq-bars"><span class="eq-bar bar-1"></span><span class="eq-bar bar-2"></span><span class="eq-bar bar-3"></span><span class="eq-bar bar-4"></span></span><img class="nova-brand-img" src="../assets/images/logo-nova-tempo.png" alt="Nova Tempo"></span>
+                <span class="credits-pill" id="pill" style="min-height:0"><i class="fas fa-coins"></i> <span id="pill-t">1 crédit</span></span>
+            </div>
+            <div class="view" id="view-parcours">
+                <div class="studio-card">
+                    <div class="pc-head"><span id="pc-etape">Étape 1 sur 7</span><span id="pc-pill"></span></div>
+                    <div class="pc-progress"><div class="pc-progress-bar" id="pc-bar"></div></div>
+                    <div id="pc-body"></div>
+                    <div class="pc-nav" id="pc-nav" style="display:none"><button type="button" class="btn-retour"><i class="fas fa-arrow-left"></i></button><button type="button" class="btn-generate" id="pc-next"><span id="pc-next-t">Suivant</span> <i class="fas fa-arrow-right" id="pc-next-i"></i></button></div>
+                </div>
+            </div>
+            <div class="view" id="view-load" style="display:none">
+                <div class="studio-card" style="text-align:center;padding-top:2.2rem!important;padding-bottom:2.2rem!important">
+                    <div style="margin-bottom:1.5rem"><i class="fas fa-compact-disc fa-spin" style="font-size:4rem;color:var(--neon-lime)"></i></div>
+                    <h2 style="font-size:1.5rem;text-transform:uppercase;margin:0 0 1rem">Création <span class="nova-brand">NovaTempo</span> en cours...</h2>
+                    <div id="load-txt" style="font-size:1.05rem;color:var(--text-muted);min-height:2.5rem;display:flex;align-items:center;justify-content:center;gap:10px"></div>
+                    <div style="margin-top:2rem;width:100%;background:rgba(255,255,255,.08);height:8px;border-radius:10px;overflow:hidden"><div id="loading-bar" style="width:15%;height:100%;background:linear-gradient(90deg,var(--neon-lime),var(--neon-pink))"></div></div>
+                </div>
+            </div>
+            <div class="view" id="view-res" style="display:none">
+                <div class="studio-card" style="text-align:center">
+                    <div style="font-size:3rem;margin-bottom:.3rem">🎉</div>
+                    <h2 style="color:var(--neon-lime);margin:0;font-size:1.6rem;text-transform:uppercase">Ta chanson est prête !</h2>
+                    <p style="color:var(--text-muted);font-size:1rem;margin:.4rem 0 .8rem">Écoute ta création exclusive <span class="nova-brand">NovaTempo</span> :</p>
+                    <div class="eqz" id="eqz"></div>
+                    <div style="padding:1rem;background:rgba(0,0,0,.4);border:1px solid rgba(212,255,0,.3);border-radius:16px"><audio id="res-audio" controls preload="auto" src="../assets/audio/demo1.mp3"></audio></div>
+                    <div class="pc-actions-sec" style="justify-content:center">
+                        <a class="btn-soft" id="b-wa" style="text-decoration:none;background:#25D366;border-color:#25D366;color:#fff"><i class="fab fa-whatsapp"></i> Envoyer sur WhatsApp</a>
+                        <a class="btn-soft" id="b-dl" style="text-decoration:none"><i class="fas fa-download"></i> Télécharger le MP3</a>
+                    </div>
+                </div>
+            </div>
+            <div class="view" id="pay" style="display:none"></div>
+        </div>
+    </section>
+
+    <!-- 9. Tarifs -->
+    <section class="scene" id="s-prix"></section>
+
+    <!-- 10. Appel à l'action -->
+    <section class="scene" id="s-cta">
+        <div class="cta-logo"><span class="logo-eq-bars"><span class="eq-bar bar-1"></span><span class="eq-bar bar-2"></span><span class="eq-bar bar-3"></span><span class="eq-bar bar-4"></span></span><img class="nova-brand-img" src="../assets/images/logo-nova-tempo.png" alt="Nova Tempo"></div>
+        <div class="cta-1">Offre une chanson,<br><em>pas un cadeau de plus.</em></div>
+        <div class="cta-url">novatempo.vercel.app</div>
+        <div class="cta-2">Dès 1 000 F · Wave, Orange, MTN, Moov</div>
+    </section>
+
+    <div id="kick"></div>
+    <div id="sub"></div>
+    <div id="cursor"></div>
+</div>
+
+<script>
+(function () {
+    'use strict';
+    const params = new URLSearchParams(location.search);
+    if (params.has('propre')) document.body.classList.add('propre');
+    // Mode contrôle : les animations CSS se terminent aussitôt (permet de vérifier la mise en page d'une scène à l'arrêt)
+    if (params.has('test')) { const st = document.createElement('style'); st.textContent = '*{animation-duration:.001s!important;animation-delay:0s!important;transition:none!important}'; document.head.appendChild(st); }
+    const $ = s => document.querySelector(s);
+    const stage = $('#stage');
+    const DUREE = 70;
+
+    // Taille : la scène 1080×1920 s'adapte à la fenêtre
+    let echelle = 1;
+    function ajuster() { echelle = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.setProperty('--s', echelle); }
+    addEventListener('resize', ajuster); ajuster();
+
+    // ---------- Données réelles du Studio ----------
+    const { OCCASIONS, STYLES } = window.NOVA_PARCOURS;
+    const ANNIV = OCCASIONS.anniversaire;
+    const ETAT = { reponses: { sexe: 'f', lien: 'amour' } };
+    const res = o => (typeof o === 'function' ? o(ETAT) : o);
+    const opt = o => (typeof o === 'string' ? o : o.f);
+    const acc = t => String(t || '').replace(/\{lui\}/g, 'elle').replace(/\{le\}/g, 'la').replace(/\{il\}/g, 'elle');
+    const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const etapes = ANNIV.etapes;
+    const TOTAL = etapes.length + 1; // l'occasion est la première étape
+
+    const LYRICS = `[Couplet 1]
+Pas besoin de grande fête ce soir
+Notre voyage à Assinie, et toi et moi, c'est tout ce qu'il me faut
+Awa, ma chérie, je veux juste te voir
+Et te dire "je t'aime" comme il faut
+
+[Refrain]
+Joyeux anniversaire, mon intimité
+Que cette nuit soit notre éternité
+Awa, ma chérie, tu es ma vérité
+
+[Couplet 2]
+Une bougie, un sourire, un baiser
+Notre voyage à Assinie, et le monde peut attendre
+3 ans que je t'aime, et je veux te garder
+Awa, ma chérie, je ne veux rien d'autre
+
+[Pont]
+Si douce et forte, personne n'est comme toi
+Merci d'être toujours là
+
+[Outro]
+Joyeux anniversaire, mon amour
+Awa, ma chérie, je t'aime pour toujours`;
+
+    // ---------- Panneaux (mêmes composants que le vrai Studio) ----------
+    const body = $('#pc-body');
+    const titre = e => `<h2 class="pc-title">${esc(acc(e.titre))}</h2>` + (e.sousTitre ? `<p class="pc-sub">${esc(acc(e.sousTitre))}</p>` : '');
+    const chip = (l, extra = '') => `<button type="button" class="chip" ${extra}>${l}</button>`;
+    const groupe = (t, items) => `<div class="pc-block"><span class="pc-label">${esc(t)}</span><div class="pc-chips">${items.map(([k, l]) => chip(l, `data-k="${k}"`)).join('')}</div></div>`;
+    const choix = e => {
+        const o = res(e.options).map(opt);
+        return titre(e) + `<div class="pc-chips">${o.map(l => chip(esc(l), `data-k="${esc(l)}"`)).join('')}</div>`;
+    };
+    const textes = e => titre(e) + e.champs.filter(c => !c.si || c.si(ETAT)).map(c =>
+        `<div class="pc-block"><label class="pc-label">${esc(acc(c.label))}${c.requis ? '' : ' <span class="optional-tag">(facultatif)</span>'}</label><input type="text" data-cle="${c.cle}" placeholder="${esc(c.exemple)}" autocomplete="off"></div>`).join('');
+    const panneaux = {
+        occ: `<h2 class="pc-title">Quelle est l'occasion ?</h2><p class="pc-sub">Choisis, et on te guide pas à pas.</p><div class="pc-occasions">` +
+            Object.entries(OCCASIONS).map(([k, o]) => `<button type="button" class="pc-occasion" data-occ="${k}"><span class="e">${o.emoji}</span><span class="t">${esc(o.label)}</span><span class="a">${esc(o.accroche)}</span></button>`).join('') + `</div>`,
+        pers: `<h2 class="pc-title">${esc(etapes[0].nom.label)}</h2><p class="pc-sub">Ce prénom sera chanté plusieurs fois dans la chanson.</p>
+            <div class="pc-block"><input type="text" id="in-nom" placeholder="${esc(etapes[0].nom.exemple)}" autocomplete="off"></div>` +
+            groupe('Cette chanson est pour…', [['h', '👨 Un homme'], ['f', '👩 Une femme'], ['g', '👥 Un couple / un groupe']]) +
+            groupe('Ton lien avec cette personne', [['amour', '💕 Mon amour'], ['parent', '👪 Mon parent / grand-parent'], ['enfant', '🧒 Mon enfant'], ['proche', '🤝 Famille, ami(e) ou collègue']]),
+        rel: choix(etapes[1]),
+        qual: choix(etapes[2]),
+        voeux: choix(etapes[3]),
+        det: textes(etapes[4]),
+        msg: textes(etapes[5]),
+        mus: `<h2 class="pc-title">La musique</h2><p class="pc-sub">On te conseille un style, tu peux le changer.</p>
+            <div class="pc-block"><span class="pc-label">Style musical</span><div class="pc-chips">` +
+            STYLES.map(s => `<button type="button" class="chip" data-k="${esc(s.v)}">${s.e} ${esc(s.v)}${s.v === ANNIV.style ? '<span class="reco">CONSEILLÉ</span>' : ''}</button>`).join('') +
+            `</div></div><div class="pc-block"><span class="pc-label">Quelle voix ?</span><div class="pc-chips">` +
+            [['male', '👨 Homme'], ['female', '👩 Femme'], ['duo', '👫 Duo']].map(([v, l]) => `<button type="button" class="chip" data-k="${v}">${l}</button>`).join('') + `</div></div>`,
+        apercu: `<h2 class="pc-title">Voici ta chanson pour Awa ✨</h2>
+            <p class="pc-sub">Lis tes paroles. <strong style="color: var(--neon-lime);">Tu peux les modifier toi-même</strong>, ou demander une autre version : c'est gratuit.</p>
+            <div class="lyrics-preview" id="lyr"></div>
+            <div class="pc-actions-sec" style="margin-top:.8rem">
+                <button type="button" class="btn-soft" id="b-edit" style="border-color: var(--neon-lime); color: var(--neon-lime);"><i class="fas fa-pen"></i> Modifier le texte</button>
+                <button type="button" class="btn-soft" id="b-autre"><i class="fas fa-sync-alt" id="i-autre"></i> Une autre version</button>
+            </div>
+            <button type="button" class="btn-generate" id="b-creer"><i class="fas fa-music"></i> Créer ma chanson <span class="btn-cout">1 crédit</span></button>`
+    };
+    body.innerHTML = Object.entries(panneaux).map(([k, h]) => `<div class="panel" id="p-${k}">${h}</div>`).join('');
+
+    // Cartes du modal d'achat (réel) + écran des tarifs
+    $('#pay').innerHTML = `<div class="nt-modal-card"><div class="nt-modal-icon"><i class="fas fa-music"></i></div>
+        <h2 id="credits-modal-title">Ta chanson est <span>prête à naître</span></h2>
+        <p class="nt-modal-sub">Il te faut 1 crédit pour lancer l'enregistrement. Choisis ton pack : tes réponses restent enregistrées.</p>
+        <div class="nt-packs">
+            <button type="button" class="nt-pack"><div class="nt-pack-main"><span class="nt-pack-songs">1</span><span class="nt-pack-label">chanson</span></div><div class="nt-pack-pricebox"><span class="nt-pack-price">1 000 F</span><span class="nt-pack-unit">1 000 F / chanson</span></div></button>
+            <button type="button" class="nt-pack popular"><span class="nt-pack-badge">Populaire</span><div class="nt-pack-main"><span class="nt-pack-songs">3</span><span class="nt-pack-label">chansons</span></div><div class="nt-pack-pricebox"><span class="nt-pack-price">2 500 F</span><span class="nt-pack-unit">≈ 833 F / chanson</span></div></button>
+            <button type="button" class="nt-pack"><div class="nt-pack-main"><span class="nt-pack-songs">5</span><span class="nt-pack-label">chansons</span></div><div class="nt-pack-pricebox"><span class="nt-pack-price">4 000 F</span><span class="nt-pack-unit">800 F / chanson</span></div></button>
+        </div>
+        <div class="nt-pay-methods"><img src="../assets/images/logo_wave.jpg" alt="Wave"><img src="../assets/images/logo_orange.jpg" alt="Orange Money"><img src="../assets/images/logo_mtn.jpg" alt="MTN MoMo"><img src="../assets/images/logo_moov.jpg" alt="Moov Money"><span><i class="fas fa-lock"></i> Paiement sécurisé</span></div></div>`;
+
+    // Accroche (mots animés)
+    const mots = (t, d0, pas) => t.split(' ').map((m, i) => `<span class="w" style="animation-delay:${(d0 + i * pas).toFixed(2)}s">${m}</span>`).join(' ');
+    $('#s-hook').innerHTML = `<div class="hook-eq"><i></i><i></i><i></i><i></i></div>
+        <div class="hook-disc"></div>
+        <p class="big" style="margin-top:80px">${mots('Imagine une chanson', 1.0, .25)}<br>${mots('écrite rien que', 2.0, .22)} <em class="w" style="animation-delay:2.7s">pour elle.</em></p>`;
+    // Ecran des tarifs
+    $('#s-prix').innerHTML = '';
+
+    // ---------- Outils de mise en scène ----------
+    let timers = [], decalage = 0, rattrapage = [];
+    // décalage > 0 : les événements déjà passés sont rejoués instantanément (démarrage à la seconde voulue)
+    const at = (s, f) => { if (s < decalage) rattrapage.push([s, f]); else timers.push(setTimeout(f, (s - decalage) * 1000)); };
+    const scenes = ['hook', 'problem', 'studio', 'prix', 'cta'];
+    function scene(nom) { scenes.forEach(n => $('#s-' + n).classList.toggle('on', n === nom)); }
+    function kick(a, b) { $('#kick').innerHTML = a ? `<div class="k1">${a}</div><div class="k2">${b}</div>` : ''; }
+    function sub(t) { const e = $('#sub'); if (!t) { e.classList.remove('on'); return; } e.innerHTML = t; e.classList.add('on'); }
+    function haut(px) { $('#screen').style.height = px + 'px'; }
+    function panel(k) { document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.id === 'p-' + k)); }
+    function entete(n, pill) {
+        $('#pc-etape').textContent = `Étape ${n} sur ${n === 1 ? 7 : TOTAL}`;
+        $('#pc-bar').style.width = Math.round(n / (n === 1 ? 7 : TOTAL) * 100) + '%';
+        $('#pc-pill').innerHTML = pill ? `<span class="pc-occasion-pill">${ANNIV.emoji} ${esc(ANNIV.label)}</span>` : '';
+    }
+    function suivant(txt, icone, visible = true) {
+        $('#pc-nav').style.display = visible ? 'flex' : 'none';
+        $('#pc-next-t').textContent = txt; $('#pc-next-i').className = 'fas ' + icone;
+    }
+    function centre(el) {
+        const r = el.getBoundingClientRect(), s = stage.getBoundingClientRect();
+        return [(r.left + r.width / 2 - s.left) / echelle, (r.top + r.height / 2 - s.top) / echelle];
+    }
+    const cur = $('#cursor');
+    function vers(el, dx = 0, dy = 0) {
+        const [x, y] = centre(el);
+        cur.style.opacity = 1; cur.style.transform = `translate(${x + dx}px, ${y + dy}px)`;
+    }
+    function tap(el, fn) {
+        const [x, y] = centre(el);
+        cur.classList.remove('tap'); void cur.offsetWidth; cur.classList.add('tap');
+        const r = document.createElement('div'); r.className = 'ripple'; r.style.left = x + 'px'; r.style.top = y + 'px'; stage.appendChild(r);
+        setTimeout(() => r.remove(), 700);
+        el.classList.add('press'); setTimeout(() => el.classList.remove('press'), 180);
+        if (fn) fn();
+    }
+    // clic planifié : le curseur arrive 0,8 s avant le tap
+    function clic(t, sel, fn) {
+        at(t - 0.8, () => vers($(sel)));
+        at(t, () => tap($(sel), fn));
+    }
+    function chipDe(panelId, cle) { return document.querySelector(`#p-${panelId} [data-k="${cle}"]`); }
+    function clicChip(t, panelId, cle) {
+        const e = chipDe(panelId, cle);
+        at(t - 0.8, () => vers(e));
+        at(t, () => tap(e, () => e.classList.add('on')));
+    }
+    function taper(t, sel, texte, pas = 0.16) {
+        const e = $(sel);
+        at(t - 0.8, () => vers(e, 120, 0));
+        at(t - 0.1, () => e.classList.add('sim'));
+        [...texte].forEach((_, i) => at(t + i * pas, () => { e.value = texte.slice(0, i + 1); }));
+        at(t + texte.length * pas + 0.2, () => e.classList.remove('sim'));
+    }
+    const SUIVANT = '#pc-next';
+
+    // ---------- Le film (secondes) ----------
+    const PHRASES = ['🎸 Les musiciens accordent leurs guitares...', '🎤 Le chanteur s\'échauffe la voix...', '🎹 Mixage de la piste audio en cours...', '🎧 NovaTempo finalise les derniers réglages...', '✨ La magie opère, encore quelques secondes...'];
+    function remise() {
+        timers.forEach(clearTimeout); timers = [];
+        const a = $('#res-audio'); a.pause(); a.currentTime = 0;
+        scenes.forEach(n => $('#s-' + n).classList.remove('on'));
+        kick(); sub();
+        cur.style.opacity = 0; cur.style.transform = 'translate(540px, 1500px)';
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('on', 'press', 'hl'));
+        document.querySelectorAll('.pc-occasion').forEach(c => c.classList.remove('hl', 'press'));
+        document.querySelectorAll('#p-pers input, #p-det input, #p-msg input').forEach(i => { i.value = ''; i.classList.remove('sim'); });
+        $('#view-parcours').style.display = 'block'; $('#view-load').style.display = 'none'; $('#view-res').style.display = 'none'; $('#pay').style.display = 'none';
+        $('#pill').classList.remove('empty'); $('#pill-t').textContent = '1 crédit'; haut(690);
+        $('#lyr').innerHTML = ''; $('#loading-bar').style.width = '15%';
+        document.querySelectorAll('.gratuit, .minus').forEach(e => e.remove());
+        panel('occ'); entete(1, false); suivant('Suivant', 'fa-arrow-right', false);
+        const eq = $('#eqz'); eq.innerHTML = Array.from({ length: 22 }, (_, i) => `<i style="animation-delay:${(i * 0.07) % 0.5}s;height:${40 + (i * 37) % 60}%"></i>`).join('');
+        $('#s-hook').innerHTML = $('#s-hook').innerHTML; // relance les animations
+        $('#bar-t').style.transition = 'none'; $('#bar-t').style.width = '0';
+    }
+
+    function lancer() {
+        remise();
+        decalage = Math.max(0, Math.min(DUREE - 1, parseFloat(params.get('t')) || 0)); rattrapage = [];
+        $('#depart').style.display = 'none';
+        requestAnimationFrame(() => { const b = $('#bar-t'); b.style.width = (decalage / DUREE * 100) + '%'; requestAnimationFrame(() => { b.style.transition = `width ${DUREE - decalage}s linear`; b.style.width = '100%'; }); });
+
+        // 0–4 : accroche
+        scene('hook'); sub('Imagine… une chanson, <b>écrite rien que pour elle.</b>');
+        // 4–11 : le problème et la solution
+        at(4, () => { scene('problem'); sub('Pas un message de plus : <b>une vraie chanson</b>, avec son prénom et votre histoire.'); });
+        at(9.6, () => sub('Voici comment ça marche avec <b>Nova Tempo</b>.'));
+
+        // 11–16 : étape 1, l'occasion
+        at(11, () => { haut(690); scene('studio'); kick('ÉTAPE 1', 'Choisis l’occasion'); sub('<b>Étape 1 :</b> tu choisis l’occasion. Amour, anniversaire, mariage, hommage…'); });
+        at(11.4, () => { cur.style.transform = 'translate(700px, 1500px)'; });
+        clic(13.4, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'));
+
+        // 15.6–31 : étape 2, les questions (une par écran)
+        at(15.6, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); kick('ÉTAPE 2', 'Raconte ton histoire'); sub('<b>Étape 2 :</b> quelques questions simples, <b>une par écran</b>. Son prénom…'); });
+        taper(16.4, '#in-nom', 'Awa', 0.22);
+        clicChip(17.6, 'pers', 'f');
+        clicChip(18.3, 'pers', 'amour');
+        clic(19.3, SUIVANT);
+        at(19.65, () => { panel('rel'); entete(3, true); sub('…le petit nom que tu lui donnes…'); });
+        clicChip(20.6, 'rel', 'ma chérie');
+        clic(21.4, SUIVANT);
+        at(21.75, () => { panel('qual'); entete(4, true); sub('…ce que tu aimes chez elle…'); });
+        clicChip(22.5, 'qual', 'douce'); clicChip(23.1, 'qual', 'forte');
+        clic(23.8, SUIVANT);
+        at(24.15, () => { panel('voeux'); entete(5, true); sub('…ton vœu pour sa nouvelle année…'); });
+        clicChip(24.9, 'voeux', 'la santé'); clicChip(25.5, 'voeux', 'beaucoup de joie');
+        clic(26.2, SUIVANT);
+        at(26.55, () => { panel('det'); entete(6, true); sub('…un souvenir à vous deux. <b>Tu peux passer</b> ce que tu veux garder secret.'); suivant('Passer', 'fa-forward'); });
+        taper(27.2, '#p-det input[data-cle="anecdote"]', 'notre voyage à Assinie', 0.07);
+        at(28.9, () => suivant('Suivant', 'fa-arrow-right'));
+        clic(29.5, SUIVANT);
+        at(29.85, () => { panel('msg'); entete(7, true); sub('…et un petit mot, <b>chanté tel quel</b>.'); suivant('Passer', 'fa-forward'); });
+        taper(30.5, '#p-msg input', 'merci d’être toujours là', 0.07);
+        at(32.1, () => suivant('Suivant', 'fa-arrow-right'));
+        clic(32.7, SUIVANT);
+
+        // 33–38 : étape 3, style et voix
+        at(33.05, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); kick('ÉTAPE 3', 'Le style et la voix'); sub('<b>Étape 3 :</b> le style — Coupé Décalé, Amapiano, Afrobeat, Zouk, Gospel… et la voix : homme, femme ou duo.'); });
+        clicChip(34.3, 'mus', 'Coupé Décalé'); clicChip(35.2, 'mus', 'female');
+        clic(36.3, SUIVANT);
+
+        // 36.7–45 : étape 4, les paroles gratuites
+        at(36.65, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 4', 'Tes paroles, gratuites'); sub('<b>Étape 4 :</b> tu découvres tes paroles, <b>gratuitement</b>.'); });
+        const lignes = LYRICS.split('\n').filter(l => l.trim());
+        lignes.forEach((l, i) => at(37.3 + i * 0.16, () => {
+            const z = $('#lyr');
+            z.insertAdjacentHTML('beforeend', /^\[.*\]$/.test(l.trim()) ? `<span class="sec">${esc(l.replace(/[\[\]]/g, ''))}</span>` : `<span class="ln">${esc(l)}</span>`);
+            z.scrollTop = z.scrollHeight;
+        }));
+        at(41.4, () => sub('Tu les modifies si tu veux, ou tu demandes <b>une autre version</b>, sans rien payer.'));
+        clic(42.6, '#b-autre', () => { $('#i-autre').classList.add('fa-spin'); const g = document.createElement('span'); g.className = 'gratuit'; g.textContent = 'GRATUIT'; const b = $('#b-autre').getBoundingClientRect(), s = $('#screen').getBoundingClientRect(); g.style.left = (((b.left - s.left) + b.width / 2) / (echelle * 1.95)) + 'px'; g.style.top = ((b.top - s.top) / (echelle * 1.95) - 12) + 'px'; $('#screen').appendChild(g); setTimeout(() => { $('#i-autre').classList.remove('fa-spin'); g.remove(); }, 2200); });
+
+        // 45–52 : étape 5, création
+        at(44.0, () => { kick('ÉTAPE 5', 'On crée ta chanson'); sub('<b>Étape 5 :</b> tu valides. <b>1 crédit = 1 chanson.</b>'); });
+        clic(45.6, '#b-creer', () => {
+            $('#pill-t').textContent = '0 crédit'; $('#pill').classList.add('empty');
+            const m = document.createElement('div'); m.className = 'minus'; m.textContent = '−1'; $('#screen').appendChild(m);
+        });
+        at(46.2, () => { haut(470); $('#view-parcours').style.display = 'none'; $('#view-load').style.display = 'block'; cur.style.opacity = 0; sub('Notre studio <b>compose et enregistre</b> ta chanson en quelques minutes.'); });
+        PHRASES.forEach((p, i) => at(46.2 + i * 1.15, () => { $('#load-txt').innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> ' + p; $('#loading-bar').style.width = (22 + i * 19) + '%'; }));
+        at(51.3, () => { $('#loading-bar').style.width = '100%'; });
+
+        // 52–59 : le résultat
+        at(51.9, () => {
+            haut(560); $('#view-load').style.display = 'none'; $('#view-res').style.display = 'block';
+            kick('C’EST PRÊT', 'Ta chanson est là'); sub('<b>Ta chanson est prête.</b> Tu l’écoutes, tu la télécharges…');
+            if (!params.has('muet')) { const a = $('#res-audio'); a.currentTime = 0; a.volume = 1; a.play().catch(() => {}); }
+        });
+        at(55.3, () => sub('…et tu l’envoies <b>sur WhatsApp</b>, en un clic.'));
+        clic(56.2, '#b-wa');
+        clic(57.8, '#b-dl');
+
+        // 59–65 : les tarifs
+        at(59.1, () => {
+            const a = $('#res-audio'); a.pause();
+            cur.style.opacity = 0; haut(640); kick('SIMPLE', '1 crédit = 1 chanson');
+            $('#view-res').style.display = 'none'; $('#pay').style.display = 'block';
+            sub('À partir de <b>1 000 francs</b>, avec Wave, Orange, MTN ou Moov Money.');
+        });
+        at(60.4, () => { const p = $('.nt-pack.popular'); vers(p, 80, 20); });
+        at(61.2, () => tap($('.nt-pack.popular')));
+
+        // 65–70 : appel à l'action
+        at(65, () => { kick(); scene('cta'); sub(); });
+        at(DUREE, () => { $('#bar-t').style.opacity = 0; });
+        rattrapage.sort((a, b) => a[0] - b[0]).forEach(([, fn]) => { try { fn(); } catch (e) {} });
+        rattrapage = [];
+    }
+
+    function arreter() {
+        remise(); $('#depart').style.display = 'flex';
+        $('#bar-t').style.opacity = 1;
+    }
+    addEventListener('keydown', e => {
+        if (e.code === 'Space') { e.preventDefault(); if ($('#go').disabled) return; $('#bar-t').style.opacity = 1; lancer(); }
+        if (e.code === 'Escape') arreter();
+    });
+    const go = $('#go');
+    go.onclick = () => { $('#bar-t').style.opacity = 1; lancer(); };
+    remise();
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => { go.disabled = false; go.textContent = '▶ Lancer la vidéo'; }, 400));
+})();
+</script>
+</body>
+</html>
