@@ -51,6 +51,6 @@ Pour un format publicitaire de 30 secondes : garder 0:00–0:04 (accroche), 0:11
 
 ## Pour modifier la vidéo
 
-- Les textes, les temps et les scènes se règlent dans  (section « Le film »).
-- La page  est fabriquée à partir de ce modèle et du **vrai CSS du Studio** (). Si le Studio change d'apparence, on la régénère avec :  (sans Node : voir CLAUDE.md pour la commande avec Antigravity).
-- Option  : affiche l'état final des animations (sert à vérifier la mise en page d'une scène à l'arrêt).
+- Les textes, les temps et les scènes se règlent dans `promo/source/video.tpl.html` (section « Le film »).
+- La page `promo/video.html` est fabriquée à partir de ce modèle et du **vrai CSS du Studio** (`studio.html`). Si le Studio change d'apparence, on la régénère avec `promo/source/build-video.js` (demande-moi de le faire, c'est une commande à lancer avec Antigravity).
+- Option `?test` : affiche l'état final des animations (sert à vérifier la mise en page d'une scène à l'arrêt).
