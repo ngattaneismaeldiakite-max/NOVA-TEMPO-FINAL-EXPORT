@@ -1,6 +1,6 @@
 # Vidéos Nova Tempo — formats, musique et guide
 
-Une seule page, `promo/video.html`, fabrique **toutes les vidéos publicitaires**, chacune adaptée à son réseau, avec **ta musique (`demo2`)** et des animations qui battent à son rythme.
+Une seule page, `promo/video.html`, fabrique **toutes les vidéos publicitaires**, chacune adaptée à son réseau, avec **ta musique (`demo3`, le disque du milieu de l’accueil)** et des animations qui battent à son rythme.
 
 ## Les fichiers produits
 
@@ -18,8 +18,8 @@ Chaque format a sa propre mise en page (le téléphone, le titre et les sous-tit
 
 ## La musique
 
-- Source : `demo2` (ta chanson générée), version originale de qualité.
-- Extraits coupés automatiquement à **52,45 s** de la chanson, juste après un court silence : la vidéo démarre sur une reprise, la musique monte vers la 7ᵉ seconde et frappe au moment où les paroles apparaissent.
+- Source : `demo3` (ta chanson à la pochette Nova Tempo, disque du milieu de l’accueil), version originale de qualité.
+- Extraits coupés automatiquement (30 s à partir de 61,6 s, 20 s à partir de 66,1 s, 15 s à partir de 69,2 s), calés sur le tempo (115 BPM) : la musique fait une petite pause puis **explose au moment où les paroles apparaissent**, et son passage le plus fort accompagne « Ta chanson est prête ! ».
 - Fichiers : `promo/musique/NovaTempo_musique_30s.mp3`, `_20s.mp3`, `_15s.mp3` (192 kbit/s, fondu de sortie, volume réglé sans saturation). Tu peux aussi les utiliser seuls dans CapCut.
 - Dans la vidéo, la chanson passe dans le **lecteur de l'écran « Ta chanson est prête ! »** sans coupure : c'est elle qu'on « entend » sortir du Studio.
 
