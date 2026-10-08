@@ -45,19 +45,11 @@ Si le navigateur ne peut produire que du WebM (ancienne version), ouvre le fichi
 **Qualité** : le fichier a la résolution de ton écran (plus net sur un écran Full HD en plein écran).
 
 ### Options dans l'adresse
-`?format=tiktok` (ou `reels`, `whatsapp`, `facebook-fil`, `facebook-carre`, `youtube`) · `&muet` (sans musique, pour mettre ta propre voix et musique au montage) · `&propre` (sans barre de progression) · `&t=12` (démarre à la seconde 12) · `?version=longue` (70 s).
+`&soustitres=0` (sans sous-titres) · `?format=tiktok` (ou `reels`, `whatsapp`, `facebook-fil`, `facebook-carre`, `youtube`) · `&muet` (sans musique, pour mettre ta propre voix et musique au montage) · `&propre` (sans barre de progression) · `&t=12` (démarre à la seconde 12) · `?version=longue` (70 s).
 
-## Voix off (facultatif)
+## Voix off
 
-Les sous-titres sont dans l'image, la vidéo fonctionne sans voix. Pour ajouter ta voix dans CapCut, lis le texte des sous-titres ; garde la musique autour de 20 % pendant que tu parles.
-
-| Version 30 s | Voix off |
-|---|---|
-| 0–3 s | « Et si tu lui offrais une chanson avec son prénom ? » |
-| 3–12 s | « Avec Nova Tempo : tu choisis l'occasion, tu réponds à quelques questions simples… » |
-| 12–17 s | « …et tu découvres tes paroles, gratuitement. Écrites rien que pour elle. » |
-| 17–25 s | « Un clic, et ta chanson est créée… prête à envoyer sur WhatsApp. » |
-| 25–30 s | « Dès mille francs. Nova Tempo : offre une chanson, pas un cadeau de plus. » |
+Textes prêts à coller dans ElevenLabs, repères de temps et montage CapCut : voir **[VOIX-OFF.md](VOIX-OFF.md)**. Les sous-titres affichés sont exactement le texte de la voix off.
 
 ## Pour modifier
 

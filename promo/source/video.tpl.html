@@ -20,20 +20,20 @@ html, body { margin: 0; height: 100%; background: #000; overflow: hidden; font-f
 body { min-height: 0; }
 #stage { position: absolute; left: 50%; top: 50%; background: #06060A; overflow: hidden; color: #fff; transform: scale(var(--s, .4)); transform-origin: center; --e: 0; }
 #bg { position: absolute; inset: -60px; background: url('../assets/images/fille-casque.jpg') center/cover; opacity: .16; }
-.glow { position: absolute; width: 1300px; height: 1300px; border-radius: 50%; opacity: calc(.16 + var(--e) * .3); }
+.glow { position: absolute; width: 1300px; height: 1300px; border-radius: 50%; opacity: .16; will-change: opacity; }
 .glow.a { left: -420px; top: -250px; background: radial-gradient(circle, #D4FF00 0%, transparent 65%); }
-.glow.b { right: -520px; bottom: -300px; background: radial-gradient(circle, #FF0066 0%, transparent 65%); opacity: calc(.12 + var(--e) * .25); }
+$1opacity: .12; }
 #flash { position: absolute; inset: 0; z-index: 25; pointer-events: none; background: radial-gradient(circle at 50% 45%, rgba(212,255,0,.16), transparent 60%); opacity: 0; }
 #flash.on { animation: flash .32s ease-out; }
 @keyframes flash { from { opacity: 1; } to { opacity: 0; } }
 #parts { position: absolute; inset: 0; z-index: 26; pointer-events: none; }
-.p { position: absolute; width: 14px; height: 14px; margin: -7px; border-radius: 50%; background: #D4FF00; box-shadow: 0 0 14px #D4FF00; animation: part 1s cubic-bezier(.2,.7,.3,1) forwards; }
-.p.rose { background: #FF0066; box-shadow: 0 0 14px #FF0066; }
-.p.note { width: auto; height: auto; margin: -20px; background: none; box-shadow: none; color: #D4FF00; font-size: 40px; text-shadow: 0 0 16px rgba(212,255,0,.8); }
+.p { position: absolute; width: 24px; height: 24px; margin: -12px; border-radius: 50%; background: radial-gradient(circle, #fff 0 18%, #D4FF00 38%, transparent 70%); will-change: transform, opacity; animation: part 1s cubic-bezier(.2,.7,.3,1) forwards; }
+.p.rose { background: radial-gradient(circle, #fff 0 18%, #FF0066 38%, transparent 70%); }
+.p.note { width: auto; height: auto; margin: -20px; background: none; box-shadow: none; color: #D4FF00; font-size: 44px; }
 @keyframes part { from { transform: translate(0, 0) scale(1); opacity: 1; } to { transform: translate(var(--dx), var(--dy)) scale(.3); opacity: 0; } }
 
-.scene { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .45s ease; }
-.scene.on { opacity: 1; }
+.scene { position: absolute; inset: 0; opacity: 0; pointer-events: none; transform: scale(1.04); transition: opacity .5s ease, transform .9s cubic-bezier(.2,.8,.2,1); will-change: opacity, transform; }
+.scene.on { opacity: 1; transform: none; }
 .scene:not(.on) * { animation: none !important; }
 @keyframes pop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 @keyframes mot { to { opacity: 1; transform: none; } }
@@ -43,7 +43,7 @@ body { min-height: 0; }
 
 /* Accroche */
 #s-hook { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 70px; }
-.disc-wrap { width: 560px; height: 560px; transform: scale(calc(1 + var(--e) * .07)); flex-shrink: 0; }
+.disc-wrap { width: 560px; height: 560px; flex-shrink: 0; will-change: transform; }
 .hook-disc { width: 100%; height: 100%; box-sizing: border-box; border-radius: 50%; overflow: hidden; background: #111; border: 10px solid #111; box-shadow: 0 0 0 4px rgba(212,255,0,.5), 0 0 120px rgba(212,255,0,.35); position: relative; animation: pop .9s cubic-bezier(.2,1.4,.4,1) both, tourne 7s linear .9s infinite; }
 /* pochette Nova Tempo (stockée tournée d'un quart de tour, comme sur l'accueil) */
 .hook-disc .cover { position: absolute; inset: 0; border-radius: 50%; background: url('../assets/images/nova-tempo.jpg') center/cover; transform: rotate(-90deg); }
@@ -70,15 +70,17 @@ body { min-height: 0; }
 
 /* Annotations */
 #kick { position: absolute; left: 0; right: 0; top: 96px; text-align: center; z-index: 20; pointer-events: none; }
-#kick .k1 { display: inline-block; font-size: 34px; font-weight: 900; letter-spacing: 6px; color: #06060A; background: #D4FF00; padding: 10px 28px; border-radius: 50px; box-shadow: 0 0 calc(30px + var(--e) * 40px) rgba(212,255,0,.55); animation: mot .5s ease both; }
+#kick .k1 { display: inline-block; font-size: 34px; font-weight: 900; letter-spacing: 6px; color: #06060A; background: #D4FF00; padding: 10px 28px; border-radius: 50px; box-shadow: 0 0 40px rgba(212,255,0,.55); animation: mot .5s ease both; }
 #kick .k2 { font-size: 78px; font-weight: 900; margin-top: 22px; line-height: 1.05; text-shadow: 0 6px 30px rgba(0,0,0,.7); animation: mot .6s ease .1s both; text-wrap: balance; }
 #sub { position: absolute; left: 70px; right: 70px; bottom: 34px; z-index: 20; text-align: center; font-size: 44px; font-weight: 700; line-height: 1.25; padding: 22px 30px; border-radius: 28px; background: rgba(6,6,10,.88); border: 1px solid rgba(255,255,255,.12); opacity: 0; transition: opacity .3s; text-wrap: balance; }
 #sub.on { opacity: 1; }
+#sub.swap { animation: subIn .45s cubic-bezier(.2,.8,.2,1); }
+@keyframes subIn { from { opacity: .15; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 #sub b { color: #D4FF00; }
 
 /* Téléphone (le vrai Studio, largeur mobile), dans une « caméra » 3D */
 #cam { position: absolute; z-index: 5; transform: perspective(2600px) rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg)) scale(var(--z, 1)); transform-origin: 50% 40%; transition: transform 1.3s cubic-bezier(.3,.7,.2,1); }
-#halo { position: absolute; inset: -18%; z-index: -1; background: radial-gradient(closest-side, rgba(212,255,0,.42), rgba(212,255,0,.08) 60%, transparent); opacity: calc(.25 + var(--e) * .75); transform: scale(calc(.92 + var(--e) * .14)); }
+#halo { position: absolute; inset: -18%; z-index: -1; background: radial-gradient(closest-side, rgba(212,255,0,.42), rgba(212,255,0,.08) 60%, transparent); opacity: .25; transform: scale(.92); will-change: transform, opacity; }
 #screen { position: absolute; left: 0; top: 0; width: 430px; height: 690px; transform: scale(var(--ps)); transform-origin: 0 0; transition: height .5s ease; border-radius: 22px; overflow: hidden; background: #0a0a10; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 0 0 1.5px rgba(212,255,0,.3), 0 30px 80px rgba(0,0,0,.6); }
 .mini-nav { height: 54px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: rgba(6,6,10,.8); border-bottom: 1px solid rgba(255,255,255,.06); }
 .mini-nav .nova-brand-img { height: 24px; } .mini-nav .logo-eq-bars { height: 16px; } .mini-nav .eq-bar { width: 3px; }
@@ -95,8 +97,26 @@ body { min-height: 0; }
 .pc-sub { margin-bottom: 1.1rem !important; font-size: .95rem !important; }
 .pc-nav { margin-top: 1.4rem !important; }
 .pc-nav .btn-generate { margin-top: 0 !important; }
-.panel { display: none; }
-.panel.on { display: block; animation: fadeIn .35s ease; }
+/* Écrans compacts : tout doit tenir dans le téléphone, bouton « Suivant » compris */
+.chip { min-height: 0 !important; padding: .55rem .9rem !important; font-size: .9rem !important; }
+.pc-chips { gap: .45rem !important; }
+#p-pers .pc-block { margin-bottom: .75rem !important; }
+#p-pers .pc-label { margin-bottom: .45rem; }
+#in-nom, .panel input[type=text] { padding: .85rem 1rem !important; }
+.pc-occasion { padding: .55rem .75rem !important; gap: .1rem !important; } .pc-occasion .e { font-size: 1.3rem !important; } .pc-occasion .a { font-size: .74rem !important; }
+#p-pers .pc-sub, #p-occ .pc-sub { margin-bottom: .7rem !important; }
+.studio-card { padding-top: 1.1rem !important; padding-bottom: 1.1rem !important; }
+#pc-body { position: relative; transition: height .38s cubic-bezier(.2,.8,.2,1); }
+.panel { position: absolute; left: 0; right: 0; top: 0; opacity: 0; transform: translateX(30px); transition: opacity .3s ease, transform .42s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+.panel.on { opacity: 1; transform: none; }
+.panel.out { transform: translateX(-30px); }
+.view { animation: vueIn .5s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes vueIn { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
+.lyrics-preview { height: 215px; scroll-behavior: smooth; }
+.lyrics-preview .ln, .lyrics-preview .sec { animation: ligne .4s ease both; }
+@keyframes ligne { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.chip, .pc-occasion, .btn-generate, .btn-soft { transition: background .25s, border-color .25s, color .25s, box-shadow .25s, transform .18s !important; }
+#cam, .glow, #halo { will-change: transform; }
 .hl { border-color: #D4FF00 !important; transform: translateY(-3px); box-shadow: 0 0 22px rgba(212,255,0,.35); }
 .press { transform: scale(.94) !important; filter: brightness(1.25); }
 input.sim { border-color: #D4FF00; background: rgba(212,255,0,.05); box-shadow: 0 0 15px rgba(212,255,0,.12); }
@@ -119,14 +139,16 @@ input.sim { border-color: #D4FF00; background: rgba(212,255,0,.05); box-shadow: 
 .cta-logo .nova-brand-img { height: 150px; } .cta-logo .logo-eq-bars { height: 105px; gap: 8px; } .cta-logo .eq-bar { width: 20px; border-radius: 10px; }
 .cta-1 { font-size: 100px; font-weight: 900; line-height: 1.05; opacity: 0; animation: mot .7s ease .6s forwards; }
 .cta-1 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: #D4FF00; }
-.cta-url { font-size: 58px; font-weight: 900; color: #06060A; background: #D4FF00; padding: 24px 56px; border-radius: 70px; box-shadow: 0 0 calc(50px + var(--e) * 70px) rgba(212,255,0,.6); opacity: 0; animation: mot .7s ease 1.3s forwards; }
+.cta-url { font-size: 58px; font-weight: 900; color: #06060A; background: #D4FF00; padding: 24px 56px; border-radius: 70px; box-shadow: 0 0 70px rgba(212,255,0,.6); opacity: 0; animation: mot .7s ease 1.3s forwards; }
 .cta-2 { font-size: 40px; color: rgba(255,255,255,.75); font-weight: 600; opacity: 0; animation: mot .7s ease 2s forwards; }
 
 /* Curseur */
-#cursor { position: absolute; z-index: 30; width: 78px; height: 78px; margin: -39px 0 0 -39px; border-radius: 50%; background: rgba(255,255,255,.26); border: 4px solid #fff; box-shadow: 0 0 30px rgba(255,255,255,.4); opacity: 0; transition: transform .7s cubic-bezier(.5,0,.2,1), opacity .25s; pointer-events: none; }
-#cursor.tap { animation: tap .35s ease; }
-@keyframes tap { 50% { width: 56px; height: 56px; margin: -28px 0 0 -28px; background: rgba(212,255,0,.6); } }
-.ripple { position: absolute; z-index: 29; width: 40px; height: 40px; margin: -20px; border-radius: 50%; border: 5px solid #D4FF00; animation: onde .6s ease-out forwards; pointer-events: none; }
+#cursor { position: absolute; left: 0; top: 0; z-index: 30; width: 0; height: 0; opacity: 0; transition: transform .7s cubic-bezier(.45,0,.2,1), opacity .3s ease; pointer-events: none; will-change: transform, opacity; }
+#cursor .main { position: absolute; left: -24px; top: -6px; font-size: 80px; line-height: 1; color: #fff; transform-origin: 32% 8%; filter: drop-shadow(0 8px 10px rgba(0,0,0,.75)) drop-shadow(0 0 10px rgba(212,255,0,.55)); }
+#cursor.tap .main { animation: appui .38s ease; }
+@keyframes appui { 45% { transform: scale(.8) translateY(6px); color: #D4FF00; } }
+.f-4x5 #cursor .main { font-size: 64px; left: -19px; } .f-1x1 #cursor .main, .f-16x9 #cursor .main { font-size: 58px; left: -17px; }
+.ripple { position: absolute; z-index: 29; width: 44px; height: 44px; margin: -22px; border-radius: 50%; border: 6px solid #D4FF00; box-shadow: 0 0 20px rgba(212,255,0,.6); animation: onde .6s ease-out forwards; pointer-events: none; }
 @keyframes onde { to { transform: scale(4); opacity: 0; } }
 
 /* ===== Formats ===== */
@@ -249,7 +271,7 @@ body.propre #bar-t { display: none; }
     <div id="parts"></div>
     <div id="kick"></div>
     <div id="sub"></div>
-    <div id="cursor"></div>
+    <div id="cursor"><div class="main"><i class="fas fa-hand-pointer"></i></div></div>
 </div>
 <audio id="musique" preload="auto"></audio>
 
@@ -287,6 +309,7 @@ body.propre #bar-t { display: none; }
     const MUS = !LONGUE && window.NOVA_MUSIQUE ? window.NOVA_MUSIQUE[DUREE] : null;
     const SRC_MUSIQUE = MUS ? `musique/NovaTempo_musique_${DUREE}s.mp3` : null;
     const SONORE = !params.has('muet');
+    const SANS_SOUS_TITRES = params.get('soustitres') === '0';
     const musique = $('#musique'), resAudio = $('#res-audio');
     if (SRC_MUSIQUE) musique.src = SRC_MUSIQUE;
     resAudio.src = SRC_MUSIQUE || '../assets/audio/demo1.mp3';
@@ -397,14 +420,27 @@ Awa, ma chérie, je t'aime pour toujours`;
 
     // ---------- Outils de mise en scène ----------
     let timers = [], decalage = 0, rattrapage = [];
-    const at = (s, f) => { if (s < decalage) rattrapage.push([s, f]); else timers.push(setTimeout(f, (s - decalage) * 1000)); };
+    const FIGE = params.has('fige'); // contrôle : image arrêtée à la seconde t
+    const at = (s, f) => { if (s < decalage) rattrapage.push([s, f]); else if (!FIGE) timers.push(setTimeout(f, (s - decalage) * 1000)); };
     const scenes = ['hook', 'problem', 'studio', 'cta'];
     function scene(nom) { scenes.forEach(n => $('#s-' + n).classList.toggle('on', n === nom)); stage.classList.toggle('in-studio', nom === 'studio'); }
     function kick(a, b) { $('#kick').innerHTML = a ? `<div class="k1">${a}</div><div class="k2">${b}</div>` : ''; }
-    function sub(t) { const e = $('#sub'); if (!t) { e.classList.remove('on'); return; } e.innerHTML = t; e.classList.add('on'); }
+    function sub(t) {
+        const e = $('#sub');
+        if (!t || SANS_SOUS_TITRES) { e.classList.remove('on'); return; }
+        e.innerHTML = t; e.classList.remove('swap'); void e.offsetWidth; e.classList.add('swap', 'on');
+    }
     function haut(px) { $('#screen').style.height = px + 'px'; }
     function cam(ry, rx, z) { const c = $('#cam').style; c.setProperty('--ry', ry + 'deg'); c.setProperty('--rx', rx + 'deg'); c.setProperty('--z', z); }
-    function panel(k) { document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.id === 'p-' + k)); }
+    function panel(k) {
+        const nouveau = $('#p-' + k);
+        document.querySelectorAll('.panel').forEach(p => {
+            if (p === nouveau) return;
+            if (p.classList.contains('on')) { p.classList.remove('on'); p.classList.add('out'); } else p.classList.remove('out');
+        });
+        nouveau.classList.remove('out'); nouveau.classList.add('on');
+        $('#pc-body').style.height = nouveau.offsetHeight + 'px';
+    }
     function entete(n, pill) {
         $('#pc-etape').textContent = `Étape ${n} sur ${n === 1 ? 7 : TOTAL}`;
         $('#pc-bar').style.width = Math.round(n / (n === 1 ? 7 : TOTAL) * 100) + '%';
@@ -420,6 +456,7 @@ Awa, ma chérie, je t'aime pour toujours`;
     }
     const cur = $('#cursor');
     function vers(el, dx = 0, dy = 0) { const [x, y] = centre(el); cur.style.opacity = 1; cur.style.transform = `translate(${x + dx}px, ${y + dy}px)`; }
+    function cacherCurseur() { cur.style.opacity = 0; }
     function tap(el, fn) {
         const [x, y] = centre(el);
         cur.classList.remove('tap'); void cur.offsetWidth; cur.classList.add('tap');
@@ -434,7 +471,7 @@ Awa, ma chérie, je t'aime pour toujours`;
     function allumer(panelId, ...cles) { cles.forEach(c => chipDe(panelId, c).classList.add('on')); }
     function taper(t, sel, texte, pas = 0.16) {
         const e = $(sel);
-        at(t - 0.6, () => vers(e, 120, 0));
+        at(t - 0.6, () => vers(e, 70, 6));
         at(t - 0.1, () => e.classList.add('sim'));
         [...texte].forEach((_, i) => at(t + i * pas, () => { e.value = texte.slice(0, i + 1); }));
         at(t + texte.length * pas + 0.2, () => e.classList.remove('sim'));
@@ -445,7 +482,7 @@ Awa, ma chérie, je t'aime pour toujours`;
             z.insertAdjacentHTML('beforeend', /^\[.*\]$/.test(l.trim())
                 ? `<span class="sec">${esc(l.replace(/[\[\]]/g, ''))}</span>`
                 : `<span class="ln">${esc(l).replace(/Awa/g, '<b class="nom">Awa</b>')}</span>`);
-            z.scrollTop = z.scrollHeight;
+            z.scrollTo({ top: z.scrollHeight, behavior: params.has('test') ? 'auto' : 'smooth' });
         }));
     }
     function debiter() {
@@ -506,12 +543,18 @@ Awa, ma chérie, je t'aime pour toujours`;
         else if (surScene.id === 's-cta' && force > .3) eclatSur($('.cta-logo'), force > .6 ? 12 : 6);
         else if (surScene.id === 's-studio' && force > .7) eclatSur($('#screen'), 6);
     }
+    const halo = $('#halo'), glowA = $('.glow.a'), glowB = $('.glow.b');
+    function appliquerEnergie(e) {
+        halo.style.opacity = (.25 + e * .75).toFixed(3); halo.style.transform = `scale(${(.92 + e * .14).toFixed(3)})`;
+        glowA.style.opacity = (.16 + e * .3).toFixed(3); glowB.style.opacity = (.12 + e * .25).toFixed(3);
+        const d = document.querySelector('.scene.on .disc-wrap'); if (d) d.style.transform = `scale(${(1 + e * .07).toFixed(3)})`;
+    }
     function boucle() {
         if (MUS) {
             const t = horloge(), i = Math.max(0, Math.min(MUS.e.length - 1, Math.floor(t * 30)));
             const v = (MUS.e.charCodeAt(i) - 48) / 74;
             lisse = lisse * .55 + v * .45;
-            stage.style.setProperty('--e', lisse.toFixed(3));
+            appliquerEnergie(lisse);
             barres().forEach((b, k) => { b.style.transform = `scaleY(${Math.max(.25, Math.min(1, lisse * (.75 + .35 * Math.sin(t * 9 + k * 1.7))) ).toFixed(3)})`; });
             while (prochainFort < MUS.forts.length && MUS.forts[prochainFort] <= t * 30) {
                 const j = MUS.forts[prochainFort]; coup((MUS.e.charCodeAt(j) - 48) / 74); prochainFort++;
@@ -522,89 +565,90 @@ Awa, ma chérie, je t'aime pour toujours`;
     }
 
     // ---------- Films ----------
-    // 30 s : accroche · Studio en accéléré · paroles (le « wahou ») · création · chanson prête · appel à l'action
+    // Les sous-titres reprennent mot pour mot le texte de la voix off (promo/VOIX-OFF.md).
     function film30() {
         scene('hook'); sub('Et si tu lui offrais une chanson avec <b>son prénom</b> ?');
-        at(3.3, () => { haut(690); scene('studio'); cam(-5, 3, 1); kick('ÉTAPE 1', 'Choisis l’occasion'); sub('Tu choisis l’occasion…'); });
-        at(3.6, () => { cur.style.transform = `translate(${W * .65}px, ${H * .78}px)`; });
-        clic(4.6, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'), 0.7);
-        at(5.1, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); kick('ÉTAPE 2', 'Quelques questions simples'); sub('…tu réponds à quelques questions simples…'); cam(4, 2, 1); });
-        taper(5.5, '#in-nom', 'Awa', 0.15);
-        clicChip(6.3, 'pers', 'f', 0.6); clicChip(6.8, 'pers', 'amour', 0.5);
-        clic(7.3, '#pc-next', null, 0.5);
-        at(7.65, () => { panel('rel'); entete(3, true); });
-        clicChip(8.2, 'rel', 'ma chérie', 0.5);
-        clic(8.7, '#pc-next', null, 0.5);
-        at(9.05, () => { panel('qual'); entete(4, true); cam(-4, 2, 1); });
-        clicChip(9.6, 'qual', 'douce', 0.5); clicChip(10.0, 'qual', 'forte', 0.4);
-        clic(10.5, '#pc-next', null, 0.4);
-        at(10.85, () => { panel('voeux'); entete(5, true); });
-        at(11.3, () => { panel('det'); entete(6, true); });
+        at(3.0, () => { haut(690); scene('studio'); cam(-5, 3, 1); kick('ÉTAPE 1', 'Choisis l’occasion'); sub('Avec Nova Tempo, tu choisis <b>l’occasion</b>…'); });
+        clic(4.3, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'), 0.9);
+        at(5.0, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); kick('ÉTAPE 2', 'Quelques questions simples'); sub('…tu réponds à quelques questions : <b>son prénom</b>, son petit nom, ce que tu aimes chez elle…'); cam(4, 2, 1); });
+        taper(5.5, '#in-nom', 'Awa', 0.16);
+        clicChip(6.4, 'pers', 'f', 0.6); clicChip(7.0, 'pers', 'amour', 0.55);
+        clic(7.6, '#pc-next', null, 0.55);
+        at(7.95, () => { panel('rel'); entete(3, true); });
+        clicChip(8.6, 'rel', 'ma chérie', 0.6);
+        clic(9.15, '#pc-next', null, 0.5);
+        at(9.5, () => { panel('qual'); entete(4, true); cam(-4, 2, 1); });
+        clicChip(10.05, 'qual', 'douce', 0.5); clicChip(10.5, 'qual', 'forte', 0.42);
+        clic(10.95, '#pc-next', null, 0.42);
+        at(11.25, () => { panel('voeux'); entete(5, true); allumer('voeux', 'la santé'); });
+        at(11.5, () => { panel('det'); entete(6, true); });
         at(11.75, () => { panel('msg'); entete(7, true); });
-        at(12.2, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); allumer('mus', 'Coupé Décalé', 'female'); });
-        at(12.65, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 3', 'Tes paroles, gratuites'); sub('…et tu découvres tes paroles, <b>gratuitement</b>.'); cur.style.opacity = 0; cam(0, 0, ZOOM); });
-        paroles(13.1, 0.12);
-        at(16.1, () => sub('<b>Écrites rien que pour elle</b>, avec son prénom.'));
-        clic(17.2, '#b-creer', debiter, 0.7);
-        at(17.8, () => { kick('ÉTAPE 4', 'On crée ta chanson'); sub('Un clic, et ta chanson est <b>créée</b>…'); });
-        chargement(17.8, 2, 0.9);
-        resultat(19.6);
-        at(19.6, () => sub('…prête à envoyer <b>sur WhatsApp</b>.'));
-        clic(22.3, '#b-wa', null, 0.7);
-        at(25.4, () => { cur.style.opacity = 0; kick(); scene('cta'); sub(); });
+        at(12.0, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); allumer('mus', 'Coupé Décalé'); kick('ÉTAPE 3', 'Le style et la voix'); sub('…le style, <b>la voix</b>…'); cam(3, 1, 1); });
+        clicChip(12.65, 'mus', 'female', 0.55);
+        clic(13.15, '#pc-next', null, 0.45);
+        at(13.45, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 4', 'Tes paroles, gratuites'); sub('…et tu découvres tes paroles, <b>gratuitement</b>.'); cacherCurseur(); cam(0, 0, ZOOM); });
+        paroles(13.75, 0.12);
+        at(16.1, () => sub('<b>Écrites rien que pour elle.</b>'));
+        clic(17.2, '#b-creer', debiter, 0.75);
+        at(17.6, () => { kick('ÉTAPE 5', 'On crée ta chanson'); sub('Un clic, et ta chanson est <b>créée</b>…'); });
+        chargement(17.8, 2, 0.85);
+        resultat(19.5);
+        at(19.5, () => sub('…prête à écouter, et à envoyer <b>sur WhatsApp</b>.'));
+        clic(22.2, '#b-wa', null, 0.8);
+        clic(23.8, '#b-dl', null, 0.7);
+        at(25.3, () => { cacherCurseur(); kick(); scene('cta'); sub(); });
     }
-    // 20 s : même histoire, plus serrée
     function film20() {
-        scene('hook'); sub('Et si tu lui offrais une chanson avec <b>son prénom</b> ?');
-        at(2.4, () => { haut(690); scene('studio'); cam(-5, 3, 1); kick('ÉTAPE 1', 'Choisis l’occasion'); sub('Tu choisis l’occasion…'); });
-        at(2.6, () => { cur.style.transform = `translate(${W * .65}px, ${H * .78}px)`; });
-        clic(3.4, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'), 0.6);
-        at(3.9, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); kick('ÉTAPE 2', 'Quelques questions'); sub('…tu réponds à quelques questions…'); cam(4, 2, 1); });
-        taper(4.2, '#in-nom', 'Awa', 0.12);
-        clicChip(4.9, 'pers', 'f', 0.5);
-        clic(5.4, '#pc-next', null, 0.4);
-        at(5.7, () => { panel('rel'); entete(3, true); });
-        clicChip(6.2, 'rel', 'ma chérie', 0.4);
-        clic(6.6, '#pc-next', null, 0.35);
-        at(6.9, () => { panel('qual'); entete(4, true); allumer('qual', 'douce', 'forte'); });
-        at(7.25, () => { panel('voeux'); entete(5, true); });
-        at(7.6, () => { panel('det'); entete(6, true); });
-        at(7.95, () => { panel('msg'); entete(7, true); });
-        at(8.3, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); allumer('mus', 'Coupé Décalé', 'female'); });
-        at(8.65, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 3', 'Tes paroles, gratuites'); sub('…et tu découvres tes paroles, <b>gratuitement</b>.'); cur.style.opacity = 0; cam(0, 0, ZOOM); });
-        paroles(9.0, 0.1);
-        at(11.0, () => sub('<b>Écrites rien que pour elle.</b>'));
-        clic(12.0, '#b-creer', debiter, 0.6);
-        at(12.5, () => { kick('ÉTAPE 4', 'On crée ta chanson'); sub('Un clic, et ta chanson est <b>créée</b>…'); });
-        chargement(12.5, 2, 0.6);
-        resultat(13.8);
-        at(13.8, () => sub('…prête à envoyer <b>sur WhatsApp</b>.'));
-        clic(15.6, '#b-wa', null, 0.6);
-        at(16.6, () => { cur.style.opacity = 0; kick(); scene('cta'); sub(); });
+        scene('hook'); sub('Offre-lui une chanson avec <b>son prénom</b>.');
+        at(2.2, () => { haut(690); scene('studio'); cam(-5, 3, 1); kick('ÉTAPE 1', 'Choisis l’occasion'); sub('Choisis <b>l’occasion</b>…'); });
+        clic(3.1, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'), 0.75);
+        at(3.5, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); kick('ÉTAPE 2', 'Quelques questions'); sub('…réponds à quelques questions…'); cam(4, 2, 1); });
+        taper(3.85, '#in-nom', 'Awa', 0.12);
+        clicChip(4.6, 'pers', 'f', 0.5);
+        clic(5.05, '#pc-next', null, 0.42);
+        at(5.35, () => { panel('rel'); entete(3, true); });
+        clicChip(5.85, 'rel', 'ma chérie', 0.45);
+        clic(6.25, '#pc-next', null, 0.38);
+        at(6.5, () => { panel('qual'); entete(4, true); allumer('qual', 'douce', 'forte'); });
+        at(6.8, () => { panel('voeux'); entete(5, true); });
+        at(7.0, () => { panel('det'); entete(6, true); });
+        at(7.2, () => { panel('msg'); entete(7, true); });
+        at(7.4, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); allumer('mus', 'Coupé Décalé'); kick('ÉTAPE 3', 'Le style et la voix'); sub('…le style, <b>la voix</b>…'); });
+        clicChip(7.95, 'mus', 'female', 0.5);
+        clic(8.4, '#pc-next', null, 0.4);
+        at(8.7, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 4', 'Tes paroles, gratuites'); sub('…et découvre tes paroles, <b>gratuitement</b>.'); cacherCurseur(); cam(0, 0, ZOOM); });
+        paroles(8.95, 0.1);
+        clic(12.0, '#b-creer', debiter, 0.65);
+        at(12.4, () => { kick('ÉTAPE 5', 'On crée ta chanson'); sub('Un clic…'); });
+        chargement(12.4, 2, 0.55);
+        resultat(13.6);
+        at(13.6, () => sub('…et ta chanson est <b>prête à envoyer</b>.'));
+        clic(15.3, '#b-wa', null, 0.7);
+        at(16.6, () => { cacherCurseur(); kick(); scene('cta'); sub(); });
     }
-    // 15 s : l'essentiel absolu
     function film15() {
-        scene('hook'); sub('Et si tu lui offrais une chanson avec <b>son prénom</b> ?');
-        at(2.0, () => { haut(690); scene('studio'); cam(-5, 3, 1); kick('ÉTAPE 1', 'Tu réponds à 3 questions'); sub('Tu choisis l’occasion, tu réponds à quelques questions…'); });
-        at(2.15, () => { cur.style.transform = `translate(${W * .65}px, ${H * .78}px)`; });
-        clic(2.8, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'), 0.5);
-        at(3.2, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); cam(4, 2, 1); });
-        taper(3.45, '#in-nom', 'Awa', 0.1);
-        at(4.0, () => { panel('rel'); entete(3, true); allumer('rel', 'ma chérie'); cur.style.opacity = 0; });
-        at(4.3, () => { panel('qual'); entete(4, true); allumer('qual', 'douce', 'forte'); });
-        at(4.6, () => { panel('voeux'); entete(5, true); });
-        at(4.9, () => { panel('det'); entete(6, true); });
-        at(5.2, () => { panel('msg'); entete(7, true); });
-        at(5.5, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); allumer('mus', 'Coupé Décalé', 'female'); });
-        at(5.8, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 2', 'Tes paroles, gratuites'); sub('…et tes paroles s’écrivent, <b>gratuitement</b>.'); cam(0, 0, ZOOM); });
-        paroles(6.1, 0.085);
-        clic(8.9, '#b-creer', debiter, 0.5);
-        chargement(9.3, 1, 0.8);
-        at(9.3, () => { kick('ÉTAPE 3', 'Ta chanson est créée'); sub('Un clic, et ta chanson est <b>créée</b>…'); });
-        resultat(10.2, false);
-        at(10.2, () => sub('…prête à envoyer <b>sur WhatsApp</b>.'));
-        clic(11.4, '#b-wa', null, 0.5);
-        at(12.0, () => { cur.style.opacity = 0; kick(); scene('cta'); sub(); });
+        scene('hook'); sub('Une chanson avec <b>son prénom</b> ?');
+        at(1.9, () => { haut(690); scene('studio'); cam(-5, 3, 1); kick('ÉTAPE 1', 'Quelques questions'); sub('Réponds à quelques questions…'); });
+        clic(2.6, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'), 0.6);
+        at(2.95, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); cam(4, 2, 1); });
+        taper(3.2, '#in-nom', 'Awa', 0.1);
+        clicChip(3.85, 'pers', 'f', 0.4);
+        at(4.15, () => { panel('rel'); entete(3, true); allumer('rel', 'ma chérie'); });
+        at(4.35, () => { panel('qual'); entete(4, true); allumer('qual', 'douce', 'forte'); });
+        at(4.55, () => { panel('voeux'); entete(5, true); });
+        at(4.7, () => { panel('det'); entete(6, true); });
+        at(4.85, () => { panel('msg'); entete(7, true); });
+        at(5.0, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); allumer('mus', 'Coupé Décalé'); });
+        clicChip(5.35, 'mus', 'female', 0.35);
+        at(5.6, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 2', 'Tes paroles, gratuites'); sub('…découvre tes paroles, <b>gratuitement</b>.'); cacherCurseur(); cam(0, 0, ZOOM); });
+        paroles(5.8, 0.085);
+        clic(8.7, '#b-creer', debiter, 0.55);
+        chargement(9.1, 1, 0.75);
+        at(9.1, () => { kick('ÉTAPE 3', 'Ta chanson est créée'); sub('Un clic…'); });
+        resultat(10.0, false);
+        at(10.0, () => sub('…ta chanson est <b>prête</b> !'));
+        clic(11.3, '#b-wa', null, 0.55);
+        at(12.0, () => { cacherCurseur(); kick(); scene('cta'); sub(); });
     }
     // 70 s : version explicative complète (toutes les étapes, tarifs)
     function film70() {
@@ -651,7 +695,7 @@ Awa, ma chérie, je t'aime pour toujours`;
         at(55.3, () => sub('…et tu l’envoies <b>sur WhatsApp</b>, en un clic.'));
         clic(56.2, '#b-wa'); clic(57.8, '#b-dl');
         at(59.1, () => {
-            resAudio.pause(); cur.style.opacity = 0; haut(640); cam(0, 0, 1); kick('SIMPLE', '1 crédit = 1 chanson');
+            resAudio.pause(); cur.style.opacity = 0; haut(668); cam(0, 0, 1); kick('SIMPLE', '1 crédit = 1 chanson');
             $('#view-res').style.display = 'none'; $('#pay').style.display = 'block';
             sub('À partir de <b>1 000 francs</b>, avec Wave, Orange, MTN ou Moov Money.');
         });
@@ -668,7 +712,7 @@ Awa, ma chérie, je t'aime pour toujours`;
         scenes.forEach(n => $('#s-' + n).classList.remove('on'));
         stage.classList.remove('in-studio');
         kick(); sub();
-        cur.style.opacity = 0; cur.style.transform = `translate(${W / 2}px, ${H * .8}px)`;
+        cur.style.opacity = 0; cur.style.transform = `translate(${W * .82}px, ${H * 1.06}px)`;
         cam(-16, 7, .88);
         document.querySelectorAll('.chip').forEach(c => c.classList.remove('on', 'press', 'hl'));
         document.querySelectorAll('.pc-occasion').forEach(c => c.classList.remove('hl', 'press'));
@@ -681,7 +725,7 @@ Awa, ma chérie, je t'aime pour toujours`;
         $('#eqz').innerHTML = Array.from({ length: 22 }, (_, i) => `<i style="animation-delay:${(i * 0.07) % 0.5}s;height:${40 + (i * 37) % 60}%"></i>`).join('');
         $('#s-hook').innerHTML = hookHtml();
         $('#bar-t').style.transition = 'none'; $('#bar-t').style.width = '0'; $('#bar-t').style.opacity = 1;
-        stage.style.setProperty('--e', 0); lisse = 0;
+        appliquerEnergie(0); lisse = 0;
     }
 
     async function lancer() {

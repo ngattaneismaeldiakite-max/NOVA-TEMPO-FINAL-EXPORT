@@ -81,4 +81,5 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 
 - `promo/video.html` (généré, ne pas modifier à la main) = modèle `promo/source/video.tpl.html` + vrai CSS de `studio.html`, via `promo/source/build-video.js <racine> <modèle>`. Formats `?format=tiktok|reels|whatsapp|facebook-fil|facebook-carre|youtube`, `?version=longue` (70 s). Bouton « Enregistrer » : capture de l'onglet + téléchargement nommé par réseau.
 - Musique : extraits de `demo3` (original, commit ee8bcf3 ; disque du milieu de l’accueil) coupés à 61,65 / 66,12 / 69,24 s dans `promo/musique/` + `enveloppes.js` (énergie 30 img/s et temps forts lus par l'animation). Outil de découpe dans le dossier temporaire de session (lamejs + mpg123-decoder) : à recréer si besoin.
-- Guide utilisateur : `promo/SCRIPT.md`.
+- Guide utilisateur : `promo/SCRIPT.md` ; voix off ElevenLabs : `promo/VOIX-OFF.md` (les sous-titres des films = ce texte, à garder synchronisés).
+- Fluidité : ne jamais animer une variable CSS héritée sur toute la scène (recalcul complet à chaque image) ; animer seulement transform/opacity d'éléments ciblés. Chaque écran du Studio doit tenir dans le téléphone (690 px), bouton « Suivant » visible. Contrôle : `&test&fige&t=…` (image arrêtée).
