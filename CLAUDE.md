@@ -76,3 +76,9 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 - `api/_lib/securite.js` : limites de débit ; `api/_lib/erreurs.js` : `signaler()` écrit dans la table `error_logs` (Supabase) et envoie une alerte Telegram pour le niveau `critique`. Les erreurs du navigateur arrivent par `api/erreurs.js` + `assets/js/suivi-erreurs.js`.
 - Migrations à lancer à la main : `20261007_durcissement_base.sql`, `20261007_journal_erreurs.sql`.
 - Tests : `node tests/simulation.js` (aussi lancés par GitHub Actions). Les relancer après toute modification de `api/`.
+
+## Vidéos publicitaires (`promo/`)
+
+- `promo/video.html` (généré, ne pas modifier à la main) = modèle `promo/source/video.tpl.html` + vrai CSS de `studio.html`, via `promo/source/build-video.js <racine> <modèle>`. Formats `?format=tiktok|reels|whatsapp|facebook-fil|facebook-carre|youtube`, `?version=longue` (70 s). Bouton « Enregistrer » : capture de l'onglet + téléchargement nommé par réseau.
+- Musique : extraits de `demo2` (original, commit ee8bcf3) coupés à 52,45 s dans `promo/musique/` + `enveloppes.js` (énergie 30 img/s et temps forts lus par l'animation). Outil de découpe dans le dossier temporaire de session (lamejs + mpg123-decoder) : à recréer si besoin.
+- Guide utilisateur : `promo/SCRIPT.md`.

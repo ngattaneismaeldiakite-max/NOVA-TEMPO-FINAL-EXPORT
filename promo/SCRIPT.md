@@ -1,61 +1,71 @@
-# Vidéo Nova Tempo — script, scènes et guide d'enregistrement
+# Vidéos Nova Tempo — formats, musique et guide
 
-Format **vertical 9:16 (1080×1920)** pour TikTok, Reels, statuts WhatsApp et publicités Facebook/Instagram.
-Deux versions, dans le même fichier :
+Une seule page, `promo/video.html`, fabrique **toutes les vidéos publicitaires**, chacune adaptée à son réseau, avec **ta musique (`demo2`)** et des animations qui battent à son rythme.
 
-- **Courte, 30 secondes (par défaut)** : faite pour la publicité, centrée sur l'effet « wahou ».
-- **Longue, 70 secondes** : explicative, pour une page d'accueil ou un tutoriel (`?version=longue`).
+## Les fichiers produits
 
-Les écrans sont ceux du **vrai Studio** (mêmes questions, options, boutons, prix). Les paroles sont **générées par ton vrai moteur** de textes, et la chanson est ta vraie démo (`demo1.mp3`).
+| Réseau | Format | Durée | Nom du fichier téléchargé |
+|---|---|---|---|
+| TikTok | vertical 9:16 | 30 s | `NovaTempo_TikTok_9x16_30s.mp4` |
+| Reels et stories Instagram/Facebook | vertical 9:16 | 30 s | `NovaTempo_Instagram-Reels_9x16_30s.mp4` |
+| Statut WhatsApp | vertical 9:16 | 30 s | `NovaTempo_WhatsApp-Statut_9x16_30s.mp4` |
+| Fil d'actualité Facebook/Instagram | 4:5 | 20 s | `NovaTempo_Facebook-Fil_4x5_20s.mp4` |
+| Publicité carrée | 1:1 | 15 s | `NovaTempo_Facebook-Carre_1x1_15s.mp4` |
+| YouTube, Facebook horizontal | 16:9 | 30 s | `NovaTempo_YouTube_16x9_30s.mp4` |
+| Vidéo explicative (site, tutoriel) | 9:16 | 70 s | `NovaTempo_Explicative_9x16_70s.mp4` |
 
-Fichier à ouvrir : `promo/video.html` (double-clic, ou `…/promo/video.html` sur le site).
+Chaque format a sa propre mise en page (le téléphone, le titre et les sous-titres sont replacés), pas un simple recadrage. Les durées de 20 et 15 s racontent la même histoire en plus serré.
 
-## Version courte (30 s) — l'idée
+## La musique
 
-Le « wahou », c'est **le prénom qui apparaît dans les paroles**, puis **la chanson qui se joue**. Tout le reste sert à y arriver vite : on ne montre que 3 questions en entier, les autres défilent en accéléré, et le prix est dans l'écran final.
+- Source : `demo2` (ta chanson générée), version originale de qualité.
+- Extraits coupés automatiquement à **52,45 s** de la chanson, juste après un court silence : la vidéo démarre sur une reprise, la musique monte vers la 7ᵉ seconde et frappe au moment où les paroles apparaissent.
+- Fichiers : `promo/musique/NovaTempo_musique_30s.mp3`, `_20s.mp3`, `_15s.mp3` (192 kbit/s, fondu de sortie, volume réglé sans saturation). Tu peux aussi les utiliser seuls dans CapCut.
+- Dans la vidéo, la chanson passe dans le **lecteur de l'écran « Ta chanson est prête ! »** sans coupure : c'est elle qu'on « entend » sortir du Studio.
 
-| Temps | Écran | Voix off |
-|---|---|---|
-| 0:00–0:03 | Disque « Pour toi » qui tourne · « Et si tu lui offrais une chanson avec son prénom ? » | « Et si tu lui offrais une chanson avec son prénom ? » |
-| 0:03–0:12 | Le vrai Studio, en accéléré : occasion « Anniversaire », prénom « Awa », « une femme », « ma chérie », qualités « douce » et « forte », puis les autres questions défilent | « Avec Nova Tempo : tu choisis l'occasion, tu réponds à quelques questions simples… » |
-| 0:12–0:17 | **Les paroles apparaissent ligne par ligne, avec le prénom en évidence** | « …et tu découvres tes paroles, gratuitement. Écrites rien que pour elle. » |
-| 0:17–0:20 | « Créer ma chanson », 1 crédit, création en cours | « Un clic, et ta chanson est créée… » |
-| 0:20–0:25 | **« Ta chanson est prête ! » : la chanson se joue**, boutons WhatsApp et MP3 | « …prête à envoyer sur WhatsApp. » |
-| 0:25–0:30 | Logo · « Offre une chanson, pas un cadeau de plus. » · novatempo.vercel.app · « Dès 1 000 F · Wave, Orange, MTN, Moov » | « Dès mille francs. Nova Tempo : offre une chanson, pas un cadeau de plus. » |
+## Les animations
 
-Les **sous-titres** sont déjà dans la vidéo : elle marche aussi sans voix, ce qui compte pour les pubs vues sans le son.
+- Le disque, les barres vertes, le halo autour du téléphone et les lumières **suivent l'énergie de la musique** ; des flashs et des particules (notes ♪) tombent sur les **temps forts**.
+- **Caméra 3D** : le téléphone pivote légèrement, puis zoome sur les paroles au moment clé.
+- Les écrans restent ceux du **vrai Studio** ; les paroles viennent de ton vrai moteur, avec le prénom en évidence.
 
-Conseil pour la publicité : mets l'accroche écrite (« Et si tu lui offrais une chanson avec son prénom ? ») dans le texte de la publication, et propose une action claire (« Crée la tienne ») avec le lien du site.
+## Fabriquer une vidéo (sans Game Bar ni renommage)
 
-## Enregistrer la vidéo (Windows)
+1. Double-clique sur `promo/video.html` (Chrome ou Edge). Mets la fenêtre en **plein écran (F11)**.
+2. Choisis le réseau dans la liste en haut (TikTok, WhatsApp, Facebook…).
+3. Clique sur **« ⏺ Enregistrer et télécharger »**.
+4. Dans la fenêtre du navigateur : choisis **« Cet onglet »**, active **« Partager aussi l'audio de l'onglet »**, puis **« Partager »**.
+5. Ne touche plus à rien : la vidéo se joue avec la musique, puis **le fichier se télécharge tout seul avec le bon nom** (dossier Téléchargements).
+6. Recommence pour chaque réseau.
 
-1. Ouvre `promo/video.html` dans **Chrome ou Edge**, en **plein écran (F11)**. La scène 9:16 s'adapte à la hauteur de ton écran.
-2. Ajoute `?propre` à la fin de l'adresse pour cacher la fine barre de progression.
-3. Lance ton enregistreur d'écran :
-   - **Windows + G** (Xbox Game Bar), puis « Capturer » ; ou
-   - **CapCut → Enregistrement d'écran** (il peut capturer le son du système : la démo sera alors dans la vidéo) ; ou OBS.
-4. Clique sur **« Lancer la vidéo »**. Elle se joue seule et reste sur la dernière image.
-5. Arrête l'enregistrement. **Espace** relance la vidéo, **Échap** l'arrête.
+« ▶ Aperçu » joue la vidéo sans l'enregistrer. **Espace** relance, **Échap** arrête.
 
-Options dans l'adresse (combinables, par exemple `video.html?propre&t=12`) :
-`?version=longue` (70 s) · `?muet` (ne joue pas la démo) · `?propre` (sans barre de progression) · `?t=12` (démarre à la seconde 12, pour refaire une seule partie).
+Si le navigateur ne peut produire que du WebM (ancienne version), ouvre le fichier dans CapCut et exporte-le en MP4.
 
-## Monter dans CapCut
+**Qualité** : le fichier a la résolution de ton écran (plus net sur un écran Full HD en plein écran).
 
-1. Importe l'enregistrement et **recadre en 9:16** si ton écran est large.
-2. **Voix off** : enregistre-la dans CapCut (« Voix off ») en lisant la colonne de droite, ou utilise « Texte en voix ».
-3. **Musique** : une piste rythmée, à **15–20 % de volume** pendant la voix.
-4. Exporte en **1080×1920, 30 images/s** (720×1280 suffit pour WhatsApp et pèse moins lourd).
+### Options dans l'adresse
+`?format=tiktok` (ou `reels`, `whatsapp`, `facebook-fil`, `facebook-carre`, `youtube`) · `&muet` (sans musique, pour mettre ta propre voix et musique au montage) · `&propre` (sans barre de progression) · `&t=12` (démarre à la seconde 12) · `?version=longue` (70 s).
 
-## Qualité de l'image
+## Voix off (facultatif)
 
-L'enregistrement a la résolution de **ton écran** : sur un écran 1366×768, la vidéo sera plus floue qu'en Full HD. Les textes sont très gros exprès pour rester lisibles.
+Les sous-titres sont dans l'image, la vidéo fonctionne sans voix. Pour ajouter ta voix dans CapCut, lis le texte des sous-titres ; garde la musique autour de 20 % pendant que tu parles.
 
-## Pour modifier la vidéo
+| Version 30 s | Voix off |
+|---|---|
+| 0–3 s | « Et si tu lui offrais une chanson avec son prénom ? » |
+| 3–12 s | « Avec Nova Tempo : tu choisis l'occasion, tu réponds à quelques questions simples… » |
+| 12–17 s | « …et tu découvres tes paroles, gratuitement. Écrites rien que pour elle. » |
+| 17–25 s | « Un clic, et ta chanson est créée… prête à envoyer sur WhatsApp. » |
+| 25–30 s | « Dès mille francs. Nova Tempo : offre une chanson, pas un cadeau de plus. » |
 
-- Les textes, les temps et les scènes se règlent dans `promo/source/video.tpl.html` (fonctions `filmCourt` et section « Le film »).
-- La page `promo/video.html` est fabriquée à partir de ce modèle et du **vrai CSS du Studio** (`studio.html`) avec `promo/source/build-video.js` (demande-moi de la régénérer si le Studio change d'apparence).
-- Option `?test` : affiche l'état final des animations (sert à vérifier la mise en page d'une scène à l'arrêt).
+## Pour modifier
+
+- Textes, temps, scènes : `promo/source/video.tpl.html` (fonctions `film30`, `film20`, `film15`, `film70`).
+- Mise en page de chaque format : même fichier, section CSS « Formats ».
+- Changer de musique : la recouper avec l'outil de découpe (demande-moi), qui produit les MP3 et `musique/enveloppes.js` (le rythme lu par l'animation).
+- La page est fabriquée à partir du modèle et du **vrai CSS du Studio** par `promo/source/build-video.js` (demande-moi de la régénérer si le Studio change).
+- `&test` : affiche l'état final des animations, image figée (vérification de mise en page).
 
 ---
 

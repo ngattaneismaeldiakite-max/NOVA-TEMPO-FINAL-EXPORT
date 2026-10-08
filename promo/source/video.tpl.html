@@ -3,46 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Tempo — Vidéo de présentation (1080×1920)</title>
+<title>Nova Tempo — Vidéos publicitaires</title>
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f[]=instrument-serif@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="../assets/css/logo.css">
 <script src="../assets/js/studio-parcours.js"></script>
+<script src="musique/enveloppes.js"></script>
 <style>
 /* ===== CSS réel du Studio (copié de studio.html, sans les règles liées à la taille de la fenêtre) ===== */
 /*REAL_CSS*/
 
-/* ===== Mise en scène de la vidéo ===== */
+/* ===== Mise en scène ===== */
+* { backdrop-filter: none !important; }
 html, body { margin: 0; height: 100%; background: #000; overflow: hidden; font-family: 'Satoshi', sans-serif; }
 body { min-height: 0; }
-#stage { position: absolute; left: 50%; top: 50%; width: 1080px; height: 1920px; margin: -960px 0 0 -540px; background: #06060A; overflow: hidden; color: #fff; transform: scale(var(--s, .4)); transform-origin: center; }
+#stage { position: absolute; left: 50%; top: 50%; background: #06060A; overflow: hidden; color: #fff; transform: scale(var(--s, .4)); transform-origin: center; --e: 0; }
 #bg { position: absolute; inset: -60px; background: url('../assets/images/fille-casque.jpg') center/cover; opacity: .16; }
-.glow { position: absolute; width: 1300px; height: 1300px; border-radius: 50%; opacity: .3; }
+.glow { position: absolute; width: 1300px; height: 1300px; border-radius: 50%; opacity: calc(.16 + var(--e) * .3); }
 .glow.a { left: -420px; top: -250px; background: radial-gradient(circle, #D4FF00 0%, transparent 65%); }
-.glow.b { right: -520px; bottom: -300px; background: radial-gradient(circle, #FF0066 0%, transparent 65%); opacity: .22; }
-@keyframes derive { from { transform: translate(0, 0) scale(1); } to { transform: translate(90px, 70px) scale(1.12); } }
+.glow.b { right: -520px; bottom: -300px; background: radial-gradient(circle, #FF0066 0%, transparent 65%); opacity: calc(.12 + var(--e) * .25); }
+#flash { position: absolute; inset: 0; z-index: 25; pointer-events: none; background: radial-gradient(circle at 50% 45%, rgba(212,255,0,.16), transparent 60%); opacity: 0; }
+#flash.on { animation: flash .32s ease-out; }
+@keyframes flash { from { opacity: 1; } to { opacity: 0; } }
+#parts { position: absolute; inset: 0; z-index: 26; pointer-events: none; }
+.p { position: absolute; width: 14px; height: 14px; margin: -7px; border-radius: 50%; background: #D4FF00; box-shadow: 0 0 14px #D4FF00; animation: part 1s cubic-bezier(.2,.7,.3,1) forwards; }
+.p.rose { background: #FF0066; box-shadow: 0 0 14px #FF0066; }
+.p.note { width: auto; height: auto; margin: -20px; background: none; box-shadow: none; color: #D4FF00; font-size: 40px; text-shadow: 0 0 16px rgba(212,255,0,.8); }
+@keyframes part { from { transform: translate(0, 0) scale(1); opacity: 1; } to { transform: translate(var(--dx), var(--dy)) scale(.3); opacity: 0; } }
 
 .scene { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .45s ease; }
 .scene.on { opacity: 1; }
 .scene:not(.on) * { animation: none !important; }
+@keyframes pop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes mot { to { opacity: 1; transform: none; } }
+@keyframes monte { from { transform: translateY(60px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes tourne { to { transform: rotate(360deg); } }
+.w { display: inline-block; opacity: 0; transform: translateY(50px); animation: mot .7s cubic-bezier(.2,.9,.3,1) forwards; }
 
 /* Accroche */
 #s-hook { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 70px; }
-.hook-disc { width: 560px; height: 560px; border-radius: 50%; background: url('../assets/images/pour-toi.jpg') center/cover; border: 10px solid #111; box-shadow: 0 0 0 4px rgba(212,255,0,.5), 0 0 120px rgba(212,255,0,.35); position: relative; animation: pop .9s cubic-bezier(.2,1.4,.4,1) both, tourne 7s linear .9s infinite; }
-.hook-disc::after { content: ''; position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px; border-radius: 50%; background: #06060A; border: 6px solid #222; }
-@keyframes tourne { to { transform: rotate(360deg); } }
-@keyframes pop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-.hook-eq { display: flex; gap: 14px; align-items: flex-end; height: 120px; margin-bottom: 70px; animation: monte .8s ease both; }
-.hook-eq i { width: 24px; border-radius: 12px; background: linear-gradient(180deg, #CBF52E, #72BE1A); box-shadow: 0 0 24px rgba(203,245,46,.5); transform-origin: bottom; animation: novaEq 1s ease-in-out infinite alternate; }
-.hook-eq i:nth-child(1) { height: 84%; animation-delay: .15s; } .hook-eq i:nth-child(2) { height: 78%; animation-delay: .45s; } .hook-eq i:nth-child(3) { height: 100%; } .hook-eq i:nth-child(4) { height: 88%; animation-delay: .3s; }
-@keyframes monte { from { transform: translateY(60px); opacity: 0; } to { transform: none; opacity: 1; } }
-.big { font-size: 108px; font-weight: 900; line-height: 1.04; letter-spacing: -2px; margin: 0; }
+.disc-wrap { width: 560px; height: 560px; transform: scale(calc(1 + var(--e) * .07)); flex-shrink: 0; }
+.hook-disc { width: 100%; height: 100%; box-sizing: border-box; border-radius: 50%; background: url('../assets/images/pour-toi.jpg') center/cover; border: 10px solid #111; box-shadow: 0 0 0 4px rgba(212,255,0,.5), 0 0 120px rgba(212,255,0,.35); position: relative; animation: pop .9s cubic-bezier(.2,1.4,.4,1) both, tourne 7s linear .9s infinite; }
+.hook-disc::after { content: ''; position: absolute; left: 50%; top: 50%; width: 21%; height: 21%; transform: translate(-50%, -50%); border-radius: 50%; background: #06060A; border: 6px solid #222; }
+.hook-txt { display: flex; flex-direction: column; align-items: center; }
+.hook-eq { display: flex; gap: 14px; align-items: flex-end; height: 110px; margin: 60px 0 0; animation: monte .8s ease both; }
+.hook-eq i { width: 24px; height: 100%; border-radius: 12px; background: linear-gradient(180deg, #CBF52E, #72BE1A); box-shadow: 0 0 24px rgba(203,245,46,.5); transform-origin: bottom; animation: novaEq 1s ease-in-out infinite alternate; }
+.hook-eq i:nth-child(2) { animation-delay: .45s; } .hook-eq i:nth-child(3) { animation-delay: .1s; } .hook-eq i:nth-child(4) { animation-delay: .3s; }
+.big { font-size: 108px; font-weight: 900; line-height: 1.04; letter-spacing: -2px; margin: 50px 0 0; }
+.big.sm { font-size: 90px; }
 .big em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: #D4FF00; text-shadow: 0 0 40px rgba(212,255,0,.45); }
-.w { display: inline-block; opacity: 0; transform: translateY(50px); animation: mot .7s cubic-bezier(.2,.9,.3,1) forwards; }
-@keyframes mot { to { opacity: 1; transform: none; } }
 
-/* Problème → solution */
+/* Problème → solution (version longue) */
 #s-problem { display: flex; flex-direction: column; justify-content: center; padding: 0 80px; gap: 40px; }
 .rate { font-size: 84px; font-weight: 800; line-height: 1.1; color: rgba(255,255,255,.55); position: relative; width: fit-content; opacity: 0; animation: mot .6s ease forwards; }
 .rate::after { content: ''; position: absolute; left: -10px; top: 54%; height: 8px; width: 0; background: #FF0066; border-radius: 8px; box-shadow: 0 0 20px #FF0066; animation: barre .5s ease forwards; }
@@ -54,17 +66,18 @@ body { min-height: 0; }
 .voici { display: flex; align-items: center; gap: 24px; margin-top: 30px; opacity: 0; animation: mot .6s ease 5.4s forwards; font-size: 56px; font-weight: 800; }
 .voici .nova-brand-img { height: 78px; } .voici .logo-eq-bars { height: 56px; } .voici .eq-bar { width: 12px; }
 
-* { backdrop-filter: none !important; }
-/* Annotations (étape, sous-titres) */
+/* Annotations */
 #kick { position: absolute; left: 0; right: 0; top: 96px; text-align: center; z-index: 20; pointer-events: none; }
-#kick .k1 { display: inline-block; font-size: 34px; font-weight: 900; letter-spacing: 6px; color: #06060A; background: #D4FF00; padding: 10px 28px; border-radius: 50px; box-shadow: 0 0 40px rgba(212,255,0,.5); animation: mot .5s ease both; }
-#kick .k2 { font-size: 78px; font-weight: 900; margin-top: 22px; line-height: 1.05; text-shadow: 0 6px 30px rgba(0,0,0,.7); animation: mot .6s ease .1s both; }
+#kick .k1 { display: inline-block; font-size: 34px; font-weight: 900; letter-spacing: 6px; color: #06060A; background: #D4FF00; padding: 10px 28px; border-radius: 50px; box-shadow: 0 0 calc(30px + var(--e) * 40px) rgba(212,255,0,.55); animation: mot .5s ease both; }
+#kick .k2 { font-size: 78px; font-weight: 900; margin-top: 22px; line-height: 1.05; text-shadow: 0 6px 30px rgba(0,0,0,.7); animation: mot .6s ease .1s both; text-wrap: balance; }
 #sub { position: absolute; left: 70px; right: 70px; bottom: 34px; z-index: 20; text-align: center; font-size: 44px; font-weight: 700; line-height: 1.25; padding: 22px 30px; border-radius: 28px; background: rgba(6,6,10,.88); border: 1px solid rgba(255,255,255,.12); opacity: 0; transition: opacity .3s; text-wrap: balance; }
 #sub.on { opacity: 1; }
 #sub b { color: #D4FF00; }
 
-/* Téléphone : le vrai Studio, en largeur mobile, agrandi */
-#screen { transition: height .5s ease; position: absolute; left: 121px; top: 312px; width: 430px; height: 690px; transform: scale(1.95); transform-origin: 0 0; border-radius: 22px; overflow: hidden; background: #0a0a10; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 0 0 1.5px rgba(212,255,0,.25), 0 30px 80px rgba(0,0,0,.6), 0 0 90px rgba(212,255,0,.12); }
+/* Téléphone (le vrai Studio, largeur mobile), dans une « caméra » 3D */
+#cam { position: absolute; z-index: 5; transform: perspective(2600px) rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg)) scale(var(--z, 1)); transform-origin: 50% 40%; transition: transform 1.3s cubic-bezier(.3,.7,.2,1); }
+#halo { position: absolute; inset: -18%; z-index: -1; background: radial-gradient(closest-side, rgba(212,255,0,.42), rgba(212,255,0,.08) 60%, transparent); opacity: calc(.25 + var(--e) * .75); transform: scale(calc(.92 + var(--e) * .14)); }
+#screen { position: absolute; left: 0; top: 0; width: 430px; height: 690px; transform: scale(var(--ps)); transform-origin: 0 0; transition: height .5s ease; border-radius: 22px; overflow: hidden; background: #0a0a10; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 0 0 1.5px rgba(212,255,0,.3), 0 30px 80px rgba(0,0,0,.6); }
 .mini-nav { height: 54px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: rgba(6,6,10,.8); border-bottom: 1px solid rgba(255,255,255,.06); }
 .mini-nav .nova-brand-img { height: 24px; } .mini-nav .logo-eq-bars { height: 16px; } .mini-nav .eq-bar { width: 3px; }
 .view { margin: 12px; }
@@ -73,7 +86,6 @@ body { min-height: 0; }
 .pc-occasions { grid-template-columns: 1fr 1fr !important; gap: .6rem !important; }
 .pc-occasion { padding: .8rem !important; }
 .lyrics-preview .nom { color: #D4FF00; font-weight: 900; text-shadow: 0 0 14px rgba(212,255,0,.5); }
-.big.sm { font-size: 90px; }
 .lyrics-preview { padding: 1rem !important; font-size: .95rem !important; line-height: 1.55 !important; max-height: 215px !important; overflow: hidden !important; }
 .btn-generate { font-size: 1rem !important; padding: .95rem !important; margin-top: 1.2rem !important; }
 .pc-progress { margin-bottom: 1.2rem !important; }
@@ -86,28 +98,27 @@ body { min-height: 0; }
 .hl { border-color: #D4FF00 !important; transform: translateY(-3px); box-shadow: 0 0 22px rgba(212,255,0,.35); }
 .press { transform: scale(.94) !important; filter: brightness(1.25); }
 input.sim { border-color: #D4FF00; background: rgba(212,255,0,.05); box-shadow: 0 0 15px rgba(212,255,0,.12); }
-.gratuit { position: absolute; z-index: 9; margin-left: -36px; background: #D4FF00; color: #06060A; font-weight: 900; font-size: .72rem; letter-spacing: 1px; padding: 3px 9px; border-radius: 50px; box-shadow: 0 0 18px rgba(212,255,0,.7); animation: pop .4s ease both; }
+#b-autre { position: relative; overflow: visible; }
+.gratuit { position: absolute; left: 50%; top: -11px; transform: translateX(-50%); z-index: 9; background: #D4FF00; color: #06060A; font-weight: 900; font-size: .72rem; letter-spacing: 1px; padding: 3px 9px; border-radius: 50px; box-shadow: 0 0 18px rgba(212,255,0,.7); }
 .eqz { display: flex; gap: 5px; align-items: flex-end; justify-content: center; height: 46px; margin: .2rem 0 .8rem; }
 .eqz i { width: 6px; border-radius: 4px; background: linear-gradient(180deg, #CBF52E, #72BE1A); animation: novaEq .5s ease-in-out infinite alternate; transform-origin: bottom; height: 100%; }
 #res-audio { width: 100%; }
-#loading-bar { transition: width 1.2s ease; }
+#loading-bar { transition: width 1s ease; }
 .minus { position: absolute; right: 18px; top: 6px; z-index: 5; color: #FF0066; font-weight: 900; font-size: 1.3rem; animation: monteOut 1.3s ease both; }
 @keyframes monteOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-34px); } }
-#pay { display: none; }
 #pay .nt-modal-card { position: relative; margin: 14px 12px; max-width: none; transform: none; opacity: 1; animation: fadeIn .4s ease; }
 
-/* Tarifs (plein écran) */
-#s-prix { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 70px; }
+/* Barres pilotées par la musique */
+.reactif .hook-eq i, .reactif .cta-logo .eq-bar, .reactif .mini-nav .eq-bar, .reactif .eqz i { animation: none !important; transition: transform .07s linear; }
 
 /* Appel à l'action */
 #s-cta { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 46px; padding: 0 70px; }
-.cta-logo { display: flex; align-items: center; gap: 28px; animation: pop .8s cubic-bezier(.2,1.4,.4,1) both; }
+.cta-logo { display: flex; align-items: center; gap: 28px; animation: pop .8s cubic-bezier(.2,1.4,.4,1) both; transform-origin: center; }
 .cta-logo .nova-brand-img { height: 150px; } .cta-logo .logo-eq-bars { height: 105px; gap: 8px; } .cta-logo .eq-bar { width: 20px; border-radius: 10px; }
 .cta-1 { font-size: 100px; font-weight: 900; line-height: 1.05; opacity: 0; animation: mot .7s ease .6s forwards; }
 .cta-1 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: #D4FF00; }
-.cta-url { font-size: 58px; font-weight: 900; color: #06060A; background: #D4FF00; padding: 24px 56px; border-radius: 70px; box-shadow: 0 0 70px rgba(212,255,0,.5); opacity: 0; animation: mot .7s ease 1.3s forwards, pulse 1.4s ease-in-out 2.2s infinite; }
-@keyframes pulse { 50% { transform: scale(1.05); box-shadow: 0 0 100px rgba(212,255,0,.7); } }
-.cta-2 { font-size: 40px; color: rgba(255,255,255,.7); font-weight: 600; opacity: 0; animation: mot .7s ease 2s forwards; }
+.cta-url { font-size: 58px; font-weight: 900; color: #06060A; background: #D4FF00; padding: 24px 56px; border-radius: 70px; box-shadow: 0 0 calc(50px + var(--e) * 70px) rgba(212,255,0,.6); opacity: 0; animation: mot .7s ease 1.3s forwards; }
+.cta-2 { font-size: 40px; color: rgba(255,255,255,.75); font-weight: 600; opacity: 0; animation: mot .7s ease 2s forwards; }
 
 /* Curseur */
 #cursor { position: absolute; z-index: 30; width: 78px; height: 78px; margin: -39px 0 0 -39px; border-radius: 50%; background: rgba(255,255,255,.26); border: 4px solid #fff; box-shadow: 0 0 30px rgba(255,255,255,.4); opacity: 0; transition: transform .7s cubic-bezier(.5,0,.2,1), opacity .25s; pointer-events: none; }
@@ -116,33 +127,65 @@ input.sim { border-color: #D4FF00; background: rgba(212,255,0,.05); box-shadow: 
 .ripple { position: absolute; z-index: 29; width: 40px; height: 40px; margin: -20px; border-radius: 50%; border: 5px solid #D4FF00; animation: onde .6s ease-out forwards; pointer-events: none; }
 @keyframes onde { to { transform: scale(4); opacity: 0; } }
 
-/* Contrôles (hors vidéo) */
+/* ===== Formats ===== */
+.f-9x16 #cam { left: 121px; top: 312px; width: 838px; height: 1346px; }
+.f-4x5 #cam { left: 233px; top: 200px; width: 615px; height: 987px; }
+.f-1x1 #cam { left: 44px; top: 40px; width: 624px; height: 1000px; }
+.f-16x9 #cam { left: 300px; top: 40px; width: 624px; height: 1000px; }
+
+.f-4x5 #kick { top: 30px; } .f-4x5 #kick .k1 { font-size: 26px; padding: 8px 22px; letter-spacing: 5px; } .f-4x5 #kick .k2 { font-size: 58px; margin-top: 12px; }
+.f-4x5 #sub { left: 60px; right: 60px; bottom: 22px; font-size: 36px; padding: 16px 24px; }
+.f-1x1 #kick, .f-16x9 #kick { text-align: left; }
+.f-1x1 #kick { left: 712px; right: 34px; top: 120px; } .f-1x1 #kick .k1 { font-size: 22px; letter-spacing: 4px; padding: 8px 18px; } .f-1x1 #kick .k2 { font-size: 52px; margin-top: 16px; }
+.f-1x1.in-studio #sub { left: 712px; right: 34px; top: 520px; bottom: auto; text-align: left; font-size: 34px; padding: 18px 22px; }
+.f-1x1:not(.in-studio) #sub { left: 60px; right: 60px; bottom: 28px; font-size: 36px; padding: 16px 24px; }
+.f-16x9 #kick { left: 1010px; right: 90px; top: 230px; } .f-16x9 #kick .k1 { font-size: 30px; } .f-16x9 #kick .k2 { font-size: 92px; }
+.f-16x9.in-studio #sub { left: 1010px; right: 90px; top: 560px; bottom: auto; text-align: left; font-size: 46px; }
+.f-16x9:not(.in-studio) #sub { left: 320px; right: 320px; bottom: 40px; font-size: 42px; }
+
+.f-4x5 .disc-wrap { width: 440px; height: 440px; } .f-4x5 .big.sm { font-size: 74px; } .f-4x5 .hook-eq { height: 80px; margin-top: 40px; } .f-4x5 .big { margin-top: 34px; }
+.f-1x1 .disc-wrap { width: 360px; height: 360px; } .f-1x1 .big.sm { font-size: 64px; } .f-1x1 .hook-eq { height: 60px; margin-top: 28px; gap: 10px; } .f-1x1 .hook-eq i { width: 18px; } .f-1x1 .big { margin-top: 24px; }
+.f-16x9 #s-hook { flex-direction: row; gap: 100px; padding: 0 170px; text-align: left; }
+.f-16x9 .disc-wrap { width: 600px; height: 600px; } .f-16x9 .hook-txt { align-items: flex-start; } .f-16x9 .hook-eq { margin: 0; height: 90px; } .f-16x9 .big.sm { font-size: 100px; margin-top: 30px; }
+
+.f-4x5 #s-cta { gap: 34px; } .f-4x5 .cta-logo .nova-brand-img { height: 120px; } .f-4x5 .cta-logo .logo-eq-bars { height: 84px; } .f-4x5 .cta-1 { font-size: 80px; } .f-4x5 .cta-url { font-size: 50px; padding: 20px 48px; } .f-4x5 .cta-2 { font-size: 36px; }
+.f-1x1 #s-cta { gap: 28px; } .f-1x1 .cta-logo .nova-brand-img { height: 100px; } .f-1x1 .cta-logo .logo-eq-bars { height: 70px; gap: 6px; } .f-1x1 .cta-logo .eq-bar { width: 14px; } .f-1x1 .cta-1 { font-size: 64px; } .f-1x1 .cta-url { font-size: 44px; padding: 18px 42px; } .f-1x1 .cta-2 { font-size: 32px; }
+.f-16x9 #s-cta { gap: 36px; } .f-16x9 .cta-logo .nova-brand-img { height: 130px; } .f-16x9 .cta-logo .logo-eq-bars { height: 92px; } .f-16x9 .cta-1 { font-size: 92px; } .f-16x9 .cta-url { font-size: 54px; }
+
+/* Écran de départ (hors vidéo) */
 #bar-t { position: absolute; left: 0; top: 0; height: 8px; width: 0; background: #D4FF00; z-index: 40; }
-#depart { position: fixed; inset: 0; z-index: 99; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: rgba(0,0,0,.88); color: #fff; text-align: center; padding: 20px; }
-#depart h1 { margin: 0; font-size: 30px; }
-#depart p { margin: 0; color: #bbb; max-width: 560px; line-height: 1.5; }
-#depart button { font-family: inherit; font-size: 20px; font-weight: 900; background: #D4FF00; color: #06060A; border: 0; border-radius: 50px; padding: 16px 38px; cursor: pointer; }
-#depart button:disabled { opacity: .5; cursor: wait; }
 body.propre #bar-t { display: none; }
+#depart { position: fixed; inset: 0; z-index: 99; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; background: rgba(0,0,0,.9); color: #fff; text-align: center; padding: 20px; overflow-y: auto; }
+#depart h1 { margin: 0; font-size: 28px; }
+#depart p { margin: 0; color: #bbb; max-width: 640px; line-height: 1.5; }
+#formats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 720px; }
+#formats a { color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,.25); border-radius: 50px; padding: 8px 14px; font-weight: 700; font-size: 14px; }
+#formats a.actif { background: #D4FF00; color: #06060A; border-color: #D4FF00; }
+.boutons { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+#depart button { font-family: inherit; font-size: 18px; font-weight: 900; border: 0; border-radius: 50px; padding: 14px 30px; cursor: pointer; }
+#go { background: rgba(255,255,255,.12); color: #fff; }
+#rec { background: #D4FF00; color: #06060A; }
+#depart button:disabled { opacity: .5; cursor: wait; }
+#etat-rec { color: #D4FF00 !important; font-weight: 700; min-height: 1.5em; }
 </style>
 </head>
 <body>
 <div id="depart">
-    <h1 id="titre-depart">Nova Tempo — vidéo de présentation</h1>
-    <p>Prépare ton enregistreur d'écran sur cette fenêtre (plein écran conseillé : touche <b>F11</b>), puis clique sur « Lancer ». À la fin, la dernière image reste affichée. <b>Espace</b> = relancer, <b>Échap</b> = arrêter.</p>
-    <p style="font-size:15px">Version : <a href="?version=courte" style="color:#D4FF00">courte (30 s, pub réseaux)</a> · <a href="?version=longue" style="color:#D4FF00">longue (70 s, explicative)</a></p>
-    <p style="font-size:14px">Options dans l'adresse : <code>?muet</code> (sans le son de la démo) et <code>?propre</code> (sans la barre de progression).</p>
-    <button id="go" disabled>Chargement…</button>
+    <h1 id="titre-depart">Nova Tempo — vidéos publicitaires</h1>
+    <div id="formats"></div>
+    <p>Fichier produit : <b id="nom-fichier"></b></p>
+    <div class="boutons"><button id="go" disabled>▶ Aperçu</button><button id="rec" disabled>⏺ Enregistrer et télécharger</button></div>
+    <p id="etat-rec"></p>
+    <p style="font-size:14px">Pour enregistrer : clique « Enregistrer », choisis <b>« Cet onglet »</b>, active <b>« Partager aussi l'audio de l'onglet »</b>, puis « Partager ». La vidéo se joue et le fichier se télécharge tout seul à la fin. Ne touche pas à la souris pendant l'enregistrement.</p>
+    <p style="font-size:13px">Options dans l'adresse : <code>muet</code> (sans musique), <code>propre</code> (sans barre de progression), <code>t=12</code> (démarrer à la seconde 12), <code>version=longue</code> (vidéo explicative de 70 s).</p>
 </div>
 
 <div id="stage">
     <div id="bg"></div><div class="glow a"></div><div class="glow b"></div>
     <div id="bar-t"></div>
 
-    <!-- 1. Accroche -->
     <section class="scene" id="s-hook"></section>
 
-    <!-- 2. Problème -> solution -->
     <section class="scene" id="s-problem">
         <div class="rate r1">Un message de plus ?</div>
         <div class="rate r2">Un cadeau oublié ?</div>
@@ -151,50 +194,48 @@ body.propre #bar-t { display: none; }
         <div class="voici"><span class="nova-brand-logo"><span class="logo-eq-bars"><span class="eq-bar bar-1"></span><span class="eq-bar bar-2"></span><span class="eq-bar bar-3"></span><span class="eq-bar bar-4"></span></span><img class="nova-brand-img" src="../assets/images/logo-nova-tempo.png" alt="Nova Tempo"></span><span>Comment ça marche ?</span></div>
     </section>
 
-    <!-- 3 à 8. Le vrai Studio -->
     <section class="scene" id="s-studio">
-        <div id="screen">
-            <div class="mini-nav">
-                <span class="nova-brand-logo"><span class="logo-eq-bars"><span class="eq-bar bar-1"></span><span class="eq-bar bar-2"></span><span class="eq-bar bar-3"></span><span class="eq-bar bar-4"></span></span><img class="nova-brand-img" src="../assets/images/logo-nova-tempo.png" alt="Nova Tempo"></span>
-                <span class="credits-pill" id="pill" style="min-height:0"><i class="fas fa-coins"></i> <span id="pill-t">1 crédit</span></span>
-            </div>
-            <div class="view" id="view-parcours">
-                <div class="studio-card">
-                    <div class="pc-head"><span id="pc-etape">Étape 1 sur 7</span><span id="pc-pill"></span></div>
-                    <div class="pc-progress"><div class="pc-progress-bar" id="pc-bar"></div></div>
-                    <div id="pc-body"></div>
-                    <div class="pc-nav" id="pc-nav" style="display:none"><button type="button" class="btn-retour"><i class="fas fa-arrow-left"></i></button><button type="button" class="btn-generate" id="pc-next"><span id="pc-next-t">Suivant</span> <i class="fas fa-arrow-right" id="pc-next-i"></i></button></div>
+        <div id="cam">
+            <div id="halo"></div>
+            <div id="screen">
+                <div class="mini-nav">
+                    <span class="nova-brand-logo"><span class="logo-eq-bars"><span class="eq-bar bar-1"></span><span class="eq-bar bar-2"></span><span class="eq-bar bar-3"></span><span class="eq-bar bar-4"></span></span><img class="nova-brand-img" src="../assets/images/logo-nova-tempo.png" alt="Nova Tempo"></span>
+                    <span class="credits-pill" id="pill" style="min-height:0"><i class="fas fa-coins"></i> <span id="pill-t">1 crédit</span></span>
                 </div>
-            </div>
-            <div class="view" id="view-load" style="display:none">
-                <div class="studio-card" style="text-align:center;padding-top:2.2rem!important;padding-bottom:2.2rem!important">
-                    <div style="margin-bottom:1.5rem"><i class="fas fa-compact-disc fa-spin" style="font-size:4rem;color:var(--neon-lime)"></i></div>
-                    <h2 style="font-size:1.5rem;text-transform:uppercase;margin:0 0 1rem">Création <span class="nova-brand">NovaTempo</span> en cours...</h2>
-                    <div id="load-txt" style="font-size:1.05rem;color:var(--text-muted);min-height:2.5rem;display:flex;align-items:center;justify-content:center;gap:10px"></div>
-                    <div style="margin-top:2rem;width:100%;background:rgba(255,255,255,.08);height:8px;border-radius:10px;overflow:hidden"><div id="loading-bar" style="width:15%;height:100%;background:linear-gradient(90deg,var(--neon-lime),var(--neon-pink))"></div></div>
-                </div>
-            </div>
-            <div class="view" id="view-res" style="display:none">
-                <div class="studio-card" style="text-align:center">
-                    <div style="font-size:3rem;margin-bottom:.3rem">🎉</div>
-                    <h2 style="color:var(--neon-lime);margin:0;font-size:1.6rem;text-transform:uppercase">Ta chanson est prête !</h2>
-                    <p style="color:var(--text-muted);font-size:1rem;margin:.4rem 0 .8rem">Écoute ta création exclusive <span class="nova-brand">NovaTempo</span> :</p>
-                    <div class="eqz" id="eqz"></div>
-                    <div style="padding:1rem;background:rgba(0,0,0,.4);border:1px solid rgba(212,255,0,.3);border-radius:16px"><audio id="res-audio" controls preload="auto" src="../assets/audio/demo1.mp3"></audio></div>
-                    <div class="pc-actions-sec" style="justify-content:center">
-                        <a class="btn-soft" id="b-wa" style="text-decoration:none;background:#25D366;border-color:#25D366;color:#fff"><i class="fab fa-whatsapp"></i> Envoyer sur WhatsApp</a>
-                        <a class="btn-soft" id="b-dl" style="text-decoration:none"><i class="fas fa-download"></i> Télécharger le MP3</a>
+                <div class="view" id="view-parcours">
+                    <div class="studio-card">
+                        <div class="pc-head"><span id="pc-etape">Étape 1 sur 7</span><span id="pc-pill"></span></div>
+                        <div class="pc-progress"><div class="pc-progress-bar" id="pc-bar"></div></div>
+                        <div id="pc-body"></div>
+                        <div class="pc-nav" id="pc-nav" style="display:none"><button type="button" class="btn-retour"><i class="fas fa-arrow-left"></i></button><button type="button" class="btn-generate" id="pc-next"><span id="pc-next-t">Suivant</span> <i class="fas fa-arrow-right" id="pc-next-i"></i></button></div>
                     </div>
                 </div>
+                <div class="view" id="view-load" style="display:none">
+                    <div class="studio-card" style="text-align:center;padding-top:2.2rem!important;padding-bottom:2.2rem!important">
+                        <div style="margin-bottom:1.5rem"><i class="fas fa-compact-disc fa-spin" style="font-size:4rem;color:var(--neon-lime)"></i></div>
+                        <h2 style="font-size:1.5rem;text-transform:uppercase;margin:0 0 1rem">Création <span class="nova-brand">NovaTempo</span> en cours...</h2>
+                        <div id="load-txt" style="font-size:1.05rem;color:var(--text-muted);min-height:2.5rem;display:flex;align-items:center;justify-content:center;gap:10px"></div>
+                        <div style="margin-top:2rem;width:100%;background:rgba(255,255,255,.08);height:8px;border-radius:10px;overflow:hidden"><div id="loading-bar" style="width:15%;height:100%;background:linear-gradient(90deg,var(--neon-lime),var(--neon-pink))"></div></div>
+                    </div>
+                </div>
+                <div class="view" id="view-res" style="display:none">
+                    <div class="studio-card" style="text-align:center">
+                        <div style="font-size:3rem;margin-bottom:.3rem">🎉</div>
+                        <h2 style="color:var(--neon-lime);margin:0;font-size:1.6rem;text-transform:uppercase">Ta chanson est prête !</h2>
+                        <p style="color:var(--text-muted);font-size:1rem;margin:.4rem 0 .8rem">Écoute ta création exclusive <span class="nova-brand">NovaTempo</span> :</p>
+                        <div class="eqz" id="eqz"></div>
+                        <div style="padding:1rem;background:rgba(0,0,0,.4);border:1px solid rgba(212,255,0,.3);border-radius:16px"><audio id="res-audio" controls preload="auto"></audio></div>
+                        <div class="pc-actions-sec" style="justify-content:center">
+                            <a class="btn-soft" id="b-wa" style="text-decoration:none;background:#25D366;border-color:#25D366;color:#fff"><i class="fab fa-whatsapp"></i> Envoyer sur WhatsApp</a>
+                            <a class="btn-soft" id="b-dl" style="text-decoration:none"><i class="fas fa-download"></i> Télécharger le MP3</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="view" id="pay" style="display:none"></div>
             </div>
-            <div class="view" id="pay" style="display:none"></div>
         </div>
     </section>
 
-    <!-- 9. Tarifs -->
-    <section class="scene" id="s-prix"></section>
-
-    <!-- 10. Appel à l'action -->
     <section class="scene" id="s-cta">
         <div class="cta-logo"><span class="logo-eq-bars"><span class="eq-bar bar-1"></span><span class="eq-bar bar-2"></span><span class="eq-bar bar-3"></span><span class="eq-bar bar-4"></span></span><img class="nova-brand-img" src="../assets/images/logo-nova-tempo.png" alt="Nova Tempo"></div>
         <div class="cta-1">Offre une chanson,<br><em>pas un cadeau de plus.</em></div>
@@ -202,29 +243,63 @@ body.propre #bar-t { display: none; }
         <div class="cta-2">Dès 1 000 F · Wave, Orange, MTN, Moov</div>
     </section>
 
+    <div id="flash"></div>
+    <div id="parts"></div>
     <div id="kick"></div>
     <div id="sub"></div>
     <div id="cursor"></div>
 </div>
+<audio id="musique" preload="auto"></audio>
 
 <script>
 (function () {
     'use strict';
     const params = new URLSearchParams(location.search);
     if (params.has('propre')) document.body.classList.add('propre');
-    // Mode contrôle : les animations CSS se terminent aussitôt (permet de vérifier la mise en page d'une scène à l'arrêt)
+    // Mode contrôle : les animations CSS se terminent aussitôt (vérification d'une scène à l'arrêt)
     if (params.has('test')) { const st = document.createElement('style'); st.textContent = '*{animation-duration:.001s!important;animation-delay:0s!important;animation-iteration-count:1!important;transition:none!important}'; document.head.appendChild(st); }
     const $ = s => document.querySelector(s);
     const stage = $('#stage');
-    const titreDepart = () => { $('#titre-depart').textContent = 'Nova Tempo — vidéo ' + (params.get('version') === 'longue' ? 'explicative (70 s, 1080×1920)' : 'publicitaire (30 s, 1080×1920)'); };
-    titreDepart();
-    const COURT = params.get('version') !== 'longue'; // 30 s par défaut (pub réseaux) ; ?version=longue = 70 s
-    const DUREE = COURT ? 30 : 70;
 
-    // Taille : la scène 1080×1920 s'adapte à la fenêtre
+    // ---------- Formats (un fichier par réseau) ----------
+    const FORMATS = {
+        tiktok: { r: '9x16', d: 30, nom: 'NovaTempo_TikTok_9x16_30s', label: 'TikTok' },
+        reels: { r: '9x16', d: 30, nom: 'NovaTempo_Instagram-Reels_9x16_30s', label: 'Reels / Stories' },
+        whatsapp: { r: '9x16', d: 30, nom: 'NovaTempo_WhatsApp-Statut_9x16_30s', label: 'Statut WhatsApp' },
+        'facebook-fil': { r: '4x5', d: 20, nom: 'NovaTempo_Facebook-Fil_4x5_20s', label: 'Fil Facebook / Instagram' },
+        'facebook-carre': { r: '1x1', d: 15, nom: 'NovaTempo_Facebook-Carre_1x1_15s', label: 'Pub carrée' },
+        youtube: { r: '16x9', d: 30, nom: 'NovaTempo_YouTube_16x9_30s', label: 'YouTube / horizontal' }
+    };
+    const TAILLES = { '9x16': [1080, 1920, 1.95], '4x5': [1080, 1350, 1.43], '1x1': [1080, 1080, 1.45], '16x9': [1920, 1080, 1.45] };
+    const LONGUE = params.get('version') === 'longue';
+    const cleFormat = FORMATS[params.get('format')] ? params.get('format') : 'tiktok';
+    const F = LONGUE ? { r: '9x16', d: 70, nom: 'NovaTempo_Explicative_9x16_70s', label: 'Explicative' } : FORMATS[cleFormat];
+    const [W, H, PS] = TAILLES[F.r];
+    const ZOOM = { '9x16': 1.07, '4x5': 1.06, '1x1': 1.025, '16x9': 1.025 }[F.r]; // zoom sur les paroles, sans sortir du cadre
+    const DUREE = F.d;
+    stage.classList.add('f-' + F.r);
+    Object.assign(stage.style, { width: W + 'px', height: H + 'px', marginLeft: (-W / 2) + 'px', marginTop: (-H / 2) + 'px' });
+    stage.style.setProperty('--ps', PS);
+
+    // Musique : extrait coupé à la durée de la vidéo (la version longue garde la démo 1 dans l'écran final)
+    const MUS = !LONGUE && window.NOVA_MUSIQUE ? window.NOVA_MUSIQUE[DUREE] : null;
+    const SRC_MUSIQUE = MUS ? `musique/NovaTempo_musique_${DUREE}s.mp3` : null;
+    const SONORE = !params.has('muet');
+    const musique = $('#musique'), resAudio = $('#res-audio');
+    if (SRC_MUSIQUE) musique.src = SRC_MUSIQUE;
+    resAudio.src = SRC_MUSIQUE || '../assets/audio/demo1.mp3';
+    if (MUS) stage.classList.add('reactif');
+
     let echelle = 1;
-    function ajuster() { echelle = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.setProperty('--s', echelle); }
+    function ajuster() { echelle = Math.min(innerWidth / W, innerHeight / H); stage.style.setProperty('--s', echelle); }
     addEventListener('resize', ajuster); ajuster();
+
+    // Écran de départ
+    $('#titre-depart').textContent = `Nova Tempo — ${F.label} (${F.r.replace('x', ':')}, ${DUREE} s)`;
+    $('#nom-fichier').textContent = F.nom + '.mp4';
+    const suffixe = ['muet', 'propre'].filter(k => params.has(k)).map(k => '&' + k).join('');
+    $('#formats').innerHTML = Object.entries(FORMATS).map(([k, f]) => `<a href="?format=${k}${suffixe}" class="${!LONGUE && k === cleFormat ? 'actif' : ''}">${f.label} · ${f.r.replace('x', ':')} · ${f.d} s</a>`).join('') +
+        `<a href="?version=longue${suffixe}" class="${LONGUE ? 'actif' : ''}">Explicative · 9:16 · 70 s</a>`;
 
     // ---------- Données réelles du Studio ----------
     const { OCCASIONS, STYLES } = window.NOVA_PARCOURS;
@@ -235,8 +310,9 @@ body.propre #bar-t { display: none; }
     const acc = t => String(t || '').replace(/\{lui\}/g, 'elle').replace(/\{le\}/g, 'la').replace(/\{il\}/g, 'elle');
     const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const etapes = ANNIV.etapes;
-    const TOTAL = etapes.length + 1; // l'occasion est la première étape
+    const TOTAL = etapes.length + 1;
 
+    // Paroles produites par le vrai moteur de textes (generate-lyrics) pour : Awa, anniversaire, mon amour, ma chérie, douce et forte…
     const LYRICS = `[Couplet 1]
 Pas besoin de grande fête ce soir
 Notre voyage à Assinie, et toi et moi, c'est tout ce qu'il me faut
@@ -263,14 +339,10 @@ Joyeux anniversaire, mon amour
 Awa, ma chérie, je t'aime pour toujours`;
 
     // ---------- Panneaux (mêmes composants que le vrai Studio) ----------
-    const body = $('#pc-body');
     const titre = e => `<h2 class="pc-title">${esc(acc(e.titre))}</h2>` + (e.sousTitre ? `<p class="pc-sub">${esc(acc(e.sousTitre))}</p>` : '');
     const chip = (l, extra = '') => `<button type="button" class="chip" ${extra}>${l}</button>`;
     const groupe = (t, items) => `<div class="pc-block"><span class="pc-label">${esc(t)}</span><div class="pc-chips">${items.map(([k, l]) => chip(l, `data-k="${k}"`)).join('')}</div></div>`;
-    const choix = e => {
-        const o = res(e.options).map(opt);
-        return titre(e) + `<div class="pc-chips">${o.map(l => chip(esc(l), `data-k="${esc(l)}"`)).join('')}</div>`;
-    };
+    const choix = e => titre(e) + `<div class="pc-chips">${res(e.options).map(opt).map(l => chip(esc(l), `data-k="${esc(l)}"`)).join('')}</div>`;
     const textes = e => titre(e) + e.champs.filter(c => !c.si || c.si(ETAT)).map(c =>
         `<div class="pc-block"><label class="pc-label">${esc(acc(c.label))}${c.requis ? '' : ' <span class="optional-tag">(facultatif)</span>'}</label><input type="text" data-cle="${c.cle}" placeholder="${esc(c.exemple)}" autocomplete="off"></div>`).join('');
     const panneaux = {
@@ -299,9 +371,8 @@ Awa, ma chérie, je t'aime pour toujours`;
             </div>
             <button type="button" class="btn-generate" id="b-creer"><i class="fas fa-music"></i> Créer ma chanson <span class="btn-cout">1 crédit</span></button>`
     };
-    body.innerHTML = Object.entries(panneaux).map(([k, h]) => `<div class="panel" id="p-${k}">${h}</div>`).join('');
+    $('#pc-body').innerHTML = Object.entries(panneaux).map(([k, h]) => `<div class="panel" id="p-${k}">${h}</div>`).join('');
 
-    // Cartes du modal d'achat (réel) + écran des tarifs
     $('#pay').innerHTML = `<div class="nt-modal-card"><div class="nt-modal-icon"><i class="fas fa-music"></i></div>
         <h2 id="credits-modal-title">Ta chanson est <span>prête à naître</span></h2>
         <p class="nt-modal-sub">Il te faut 1 crédit pour lancer l'enregistrement. Choisis ton pack : tes réponses restent enregistrées.</p>
@@ -312,25 +383,25 @@ Awa, ma chérie, je t'aime pour toujours`;
         </div>
         <div class="nt-pay-methods"><img src="../assets/images/logo_wave.jpg" alt="Wave"><img src="../assets/images/logo_orange.jpg" alt="Orange Money"><img src="../assets/images/logo_mtn.jpg" alt="MTN MoMo"><img src="../assets/images/logo_moov.jpg" alt="Moov Money"><span><i class="fas fa-lock"></i> Paiement sécurisé</span></div></div>`;
 
-    // Accroche (mots animés)
+    // Accroche (mots animés ; k = rythme d'apparition selon la durée de la vidéo)
     const mots = (t, d0, pas) => t.split(' ').map((m, i) => `<span class="w" style="animation-delay:${(d0 + i * pas).toFixed(2)}s">${m}</span>`).join(' ');
-    const hookHtml = () => `<div class="hook-eq"><i></i><i></i><i></i><i></i></div>
-        <div class="hook-disc"></div>` + (COURT
-        ? `<p class="big sm" style="margin-top:80px">${mots('Et si tu lui offrais', .5, .15)}<br>${mots('une chanson', 1.2, .15)}<br>${mots('avec', 1.55, .15)} <em class="w" style="animation-delay:1.75s">son prénom ?</em></p>`
-        : `<p class="big" style="margin-top:80px">${mots('Imagine une chanson', 1.0, .25)}<br>${mots('écrite rien que', 2.0, .22)} <em class="w" style="animation-delay:2.7s">pour elle.</em></p>`);
-    $('#s-hook').innerHTML = hookHtml();
-    // Ecran des tarifs
-    $('#s-prix').innerHTML = '';
+    function hookHtml() {
+        const k = DUREE >= 30 ? 1 : DUREE >= 20 ? .75 : .6;
+        const texte = LONGUE
+            ? `<p class="big">${mots('Imagine une chanson', 1.0, .25)}<br>${mots('écrite rien que', 2.0, .22)} <em class="w" style="animation-delay:2.7s">pour elle.</em></p>`
+            : `<p class="big sm">${mots('Et si tu lui offrais', .5 * k, .15 * k)}<br>${mots('une chanson', 1.2 * k, .15 * k)}<br>${mots('avec', 1.55 * k, .15)} <em class="w" style="animation-delay:${(1.75 * k).toFixed(2)}s">son prénom ?</em></p>`;
+        return `<div class="disc-wrap"><div class="hook-disc"></div></div><div class="hook-txt"><div class="hook-eq"><i></i><i></i><i></i><i></i></div>${texte}</div>`;
+    }
 
     // ---------- Outils de mise en scène ----------
     let timers = [], decalage = 0, rattrapage = [];
-    // décalage > 0 : les événements déjà passés sont rejoués instantanément (démarrage à la seconde voulue)
     const at = (s, f) => { if (s < decalage) rattrapage.push([s, f]); else timers.push(setTimeout(f, (s - decalage) * 1000)); };
-    const scenes = ['hook', 'problem', 'studio', 'prix', 'cta'];
-    function scene(nom) { scenes.forEach(n => $('#s-' + n).classList.toggle('on', n === nom)); }
+    const scenes = ['hook', 'problem', 'studio', 'cta'];
+    function scene(nom) { scenes.forEach(n => $('#s-' + n).classList.toggle('on', n === nom)); stage.classList.toggle('in-studio', nom === 'studio'); }
     function kick(a, b) { $('#kick').innerHTML = a ? `<div class="k1">${a}</div><div class="k2">${b}</div>` : ''; }
     function sub(t) { const e = $('#sub'); if (!t) { e.classList.remove('on'); return; } e.innerHTML = t; e.classList.add('on'); }
     function haut(px) { $('#screen').style.height = px + 'px'; }
+    function cam(ry, rx, z) { const c = $('#cam').style; c.setProperty('--ry', ry + 'deg'); c.setProperty('--rx', rx + 'deg'); c.setProperty('--z', z); }
     function panel(k) { document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.id === 'p-' + k)); }
     function entete(n, pill) {
         $('#pc-etape').textContent = `Étape ${n} sur ${n === 1 ? 7 : TOTAL}`;
@@ -346,10 +417,7 @@ Awa, ma chérie, je t'aime pour toujours`;
         return [(r.left + r.width / 2 - s.left) / echelle, (r.top + r.height / 2 - s.top) / echelle];
     }
     const cur = $('#cursor');
-    function vers(el, dx = 0, dy = 0) {
-        const [x, y] = centre(el);
-        cur.style.opacity = 1; cur.style.transform = `translate(${x + dx}px, ${y + dy}px)`;
-    }
+    function vers(el, dx = 0, dy = 0) { const [x, y] = centre(el); cur.style.opacity = 1; cur.style.transform = `translate(${x + dx}px, ${y + dy}px)`; }
     function tap(el, fn) {
         const [x, y] = centre(el);
         cur.classList.remove('tap'); void cur.offsetWidth; cur.classList.add('tap');
@@ -358,48 +426,17 @@ Awa, ma chérie, je t'aime pour toujours`;
         el.classList.add('press'); setTimeout(() => el.classList.remove('press'), 180);
         if (fn) fn();
     }
-    // clic planifié : le curseur arrive 0,8 s avant le tap
-    function clic(t, sel, fn, avance = 0.8) {
-        at(t - avance, () => vers($(sel)));
-        at(t, () => tap($(sel), fn));
-    }
-    function chipDe(panelId, cle) { return document.querySelector(`#p-${panelId} [data-k="${cle}"]`); }
-    function clicChip(t, panelId, cle, avance = 0.8) {
-        const e = chipDe(panelId, cle);
-        at(t - avance, () => vers(e));
-        at(t, () => tap(e, () => e.classList.add('on')));
-    }
+    function clic(t, sel, fn, avance = 0.8) { at(t - avance, () => vers($(sel))); at(t, () => tap($(sel), fn)); }
+    const chipDe = (panelId, cle) => document.querySelector(`#p-${panelId} [data-k="${cle}"]`);
+    function clicChip(t, panelId, cle, avance = 0.8) { const e = chipDe(panelId, cle); at(t - avance, () => vers(e)); at(t, () => tap(e, () => e.classList.add('on'))); }
+    function allumer(panelId, ...cles) { cles.forEach(c => chipDe(panelId, c).classList.add('on')); }
     function taper(t, sel, texte, pas = 0.16) {
         const e = $(sel);
-        at(t - 0.8, () => vers(e, 120, 0));
+        at(t - 0.6, () => vers(e, 120, 0));
         at(t - 0.1, () => e.classList.add('sim'));
         [...texte].forEach((_, i) => at(t + i * pas, () => { e.value = texte.slice(0, i + 1); }));
         at(t + texte.length * pas + 0.2, () => e.classList.remove('sim'));
     }
-    const SUIVANT = '#pc-next';
-
-    // ---------- Le film (secondes) ----------
-    const PHRASES = ['🎸 Les musiciens accordent leurs guitares...', '🎤 Le chanteur s\'échauffe la voix...', '🎹 Mixage de la piste audio en cours...', '🎧 NovaTempo finalise les derniers réglages...', '✨ La magie opère, encore quelques secondes...'];
-    function remise() {
-        timers.forEach(clearTimeout); timers = [];
-        const a = $('#res-audio'); a.pause(); a.currentTime = 0;
-        scenes.forEach(n => $('#s-' + n).classList.remove('on'));
-        kick(); sub();
-        cur.style.opacity = 0; cur.style.transform = 'translate(540px, 1500px)';
-        document.querySelectorAll('.chip').forEach(c => c.classList.remove('on', 'press', 'hl'));
-        document.querySelectorAll('.pc-occasion').forEach(c => c.classList.remove('hl', 'press'));
-        document.querySelectorAll('#p-pers input, #p-det input, #p-msg input').forEach(i => { i.value = ''; i.classList.remove('sim'); });
-        $('#view-parcours').style.display = 'block'; $('#view-load').style.display = 'none'; $('#view-res').style.display = 'none'; $('#pay').style.display = 'none';
-        $('#pill').classList.remove('empty'); $('#pill-t').textContent = '1 crédit'; haut(690);
-        $('#lyr').innerHTML = ''; $('#loading-bar').style.width = '15%';
-        document.querySelectorAll('.gratuit, .minus').forEach(e => e.remove());
-        panel('occ'); entete(1, false); suivant('Suivant', 'fa-arrow-right', false);
-        const eq = $('#eqz'); eq.innerHTML = Array.from({ length: 22 }, (_, i) => `<i style="animation-delay:${(i * 0.07) % 0.5}s;height:${40 + (i * 37) % 60}%"></i>`).join('');
-        $('#s-hook').innerHTML = $('#s-hook').innerHTML; // relance les animations
-        $('#bar-t').style.transition = 'none'; $('#bar-t').style.width = '0';
-    }
-
-    // Affiche les paroles ligne par ligne (le prénom ressort en vert)
     function paroles(t0, pas) {
         LYRICS.split('\n').filter(l => l.trim()).forEach((l, i) => at(t0 + i * pas, () => {
             const z = $('#lyr');
@@ -413,160 +450,302 @@ Awa, ma chérie, je t'aime pour toujours`;
         $('#pill-t').textContent = '0 crédit'; $('#pill').classList.add('empty');
         const m = document.createElement('div'); m.className = 'minus'; m.textContent = '−1'; $('#screen').appendChild(m);
     }
+    function gratuit() {
+        $('#i-autre').classList.add('fa-spin');
+        const g = document.createElement('span'); g.className = 'gratuit'; g.textContent = 'GRATUIT'; $('#b-autre').appendChild(g);
+        setTimeout(() => { $('#i-autre').classList.remove('fa-spin'); g.remove(); }, 2200);
+    }
+    const PHRASES = ['🎸 Les musiciens accordent leurs guitares...', '🎤 Le chanteur s\'échauffe la voix...', '🎹 Mixage de la piste audio en cours...', '🎧 NovaTempo finalise les derniers réglages...', '✨ La magie opère, encore quelques secondes...'];
+    function chargement(t, n, pas) {
+        at(t, () => { haut(470); $('#view-parcours').style.display = 'none'; $('#view-load').style.display = 'block'; cur.style.opacity = 0; cam(5, -2, 1); });
+        for (let i = 0; i < n; i++) at(t + i * pas, () => { $('#load-txt').innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> ' + PHRASES[i]; $('#loading-bar').style.width = (25 + (i + 1) * (70 / n)) + '%'; });
+        at(t + n * pas - 0.2, () => { $('#loading-bar').style.width = '100%'; });
+    }
+    // La chanson passe dans le lecteur de l'écran final (même fichier, sans coupure)
+    let sourceSon = null;
+    function resultat(t, kicker = true) {
+        at(t, () => {
+            haut(560); $('#view-load').style.display = 'none'; $('#view-res').style.display = 'block'; cam(0, 0, 1.04);
+            if (kicker) kick('C’EST PRÊT', 'Ta chanson est là');
+            eclatSur($('#screen'), 16);
+            if (!SONORE) return;
+            if (MUS) {
+                try { resAudio.currentTime = musique.currentTime; resAudio.play().catch(() => {}); musique.pause(); sourceSon = resAudio; } catch (e) {}
+            } else { resAudio.currentTime = 0; resAudio.play().catch(() => {}); }
+        });
+    }
 
-    // ---------- Film court (30 s) : l'essentiel, centré sur l'effet « wahou » ----------
-    function filmCourt() {
-        // 0–3.3 : accroche
+    // ---------- Musique → animation (énergie et temps forts) ----------
+    let t0 = 0, prochainFort = 0, lisse = 0, rafId = null;
+    const barres = () => [...document.querySelectorAll('.scene.on .hook-eq i, .scene.on .cta-logo .eq-bar, .scene.on .mini-nav .eq-bar, .scene.on .eqz i')];
+    function horloge() {
+        if (sourceSon && !sourceSon.paused) return sourceSon.currentTime;
+        return (performance.now() - t0) / 1000 + decalage;
+    }
+    function eclat(x, y, n, rayon = 420) {
+        const box = $('#parts');
+        for (let i = 0; i < n; i++) {
+            const p = document.createElement('div');
+            const note = i % 5 === 0;
+            p.className = 'p' + (note ? ' note' : i % 3 === 0 ? ' rose' : '');
+            if (note) p.textContent = ['♪', '♫', '♬'][i % 3];
+            const a = Math.random() * Math.PI * 2, d = rayon * (0.45 + Math.random() * 0.55);
+            p.style.left = x + 'px'; p.style.top = y + 'px';
+            p.style.setProperty('--dx', Math.cos(a) * d + 'px'); p.style.setProperty('--dy', Math.sin(a) * d + 'px');
+            box.appendChild(p); setTimeout(() => p.remove(), 1050);
+        }
+    }
+    function eclatSur(el, n) { if (!el) return; const [x, y] = centre(el); eclat(x, y, n); }
+    function coup(force) {
+        const f = $('#flash'); f.classList.remove('on'); void f.offsetWidth; f.classList.add('on');
+        const surScene = document.querySelector('.scene.on');
+        if (!surScene) return;
+        if (surScene.id === 's-hook' && force > .22) eclatSur($('.disc-wrap'), force > .5 ? 10 : 5);
+        else if (surScene.id === 's-cta' && force > .3) eclatSur($('.cta-logo'), force > .6 ? 12 : 6);
+        else if (surScene.id === 's-studio' && force > .7) eclatSur($('#screen'), 6);
+    }
+    function boucle() {
+        if (MUS) {
+            const t = horloge(), i = Math.max(0, Math.min(MUS.e.length - 1, Math.floor(t * 30)));
+            const v = (MUS.e.charCodeAt(i) - 48) / 74;
+            lisse = lisse * .55 + v * .45;
+            stage.style.setProperty('--e', lisse.toFixed(3));
+            barres().forEach((b, k) => { b.style.transform = `scaleY(${Math.max(.25, Math.min(1, lisse * (.75 + .35 * Math.sin(t * 9 + k * 1.7))) ).toFixed(3)})`; });
+            while (prochainFort < MUS.forts.length && MUS.forts[prochainFort] <= t * 30) {
+                const j = MUS.forts[prochainFort]; coup((MUS.e.charCodeAt(j) - 48) / 74); prochainFort++;
+            }
+        }
+        // onglet en arrière-plan : le navigateur suspend les images d'animation, on continue au minuteur
+        rafId = document.hidden ? setTimeout(boucle, 33) : requestAnimationFrame(boucle);
+    }
+
+    // ---------- Films ----------
+    // 30 s : accroche · Studio en accéléré · paroles (le « wahou ») · création · chanson prête · appel à l'action
+    function film30() {
         scene('hook'); sub('Et si tu lui offrais une chanson avec <b>son prénom</b> ?');
-
-        // 3.3–12.6 : le Studio en accéléré
-        at(3.3, () => { haut(690); scene('studio'); kick('ÉTAPE 1', 'Choisis l’occasion'); sub('Tu choisis l’occasion…'); });
-        at(3.6, () => { cur.style.transform = 'translate(700px, 1500px)'; });
+        at(3.3, () => { haut(690); scene('studio'); cam(-5, 3, 1); kick('ÉTAPE 1', 'Choisis l’occasion'); sub('Tu choisis l’occasion…'); });
+        at(3.6, () => { cur.style.transform = `translate(${W * .65}px, ${H * .78}px)`; });
         clic(4.6, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'), 0.7);
-        at(5.1, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); kick('ÉTAPE 2', 'Quelques questions simples'); sub('…tu réponds à quelques questions simples…'); });
+        at(5.1, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); kick('ÉTAPE 2', 'Quelques questions simples'); sub('…tu réponds à quelques questions simples…'); cam(4, 2, 1); });
         taper(5.5, '#in-nom', 'Awa', 0.15);
         clicChip(6.3, 'pers', 'f', 0.6); clicChip(6.8, 'pers', 'amour', 0.5);
-        clic(7.3, SUIVANT, null, 0.5);
+        clic(7.3, '#pc-next', null, 0.5);
         at(7.65, () => { panel('rel'); entete(3, true); });
         clicChip(8.2, 'rel', 'ma chérie', 0.5);
-        clic(8.7, SUIVANT, null, 0.5);
-        at(9.05, () => { panel('qual'); entete(4, true); });
+        clic(8.7, '#pc-next', null, 0.5);
+        at(9.05, () => { panel('qual'); entete(4, true); cam(-4, 2, 1); });
         clicChip(9.6, 'qual', 'douce', 0.5); clicChip(10.0, 'qual', 'forte', 0.4);
-        clic(10.5, SUIVANT, null, 0.4);
-        // les questions suivantes défilent vite
+        clic(10.5, '#pc-next', null, 0.4);
         at(10.85, () => { panel('voeux'); entete(5, true); });
         at(11.3, () => { panel('det'); entete(6, true); });
         at(11.75, () => { panel('msg'); entete(7, true); });
-        at(12.2, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); chipDe('mus', 'Coupé Décalé').classList.add('on'); chipDe('mus', 'female').classList.add('on'); });
-
-        // 12.65–17.5 : les paroles, le moment « wahou »
-        at(12.65, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 3', 'Tes paroles, gratuites'); sub('…et tu découvres tes paroles, <b>gratuitement</b>.'); cur.style.opacity = 0; });
+        at(12.2, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); allumer('mus', 'Coupé Décalé', 'female'); });
+        at(12.65, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 3', 'Tes paroles, gratuites'); sub('…et tu découvres tes paroles, <b>gratuitement</b>.'); cur.style.opacity = 0; cam(0, 0, ZOOM); });
         paroles(13.1, 0.12);
         at(16.1, () => sub('<b>Écrites rien que pour elle</b>, avec son prénom.'));
-
-        // 17–19.6 : création
         clic(17.2, '#b-creer', debiter, 0.7);
-        at(17.8, () => { haut(470); $('#view-parcours').style.display = 'none'; $('#view-load').style.display = 'block'; cur.style.opacity = 0; kick('ÉTAPE 4', 'On crée ta chanson'); sub('Un clic, et ta chanson est <b>créée</b>…'); });
-        [0, 1].forEach(i => at(17.8 + i * 0.9, () => { $('#load-txt').innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> ' + PHRASES[i]; $('#loading-bar').style.width = (30 + i * 30) + '%'; }));
-        at(19.3, () => { $('#loading-bar').style.width = '100%'; });
-
-        // 19.6–25.4 : le résultat
-        at(19.6, () => {
-            haut(560); $('#view-load').style.display = 'none'; $('#view-res').style.display = 'block';
-            kick('C’EST PRÊT', 'Ta chanson est là'); sub('…prête à envoyer <b>sur WhatsApp</b>.');
-            if (!params.has('muet')) { const a = $('#res-audio'); a.currentTime = 0; a.volume = 1; a.play().catch(() => {}); }
-        });
+        at(17.8, () => { kick('ÉTAPE 4', 'On crée ta chanson'); sub('Un clic, et ta chanson est <b>créée</b>…'); });
+        chargement(17.8, 2, 0.9);
+        resultat(19.6);
+        at(19.6, () => sub('…prête à envoyer <b>sur WhatsApp</b>.'));
         clic(22.3, '#b-wa', null, 0.7);
-
-        // 25.4–30 : appel à l'action
         at(25.4, () => { cur.style.opacity = 0; kick(); scene('cta'); sub(); });
-        at(28.6, () => { $('#res-audio').pause(); });
-        at(DUREE, () => { $('#bar-t').style.opacity = 0; });
     }
-
-    function lancer() {
-        remise();
-        decalage = Math.max(0, Math.min(DUREE - 1, parseFloat(params.get('t')) || 0)); rattrapage = [];
-        $('#depart').style.display = 'none';
-        requestAnimationFrame(() => { const b = $('#bar-t'); b.style.width = (decalage / DUREE * 100) + '%'; requestAnimationFrame(() => { b.style.transition = `width ${DUREE - decalage}s linear`; b.style.width = '100%'; }); });
-
-        if (COURT) { filmCourt(); } else {
-        // 0–4 : accroche
+    // 20 s : même histoire, plus serrée
+    function film20() {
+        scene('hook'); sub('Et si tu lui offrais une chanson avec <b>son prénom</b> ?');
+        at(2.4, () => { haut(690); scene('studio'); cam(-5, 3, 1); kick('ÉTAPE 1', 'Choisis l’occasion'); sub('Tu choisis l’occasion…'); });
+        at(2.6, () => { cur.style.transform = `translate(${W * .65}px, ${H * .78}px)`; });
+        clic(3.4, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'), 0.6);
+        at(3.9, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); kick('ÉTAPE 2', 'Quelques questions'); sub('…tu réponds à quelques questions…'); cam(4, 2, 1); });
+        taper(4.2, '#in-nom', 'Awa', 0.12);
+        clicChip(4.9, 'pers', 'f', 0.5);
+        clic(5.4, '#pc-next', null, 0.4);
+        at(5.7, () => { panel('rel'); entete(3, true); });
+        clicChip(6.2, 'rel', 'ma chérie', 0.4);
+        clic(6.6, '#pc-next', null, 0.35);
+        at(6.9, () => { panel('qual'); entete(4, true); allumer('qual', 'douce', 'forte'); });
+        at(7.25, () => { panel('voeux'); entete(5, true); });
+        at(7.6, () => { panel('det'); entete(6, true); });
+        at(7.95, () => { panel('msg'); entete(7, true); });
+        at(8.3, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); allumer('mus', 'Coupé Décalé', 'female'); });
+        at(8.65, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 3', 'Tes paroles, gratuites'); sub('…et tu découvres tes paroles, <b>gratuitement</b>.'); cur.style.opacity = 0; cam(0, 0, ZOOM); });
+        paroles(9.0, 0.1);
+        at(11.0, () => sub('<b>Écrites rien que pour elle.</b>'));
+        clic(12.0, '#b-creer', debiter, 0.6);
+        at(12.5, () => { kick('ÉTAPE 4', 'On crée ta chanson'); sub('Un clic, et ta chanson est <b>créée</b>…'); });
+        chargement(12.5, 2, 0.6);
+        resultat(13.8);
+        at(13.8, () => sub('…prête à envoyer <b>sur WhatsApp</b>.'));
+        clic(15.6, '#b-wa', null, 0.6);
+        at(16.6, () => { cur.style.opacity = 0; kick(); scene('cta'); sub(); });
+    }
+    // 15 s : l'essentiel absolu
+    function film15() {
+        scene('hook'); sub('Et si tu lui offrais une chanson avec <b>son prénom</b> ?');
+        at(2.0, () => { haut(690); scene('studio'); cam(-5, 3, 1); kick('ÉTAPE 1', 'Tu réponds à 3 questions'); sub('Tu choisis l’occasion, tu réponds à quelques questions…'); });
+        at(2.15, () => { cur.style.transform = `translate(${W * .65}px, ${H * .78}px)`; });
+        clic(2.8, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'), 0.5);
+        at(3.2, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); cam(4, 2, 1); });
+        taper(3.45, '#in-nom', 'Awa', 0.1);
+        at(4.0, () => { panel('rel'); entete(3, true); allumer('rel', 'ma chérie'); cur.style.opacity = 0; });
+        at(4.3, () => { panel('qual'); entete(4, true); allumer('qual', 'douce', 'forte'); });
+        at(4.6, () => { panel('voeux'); entete(5, true); });
+        at(4.9, () => { panel('det'); entete(6, true); });
+        at(5.2, () => { panel('msg'); entete(7, true); });
+        at(5.5, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); allumer('mus', 'Coupé Décalé', 'female'); });
+        at(5.8, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 2', 'Tes paroles, gratuites'); sub('…et tes paroles s’écrivent, <b>gratuitement</b>.'); cam(0, 0, ZOOM); });
+        paroles(6.1, 0.085);
+        clic(8.9, '#b-creer', debiter, 0.5);
+        chargement(9.3, 1, 0.8);
+        at(9.3, () => { kick('ÉTAPE 3', 'Ta chanson est créée'); sub('Un clic, et ta chanson est <b>créée</b>…'); });
+        resultat(10.2, false);
+        at(10.2, () => sub('…prête à envoyer <b>sur WhatsApp</b>.'));
+        clic(11.4, '#b-wa', null, 0.5);
+        at(12.0, () => { cur.style.opacity = 0; kick(); scene('cta'); sub(); });
+    }
+    // 70 s : version explicative complète (toutes les étapes, tarifs)
+    function film70() {
         scene('hook'); sub('Imagine… une chanson, <b>écrite rien que pour elle.</b>');
-        // 4–11 : le problème et la solution
         at(4, () => { scene('problem'); sub('Pas un message de plus : <b>une vraie chanson</b>, avec son prénom et votre histoire.'); });
         at(9.6, () => sub('Voici comment ça marche avec <b>Nova Tempo</b>.'));
-
-        // 11–16 : étape 1, l'occasion
-        at(11, () => { haut(690); scene('studio'); kick('ÉTAPE 1', 'Choisis l’occasion'); sub('<b>Étape 1 :</b> tu choisis l’occasion. Amour, anniversaire, mariage, hommage…'); });
+        at(11, () => { haut(690); scene('studio'); cam(-5, 3, 1); kick('ÉTAPE 1', 'Choisis l’occasion'); sub('<b>Étape 1 :</b> tu choisis l’occasion. Amour, anniversaire, mariage, hommage…'); });
         at(11.4, () => { cur.style.transform = 'translate(700px, 1500px)'; });
         clic(13.4, '[data-occ="anniversaire"]', () => $('[data-occ="anniversaire"]').classList.add('hl'));
-
-        // 15.6–31 : étape 2, les questions (une par écran)
-        at(15.6, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); kick('ÉTAPE 2', 'Raconte ton histoire'); sub('<b>Étape 2 :</b> quelques questions simples, <b>une par écran</b>. Son prénom…'); });
+        at(15.6, () => { panel('pers'); entete(2, true); suivant('Suivant', 'fa-arrow-right'); kick('ÉTAPE 2', 'Raconte ton histoire'); sub('<b>Étape 2 :</b> quelques questions simples, <b>une par écran</b>. Son prénom…'); cam(4, 2, 1); });
         taper(16.4, '#in-nom', 'Awa', 0.22);
-        clicChip(17.6, 'pers', 'f');
-        clicChip(18.3, 'pers', 'amour');
-        clic(19.3, SUIVANT);
+        clicChip(17.6, 'pers', 'f'); clicChip(18.3, 'pers', 'amour');
+        clic(19.3, '#pc-next');
         at(19.65, () => { panel('rel'); entete(3, true); sub('…le petit nom que tu lui donnes…'); });
         clicChip(20.6, 'rel', 'ma chérie');
-        clic(21.4, SUIVANT);
-        at(21.75, () => { panel('qual'); entete(4, true); sub('…ce que tu aimes chez elle…'); });
+        clic(21.4, '#pc-next');
+        at(21.75, () => { panel('qual'); entete(4, true); sub('…ce que tu aimes chez elle…'); cam(-4, 2, 1); });
         clicChip(22.5, 'qual', 'douce'); clicChip(23.1, 'qual', 'forte');
-        clic(23.8, SUIVANT);
+        clic(23.8, '#pc-next');
         at(24.15, () => { panel('voeux'); entete(5, true); sub('…ton vœu pour sa nouvelle année…'); });
         clicChip(24.9, 'voeux', 'la santé'); clicChip(25.5, 'voeux', 'beaucoup de joie');
-        clic(26.2, SUIVANT);
+        clic(26.2, '#pc-next');
         at(26.55, () => { panel('det'); entete(6, true); sub('…un souvenir à vous deux. <b>Tu peux passer</b> ce que tu veux garder secret.'); suivant('Passer', 'fa-forward'); });
         taper(27.2, '#p-det input[data-cle="anecdote"]', 'notre voyage à Assinie', 0.07);
         at(28.9, () => suivant('Suivant', 'fa-arrow-right'));
-        clic(29.5, SUIVANT);
+        clic(29.5, '#pc-next');
         at(29.85, () => { panel('msg'); entete(7, true); sub('…et un petit mot, <b>chanté tel quel</b>.'); suivant('Passer', 'fa-forward'); });
         taper(30.5, '#p-msg input', 'merci d’être toujours là', 0.07);
         at(32.1, () => suivant('Suivant', 'fa-arrow-right'));
-        clic(32.7, SUIVANT);
-
-        // 33–38 : étape 3, style et voix
+        clic(32.7, '#pc-next');
         at(33.05, () => { panel('mus'); entete(8, true); suivant('Voir mes paroles', 'fa-eye'); kick('ÉTAPE 3', 'Le style et la voix'); sub('<b>Étape 3 :</b> le style — Coupé Décalé, Amapiano, Afrobeat, Zouk, Gospel… et la voix : homme, femme ou duo.'); });
         clicChip(34.3, 'mus', 'Coupé Décalé'); clicChip(35.2, 'mus', 'female');
-        clic(36.3, SUIVANT);
-
-        // 36.7–45 : étape 4, les paroles gratuites
-        at(36.65, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 4', 'Tes paroles, gratuites'); sub('<b>Étape 4 :</b> tu découvres tes paroles, <b>gratuitement</b>.'); });
+        clic(36.3, '#pc-next');
+        at(36.65, () => { panel('apercu'); entete(9, true); suivant('', 'fa-arrow-right', false); kick('ÉTAPE 4', 'Tes paroles, gratuites'); sub('<b>Étape 4 :</b> tu découvres tes paroles, <b>gratuitement</b>.'); cam(0, 0, ZOOM); });
         paroles(37.3, 0.16);
         at(41.4, () => sub('Tu les modifies si tu veux, ou tu demandes <b>une autre version</b>, sans rien payer.'));
-        clic(42.6, '#b-autre', () => { $('#i-autre').classList.add('fa-spin'); const g = document.createElement('span'); g.className = 'gratuit'; g.textContent = 'GRATUIT'; const b = $('#b-autre').getBoundingClientRect(), s = $('#screen').getBoundingClientRect(); g.style.left = (((b.left - s.left) + b.width / 2) / (echelle * 1.95)) + 'px'; g.style.top = ((b.top - s.top) / (echelle * 1.95) - 12) + 'px'; $('#screen').appendChild(g); setTimeout(() => { $('#i-autre').classList.remove('fa-spin'); g.remove(); }, 2200); });
-
-        // 45–52 : étape 5, création
+        clic(42.6, '#b-autre', gratuit);
         at(44.0, () => { kick('ÉTAPE 5', 'On crée ta chanson'); sub('<b>Étape 5 :</b> tu valides. <b>1 crédit = 1 chanson.</b>'); });
-        clic(45.6, '#b-creer', () => {
-            $('#pill-t').textContent = '0 crédit'; $('#pill').classList.add('empty');
-            const m = document.createElement('div'); m.className = 'minus'; m.textContent = '−1'; $('#screen').appendChild(m);
-        });
-        at(46.2, () => { haut(470); $('#view-parcours').style.display = 'none'; $('#view-load').style.display = 'block'; cur.style.opacity = 0; sub('Notre studio <b>compose et enregistre</b> ta chanson en quelques minutes.'); });
-        PHRASES.forEach((p, i) => at(46.2 + i * 1.15, () => { $('#load-txt').innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> ' + p; $('#loading-bar').style.width = (22 + i * 19) + '%'; }));
-        at(51.3, () => { $('#loading-bar').style.width = '100%'; });
-
-        // 52–59 : le résultat
-        at(51.9, () => {
-            haut(560); $('#view-load').style.display = 'none'; $('#view-res').style.display = 'block';
-            kick('C’EST PRÊT', 'Ta chanson est là'); sub('<b>Ta chanson est prête.</b> Tu l’écoutes, tu la télécharges…');
-            if (!params.has('muet')) { const a = $('#res-audio'); a.currentTime = 0; a.volume = 1; a.play().catch(() => {}); }
-        });
+        clic(45.6, '#b-creer', debiter);
+        chargement(46.2, 5, 1.15);
+        at(46.2, () => sub('Notre studio <b>compose et enregistre</b> ta chanson en quelques minutes.'));
+        resultat(51.9);
+        at(51.9, () => sub('<b>Ta chanson est prête.</b> Tu l’écoutes, tu la télécharges…'));
         at(55.3, () => sub('…et tu l’envoies <b>sur WhatsApp</b>, en un clic.'));
-        clic(56.2, '#b-wa');
-        clic(57.8, '#b-dl');
-
-        // 59–65 : les tarifs
+        clic(56.2, '#b-wa'); clic(57.8, '#b-dl');
         at(59.1, () => {
-            const a = $('#res-audio'); a.pause();
-            cur.style.opacity = 0; haut(640); kick('SIMPLE', '1 crédit = 1 chanson');
+            resAudio.pause(); cur.style.opacity = 0; haut(640); cam(0, 0, 1); kick('SIMPLE', '1 crédit = 1 chanson');
             $('#view-res').style.display = 'none'; $('#pay').style.display = 'block';
             sub('À partir de <b>1 000 francs</b>, avec Wave, Orange, MTN ou Moov Money.');
         });
-        at(60.4, () => { const p = $('.nt-pack.popular'); vers(p, 80, 20); });
+        at(60.4, () => vers($('.nt-pack.popular'), 80, 20));
         at(61.2, () => tap($('.nt-pack.popular')));
-
-        // 65–70 : appel à l'action
         at(65, () => { kick(); scene('cta'); sub(); });
+    }
+
+    // ---------- Lancement ----------
+    function remise() {
+        timers.forEach(clearTimeout); timers = [];
+        cancelAnimationFrame(rafId); clearTimeout(rafId);
+        musique.pause(); resAudio.pause(); sourceSon = null;
+        scenes.forEach(n => $('#s-' + n).classList.remove('on'));
+        stage.classList.remove('in-studio');
+        kick(); sub();
+        cur.style.opacity = 0; cur.style.transform = `translate(${W / 2}px, ${H * .8}px)`;
+        cam(-16, 7, .88);
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('on', 'press', 'hl'));
+        document.querySelectorAll('.pc-occasion').forEach(c => c.classList.remove('hl', 'press'));
+        document.querySelectorAll('#p-pers input, #p-det input, #p-msg input').forEach(i => { i.value = ''; i.classList.remove('sim'); });
+        $('#view-parcours').style.display = 'block'; $('#view-load').style.display = 'none'; $('#view-res').style.display = 'none'; $('#pay').style.display = 'none';
+        $('#pill').classList.remove('empty'); $('#pill-t').textContent = '1 crédit'; haut(690);
+        $('#lyr').innerHTML = ''; $('#loading-bar').style.width = '15%';
+        document.querySelectorAll('.gratuit, .minus, .p').forEach(e => e.remove());
+        panel('occ'); entete(1, false); suivant('Suivant', 'fa-arrow-right', false);
+        $('#eqz').innerHTML = Array.from({ length: 22 }, (_, i) => `<i style="animation-delay:${(i * 0.07) % 0.5}s;height:${40 + (i * 37) % 60}%"></i>`).join('');
+        $('#s-hook').innerHTML = hookHtml();
+        $('#bar-t').style.transition = 'none'; $('#bar-t').style.width = '0'; $('#bar-t').style.opacity = 1;
+        stage.style.setProperty('--e', 0); lisse = 0;
+    }
+
+    async function lancer() {
+        remise();
+        decalage = Math.max(0, Math.min(DUREE - 1, parseFloat(params.get('t')) || 0)); rattrapage = [];
+        $('#depart').style.display = 'none';
+        // La musique d'abord : l'image démarre quand le son joue vraiment (synchronisation exacte)
+        if (MUS && SONORE) { musique.currentTime = decalage; try { await musique.play(); sourceSon = musique; } catch (e) {} }
+        requestAnimationFrame(() => { const b = $('#bar-t'); b.style.width = (decalage / DUREE * 100) + '%'; requestAnimationFrame(() => { b.style.transition = `width ${DUREE - decalage}s linear`; b.style.width = '100%'; }); });
+        ({ 30: film30, 20: film20, 15: film15, 70: film70 })[DUREE]();
         at(DUREE, () => { $('#bar-t').style.opacity = 0; });
-        }
         rattrapage.sort((a, b) => a[0] - b[0]).forEach(([, fn]) => { try { fn(); } catch (e) {} });
         rattrapage = [];
+        t0 = performance.now(); prochainFort = 0;
+        if (MUS) { while (prochainFort < MUS.forts.length && MUS.forts[prochainFort] < decalage * 30) prochainFort++; }
+        if (!params.has('test')) rafId = requestAnimationFrame(boucle); // en mode contrôle, image figée
+    }
+    function arreter() { remise(); $('#depart').style.display = 'flex'; }
+
+    // ---------- Enregistrement automatique (le fichier se télécharge avec le nom du réseau) ----------
+    const attendre = ms => new Promise(r => setTimeout(r, ms));
+    async function enregistrer() {
+        const etat = $('#etat-rec');
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia || !window.MediaRecorder) {
+            etat.textContent = 'Ce navigateur ne sait pas enregistrer : utilise Chrome ou Edge à jour, ou Windows + G.'; return;
+        }
+        let flux;
+        try {
+            flux = await navigator.mediaDevices.getDisplayMedia({
+                video: { displaySurface: 'browser', frameRate: 30, cursor: 'never' },
+                audio: { suppressLocalAudioPlayback: false, echoCancellation: false, noiseSuppression: false, autoGainControl: false },
+                preferCurrentTab: true, selfBrowserSurface: 'include', surfaceSwitching: 'exclude', systemAudio: 'include'
+            });
+        } catch (e) { etat.textContent = 'Enregistrement annulé.'; return; }
+        const piste = flux.getVideoTracks()[0];
+        // Ne garder que la vidéo (sans les bords noirs de la fenêtre), si le navigateur le permet
+        try { if (window.CropTarget && piste.cropTo) await piste.cropTo(await CropTarget.fromElement(stage)); } catch (e) {}
+        if (SONORE && MUS && !flux.getAudioTracks().length) etat.textContent = 'Attention : le son de l’onglet n’est pas partagé, la vidéo sera muette.';
+        const type = ['video/mp4;codecs=avc1.640028,mp4a.40.2', 'video/mp4;codecs=avc1,mp4a', 'video/mp4', 'video/webm;codecs=vp9,opus', 'video/webm'].find(t => MediaRecorder.isTypeSupported(t));
+        const rec = new MediaRecorder(flux, { mimeType: type, videoBitsPerSecond: 12000000, audioBitsPerSecond: 192000 });
+        const morceaux = [];
+        rec.ondataavailable = e => { if (e.data && e.data.size) morceaux.push(e.data); };
+        const fini = new Promise(r => { rec.onstop = r; });
+        $('#depart').style.display = 'none';
+        await attendre(900); // laisse disparaître le bandeau de partage
+        rec.start(250);
+        await lancer();
+        await attendre((DUREE - decalage + 0.5) * 1000);
+        rec.stop(); await fini;
+        flux.getTracks().forEach(t => t.stop());
+        const ext = type.includes('mp4') ? 'mp4' : 'webm';
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob(morceaux, { type })); a.download = `${F.nom}.${ext}`;
+        document.body.appendChild(a); a.click(); a.remove();
+        $('#depart').style.display = 'flex';
+        etat.textContent = `✅ Vidéo téléchargée : ${F.nom}.${ext}` + (ext === 'webm' ? ' (format WebM : ouvre-la dans CapCut et exporte-la en MP4 pour TikTok/Instagram)' : '');
     }
 
-    function arreter() {
-        remise(); $('#depart').style.display = 'flex';
-        $('#bar-t').style.opacity = 1;
-    }
     addEventListener('keydown', e => {
-        if (e.code === 'Space') { e.preventDefault(); if ($('#go').disabled) return; $('#bar-t').style.opacity = 1; lancer(); }
+        if (e.code === 'Space') { e.preventDefault(); if (!$('#go').disabled) lancer(); }
         if (e.code === 'Escape') arreter();
     });
-    const go = $('#go');
-    go.onclick = () => { $('#bar-t').style.opacity = 1; lancer(); };
+    $('#go').onclick = lancer;
+    $('#rec').onclick = enregistrer;
     remise();
-    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => { go.disabled = false; go.textContent = '▶ Lancer la vidéo'; }, 400));
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => { $('#go').disabled = false; $('#rec').disabled = false; }, 400));
 })();
 </script>
 </body>
