@@ -15,7 +15,7 @@ module.exports = async function handler(req, res) {
 
         const rows = await rest(`tracks?suno_task_id=eq.${encodeURIComponent(taskId)}&select=*`);
         if (rows && rows.length) {
-            await refreshTrack(rows[0]);
+            await refreshTrack(rows[0], { forcer: true });
         }
         return res.status(200).json({ received: true });
     } catch (err) {

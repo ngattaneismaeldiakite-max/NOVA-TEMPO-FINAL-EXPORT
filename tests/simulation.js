@@ -11,7 +11,7 @@ const gp = {}; // reference -> {status, amount}
 process.env.TELEGRAM_BOT_TOKEN = 'tg';
 process.env.TELEGRAM_CHAT_ID = '1';
 const telegram = []; // messages envoyés au propriétaire
-let suno = { generateFails: false, status: 'PENDING', audioUrl: null, credits: 5000, creditsKo: false };
+let suno = { generateFails: false, status: 'PENDING', audioUrl: null, credits: 5000, creditsKo: false, limiteRestantes: 0, recordLimite: false, lectures: 0 };
 let calls = [];
 let idn = 0;
 const uuid = () => `00000000-0000-0000-0000-${String(++idn).padStart(12, '0')}`;
@@ -60,6 +60,8 @@ global.fetch = async (url, opt = {}) => {
   if (u.hostname === 'api.telegram.org') { telegram.push(String(body.text)); return json({ ok: true }); }
   if (u.hostname === 'api.sunoapi.org') {
     if (u.pathname.endsWith('/generate/credit')) return suno.creditsKo ? json({ code: 500, msg: 'erreur' }, 500) : json({ code: 200, msg: 'success', data: suno.credits });
+    if (u.pathname.endsWith('/generate') && suno.limiteRestantes > 0) { suno.limiteRestantes--; return json({ code: 430, msg: 'call frequency too high' }); }
+    if (u.pathname.endsWith('/generate/record-info')) { suno.lectures++; if (suno.recordLimite) return json({ code: 430, msg: 'call frequency too high' }); }
     if (u.pathname.endsWith('/generate')) return suno.generateFails ? json({ code: 429, msg: 'busy' }) : json({ code: 200, data: { taskId: 'task-1' } });
     return json({ code: 200, data: { status: suno.status, response: { sunoData: [{ audioUrl: suno.audioUrl || '' }] } } });
   }
@@ -69,8 +71,11 @@ global.fetch = async (url, opt = {}) => {
 
 const handler = p => require(`${ROOT}/api/${p}`);
 const securite = require(`${ROOT}/api/_lib/securite`);
+const tracksLib = require(`${ROOT}/api/_lib/tracks`);
+// Hors scénarios dédiés : pas d'attente ni de limite de lecture (les tests enchaînent les appels)
+tracksLib.delais.avant = 0; tracksLib.delais.intervalle = 0; tracksLib.delais.reessai = [10, 10];
 async function call(p, { method = 'POST', body = {}, query = {}, token = 'good', garder = false } = {}) {
-  if (!garder) securite.reinitialiser();
+  if (!garder) { securite.reinitialiser(); tracksLib.reinitialiserLimites(); }
   const res = { code: 0, body: null, status(c) { this.code = c; return this; }, json(o) { this.body = o; return this; } };
   await handler(p)({ method, body, query, headers: { host: 'novatempo.vercel.app', authorization: token ? `Bearer ${token}` : undefined } }, res);
   return res;
@@ -149,6 +154,33 @@ const check = (label, cond) => { cond ? ok++ : ko++; console.log(`${cond ? 'OK '
   const panneSolde = await generer();
   check('lecture du solde en panne : les clients ne sont pas bloqués', panneSolde.code === 200 && credits() === 0);
   suno.creditsKo = false; solde.reinitialiser();
+
+  // --- Limite de SunoAPI (20 requêtes / 10 s) : le client ne doit jamais en pâtir
+  db.tracks.forEach(x => { x.statut = 'completed'; });
+  db.profiles[0].credits = 3; solde.reinitialiser(); suno.credits = 5000;
+  suno.limiteRestantes = 2;
+  const reessai = await generer();
+  check('Suno répond « trop d\'appels » 2 fois : relancé automatiquement, le client voit une chanson créée (1 crédit)', reessai.code === 200 && suno.limiteRestantes === 0 && credits() === 2);
+  suno.limiteRestantes = 5;
+  const sature = await generer();
+  check('limite de débit persistante : échec propre (502) et crédit rendu', sature.code === 502 && credits() === 2);
+  suno.limiteRestantes = 0;
+  const enCours = db.tracks.find(x => x.statut === 'processing');
+  suno.recordLimite = true;
+  const lectureLimitee = await call('songs/check-status', { method: 'GET', query: { id: enCours.id } });
+  check('lecture du statut refusée par la limite : la chanson reste « en cours », ni échec ni remboursement', lectureLimitee.body.status === 'processing' && enCours.statut === 'processing' && credits() === 2);
+  suno.recordLimite = false;
+  tracksLib.delais.intervalle = 60000; tracksLib.reinitialiserLimites(); suno.lectures = 0;
+  for (let i = 0; i < 6; i++) await call('songs/check-status', { method: 'GET', query: { id: enCours.id }, garder: true });
+  check('le navigateur interroge toutes les 5 s : une seule lecture chez Suno (au lieu de 6)', suno.lectures === 1);
+  db.tracks.forEach(x => { if (x !== enCours) x.suno_task_id = `ancienne-${x.id}`; }); // la simulation réutilise le même identifiant Suno
+  await call('songs/suno-callback', { body: { data: { task_id: enCours.suno_task_id } }, garder: true });
+  check('le rappel (callback) de Suno passe toujours, même pendant l\'attente', suno.lectures === 2);
+  tracksLib.delais.avant = 20000; tracksLib.reinitialiserLimites(); suno.lectures = 0;
+  enCours.created_at = new Date().toISOString();
+  await call('songs/check-status', { method: 'GET', query: { id: enCours.id }, garder: true });
+  check('chanson lancée il y a moins de 20 s : aucune lecture inutile chez Suno', suno.lectures === 0);
+  tracksLib.delais.avant = 0; tracksLib.delais.intervalle = 0; tracksLib.reinitialiserLimites();
 
   securite.reinitialiser();
   let dernier; for (let i = 0; i < 9; i++) dernier = await call('songs/generate-audio', { body: { lyrics }, garder: true });
