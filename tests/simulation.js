@@ -8,7 +8,10 @@ const ROOT = process.argv[2] || require('path').resolve(__dirname, '..');
 const USER = '11111111-1111-1111-1111-111111111111';
 const db = { profiles: [{ id: USER, credits: 0 }], payments: [], tracks: [], error_logs: [] };
 const gp = {}; // reference -> {status, amount}
-let suno = { generateFails: false, status: 'PENDING', audioUrl: null };
+process.env.TELEGRAM_BOT_TOKEN = 'tg';
+process.env.TELEGRAM_CHAT_ID = '1';
+const telegram = []; // messages envoyés au propriétaire
+let suno = { generateFails: false, status: 'PENDING', audioUrl: null, credits: 5000, creditsKo: false };
 let calls = [];
 let idn = 0;
 const uuid = () => `00000000-0000-0000-0000-${String(++idn).padStart(12, '0')}`;
@@ -54,7 +57,9 @@ global.fetch = async (url, opt = {}) => {
     if (method === 'POST') { const ref = 'MTX-' + (++idn); gp[ref] = { status: 'pending', amount: body.amount }; return json({ success: true, data: { reference: ref, checkout_url: 'https://pay/' + ref } }); }
     const ref = decodeURIComponent(u.pathname.split('/').pop()); return gp[ref] ? json({ success: true, data: { reference: ref, ...gp[ref] } }) : json({ success: false }, 404);
   }
+  if (u.hostname === 'api.telegram.org') { telegram.push(String(body.text)); return json({ ok: true }); }
   if (u.hostname === 'api.sunoapi.org') {
+    if (u.pathname.endsWith('/generate/credit')) return suno.creditsKo ? json({ code: 500, msg: 'erreur' }, 500) : json({ code: 200, msg: 'success', data: suno.credits });
     if (u.pathname.endsWith('/generate')) return suno.generateFails ? json({ code: 429, msg: 'busy' }) : json({ code: 200, data: { taskId: 'task-1' } });
     return json({ code: 200, data: { status: suno.status, response: { sunoData: [{ audioUrl: suno.audioUrl || '' }] } } });
   }
@@ -123,6 +128,27 @@ const check = (label, cond) => { cond ? ok++ : ko++; console.log(`${cond ? 'OK '
   await call('songs/check-status', { method: 'GET', query: { id: t3.id } });
   await call('songs/suno-callback', { body: { data: { task_id: t3.suno_task_id } } });
   check('échec Suno après lancement : crédit rendu une seule fois', credits() === 1 && t3.statut === 'failed');
+
+  // --- Solde Suno : alerte Telegram et suspension préventive (le client n'est jamais débité pour rien)
+  const solde = require(`${ROOT}/api/_lib/suno-solde`);
+  const generer = () => call('songs/generate-audio', { body: { lyrics } });
+  db.profiles[0].credits = 3; suno.generateFails = false; suno.status = 'PENDING'; suno.audioUrl = null;
+  solde.reinitialiser(); telegram.length = 0; suno.credits = 5;
+  const bloque = await generer();
+  check('solde Suno épuisé : création suspendue (503) et client NON débité', bloque.code === 503 && /pas été débité/.test(bloque.body.error) && credits() === 3);
+  check('solde Suno épuisé : alerte Telegram envoyée', telegram.some(t => /épuisé/.test(t) && /SUSPENDUES/.test(t)));
+  await generer();
+  check('alerte « épuisé » non répétée à chaque tentative', telegram.filter(t => /épuisé/.test(t)).length === 1);
+  solde.reinitialiser(); telegram.length = 0; suno.credits = 150;
+  const bas = await generer();
+  check('solde bas : création autorisée + alerte « bientôt vide »', bas.code === 200 && credits() === 2 && telegram.some(t => /bientôt vide/.test(t) && t.includes('150')));
+  solde.reinitialiser(); telegram.length = 0; suno.credits = 5000;
+  const normal = await generer();
+  check('solde normal : création autorisée, aucune alerte', normal.code === 200 && credits() === 1 && !telegram.some(t => /solde Suno/.test(t)));
+  solde.reinitialiser(); suno.creditsKo = true;
+  const panneSolde = await generer();
+  check('lecture du solde en panne : les clients ne sont pas bloqués', panneSolde.code === 200 && credits() === 0);
+  suno.creditsKo = false; solde.reinitialiser();
 
   securite.reinitialiser();
   let dernier; for (let i = 0; i < 9; i++) dernier = await call('songs/generate-audio', { body: { lyrics }, garder: true });

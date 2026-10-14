@@ -52,7 +52,8 @@ Production : https://novatempo.vercel.app — dépôt GitHub `ngattaneismaeldiak
 
 ## Variables Vercel
 
-`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `GENIUSPAY_PUBLIC_KEY`, `GENIUSPAY_SECRET_KEY`, `SUNO_API_KEY` (Production ; Preview avec clés sandbox GeniusPay). Optionnels : `SITE_URL`, `GENIUSPAY_API_BASE`. Alertes téléphone (facultatif) : `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`.
+`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `GENIUSPAY_PUBLIC_KEY`, `GENIUSPAY_SECRET_KEY`, `SUNO_API_KEY` (Production ; Preview avec clés sandbox GeniusPay). Optionnels : `SITE_URL`, `GENIUSPAY_API_BASE`. Alertes téléphone (facultatif) : `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. Solde Suno (facultatif, `api/_lib/suno-solde.js`) : `SUNO_SEUIL_ALERTE` (défaut 200 crédits → alerte Telegram), `SUNO_SEUIL_BLOCAGE` (défaut 20 → création suspendue sans débiter le client), `SUNO_CREDITS_PAR_CHANSON` (affiche « ≈ N chansons »). Une lecture impossible du solde ne bloque jamais les clients.
+- **GeniusPay** (docs : geniuspay.ci/docs/api) : clés `pk_sandbox_`/`sk_sandbox_` = test, `pk_live_`/`sk_live_` = vrai argent (« Activez le mode live dans vos paramètres »). Frais : 1 % + 100 F + frais opérateur (Wave 1,5 %, autres 3,5 à 5 %), retraits gratuits. Nos appels (`X-API-Key`, `X-API-Secret`, `/api/v1/merchant/payments`) sont conformes à la doc.
 
 ## Façon de travailler
 

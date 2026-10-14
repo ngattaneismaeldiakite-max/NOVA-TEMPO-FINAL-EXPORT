@@ -27,6 +27,11 @@ async function alerteTelegram(texte) {
     });
 }
 
+// Message d'information pour le propriétaire (ex. solde Suno bas) : jamais de donnée client dedans
+async function notifier(texte) {
+    await alerteTelegram(texte).catch(e => console.error('Telegram:', nettoyer(e.message, 200)));
+}
+
 // niveau : 'erreur' (à regarder) ou 'critique' (alerte immédiate sur le téléphone)
 async function signaler(source, erreur, { niveau = 'erreur', contexte = {}, userId = null } = {}) {
     const message = nettoyer(erreur && erreur.message ? erreur.message : erreur);
@@ -50,4 +55,4 @@ async function signaler(source, erreur, { niveau = 'erreur', contexte = {}, user
     }
 }
 
-module.exports = { signaler, nettoyer };
+module.exports = { signaler, notifier, nettoyer };

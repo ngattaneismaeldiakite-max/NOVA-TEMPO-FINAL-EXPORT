@@ -4,6 +4,7 @@ const { rest, rpc, getUserFromRequest, siteUrl } = require('../_lib/supabase');
 const { signaler } = require('../_lib/erreurs');
 const { startSunoGeneration, markFailed, refreshTrack } = require('../_lib/tracks');
 const { tropDeDemandes } = require('../_lib/securite');
+const { verifierSolde } = require('../_lib/suno-solde');
 const MAX_EN_COURS = 3; // chansons simultanées par client
 
 const STYLES = {
@@ -56,6 +57,12 @@ module.exports = async function handler(req, res) {
 
     if (tropDeDemandes(`audio:${user.id}`, 8, 10 * 60 * 1000)) {
         return res.status(429).json({ error: 'Trop de demandes rapprochées. Patientez un instant.' });
+    }
+
+    // Solde Suno presque vide : on suspend AVANT de débiter le client (et on te prévient sur Telegram)
+    const solde = await verifierSolde();
+    if (!solde.ok) {
+        return res.status(503).json({ error: 'Le studio est très sollicité en ce moment. Réessaie dans quelques minutes : tu n’as pas été débité.' });
     }
 
     // Chansons déjà en cours : on rattrape celles qui sont bloquées (crédit rendu), puis on plafonne
