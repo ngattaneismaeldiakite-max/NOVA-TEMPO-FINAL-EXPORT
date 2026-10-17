@@ -1,0 +1,10 @@
+﻿# Fichiers du projet qui ne doivent PAS être servis sur le site public (documentation, tests, base de données, outils)
+docs
+tests
+supabase
+.github
+CLAUDE.md
+README.md
+promo/source
+promo/SCRIPT.md
+promo/VOIX-OFF.md
