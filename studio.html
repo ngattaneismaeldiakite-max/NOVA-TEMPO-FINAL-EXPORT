@@ -1083,6 +1083,9 @@
 
                 const jobId = dataCreation.job_id;
                 chargerSolde();
+                // Studio très sollicité : la chanson attend son tour (le crédit est déjà réservé, rien n'est perdu)
+                const messageFile = rang => '<i class="fas fa-hourglass-half" style="color: var(--neon-lime);"></i> Beaucoup de chansons en cours : la tienne démarre dans quelques instants' + (rang > 1 ? ` (n° ${rang} dans la file)` : ' (tu es la prochaine)');
+                if (dataCreation.queued) loadingText.innerHTML = messageFile(0);
 
                 const verificationIntervalle = setInterval(async () => {
                     try {
@@ -1110,6 +1113,9 @@
                         } else if (dataStatut.status === 'failed') {
                             clearInterval(verificationIntervalle);
                             await retourAuParcours("Nos musiciens ont eu un souci. Ton crédit t'a été rendu : demande une autre version des paroles et réessaie.");
+                        } else if (dataStatut.queued) {
+                            loadingBar.style.width = '30%';
+                            loadingText.innerHTML = messageFile(dataStatut.position || 0);
                         } else {
                             progressPercent = Math.min(progressPercent + 10, 92);
                             loadingBar.style.width = progressPercent + '%';

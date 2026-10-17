@@ -23,6 +23,7 @@ function parseFilters(qs) {
     const [op, ...rest] = v.split('.'); const val = rest.join('.');
     f.push(row => op === 'eq' ? String(row[k]) === val
       : op === 'is' ? row[k] == null
+      : op === 'lt' ? String(row[k]) < val
       : op === 'in' ? val.slice(1, -1).split(',').includes(row[k]) : true);
   }
   return row => f.every(fn => fn(row));
@@ -48,8 +49,13 @@ global.fetch = async (url, opt = {}) => {
   }
   if (u.pathname.startsWith('/rest/v1/')) {
     const table = u.pathname.split('/').pop(); const match = parseFilters(u.search);
-    if (method === 'GET') return json(db[table].filter(match));
-    if (method === 'POST') { const row = { id: uuid(), created_at: new Date().toISOString(), ...body }; db[table].push(row); return json([row], 201); }
+    if (method === 'GET') {
+      let rows = db[table].filter(match); const ordre = u.searchParams.get('order');
+      if (ordre) { const [c, d] = ordre.split('.'); rows = [...rows].sort((a, b) => (String(a[c]) < String(b[c]) ? -1 : 1) * (d === 'desc' ? -1 : 1)); }
+      const lim = Number(u.searchParams.get('limit')); if (lim) rows = rows.slice(0, lim);
+      return json(rows);
+    }
+    if (method === 'POST') { const row = { id: uuid(), created_at: new Date().toISOString(), updated_at: new Date().toISOString(), ...body }; db[table].push(row); return json([row], 201); }
     if (method === 'PATCH') { const rows = db[table].filter(match); rows.forEach(r => Object.assign(r, body)); return json(rows); }
   }
   if (u.pathname.startsWith('/storage/v1/object/')) return json({ Key: 'ok' });
@@ -62,7 +68,7 @@ global.fetch = async (url, opt = {}) => {
     if (u.pathname.endsWith('/generate/credit')) return suno.creditsKo ? json({ code: 500, msg: 'erreur' }, 500) : json({ code: 200, msg: 'success', data: suno.credits });
     if (u.pathname.endsWith('/generate') && suno.limiteRestantes > 0) { suno.limiteRestantes--; return json({ code: 430, msg: 'call frequency too high' }); }
     if (u.pathname.endsWith('/generate/record-info')) { suno.lectures++; if (suno.recordLimite) return json({ code: 430, msg: 'call frequency too high' }); }
-    if (u.pathname.endsWith('/generate')) return suno.generateFails ? json({ code: 429, msg: 'busy' }) : json({ code: 200, data: { taskId: 'task-1' } });
+    if (u.pathname.endsWith('/generate')) { if (suno.generateFails) return json({ code: 429, msg: 'busy' }); suno.generations = (suno.generations || 0) + 1; return json({ code: 200, data: { taskId: 'task-1' } }); }
     return json({ code: 200, data: { status: suno.status, response: { sunoData: [{ audioUrl: suno.audioUrl || '' }] } } });
   }
   if (u.hostname === 'cdn.suno') return json({});
@@ -74,8 +80,10 @@ const securite = require(`${ROOT}/api/_lib/securite`);
 const tracksLib = require(`${ROOT}/api/_lib/tracks`);
 // Hors scénarios dédiés : pas d'attente ni de limite de lecture (les tests enchaînent les appels)
 tracksLib.delais.avant = 0; tracksLib.delais.intervalle = 0; tracksLib.delais.reessai = [10, 10];
+tracksLib.delais.priseEnCharge = 0; tracksLib.delais.reprise = 0; // dans les tests, une chanson en file est « prenable » dès l'appel suivant
 async function call(p, { method = 'POST', body = {}, query = {}, token = 'good', garder = false } = {}) {
   if (!garder) { securite.reinitialiser(); tracksLib.reinitialiserLimites(); }
+  await new Promise(r => setTimeout(r, 3)); // l'heure avance d'au moins 3 ms entre deux appels (horodatages de la file)
   const res = { code: 0, body: null, status(c) { this.code = c; return this; }, json(o) { this.body = o; return this; } };
   await handler(p)({ method, body, query, headers: { host: 'novatempo.vercel.app', authorization: token ? `Bearer ${token}` : undefined } }, res);
   return res;
@@ -161,14 +169,22 @@ const check = (label, cond) => { cond ? ok++ : ko++; console.log(`${cond ? 'OK '
   suno.limiteRestantes = 2;
   const reessai = await generer();
   check('Suno répond « trop d\'appels » 2 fois : relancé automatiquement, le client voit une chanson créée (1 crédit)', reessai.code === 200 && suno.limiteRestantes === 0 && credits() === 2);
+  // Suno toujours saturé après les relances : la chanson entre en FILE D'ATTENTE (client non refusé, crédit gardé)
   suno.limiteRestantes = 5;
   const sature = await generer();
-  check('limite de débit persistante : échec propre (502) et crédit rendu', sature.code === 502 && credits() === 2);
+  const enFile = db.tracks.find(x => x.id === (sature.body && sature.body.job_id));
+  check('limite de débit persistante : file d\'attente (202), crédit gardé, chanson « en attente »', sature.code === 202 && sature.body.queued === true && credits() === 1 && enFile.statut === 'pending' && !enFile.suno_task_id);
+  suno.limiteRestantes = 5;
+  const attente = await call('songs/check-status', { method: 'GET', query: { id: enFile.id } });
+  check('en attente : le client voit son rang, ni échec ni remboursement', attente.body.status === 'processing' && attente.body.queued === true && attente.body.position === 1 && credits() === 1 && enFile.statut === 'pending');
   suno.limiteRestantes = 0;
+  const repart = await call('songs/check-status', { method: 'GET', query: { id: enFile.id } });
+  check('Suno a de la place : la chanson en file démarre toute seule', enFile.statut === 'processing' && !!enFile.suno_task_id && repart.body.status === 'processing' && !repart.body.queued);
   const enCours = db.tracks.find(x => x.statut === 'processing');
+  const creditsAvant = credits();
   suno.recordLimite = true;
   const lectureLimitee = await call('songs/check-status', { method: 'GET', query: { id: enCours.id } });
-  check('lecture du statut refusée par la limite : la chanson reste « en cours », ni échec ni remboursement', lectureLimitee.body.status === 'processing' && enCours.statut === 'processing' && credits() === 2);
+  check('lecture du statut refusée par la limite : la chanson reste « en cours », ni échec ni remboursement', lectureLimitee.body.status === 'processing' && enCours.statut === 'processing' && credits() === creditsAvant);
   suno.recordLimite = false;
   tracksLib.delais.intervalle = 60000; tracksLib.reinitialiserLimites(); suno.lectures = 0;
   for (let i = 0; i < 6; i++) await call('songs/check-status', { method: 'GET', query: { id: enCours.id }, garder: true });
@@ -182,6 +198,28 @@ const check = (label, cond) => { cond ? ok++ : ko++; console.log(`${cond ? 'OK '
   check('chanson lancée il y a moins de 20 s : aucune lecture inutile chez Suno', suno.lectures === 0);
   tracksLib.delais.avant = 0; tracksLib.delais.intervalle = 0; tracksLib.reinitialiserLimites();
 
+  // --- File d'attente : équité (premier arrivé, premier servi) et pas de double lancement
+  db.tracks.forEach(x => { x.statut = 'completed'; });
+  const iso = decalageMs => new Date(Date.now() + decalageMs).toISOString();
+  const nouvelle = (id, age) => { const t = { id, user_id: USER, titre: 'T', paroles: '[Refrain]\nAwa', style_musical: 'Zouk', voix: 'male', statut: 'pending', suno_task_id: null, created_at: iso(-age), updated_at: iso(-60000) }; db.tracks.push(t); return t; };
+  const ancienne = nouvelle('00000000-0000-0000-0002-000000000001', 4000), recente = nouvelle('00000000-0000-0000-0002-000000000002', 1000);
+  tracksLib.delais.lot = 1; suno.limiteRestantes = 0; suno.generations = 0;
+  const rRecente = await call('songs/check-status', { method: 'GET', query: { id: recente.id } });
+  check('file d\'attente : la plus récente attend son tour (rang 2), la plus ancienne passe d\'abord', rRecente.body.queued === true && rRecente.body.position === 2 && recente.statut === 'pending' && suno.generations === 0);
+  await call('songs/check-status', { method: 'GET', query: { id: ancienne.id } });
+  check('file d\'attente : la plus ancienne démarre (1 seul lancement chez Suno)', ancienne.statut === 'processing' && suno.generations === 1);
+  const rRecente2 = await call('songs/check-status', { method: 'GET', query: { id: recente.id } });
+  check('file d\'attente : une fois la première partie, la suivante démarre à son tour', recente.statut === 'processing' && suno.generations === 2 && rRecente2.body.status === 'processing');
+  // Deux navigateurs demandent la même chanson en file au même instant : un seul lancement (prise en charge atomique)
+  const jumelle = nouvelle('00000000-0000-0000-0002-000000000004', 500); tracksLib.delais.priseEnCharge = 5000; suno.generations = 0;
+  await Promise.all([call('songs/check-status', { method: 'GET', query: { id: jumelle.id }, garder: true }), call('songs/check-status', { method: 'GET', query: { id: jumelle.id }, garder: true })]);
+  check('aucun double lancement même avec des demandes simultanées', suno.generations === 1 && jumelle.statut === 'processing');
+  tracksLib.delais.priseEnCharge = 0;
+  const vieille = nouvelle('00000000-0000-0000-0002-000000000003', 20 * 60 * 1000); credits0 = credits();
+  const rVieille = await call('songs/check-status', { method: 'GET', query: { id: vieille.id } });
+  check('chanson trop longtemps en attente (> 15 min) : échec propre et crédit rendu', rVieille.body.status === 'failed' && vieille.statut === 'failed' && credits() === credits0 + 1);
+  tracksLib.delais.lot = 5; db.tracks.forEach(x => { x.statut = 'completed'; });
+
   securite.reinitialiser();
   let dernier; for (let i = 0; i < 9; i++) dernier = await call('songs/generate-audio', { body: { lyrics }, garder: true });
   check('limite : la 9e demande de chanson en 10 min est refusée (429)', dernier.code === 429);
@@ -192,6 +230,12 @@ const check = (label, cond) => { cond ? ok++ : ko++; console.log(`${cond ? 'OK '
   check('erreur Suno enregistrée dans le journal, sans clé ni e-mail', db.error_logs.length > 0 && db.error_logs.every(l => l.niveau && !/Bearer|a@b\.ci/.test(JSON.stringify(l))));
   const nav = await call('erreurs', { body: { message: 'x is not defined', page: '/studio.html' } });
   check('erreur du navigateur reçue et journalisée', nav.code === 200 && db.error_logs.some(l => l.source === 'navigateur'));
+
+  const logsAvant = db.error_logs.length;
+  const reqCasse = { method: 'POST', query: {}, headers: {} }; Object.defineProperty(reqCasse, 'body', { get() { throw new Error('Invalid JSON'); } });
+  const resCasse = { code: 0, body: null, status(c) { this.code = c; return this; }, json(o) { this.body = o; return this; } };
+  await handler('webhook/geniuspay')(reqCasse, resCasse);
+  check('webhook avec un corps illisible : refus 400 simple, sans fausse alerte critique', resCasse.code === 400 && db.error_logs.length === logsAvant);
 
   console.log(`\n${ok} réussis, ${ko} échoués`);
   process.exit(ko ? 1 : 0);

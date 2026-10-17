@@ -3,6 +3,7 @@
 
 const { rest, rpc, uploadPublicFile } = require('./supabase');
 const { signaler } = require('./erreurs');
+const { STYLES, VOICES } = require('./styles');
 
 const SUNO_API = 'https://api.sunoapi.org/api/v1';
 const MAX_DURATION_MS = 15 * 60 * 1000; // au-delà : échec + remboursement
@@ -20,7 +21,10 @@ const LIMITE_DEBIT = code => code === 405 || code === 430;
 const delais = {
     intervalle: 12 * 1000,   // au plus une lecture Suno toutes les 12 s par chanson
     avant: 20 * 1000,        // une chanson prend plus de 20 s : inutile de demander avant
-    reessai: [1200, 2500]    // attentes entre les essais de lancement (limite de débit)
+    reessai: [1200, 2500],   // attentes entre les essais de lancement (limite de débit)
+    priseEnCharge: 10 * 1000, // une chanson en file n'est « prise » que si personne ne s'en est occupé depuis 10 s
+    reprise: 3 * 1000,        // après un refus de Suno (limite), nouvel essai possible 3 s plus tard
+    lot: 5                    // nombre de chansons en file autorisées à tenter leur lancement en même temps
 };
 const dernieresVerifs = new Map();        // id de chanson -> heure de la dernière lecture
 const attendre = ms => new Promise(r => setTimeout(r, ms));
@@ -45,6 +49,8 @@ async function startSunoGeneration(payload) {
         if (LIMITE_DEBIT(code) && essai < delais.reessai.length) { await attendre(delais.reessai[essai]); continue; }
         break;
     }
+    // Toujours « trop d'appels » après les relances : ce n'est pas un échec, la chanson passe en file d'attente
+    if (LIMITE_DEBIT(Number(data.code) || res.status)) throw erreurLimite();
     if (!res.ok || (data.code && data.code !== 200)) {
         throw new Error(`SunoAPI a refusé (${res.status}): ${data.msg || 'erreur inconnue'}`);
     }
@@ -72,6 +78,78 @@ async function getSunoTask(taskId) {
         status,
         errorMessage: info.errorMessage || data.msg || status
     };
+}
+
+// Ce qu'on envoie à Suno pour une chanson enregistrée en base
+function payloadSuno(track, callBackUrl) {
+    return {
+        customMode: true,
+        instrumental: false,
+        prompt: track.paroles,
+        style: `${STYLES[track.style_musical] || STYLES.Afrobeat}, ${VOICES[track.voix] || VOICES.male}`,
+        title: track.titre,
+        model: 'V6',
+        callBackUrl
+    };
+}
+
+// ---------- File d'attente ----------
+// Quand Suno est saturé (limite de débit), la chanson reste « pending » sans identifiant Suno : elle attend son tour,
+// le client est déjà débité et voit « ta chanson est en file d'attente ». C'est le navigateur du client qui, en
+// demandant l'état toutes les 5 s, relance la chanson dès que Suno a de la place. Les plus anciennes passent d'abord
+// (par lots de `delais.lot`), et la prise en charge est atomique : une chanson n'est jamais lancée deux fois.
+const enFile = (extra = '') => `tracks?statut=eq.pending&suno_task_id=is.null${extra}`;
+
+// Rang d'attente (1 = la prochaine à partir)
+async function positionEnFile(track) {
+    const avant = await rest(enFile(`&created_at=lt.${encodeURIComponent(track.created_at)}&select=id`));
+    return (avant ? avant.length : 0) + 1;
+}
+
+async function demarrerEnAttente(track, callBackUrl) {
+    if (track.statut !== 'pending' || track.suno_task_id) return track;
+
+    // Trop longtemps en attente : on rend le crédit plutôt que de faire attendre indéfiniment
+    if (Date.now() - new Date(track.created_at).getTime() > MAX_DURATION_MS) {
+        await markFailed(track, 'Délai d\'attente dépassé');
+        return { ...track, statut: 'failed' };
+    }
+
+    // Seules les plus anciennes de la file tentent (équité : premier arrivé, premier servi)
+    const premieres = await rest(enFile(`&order=created_at.asc&limit=${delais.lot}&select=id`));
+    if (!premieres || !premieres.some(p => p.id === track.id)) return track;
+
+    // Prise en charge atomique : un seul lanceur à la fois pour une même chanson
+    const limite = new Date(Date.now() - delais.priseEnCharge).toISOString();
+    const pris = await rest(`tracks?id=eq.${track.id}&statut=eq.pending&suno_task_id=is.null&updated_at=lt.${encodeURIComponent(limite)}`, {
+        method: 'PATCH',
+        prefer: 'return=representation',
+        body: { updated_at: new Date().toISOString() }
+    });
+    if (!pris || !pris.length) return track;
+
+    try {
+        const taskId = await startSunoGeneration(payloadSuno(track, callBackUrl));
+        const maj = await rest(`tracks?id=eq.${track.id}&statut=eq.pending`, {
+            method: 'PATCH',
+            prefer: 'return=representation',
+            body: { statut: 'processing', suno_task_id: taskId, updated_at: new Date().toISOString() }
+        });
+        return maj && maj.length ? maj[0] : track;
+    } catch (err) {
+        if (err.limite) {
+            // Toujours saturé : on garde sa place, nouvel essai possible dans quelques secondes
+            await rest(`tracks?id=eq.${track.id}&statut=eq.pending`, {
+                method: 'PATCH',
+                prefer: 'return=minimal',
+                body: { updated_at: new Date(Date.now() - delais.priseEnCharge + delais.reprise).toISOString() }
+            }).catch(() => null);
+            return track;
+        }
+        await signaler('file-attente:suno', err, { niveau: 'critique', userId: track.user_id });
+        await markFailed(track, err.message);
+        return { ...track, statut: 'failed' };
+    }
 }
 
 async function markFailed(track, reason) {
@@ -146,4 +224,4 @@ async function refreshTrack(track, { forcer = false } = {}) {
 // Pour les tests : repartir sans mémoire des lectures et sans attente entre essais
 function reinitialiserLimites() { dernieresVerifs.clear(); }
 
-module.exports = { startSunoGeneration, refreshTrack, markFailed, reinitialiserLimites, delais };
+module.exports = { startSunoGeneration, refreshTrack, markFailed, reinitialiserLimites, delais, payloadSuno, demarrerEnAttente, positionEnFile };

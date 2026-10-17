@@ -1,22 +1,14 @@
 // api/songs/generate-audio.js
 // Retire 1 crédit, crée la chanson en base et lance la génération Suno.
 const { rest, rpc, getUserFromRequest, siteUrl } = require('../_lib/supabase');
-const { signaler } = require('../_lib/erreurs');
-const { startSunoGeneration, markFailed, refreshTrack } = require('../_lib/tracks');
+const { signaler, notifier } = require('../_lib/erreurs');
+const { startSunoGeneration, markFailed, refreshTrack, payloadSuno, demarrerEnAttente } = require('../_lib/tracks');
+const { STYLES, VOICES } = require('../_lib/styles');
 const { tropDeDemandes } = require('../_lib/securite');
 const { verifierSolde } = require('../_lib/suno-solde');
 const MAX_EN_COURS = 3; // chansons simultanées par client
+let derniereAlerteFile = 0; // anti-spam de l'alerte « file d'attente »
 
-const STYLES = {
-    'Coupé Décalé': 'ivorian coupe decale, atalaku, fast tempo, festive animation, sebene guitar, log drum',
-    'Amapiano': 'amapiano, deep log drum, south african vibe, groovy shaker, party',
-    'Afrobeat': 'afrobeat, naija groove, smooth percussion, saxophone',
-    'Ndombolo': 'ndombolo, congolese rumba, sebene guitar, fast dance',
-    'Rap Français': 'french rap, trap beat, heavy 808, punchy drill',
-    'Zouk': 'zouk, kizomba, romantic, slow dance, smooth',
-    'Gospel': 'gospel choir, uplifting, emotional, spiritual, powerful vocals, organ'
-};
-const VOICES = { male: 'male vocal', female: 'female vocal', duo: 'male and female duet' };
 const OCCASIONS = ['amour', 'anniversaire', 'hommage', 'evenement', 'mariage', 'adoration', 'promotion'];
 
 // Code de diagnostic ajouté aux erreurs (aucun secret) : aide au support sans accès aux logs
@@ -59,6 +51,8 @@ module.exports = async function handler(req, res) {
         return res.status(429).json({ error: 'Trop de demandes rapprochées. Patientez un instant.' });
     }
 
+    const callBackUrl = `${siteUrl(req)}/api/songs/suno-callback`;
+
     // Solde Suno presque vide : on suspend AVANT de débiter le client (et on te prévient sur Telegram)
     const solde = await verifierSolde();
     if (!solde.ok) {
@@ -70,7 +64,8 @@ module.exports = async function handler(req, res) {
         const enCours = await rest(`tracks?user_id=eq.${user.id}&statut=in.(pending,processing)&select=*&limit=10`);
         let actives = 0;
         for (const t of enCours || []) {
-            const maj = await refreshTrack(t).catch(() => t);
+            const enAttente = t.statut === 'pending' && !t.suno_task_id;
+            const maj = await (enAttente ? demarrerEnAttente(t, callBackUrl) : refreshTrack(t)).catch(() => t);
             if (maj.statut === 'pending' || maj.statut === 'processing') actives += 1;
         }
         if (actives >= MAX_EN_COURS) {
@@ -117,15 +112,7 @@ module.exports = async function handler(req, res) {
 
     // 3. Lancer Suno
     try {
-        const taskId = await startSunoGeneration({
-            customMode: true,
-            instrumental: false,
-            prompt: lyrics,
-            style: `${STYLES[style]}, ${VOICES[voix]}`,
-            title,
-            model: 'V6',
-            callBackUrl: `${siteUrl(req)}/api/songs/suno-callback`
-        });
+        const taskId = await startSunoGeneration(payloadSuno(track, callBackUrl));
 
         await rest(`tracks?id=eq.${track.id}`, {
             method: 'PATCH',
@@ -135,6 +122,15 @@ module.exports = async function handler(req, res) {
 
         return res.status(200).json({ job_id: track.id, credits: newBalance });
     } catch (err) {
+        // Suno saturé (trop de demandes à la fois) : la chanson entre en file d'attente, le client n'est pas refusé
+        if (err.limite) {
+            const maintenant = Date.now();
+            if (maintenant - derniereAlerteFile > 30 * 60 * 1000) {
+                derniereAlerteFile = maintenant;
+                await notifier('⏳ Nova Tempo — Suno est saturé : des chansons attendent leur tour (aucun client perdu, elles démarrent dès que possible). Beaucoup d\'activité en ce moment.');
+            }
+            return res.status(202).json({ job_id: track.id, credits: newBalance, queued: true });
+        }
         await signaler('generate-audio:suno', err, { niveau: 'critique', userId: user.id });
         await markFailed(track, err.message).catch(e => console.error('markFailed:', e.message));
         return res.status(502).json({ error: 'Le studio est momentanément saturé. Votre crédit vous a été rendu, réessayez dans un instant.' });

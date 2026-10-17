@@ -10,8 +10,12 @@ const UUID = /^[0-9a-f-]{36}$/i;
 module.exports = async (req, res) => {
     if (req.method !== 'POST') return res.status(405).json({ error: 'Méthode non autorisée' });
 
+    // Corps illisible (n'importe qui peut envoyer n'importe quoi à cette adresse) : refus simple, sans fausse alerte
+    let body;
+    try { body = req.body || {}; } catch (e) { return res.status(400).json({ error: 'Corps de requête invalide' }); }
+    if (typeof body !== 'object') return res.status(400).json({ error: 'Corps de requête invalide' });
+
     try {
-        const body = req.body || {};
         const data = body.data || body;
         const reference = data.reference || body.reference;
         const metadata = data.metadata || body.metadata || {};
