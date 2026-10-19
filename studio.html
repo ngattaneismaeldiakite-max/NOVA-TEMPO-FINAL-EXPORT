@@ -81,6 +81,16 @@
         .pc-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.7rem; color: var(--text-muted); font-size: 0.85rem; font-weight: 700; }
         .pc-progress { height: 6px; border-radius: 10px; background: rgba(255,255,255,0.08); overflow: hidden; margin-bottom: 2rem; }
         .pc-progress-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--neon-lime), #9BDB22); border-radius: 10px; transition: width 0.45s ease; }
+        .pc-etape-phases { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+        .pc-phase { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); opacity: 0.6; white-space: nowrap; }
+        .pc-phase.on { color: var(--neon-lime); opacity: 1; }
+        .pc-phase.fait { opacity: 0.9; }
+        .pc-phase + .pc-phase::before { content: '›'; margin-right: 0.35rem; opacity: 0.5; }
+        .pc-occasion .reco { margin-left: 6px; font-size: 0.65rem; font-weight: 900; color: var(--bg-dark); background: var(--neon-lime); padding: 2px 7px; border-radius: 50px; vertical-align: middle; }
+        .pc-occasion.on { border-color: var(--neon-lime); }
+        .pc-recap { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+        .pc-recap-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0.3rem 0.8rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.04); color: var(--text-light); font-family: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+        .pc-recap-chip i { color: var(--neon-lime); font-size: 0.7rem; }
         .pc-occasion-pill { display: inline-flex; align-items: center; gap: 6px; padding: 0.25rem 0.8rem; border-radius: 50px; background: rgba(212,255,0,0.08); border: 1px solid rgba(212,255,0,0.3); color: var(--neon-lime); }
         .pc-title { font-size: 1.6rem; font-weight: 900; line-height: 1.25; margin: 0 0 0.4rem; }
         .pc-sub { color: var(--text-muted); margin: 0 0 1.6rem; font-size: 1rem; line-height: 1.5; }
@@ -116,6 +126,10 @@
         .btn-soft:disabled { opacity: 0.5; cursor: wait; }
         .btn-cout { font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 50px; background: rgba(6,6,10,0.15); text-transform: none; }
         @media (max-width: 600px) {
+            #pc-occasion-pill { display: none; }
+            .pc-etape-phases { gap: 0.25rem; }
+            .pc-phase { font-size: 0.72rem; }
+            .pc-phase + .pc-phase::before { margin-right: 0.25rem; }
             .studio-card { padding: 1.6rem 1.2rem; }
             .pc-title { font-size: 1.35rem; }
             .pc-occasions { grid-template-columns: 1fr 1fr; }
@@ -352,7 +366,7 @@
             
             <!-- BLOC 1 : PARCOURS GUIDÉ (étapes décrites dans studio-parcours.js) -->
             <div id="parcours">
-                <div class="pc-head"><span id="pc-etape"></span><span id="pc-occasion-pill"></span></div>
+                <div class="pc-head"><span id="pc-etape" class="pc-etape-phases"></span><span id="pc-occasion-pill"></span></div>
                 <div class="pc-progress"><div class="pc-progress-bar" id="pc-bar"></div></div>
                 <div id="pc-body" class="pc-body"></div>
                 <p class="pc-error" id="pc-error" role="alert"></p>
@@ -656,6 +670,19 @@
         const { OCCASIONS, STYLES } = window.NOVA_PARCOURS;
         const NOMS_OCCASIONS = { amour: "d'amour", anniversaire: "d'anniversaire", hommage: 'hommage', mariage: 'de mariage', adoration: "d'adoration", promotion: 'promotionnelle', evenement: "d'événement" };
 
+        const PHASES = ['Occasion', 'Paroles', 'Musique', 'Aperçu'];
+        const PHASE_DE = { occasion: 0, mode: 1, personne: 1, choix: 1, textes: 1, ecrire: 1, musique: 2, apercu: 3 };
+        const ENCOURS_KEY = 'nova_studio_encours';
+
+        // Le parcours est gardé si le client actualise la page ou revient en arrière
+        function sauverEnCours() {
+            try {
+                if (etat.occasion) sessionStorage.setItem(ENCOURS_KEY, JSON.stringify(etat));
+                else sessionStorage.removeItem(ENCOURS_KEY);
+            } catch (e) {}
+        }
+        function effacerEnCours() { try { sessionStorage.removeItem(ENCOURS_KEY); } catch (e) {} }
+
         function etatInitial() {
             return { occasion: null, mode: null, etape: 0, reponses: {}, style: null, voix: null, paroles: null };
         }
@@ -707,8 +734,15 @@
             const total = etat.occasion ? liste.length : 8;
             erreurParcours('');
 
-            document.getElementById('pc-etape').textContent = `Étape ${etat.etape + 1} sur ${total}`;
-            document.getElementById('pc-bar').style.width = `${Math.round(((etat.etape + 1) / total) * 100)}%`;
+            // 4 repères fixes : le total ne change jamais, quel que soit le chemin choisi
+            const phases = liste.map(e => PHASE_DE[e.type] ?? 1);
+            const phase = phases[etat.etape];
+            const dansPhase = phases.filter(p => p === phase);
+            const rang = phases.slice(0, etat.etape + 1).filter(p => p === phase).length;
+            document.getElementById('pc-etape').innerHTML = PHASES.map((nom, i) =>
+                `<span class="pc-phase${i < phase ? ' fait' : ''}${i === phase ? ' on' : ''}">${i < phase ? '✓' : i + 1} ${nom}</span>`).join('');
+            document.getElementById('pc-bar').style.width = `${Math.round(((phase + rang / dansPhase.length) / PHASES.length) * 100)}%`;
+            sauverEnCours();
             const occ = etat.occasion && OCCASIONS[etat.occasion];
             document.getElementById('pc-occasion-pill').innerHTML = occ ? `<span class="pc-occasion-pill">${occ.emoji} ${esc(occ.label)}</span>` : '';
 
@@ -844,7 +878,7 @@
                 ['perso', '✍️', "J'écris mes paroles", "Tu as déjà ton texte, ou tu veux l'écrire toi-même : il sera chanté tel quel."]
             ];
             corps.innerHTML = `<h2 class="pc-title">Comment veux-tu tes paroles ?</h2><p class="pc-sub">Dans les deux cas, tu relis tout avant de créer ta chanson.</p><div class="pc-occasions pc-modes">` +
-                choix.map(([v, e, t, a]) => `<button type="button" class="pc-occasion${etat.mode === v ? ' on' : ''}" data-mode="${v}"><span class="e">${e}</span><span class="t">${t}</span><span class="a">${a}</span></button>`).join('') + '</div>';
+                choix.map(([v, e, t, a]) => `<button type="button" class="pc-occasion${etat.mode === v ? ' on' : ''}" data-mode="${v}"><span class="e">${e}</span><span class="t">${t}${v === 'auto' ? '<span class="reco">CONSEILLÉ</span>' : ''}</span><span class="a">${a}</span></button>`).join('') + '</div>';
             corps.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => {
                 if (etat.mode !== b.dataset.mode) { etat.mode = b.dataset.mode; etat.paroles = null; etat.parolesModifiees = false; }
                 etat.etape = 2;
@@ -918,7 +952,9 @@
             };
             const perso = etat.mode === 'perso';
             const titre = perso ? 'Voici tes paroles ✍️' : titres[etat.occasion] || `Voici ta chanson${nom ? ` pour ${esc(nom)}` : ''} ✨`;
-            corps.innerHTML = `<h2 class="pc-title">${titre}</h2>
+            const voixNoms = { male: '👨 Voix homme', female: '👩 Voix femme', duo: '👫 Duo' };
+            const recap = [[0, `${OCCASIONS[etat.occasion].emoji} ${OCCASIONS[etat.occasion].label}`], [1, perso ? '✍️ Mes paroles' : '🪄 Texte automatique'], [etapes().findIndex(e => e.type === 'musique'), `${esc(etat.style || '')}`], [etapes().findIndex(e => e.type === 'musique'), voixNoms[etat.voix] || '']].filter(r => r[1]);
+            corps.innerHTML = `<div class="pc-recap">${recap.map(([i, t]) => `<button type="button" class="pc-recap-chip" data-aller="${i}">${t} <i class="fas fa-pen"></i></button>`).join('')}</div><h2 class="pc-title">${titre}</h2>
                 <p class="pc-sub">${perso ? 'Relis-les une dernière fois : elles seront chantées' : 'Lis tes paroles.'} <strong style="color: var(--neon-lime);">${perso ? 'telles quelles.' : 'Tu peux les modifier toi-même'}</strong>${perso ? '' : ', ou demander une autre version : c\'est gratuit.'}</p>
                 <div class="lyrics-preview" id="pc-paroles">${etat.paroles ? parolesHtml(etat.paroles) : '<i class="fas fa-spinner fa-spin"></i> Écriture des paroles…'}</div>
                 <div id="pc-edition" style="display: none;">
@@ -949,6 +985,7 @@
                 etat.parolesModifiees = false;
                 ecrireParoles(true);
             };
+            corps.querySelectorAll('[data-aller]').forEach(b => b.onclick = () => { etat.etape = +b.dataset.aller; rendreEtape(); });
             document.getElementById('pc-modifier').onclick = () => { etat.etape = 2; rendreEtape(); };
             document.getElementById('generate-btn').onclick = lancerCreation;
             document.getElementById('pc-editer-texte').onclick = ouvrirEdition;
@@ -1068,7 +1105,7 @@
             if (etat.etape < etapes().length - 1) {
                 etat.etape++;
                 // Toute modification des réponses oblige à réécrire les paroles
-                if (etapes()[etat.etape].type === 'apercu' && etat.mode !== 'perso') { etat.paroles = null; etat.parolesModifiees = false; }
+                if (etapes()[etat.etape].type === 'apercu' && etat.mode !== 'perso' && etape.type !== 'musique') { etat.paroles = null; etat.parolesModifiees = false; }
                 rendreEtape();
             }
         }
@@ -1100,6 +1137,7 @@
             audio.pause();
             audio.src = '';
             etat = etatInitial();
+            effacerEnCours();
             rendreEtape();
             await switchView(result, parcours);
         }
@@ -1126,6 +1164,7 @@
             const titrePerso = String(etat.reponses.titre || '').trim();
 
             const titreChanson = titrePerso || (nom && personnelle ? `Pour ${nom}` : `Ma chanson ${NOMS_OCCASIONS[etat.occasion] || ''}`.trim());
+            effacerEnCours();
             loadingBar.style.width = '25%';
             loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Enregistrement studio en cours...';
             await switchView(parcoursEl, loadingEl);
@@ -1221,6 +1260,15 @@
             }
         }
 
+        // Reprise du parcours après une actualisation de la page
+        try {
+            const enCours = JSON.parse(sessionStorage.getItem(ENCOURS_KEY));
+            if (enCours && enCours.occasion && OCCASIONS[enCours.occasion]) {
+                etat = { ...etatInitial(), ...enCours };
+                etat.etape = Math.min(etat.etape, etapes().length - 1);
+            }
+        } catch (e) {}
+        document.getElementById('pc-body').addEventListener('input', sauverEnCours);
         rendreEtape();
     </script>
 </body>
