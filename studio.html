@@ -654,10 +654,10 @@
         // PARCOURS GUIDÉ (étapes décrites dans studio-parcours.js)
         // ==========================================
         const { OCCASIONS, STYLES } = window.NOVA_PARCOURS;
-        const NOMS_OCCASIONS = { amour: "d'amour", anniversaire: "d'anniversaire", hommage: 'hommage', mariage: 'de mariage', adoration: "d'adoration", promotion: 'promotionnelle', evenement: "d'événement", perso: '' };
+        const NOMS_OCCASIONS = { amour: "d'amour", anniversaire: "d'anniversaire", hommage: 'hommage', mariage: 'de mariage', adoration: "d'adoration", promotion: 'promotionnelle', evenement: "d'événement" };
 
         function etatInitial() {
-            return { occasion: null, etape: 0, reponses: {}, style: null, voix: null, paroles: null };
+            return { occasion: null, mode: null, etape: 0, reponses: {}, style: null, voix: null, paroles: null };
         }
         let etat = etatInitial();
 
@@ -665,7 +665,10 @@
 
         // Étapes de l'occasion choisie (l'étape 0 = choix de l'occasion)
         function etapes() {
-            return etat.occasion ? [{ type: 'occasion' }, ...OCCASIONS[etat.occasion].etapes] : [{ type: 'occasion' }];
+            if (!etat.occasion) return [{ type: 'occasion' }];
+            // Après l'occasion : texte automatique (questions) ou paroles écrites par le client
+            const suite = etat.mode === 'perso' ? [{ type: 'ecrire' }, { type: 'musique' }, { type: 'apercu' }] : OCCASIONS[etat.occasion].etapes;
+            return [{ type: 'occasion' }, { type: 'mode' }, ...suite];
         }
 
         // Texte d'une option selon le genre ("généreux" / "généreuse")
@@ -701,7 +704,7 @@
             const liste = etapes();
             const etape = liste[etat.etape];
             const corps = document.getElementById('pc-body');
-            const total = etat.occasion ? liste.length : 7;
+            const total = etat.occasion ? liste.length : 8;
             erreurParcours('');
 
             document.getElementById('pc-etape').textContent = `Étape ${etat.etape + 1} sur ${total}`;
@@ -718,7 +721,7 @@
 
             corps.innerHTML = '';
             corps.classList.remove('pc-body'); void corps.offsetWidth; corps.classList.add('pc-body');
-            ({ occasion: rendreOccasion, personne: rendrePersonne, choix: rendreChoix, textes: rendreTextes, ecrire: rendreEcrire, musique: rendreMusique, apercu: rendreApercu })[etape.type](corps, etape);
+            ({ occasion: rendreOccasion, personne: rendrePersonne, choix: rendreChoix, textes: rendreTextes, mode: rendreMode, ecrire: rendreEcrire, musique: rendreMusique, apercu: rendreApercu })[etape.type](corps, etape);
             mettreAJourBoutonSuivant();
             if (rendreEtape.deja) document.getElementById('parcours').scrollIntoView({ behavior: 'smooth', block: 'start' });
             rendreEtape.deja = true;
@@ -834,7 +837,22 @@
             corps.querySelector('input')?.focus();
         }
 
-        // Occasion « Mes paroles » : le client écrit lui-même son texte
+        // Choix après l'occasion : texte automatique ou paroles écrites par le client
+        function rendreMode(corps) {
+            const choix = [
+                ['auto', '🪄', 'Texte automatique', 'Réponds à quelques questions : on écrit les paroles pour toi. Tu pourras les relire et les modifier avant de créer.'],
+                ['perso', '✍️', "J'écris mes paroles", "Tu as déjà ton texte, ou tu veux l'écrire toi-même : il sera chanté tel quel."]
+            ];
+            corps.innerHTML = `<h2 class="pc-title">Comment veux-tu tes paroles ?</h2><p class="pc-sub">Dans les deux cas, tu relis tout avant de créer ta chanson.</p><div class="pc-occasions pc-modes">` +
+                choix.map(([v, e, t, a]) => `<button type="button" class="pc-occasion${etat.mode === v ? ' on' : ''}" data-mode="${v}"><span class="e">${e}</span><span class="t">${t}</span><span class="a">${a}</span></button>`).join('') + '</div>';
+            corps.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => {
+                if (etat.mode !== b.dataset.mode) { etat.mode = b.dataset.mode; etat.paroles = null; etat.parolesModifiees = false; }
+                etat.etape = 2;
+                rendreEtape();
+            });
+        }
+
+        // Paroles écrites par le client
         function rendreEcrire(corps) {
             const r = etat.reponses;
             corps.innerHTML = `<h2 class="pc-title">Écris tes paroles</h2>
@@ -898,7 +916,7 @@
                 promotion: `Voici la chanson de ${esc(etat.reponses.produit || 'ton offre')} ✨`,
                 evenement: 'Voici la chanson de ton événement ✨'
             };
-            const perso = etat.occasion === 'perso';
+            const perso = etat.mode === 'perso';
             const titre = perso ? 'Voici tes paroles ✍️' : titres[etat.occasion] || `Voici ta chanson${nom ? ` pour ${esc(nom)}` : ''} ✨`;
             corps.innerHTML = `<h2 class="pc-title">${titre}</h2>
                 <p class="pc-sub">${perso ? 'Relis-les une dernière fois : elles seront chantées' : 'Lis tes paroles.'} <strong style="color: var(--neon-lime);">${perso ? 'telles quelles.' : 'Tu peux les modifier toi-même'}</strong>${perso ? '' : ', ou demander une autre version : c\'est gratuit.'}</p>
@@ -931,7 +949,7 @@
                 etat.parolesModifiees = false;
                 ecrireParoles(true);
             };
-            document.getElementById('pc-modifier').onclick = () => { etat.etape = 1; rendreEtape(); };
+            document.getElementById('pc-modifier').onclick = () => { etat.etape = 2; rendreEtape(); };
             document.getElementById('generate-btn').onclick = lancerCreation;
             document.getElementById('pc-editer-texte').onclick = ouvrirEdition;
             document.getElementById('pc-annuler-texte').onclick = fermerEdition;
@@ -1028,6 +1046,7 @@
                 const manquant = etape.champs.find(c => c.requis && !String(r[c.cle] || '').trim());
                 if (manquant) return `Indique : ${accorderTitre(manquant.label).toLowerCase()}.`;
             }
+            if (etape.type === 'mode' && !etat.mode) return 'Choisis une des deux options.';
             if (etape.type === 'ecrire') {
                 const texte = String(etat.paroles || '').replace(/\r\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
                 const lignes = texte.split('\n').filter(l => l.trim() && !/^\[.*\]$/.test(l.trim()));
@@ -1049,7 +1068,7 @@
             if (etat.etape < etapes().length - 1) {
                 etat.etape++;
                 // Toute modification des réponses oblige à réécrire les paroles
-                if (etapes()[etat.etape].type === 'apercu' && etat.occasion !== 'perso') { etat.paroles = null; etat.parolesModifiees = false; }
+                if (etapes()[etat.etape].type === 'apercu' && etat.mode !== 'perso') { etat.paroles = null; etat.parolesModifiees = false; }
                 rendreEtape();
             }
         }

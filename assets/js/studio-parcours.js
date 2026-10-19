@@ -140,12 +140,6 @@
         }
     };
 
-    // L'utilisateur écrit lui-même ses paroles (aucune génération de texte)
-    OCCASIONS.perso = {
-        label: 'Mes paroles', emoji: '✍️', style: 'Afrobeat', accroche: 'Tu écris, on chante',
-        etapes: [{ type: 'ecrire' }, MUSIQUE, APERCU]
-    };
-
     const STYLES = [
         { v: 'Afrobeat', e: '🌍' }, { v: 'Coupé Décalé', e: '🕺' }, { v: 'Zouk', e: '💃' }, { v: 'Amapiano', e: '🔥' },
         { v: 'Ndombolo', e: '🎸' }, { v: 'Gospel', e: '🙏' }, { v: 'Rap Français', e: '🎤' }
