@@ -654,7 +654,7 @@
         // PARCOURS GUIDÉ (étapes décrites dans studio-parcours.js)
         // ==========================================
         const { OCCASIONS, STYLES } = window.NOVA_PARCOURS;
-        const NOMS_OCCASIONS = { amour: "d'amour", anniversaire: "d'anniversaire", hommage: 'hommage', mariage: 'de mariage', adoration: "d'adoration", promotion: 'promotionnelle', evenement: "d'événement" };
+        const NOMS_OCCASIONS = { amour: "d'amour", anniversaire: "d'anniversaire", hommage: 'hommage', mariage: 'de mariage', adoration: "d'adoration", promotion: 'promotionnelle', evenement: "d'événement", perso: '' };
 
         function etatInitial() {
             return { occasion: null, etape: 0, reponses: {}, style: null, voix: null, paroles: null };
@@ -718,7 +718,7 @@
 
             corps.innerHTML = '';
             corps.classList.remove('pc-body'); void corps.offsetWidth; corps.classList.add('pc-body');
-            ({ occasion: rendreOccasion, personne: rendrePersonne, choix: rendreChoix, textes: rendreTextes, musique: rendreMusique, apercu: rendreApercu })[etape.type](corps, etape);
+            ({ occasion: rendreOccasion, personne: rendrePersonne, choix: rendreChoix, textes: rendreTextes, ecrire: rendreEcrire, musique: rendreMusique, apercu: rendreApercu })[etape.type](corps, etape);
             mettreAJourBoutonSuivant();
             if (rendreEtape.deja) document.getElementById('parcours').scrollIntoView({ behavior: 'smooth', block: 'start' });
             rendreEtape.deja = true;
@@ -834,6 +834,44 @@
             corps.querySelector('input')?.focus();
         }
 
+        // Occasion « Mes paroles » : le client écrit lui-même son texte
+        function rendreEcrire(corps) {
+            const r = etat.reponses;
+            corps.innerHTML = `<h2 class="pc-title">Écris tes paroles</h2>
+                <p class="pc-sub">Elles seront chantées <strong style="color: var(--neon-lime);">telles quelles</strong>. Une ligne = une phrase chantée.</p>
+                <div class="pc-block"><label class="pc-label" for="pc-perso-titre">Titre de la chanson <span class="optional-tag">(facultatif)</span></label>
+                    <input type="text" id="pc-perso-titre" maxlength="60" placeholder="Ex : Pour Maman, Mon grand frère" value="${esc(r.titre || '')}" autocomplete="off"></div>
+                <div class="pc-block"><label class="pc-label" for="pc-perso-texte">Tes paroles</label>
+                    <textarea id="pc-perso-texte" class="lyrics-edit" spellcheck="true" maxlength="3000" placeholder="[Couplet 1]&#10;Écris ici tes phrases…&#10;&#10;[Refrain]&#10;Le passage que tout le monde retiendra…">${esc(etat.paroles || '')}</textarea>
+                    <div class="pc-actions-sec" style="margin-top: 0.6rem;">
+                        <button type="button" class="btn-soft" data-ajout="[Couplet]">+ Couplet</button>
+                        <button type="button" class="btn-soft" data-ajout="[Refrain]">+ Refrain</button>
+                        <button type="button" class="btn-soft" data-ajout="[Pont]">+ Pont</button>
+                    </div>
+                    <p class="field-tip" id="pc-perso-compteur"></p></div>
+                <p class="field-tip">💡 Mets les prénoms à écrire <strong>comme ils se prononcent</strong>, et répète le refrain : c'est lui qu'on retient. Garde les titres entre crochets, ils guident le chanteur.</p>`;
+            const zone = document.getElementById('pc-perso-texte');
+            const compteur = document.getElementById('pc-perso-compteur');
+            const maj = () => {
+                etat.paroles = zone.value;
+                const n = zone.value.split('\n').filter(l => l.trim() && !/^\[.*\]$/.test(l.trim())).length;
+                compteur.textContent = `${n} ligne${n > 1 ? 's' : ''} à chanter · ${zone.value.length} / 3000 caractères`;
+                erreurParcours('');
+            };
+            zone.oninput = maj;
+            document.getElementById('pc-perso-titre').oninput = e => { r.titre = e.target.value; };
+            corps.querySelectorAll('[data-ajout]').forEach(b => b.onclick = () => {
+                const debut = zone.selectionStart, fin = zone.selectionEnd;
+                const avant = zone.value.slice(0, debut), apres = zone.value.slice(fin);
+                const prefixe = avant && !avant.endsWith('\n\n') ? (avant.endsWith('\n') ? '\n' : '\n\n') : '';
+                const ajout = prefixe + b.dataset.ajout + '\n';
+                zone.value = avant + ajout + apres;
+                zone.focus(); zone.selectionStart = zone.selectionEnd = avant.length + ajout.length;
+                maj();
+            });
+            maj();
+        }
+
         function rendreMusique(corps) {
             const occ = OCCASIONS[etat.occasion];
             corps.innerHTML = `<h2 class="pc-title">La musique</h2><p class="pc-sub">On te conseille un style, tu peux le changer.</p>
@@ -860,9 +898,10 @@
                 promotion: `Voici la chanson de ${esc(etat.reponses.produit || 'ton offre')} ✨`,
                 evenement: 'Voici la chanson de ton événement ✨'
             };
-            const titre = titres[etat.occasion] || `Voici ta chanson${nom ? ` pour ${esc(nom)}` : ''} ✨`;
+            const perso = etat.occasion === 'perso';
+            const titre = perso ? 'Voici tes paroles ✍️' : titres[etat.occasion] || `Voici ta chanson${nom ? ` pour ${esc(nom)}` : ''} ✨`;
             corps.innerHTML = `<h2 class="pc-title">${titre}</h2>
-                <p class="pc-sub">Lis tes paroles. <strong style="color: var(--neon-lime);">Tu peux les modifier toi-même</strong>, ou demander une autre version : c'est gratuit.</p>
+                <p class="pc-sub">${perso ? 'Relis-les une dernière fois : elles seront chantées' : 'Lis tes paroles.'} <strong style="color: var(--neon-lime);">${perso ? 'telles quelles.' : 'Tu peux les modifier toi-même'}</strong>${perso ? '' : ', ou demander une autre version : c\'est gratuit.'}</p>
                 <div class="lyrics-preview" id="pc-paroles">${etat.paroles ? parolesHtml(etat.paroles) : '<i class="fas fa-spinner fa-spin"></i> Écriture des paroles…'}</div>
                 <div id="pc-edition" style="display: none;">
                     <textarea id="pc-texte" class="lyrics-edit" spellcheck="true" maxlength="3000"></textarea>
@@ -875,7 +914,7 @@
                 <div class="pc-actions-sec" id="pc-actions-apercu">
                     <button type="button" class="btn-soft" id="pc-editer-texte" style="border-color: var(--neon-lime); color: var(--neon-lime);"><i class="fas fa-pen"></i> Modifier le texte</button>
                     <button type="button" class="btn-soft" id="pc-autre-version"><i class="fas fa-sync-alt"></i> Une autre version</button>
-                    <button type="button" class="btn-soft" id="pc-modifier"><i class="fas fa-undo"></i> Changer mes réponses</button>
+                    <button type="button" class="btn-soft" id="pc-modifier"><i class="fas fa-undo"></i> ${perso ? 'Revenir à l\'écriture' : 'Changer mes réponses'}</button>
                 </div>
                 <button type="button" class="btn-generate" id="generate-btn"><i class="fas fa-music"></i> Créer ma chanson <span class="btn-cout">1 crédit</span></button>`;
             document.getElementById('pc-autre-version').onclick = e => {
@@ -897,7 +936,8 @@
             document.getElementById('pc-editer-texte').onclick = ouvrirEdition;
             document.getElementById('pc-annuler-texte').onclick = fermerEdition;
             document.getElementById('pc-valider-texte').onclick = validerEdition;
-            if (!etat.paroles) ecrireParoles(false);
+            if (perso) document.getElementById('pc-autre-version').style.display = 'none';
+            else if (!etat.paroles) ecrireParoles(false);
         }
 
         // --- Modification du texte final par le client ---
@@ -988,6 +1028,13 @@
                 const manquant = etape.champs.find(c => c.requis && !String(r[c.cle] || '').trim());
                 if (manquant) return `Indique : ${accorderTitre(manquant.label).toLowerCase()}.`;
             }
+            if (etape.type === 'ecrire') {
+                const texte = String(etat.paroles || '').replace(/\r\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+                const lignes = texte.split('\n').filter(l => l.trim() && !/^\[.*\]$/.test(l.trim()));
+                if (lignes.length < 4) return 'Écris au moins 4 lignes à chanter.';
+                etat.paroles = texte;
+                etat.parolesModifiees = true;
+            }
             if (etape.type === 'musique') {
                 if (!etat.style) return 'Choisis un style musical.';
                 if (!etat.voix) return 'Choisis la voix.';
@@ -1002,7 +1049,7 @@
             if (etat.etape < etapes().length - 1) {
                 etat.etape++;
                 // Toute modification des réponses oblige à réécrire les paroles
-                if (etapes()[etat.etape].type === 'apercu') { etat.paroles = null; etat.parolesModifiees = false; }
+                if (etapes()[etat.etape].type === 'apercu' && etat.occasion !== 'perso') { etat.paroles = null; etat.parolesModifiees = false; }
                 rendreEtape();
             }
         }
@@ -1057,7 +1104,9 @@
             const loadingBar = document.getElementById('loading-bar');
             const nom = (etat.reponses.nom || '').trim();
             const personnelle = ['amour', 'anniversaire', 'mariage', 'hommage'].includes(etat.occasion);
+            const titrePerso = String(etat.reponses.titre || '').trim();
 
+            const titreChanson = titrePerso || (nom && personnelle ? `Pour ${nom}` : `Ma chanson ${NOMS_OCCASIONS[etat.occasion] || ''}`.trim());
             loadingBar.style.width = '25%';
             loadingText.innerHTML = '<i class="fas fa-spinner fa-spin" style="color: var(--neon-lime);"></i> Enregistrement studio en cours...';
             await switchView(parcoursEl, loadingEl);
@@ -1087,7 +1136,7 @@
                         genre: etat.style,
                         voice: etat.voix,
                         occasion: etat.occasion,
-                        titre: nom && personnelle ? `Pour ${nom}` : `Ma chanson ${NOMS_OCCASIONS[etat.occasion] || ''}`.trim()
+                        titre: titreChanson
                     })
                 });
                 const dataCreation = await resCreation.json();
@@ -1123,7 +1172,7 @@
                             const audioPlayer = document.getElementById('audio-player');
                             audioPlayer.src = dataStatut.outputs[0].audio_url;
                             const urlChanson = dataStatut.outputs[0].audio_url;
-                            const titreChanson = nom && personnelle ? `Pour ${nom}` : `Ma chanson ${NOMS_OCCASIONS[etat.occasion] || ''}`.trim();
+                            
                             document.getElementById('result-partager').onclick = e => { e.preventDefault(); window.NovaAudio.partagerAudio(urlChanson, titreChanson, e.currentTarget); };
                             document.getElementById('result-download').onclick = e => { e.preventDefault(); window.NovaAudio.telechargerAudio(urlChanson, titreChanson, e.currentTarget); };
                             await notifierMorceauPret(personnelle ? nom : '');
