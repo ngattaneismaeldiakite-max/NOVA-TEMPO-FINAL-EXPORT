@@ -88,6 +88,17 @@
         .pc-phase + .pc-phase::before { content: '›'; margin-right: 0.35rem; opacity: 0.5; }
         .pc-occasion .reco { margin-left: 6px; font-size: 0.65rem; font-weight: 900; color: var(--bg-dark); background: var(--neon-lime); padding: 2px 7px; border-radius: 50px; vertical-align: middle; }
         .pc-occasion.on { border-color: var(--neon-lime); }
+        .pc-occasion.vedette { border-color: rgba(212,255,0,0.55); background: rgba(212,255,0,0.07); box-shadow: 0 0 22px rgba(212,255,0,0.12); }
+        .pc-partie { padding: 0.9rem; margin-bottom: 0.8rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.25); }
+        .pc-partie-tete { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+        .pc-partie-nom { font-weight: 800; color: var(--neon-lime); }
+        .pc-partie-outils { display: flex; gap: 0.3rem; }
+        .pc-partie-outils button { min-width: 44px; min-height: 44px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.04); color: var(--text-light); font-size: 1rem; cursor: pointer; }
+        .pc-partie-outils button:disabled { opacity: 0.3; cursor: default; }
+        .pc-partie-aide { color: var(--text-muted); font-size: 0.82rem; margin: 0.2rem 0 0.5rem; }
+        .pc-partie-texte { min-height: 110px; }
+        .pc-ajouter { margin: 0.4rem 0 0.8rem; }
+        .pc-lien { display: block; background: none; border: none; color: var(--neon-lime); font-family: inherit; font-weight: 700; font-size: 0.9rem; text-decoration: underline; cursor: pointer; padding: 0.7rem 0; min-height: 44px; }
         .pc-recap { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
         .pc-recap-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0.3rem 0.8rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.04); color: var(--text-light); font-family: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
         .pc-recap-chip i { color: var(--neon-lime); font-size: 0.7rem; }
@@ -874,11 +885,11 @@
         // Choix après l'occasion : texte automatique ou paroles écrites par le client
         function rendreMode(corps) {
             const choix = [
-                ['auto', '🪄', 'Texte automatique', 'Réponds à quelques questions : on écrit les paroles pour toi. Tu pourras les relire et les modifier avant de créer.'],
-                ['perso', '✍️', "J'écris mes paroles", "Tu as déjà ton texte, ou tu veux l'écrire toi-même : il sera chanté tel quel."]
+                ['perso', '✍️', "J'écris mes paroles", "Tu as déjà ton texte, ou tu veux l'écrire toi-même : il sera chanté tel quel."],
+                ['auto', '🪄', 'Texte automatique', 'Réponds à quelques questions : on écrit les paroles pour toi. Tu pourras les relire et les modifier avant de créer.']
             ];
             corps.innerHTML = `<h2 class="pc-title">Comment veux-tu tes paroles ?</h2><p class="pc-sub">Dans les deux cas, tu relis tout avant de créer ta chanson.</p><div class="pc-occasions pc-modes">` +
-                choix.map(([v, e, t, a]) => `<button type="button" class="pc-occasion${etat.mode === v ? ' on' : ''}" data-mode="${v}"><span class="e">${e}</span><span class="t">${t}${v === 'auto' ? '<span class="reco">CONSEILLÉ</span>' : ''}</span><span class="a">${a}</span></button>`).join('') + '</div>';
+                choix.map(([v, e, t, a]) => `<button type="button" class="pc-occasion${v === 'perso' ? ' vedette' : ''}${etat.mode === v ? ' on' : ''}" data-mode="${v}"><span class="e">${e}</span><span class="t">${t}</span><span class="a">${a}</span></button>`).join('') + '</div>';
             corps.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => {
                 if (etat.mode !== b.dataset.mode) { etat.mode = b.dataset.mode; etat.paroles = null; etat.parolesModifiees = false; }
                 etat.etape = 2;
@@ -886,42 +897,121 @@
             });
         }
 
-        // Paroles écrites par le client
+        // Paroles écrites par le client : par parties (Intro, Couplet, Refrain…) ou en un seul bloc
+        const PARTIES = {
+            Intro: { aide: 'Quelques mots pour ouvrir la chanson.', exemple: 'Ex : Awa… écoute-moi bien' },
+            Couplet: { aide: 'Raconte : qui est la personne, ce que tu ressens, un souvenir.', exemple: "Ex : Awa, depuis le jour où je t'ai vue,\nmon cœur ne bat que pour toi" },
+            Refrain: { aide: 'La phrase que tout le monde retiendra, avec le prénom. Il est chanté plusieurs fois.', exemple: 'Ex : Awa, Awa, tu es ma lumière,\nAwa, Awa, je t\'aime' },
+            Pont: { aide: 'Un moment fort juste avant la fin.', exemple: 'Ex : Même si le monde s\'arrête…' },
+            Outro: { aide: 'La toute dernière phrase.', exemple: 'Ex : Awa, pour toujours' }
+        };
+        function partiesParDefaut() { return [{ t: 'Couplet', x: '' }, { t: 'Refrain', x: '' }, { t: 'Couplet', x: '' }]; }
+        function nomPartie(parties, i) {
+            const p = parties[i];
+            if (p.t !== 'Couplet') return p.t;
+            return 'Couplet ' + (parties.slice(0, i + 1).filter(q => q.t === 'Couplet').length);
+        }
+        function compilerParties(parties) {
+            return parties.filter(p => p.x.trim()).map(p => `[${nomPartie(parties, parties.indexOf(p))}]\n${p.x.trim()}`).join('\n\n');
+        }
+        // Texte collé d'un bloc -> parties (les titres [Refrain] découpent le texte)
+        function decouperEnParties(texte) {
+            const parties = [];
+            let courante = null;
+            String(texte || '').replace(/\r\n/g, '\n').split('\n').forEach(l => {
+                const m = l.trim().match(/^\[(.*)\]$/);
+                if (m) {
+                    const t = /intro/i.test(m[1]) ? 'Intro' : /refrain/i.test(m[1]) ? 'Refrain' : /pont/i.test(m[1]) ? 'Pont' : /outro|fin/i.test(m[1]) ? 'Outro' : 'Couplet';
+                    courante = { t, x: '' }; parties.push(courante);
+                } else if (l.trim()) {
+                    if (!courante) { courante = { t: 'Couplet', x: '' }; parties.push(courante); }
+                    courante.x += (courante.x ? '\n' : '') + l.trim();
+                }
+            });
+            return parties.length ? parties : partiesParDefaut();
+        }
+
         function rendreEcrire(corps) {
             const r = etat.reponses;
+            if (!etat.parties) etat.parties = partiesParDefaut();
+            const libre = !!etat.libre;
             corps.innerHTML = `<h2 class="pc-title">Écris tes paroles</h2>
                 <p class="pc-sub">Elles seront chantées <strong style="color: var(--neon-lime);">telles quelles</strong>. Une ligne = une phrase chantée.</p>
                 <div class="pc-block"><label class="pc-label" for="pc-perso-titre">Titre de la chanson <span class="optional-tag">(facultatif)</span></label>
                     <input type="text" id="pc-perso-titre" maxlength="60" placeholder="Ex : Pour Maman, Mon grand frère" value="${esc(r.titre || '')}" autocomplete="off"></div>
-                <div class="pc-block"><label class="pc-label" for="pc-perso-texte">Tes paroles</label>
-                    <textarea id="pc-perso-texte" class="lyrics-edit" spellcheck="true" maxlength="3000" placeholder="[Couplet 1]&#10;Écris ici tes phrases…&#10;&#10;[Refrain]&#10;Le passage que tout le monde retiendra…">${esc(etat.paroles || '')}</textarea>
-                    <div class="pc-actions-sec" style="margin-top: 0.6rem;">
-                        <button type="button" class="btn-soft" data-ajout="[Couplet]">+ Couplet</button>
-                        <button type="button" class="btn-soft" data-ajout="[Refrain]">+ Refrain</button>
-                        <button type="button" class="btn-soft" data-ajout="[Pont]">+ Pont</button>
-                    </div>
-                    <p class="field-tip" id="pc-perso-compteur"></p></div>
-                <p class="field-tip">💡 Mets les prénoms à écrire <strong>comme ils se prononcent</strong>, et répète le refrain : c'est lui qu'on retient. Garde les titres entre crochets, ils guident le chanteur.</p>`;
-            const zone = document.getElementById('pc-perso-texte');
+                ${libre ? corpsLibre() : corpsParties()}
+                <p class="field-tip" id="pc-perso-compteur"></p>
+                <button type="button" class="pc-lien" id="pc-perso-mode">${libre ? '🧩 Écrire par parties (Intro, Couplet, Refrain…)' : '📋 Je colle tout mon texte d\'un coup'}</button>
+                <p class="field-tip">💡 Écris les prénoms <strong>comme ils se prononcent</strong>, et répète le refrain : c'est lui qu'on retient.</p>`;
+            document.getElementById('pc-perso-titre').oninput = e => { r.titre = e.target.value; };
             const compteur = document.getElementById('pc-perso-compteur');
             const maj = () => {
-                etat.paroles = zone.value;
-                const n = zone.value.split('\n').filter(l => l.trim() && !/^\[.*\]$/.test(l.trim())).length;
-                compteur.textContent = `${n} ligne${n > 1 ? 's' : ''} à chanter · ${zone.value.length} / 3000 caractères`;
+                etat.paroles = libre ? document.getElementById('pc-perso-texte').value : compilerParties(etat.parties);
+                const n = etat.paroles.split('\n').filter(l => l.trim() && !/^\[.*\]$/.test(l.trim())).length;
+                compteur.textContent = `${n} ligne${n > 1 ? 's' : ''} à chanter · ${etat.paroles.length} / 3000 caractères`;
                 erreurParcours('');
             };
-            zone.oninput = maj;
-            document.getElementById('pc-perso-titre').oninput = e => { r.titre = e.target.value; };
-            corps.querySelectorAll('[data-ajout]').forEach(b => b.onclick = () => {
-                const debut = zone.selectionStart, fin = zone.selectionEnd;
-                const avant = zone.value.slice(0, debut), apres = zone.value.slice(fin);
-                const prefixe = avant && !avant.endsWith('\n\n') ? (avant.endsWith('\n') ? '\n' : '\n\n') : '';
-                const ajout = prefixe + b.dataset.ajout + '\n';
-                zone.value = avant + ajout + apres;
-                zone.focus(); zone.selectionStart = zone.selectionEnd = avant.length + ajout.length;
-                maj();
-            });
+            document.getElementById('pc-perso-mode').onclick = () => {
+                if (libre) etat.parties = decouperEnParties(document.getElementById('pc-perso-texte').value);
+                else etat.paroles = compilerParties(etat.parties);
+                etat.libre = !libre;
+                rendreEcrire(corps);
+            };
+            if (libre) {
+                const zone = document.getElementById('pc-perso-texte');
+                zone.oninput = maj;
+                corps.querySelectorAll('[data-ajout]').forEach(b => b.onclick = () => {
+                    const debut = zone.selectionStart, fin = zone.selectionEnd;
+                    const avant = zone.value.slice(0, debut), apres = zone.value.slice(fin);
+                    const prefixe = avant && !avant.endsWith('\n\n') ? (avant.endsWith('\n') ? '\n' : '\n\n') : '';
+                    const ajout = prefixe + b.dataset.ajout + '\n';
+                    zone.value = avant + ajout + apres;
+                    zone.focus(); zone.selectionStart = zone.selectionEnd = avant.length + ajout.length;
+                    maj();
+                });
+            } else {
+                const parties = etat.parties;
+                const refaire = focus => { maj(); rendreEcrire(corps); if (focus !== undefined) document.querySelector(`[data-partie="${focus}"] textarea`)?.focus(); };
+                corps.querySelectorAll('[data-partie]').forEach(bloc => {
+                    const i = +bloc.dataset.partie;
+                    bloc.querySelector('textarea').oninput = e => { parties[i].x = e.target.value; maj(); };
+                    bloc.querySelector('[data-action="supprimer"]').onclick = () => { if (parties.length > 1) { parties.splice(i, 1); refaire(); } };
+                    bloc.querySelector('[data-action="monter"]').onclick = () => { if (i > 0) { [parties[i - 1], parties[i]] = [parties[i], parties[i - 1]]; refaire(i - 1); } };
+                    bloc.querySelector('[data-action="descendre"]').onclick = () => { if (i < parties.length - 1) { [parties[i + 1], parties[i]] = [parties[i], parties[i + 1]]; refaire(i + 1); } };
+                });
+                corps.querySelectorAll('[data-nouveau]').forEach(b => b.onclick = () => {
+                    const t = b.dataset.nouveau;
+                    let pos;
+                    if (t === 'Intro') pos = 0;
+                    else if (t === 'Outro') pos = parties.length;
+                    else { const o = parties.findIndex(p => p.t === 'Outro'); pos = o === -1 ? parties.length : o; }
+                    parties.splice(pos, 0, { t, x: '' });
+                    refaire(pos);
+                });
+            }
             maj();
+        }
+        function corpsLibre() {
+            return `<div class="pc-block"><label class="pc-label" for="pc-perso-texte">Tes paroles</label>
+                <textarea id="pc-perso-texte" class="lyrics-edit" spellcheck="true" maxlength="3000" placeholder="[Couplet 1]&#10;Écris ici tes phrases…&#10;&#10;[Refrain]&#10;Le passage que tout le monde retiendra…">${esc(etat.paroles || '')}</textarea>
+                <div class="pc-actions-sec" style="margin-top: 0.6rem;">
+                    ${['[Intro]', '[Couplet]', '[Refrain]', '[Pont]', '[Outro]'].map(t => `<button type="button" class="btn-soft" data-ajout="${t}">+ ${t.slice(1, -1)}</button>`).join('')}
+                </div></div>`;
+        }
+        function corpsParties() {
+            const parties = etat.parties;
+            const blocs = parties.map((p, i) => `<div class="pc-partie" data-partie="${i}">
+                    <div class="pc-partie-tete"><span class="pc-partie-nom">${esc(nomPartie(parties, i))}${p.t === 'Intro' || p.t === 'Pont' || p.t === 'Outro' ? ' <span class="optional-tag">(facultatif)</span>' : ''}</span>
+                        <span class="pc-partie-outils">
+                            <button type="button" data-action="monter" aria-label="Monter cette partie"${i === 0 ? ' disabled' : ''}>↑</button>
+                            <button type="button" data-action="descendre" aria-label="Descendre cette partie"${i === parties.length - 1 ? ' disabled' : ''}>↓</button>
+                            <button type="button" data-action="supprimer" aria-label="Supprimer cette partie"${parties.length <= 1 ? ' disabled' : ''}>✕</button>
+                        </span></div>
+                    <p class="pc-partie-aide">${esc(PARTIES[p.t].aide)}</p>
+                    <textarea class="lyrics-edit pc-partie-texte" rows="4" maxlength="1200" spellcheck="true" placeholder="${esc(PARTIES[p.t].exemple)}">${esc(p.x)}</textarea>
+                </div>`).join('');
+            const a = t => `<button type="button" class="btn-soft" data-nouveau="${t}">+ ${t}</button>`;
+            return blocs + `<div class="pc-actions-sec pc-ajouter">${!parties.some(p => p.t === 'Intro') ? a('Intro') : ''}${a('Couplet')}${a('Refrain')}${a('Pont')}${!parties.some(p => p.t === 'Outro') ? a('Outro') : ''}</div>`;
         }
 
         function rendreMusique(corps) {
@@ -1017,6 +1107,7 @@
             const lignes = texte.split('\n').filter(l => l.trim() && !/^\[.*\]$/.test(l.trim()));
             if (lignes.length < 4) { afficherToast('Ton texte est trop court : garde au moins 4 lignes à chanter.', 'error'); return; }
             etat.paroles = texte;
+            if (etat.mode === 'perso') etat.parties = decouperEnParties(texte);
             etat.parolesModifiees = true;
             document.getElementById('pc-paroles').innerHTML = parolesHtml(texte);
             basculerEdition(false);
