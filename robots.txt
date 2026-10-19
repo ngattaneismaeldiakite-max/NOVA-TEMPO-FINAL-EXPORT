@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /studio.html
+Disallow: /profil.html
+Disallow: /creations.html
+Disallow: /reset-password.html
+
+Sitemap: https://novatempo.vercel.app/sitemap.xml
